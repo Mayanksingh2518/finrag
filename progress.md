@@ -237,8 +237,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `KMP_DUPLICATE_LIB_OK=TRUE` turns that into a hang. On mps it works. `build_retriever` now
   refuses `DEVICE=cpu` on macOS with a clear error (`app/devices.py`). Windows is unaffected.
   If CPU-on-Mac is ever needed: one shared libomp, or numpy exact search instead of FAISS.
-- MacBook: `gh` is installed but not logged in, and `~/.ssh/id_ed25519` is not registered with
-  GitHub, so `git push` fails until the user runs `gh auth login` + `gh auth setup-git`.
+- MacBook: `gh` logged in as Mayanksingh2518 (device-code web login, 2026-10-07) and
+  `gh auth setup-git` done, so `git push` works over HTTPS. `~/.ssh/id_ed25519` is not
+  registered with GitHub (SSH push would fail).
 - Full retrieval eval takes ~20 min on the M4 (mostly reranking); `--no-ablations` ~8 min.
 
 ## Session log
@@ -269,7 +270,7 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   metrics, eval runner + report, reranker ablations, decomposition preview
   (`app/retrieval/decompose.py`). hybrid_rerank: recall@5 0.884, MRR 0.920; decomposition lifts
   comparison/trend recall@10 to 0.958/0.833. Kept bge-reranker-base. 48 tests passing.
-  Committed Phase 3 + Phase 4 WIP locally; push blocked on GitHub login on this Mac.
+  Committed Phase 3 + Phase 4; pushed to GitHub after logging in gh on this Mac.
 - **2026-10-07 (MacBook M4):** User added API keys. Moved them from the tracked `.env.example`
   into the gitignored `.env` before any commit. Verified both: Groq gpt-oss-120b works (8k
   TPM, 1k RPD free); Gemini works only through the Interactions API with `gemini-3.8-flash`,
