@@ -4,9 +4,9 @@ Single source of truth for project state. Update this file at the end of every w
 
 ## Current status
 
-- **Last completed:** Phase 3 (indexing and retrieval), verified on the MacBook M4
+- **Last completed:** Phase 4 (evaluation v0): golden set, metrics, runner, ablations, decomposition preview
 - **In progress:** nothing
-- **Next up:** Phase 4 (evaluation v0), see "Next task in detail" below
+- **Next up:** Phase 5 (grounded generation), see "Next task in detail" below. Needs free API keys.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
 - **Last updated:** 2026-10-07
 
@@ -15,7 +15,7 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 1: Data acquisition.** EDGAR 10-K downloader, 40 filings (10 companies × FY2022–2025), manifest
 - [x] **Phase 2: Parsing and chunking.** 17,602 chunks (14,975 text / 2,627 table), 0 over the 512-token limit, all core items found in all 40 filings, 96.8% of chunks carry a printed page number
 - [x] **Phase 3: Indexing and retrieval.** Local bge-small embeddings + FAISS, BM25, RRF hybrid, metadata filters, bge-reranker-base cross-encoder; 12/12 smoke queries in all 4 modes; 33 tests
-- [ ] **Phase 4: Evaluation v0.** Golden set (~80 Qs incl. unanswerable), Recall@K / MRR / nDCG, ablation table
+- [x] **Phase 4: Evaluation v0.** 84-question golden set (quote-verified pages), Recall@K / MRR / nDCG, 4 modes × filters on/off, reranker ablations, decomposition preview; hybrid_rerank recall@5 0.884, MRR 0.920; 48 tests
 - [ ] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier, abstention, confidence
 - [ ] **Phase 6: LangGraph agent.** Query analyzer, decomposition, conversational memory, XBRL financial-facts tool
 - [ ] **Phase 7: Full evaluation.** RAGAS, Langfuse tracing, latency/cost per stage
@@ -23,33 +23,79 @@ Single source of truth for project state. Update this file at the end of every w
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
-## Next task in detail: Phase 4 (evaluation v0)
+## Next task in detail: Phase 5 (grounded generation)
 
-Goal: measure retrieval quality so every later change (reranker choice, chunking, query
-analysis) is judged by numbers, not by the smoke test (which every mode already passes, so it
-no longer discriminates).
+Goal: turn retrieved chunks into an answer whose every claim cites a page, and abstain when
+the evidence doesn't support an answer. Measured on the golden set.
 
-1. **Golden set** `data/eval/golden_v0.jsonl` (committed, unlike other data; hand-checked).
-   ~80 questions, each with: `id`, `question`, `category`, `filters` (what the Phase 6 analyzer
-   should extract: tickers / fiscal_years / sections), `reference_answer`, and gold evidence as
-   a list of `(ticker, fiscal_year, printed page)` (optionally `chunk_id`s).
-   Categories, roughly: single lookup (~25), multi-year trend (~12, one evidence item per year),
-   cross-company comparison (~12, decomposed per company), numeric/table (~15, evidence in table
-   chunks), conversational follow-up (~6, with prior turn), unanswerable (~10: out-of-corpus
-   companies/years, facts not in a 10-K). Spread across all 10 companies and 4 years.
-   Build it semi-automatically: draft candidate Q/evidence pairs from chunks (e.g. MD&A segment
-   paragraphs, key tables), then verify every page by reading the chunk text. No LLM key needed;
-   a local Ollama model could help draft but is optional.
-2. **Metrics** `app/evaluation/metrics.py`: Recall@K (K=1,3,5,10), MRR, nDCG@10 at page level
-   (a hit = retrieved chunk whose ticker/FY matches and whose page range covers a gold page);
-   multi-evidence questions count the fraction of gold items covered. Unit-test on toy rankings.
-3. **Runner** `app/evaluation/run_retrieval_eval.py`: run each mode (bm25 / dense / hybrid /
-   hybrid_rerank), with gold filters and with no filters, write `reports/retrieval_v0.md` +
-   JSON (per-category breakdown, p50/p95 latency per stage).
-4. **Ablations** worth one row each: reranker bge-reranker-base vs MiniLM-L-6 (8× faster, see
-   benchmark below), reranker max_length 512 vs 384, rerank candidates 30 vs 50, optional
-   bge-base embeddings. Pick defaults from the table and record the decision here.
-5. Look at failure cases per category and note fixes for later phases (do not over-tune on v0).
+**Blocked on the user for real runs:** `GEMINI_API_KEY` (aistudio.google.com/apikey) and
+`GROQ_API_KEY` (console.groq.com/keys) in `.env`. Everything else can be built and unit-tested
+with a fake LLM first; Ollama is optional (not installed; on the M4 `qwen2.5:7b`).
+
+1. **LLM interface** `app/generation/llm.py`: one `LLM.generate(messages, schema) -> parsed
+   object` over Gemini (primary) → Groq (fallback) → Ollama (offline), with tenacity retries and
+   rate-limit backoff, an on-disk response cache keyed by (provider, model, prompt hash), and
+   token/latency accounting per call. Check current free-tier model names and limits first.
+2. **Context builder** `app/generation/context.py`: take retrieval hits, dedupe, apply a token
+   budget, keep table chunks whole, label each chunk `[S1] AAPL FY2025 p.23 (Item 7)`. Use
+   per-entity quotas when the filters span several companies/years (Phase 4 finding below).
+3. **Generator** `app/generation/answer.py`: prompt + structured output (pydantic):
+   `answer`, `claims[{text, source_ids}]`, `abstained`, `confidence`. Render citations as
+   `[TICKER FY p.N]` using printed page labels.
+4. **Citation verifier** `app/generation/verify.py`: every claim cites at least one provided
+   source; numbers in a claim must appear in a cited chunk (normalize $, %, billions/millions);
+   drop or flag unsupported claims; no surviving claims → abstain.
+5. **Eval** `app/evaluation/run_generation_eval.py` on the 84 questions (cache every call; the
+   free tier allows the whole set): citation page accuracy vs gold pages, abstention
+   precision/recall (10 unanswerable + retrieval misses), answer correctness by numeric/keyword
+   match against `reference_answer` (LLM judge deferred to Phase 7 / RAGAS). Report to
+   `reports/generation_v0.md`.
+
+## Evaluation v0 results (Phase 4, MacBook M4)
+
+Full report: `reports/retrieval_v0.md` (+ per-question JSON). Golden set
+`data/eval/golden_v0.jsonl`: 84 questions = lookup 27, numeric 17, trend 12, comparison 12,
+follow-up 6, unanswerable 10; 119 evidence items over all 10 companies and FY2022–2025.
+
+| Mode (k=10) | Filters | recall@1 | recall@5 | recall@10 | MRR | nDCG@10 | p50 |
+|---|---|---|---|---|---|---|---|
+| bm25 | gold | 0.373 | 0.697 | 0.819 | 0.579 | 0.620 | <1 ms |
+| dense | gold | 0.538 | 0.828 | 0.902 | 0.764 | 0.777 | 8 ms |
+| hybrid | gold | 0.579 | 0.860 | 0.926 | 0.794 | 0.805 | 7 ms |
+| **hybrid_rerank** | gold | **0.707** | **0.884** | 0.922 | **0.920** | 0.877 | 2.2 s |
+| hybrid_rerank + decomposition | gold | 0.704 | 0.901 | **0.966** | 0.905 | **0.902** | 1.6 s (p95 7 s) |
+| bm25 | none | 0.271 | 0.464 | 0.602 | 0.414 | 0.442 | <1 ms |
+| hybrid | none | 0.396 | 0.783 | 0.858 | 0.665 | 0.686 | 8 ms |
+| hybrid_rerank | none | 0.694 | 0.884 | 0.905 | 0.909 | 0.866 | 2.1 s |
+
+Reranker ablations (gold filters): bge-reranker-base 30 cand / len 512 = MRR 0.920;
+len 384 = 0.909 (~15% faster); 50 cand = 0.917 (1.6× slower); MiniLM-L-6 = 0.818 (7× faster).
+**Decision: keep bge-reranker-base, 30 candidates, max_length 512.** MiniLM is the fallback if
+latency ever matters more than ~0.1 MRR.
+
+Findings:
+- Hybrid beats either retriever alone; the reranker is the biggest single gain (MRR +0.13
+  filtered, +0.24 unfiltered). BM25 alone is weak on numeric questions (recall@5 0.65).
+- With the reranker, filters barely matter for quality (0.884 vs 0.884 recall@5): the
+  cross-encoder finds the right company/year itself. Filters still cut work and noise.
+- Lookup, numeric and follow-up (via the standalone rewrite) are near-solved: recall@5 1.0.
+- **Trend and comparison are the gap** (recall@5 0.62 / 0.67): one filing crowds out the
+  others. Decomposition (one sub-search per company × year, round-robin merge ordered by score,
+  `app/retrieval/decompose.py`) lifts recall@10 for comparison 0.792 → 0.958 and trend
+  0.729 → 0.833 under reranking. At k=5 a 4-year trend can't fit, so Phase 6 should use
+  **per-entity quotas** (top-n per sub-query) rather than one global k, and batch the
+  sub-queries' reranking (decomposed p95 is 7 s with sequential reranking).
+- Residual trend misses: the reranker prefers Item 8 notes or segment pages over the MD&A
+  sentence with the figure (e.g. JPM net income → segment results pages), and Item 5 buyback
+  tables over the annual total.
+
+Golden-set method (for interviews): evidence is written as verbatim quotes; `build_golden`
+fills `pages` with every page of the filing containing a quote, and `validate` checks each page
+really contains it. Labels therefore never come from the retriever and survive re-chunking. A
+failure review found 8 questions where the same fact was restated on another page (Item 8
+notes, liquidity section); alt quotes were added (noted in each row). That review only looked
+at pages the reranked system retrieved, so it slightly favours that mode; v1 should add
+labels from a pooled review of all modes.
 
 ## Retrieval results (Phase 3, MacBook M4)
 
@@ -130,11 +176,15 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 
 ## Key decisions (see docs/ARCHITECTURE.md for rationale)
 
+- Gold evidence is quote-verified and page-level (not chunk ids); `data/eval/` and `reports/` are committed.
+- Reranker default `bge-reranker-base`, 30 candidates, max_length 512 (Phase 4 ablation).
+
 - Source = SEC EDGAR HTML, not IR-site PDFs (stable URLs, structured tables, exact page breaks).
 - `fiscal_year` = year of the period end (matches company labels: NVDA FY2025 ended 2025-01-26).
 - Original 10-K only; 10-K/A excluded.
 - Dependencies are added to `requirements.txt` phase by phase.
 - Build eval v0 (Phase 4) before generation so retrieval tuning is measured.
+- Multi-entity questions use per-(company, year) decomposition with per-entity quotas (Phase 4 data).
 
 ## Environment notes
 
@@ -170,6 +220,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `KMP_DUPLICATE_LIB_OK=TRUE` turns that into a hang. On mps it works. `build_retriever` now
   refuses `DEVICE=cpu` on macOS with a clear error (`app/devices.py`). Windows is unaffected.
   If CPU-on-Mac is ever needed: one shared libomp, or numpy exact search instead of FAISS.
+- MacBook: `gh` is installed but not logged in, and `~/.ssh/id_ed25519` is not registered with
+  GitHub, so `git push` fails until the user runs `gh auth login` + `gh auth setup-git`.
+- Full retrieval eval takes ~20 min on the M4 (mostly reranking); `--no-ablations` ~8 min.
 
 ## Session log
 
@@ -194,3 +247,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   reranker benchmark (bge-reranker-base vs MiniLM, mps vs CPU, max_len 512/384), kept
   bge-reranker-base. Found and diagnosed the macOS torch-CPU + FAISS OpenMP crash/deadlock;
   added a fail-fast guard + test (33/33 passing). Checked for local LLMs: none installed.
+- **2026-10-07 (MacBook M4):** Phase 4 built: golden set (84 questions, 119 quote-verified
+  evidence items, `build_golden` resolver/validator, `find_evidence` authoring CLI), page-level
+  metrics, eval runner + report, reranker ablations, decomposition preview
+  (`app/retrieval/decompose.py`). hybrid_rerank: recall@5 0.884, MRR 0.920; decomposition lifts
+  comparison/trend recall@10 to 0.958/0.833. Kept bge-reranker-base. 48 tests passing.
+  Committed Phase 3 + Phase 4 WIP locally; push blocked on GitHub login on this Mac.

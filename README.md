@@ -29,6 +29,10 @@ python -m app.retrieval.build_index
 # Search: BM25 / dense / hybrid / hybrid + reranker, with metadata filters
 python -m app.retrieval.search_cli "Why did international transaction revenue change?" --tickers V --years 2025
 
+# Evaluate retrieval against the golden set (84 questions) -> reports/retrieval_v0.md
+python -m app.evaluation.build_golden          # resolve gold pages from quotes + validate
+python -m app.evaluation.run_retrieval_eval    # all modes, filters on/off, reranker ablations
+
 pytest
 ```
 
@@ -37,7 +41,7 @@ pytest
 - [x] Phase 1: EDGAR downloader (40 filings, manifest with source URLs)
 - [x] Phase 2: Parsing (pages, sections, tables) and chunking (17.6k chunks, quality report)
 - [x] Phase 3: Indexing (embeddings + FAISS, BM25), hybrid retrieval, cross-encoder reranking (12/12 smoke queries in all modes; 1.3 s reranked p50 on Apple M4)
-- [ ] Phase 4: Evaluation harness v0 (golden set, retrieval metrics, ablations)
+- [x] Phase 4: Evaluation harness v0 (84-question golden set, Recall@K/MRR/nDCG, ablations): hybrid + rerank recall@5 0.884, MRR 0.920 ([report](reports/retrieval_v0.md))
 - [ ] Phase 5: Grounded generation with citations and abstention
 - [ ] Phase 6: LangGraph agent (query analysis, decomposition, memory, XBRL facts tool)
 - [ ] Phase 7: Full evaluation (RAGAS, Langfuse tracing, latency/cost)
