@@ -25,3 +25,7 @@ faiss-cpu>=1.8
 bm25s>=0.2
 PyStemmer>=2.2
 numpy>=1.26
+
+# Phase 8 - serving (API for the web frontend in frontend/)
+fastapi>=0.115
+uvicorn[standard]>=0.30

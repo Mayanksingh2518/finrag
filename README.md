@@ -36,6 +36,22 @@ python -m app.evaluation.run_retrieval_eval    # all modes, filters on/off, rera
 pytest
 ```
 
+## Web app
+
+A glassmorphism web UI (React + Vite + TypeScript) over a FastAPI backend: search with
+company/year/section filters, retrieval-mode switch, per-entity decomposition, evidence cards
+with page citations, rendered tables, per-stage scores and latency, and shareable URLs.
+
+```bash
+cd frontend && npm install && npm run build && cd ..   # once, or after UI changes
+uvicorn app.api.main:app --port 8010                   # API + built UI at http://localhost:8010
+
+# UI development with hot reload (API must be running on :8010)
+cd frontend && npm run dev                             # http://localhost:5173
+```
+
+API: `GET /api/health`, `GET /api/meta`, `POST /api/search` (schemas in `app/api/schemas.py`).
+
 ## Status
 
 - [x] Phase 1: EDGAR downloader (40 filings, manifest with source URLs)
@@ -45,5 +61,5 @@ pytest
 - [ ] Phase 5: Grounded generation with citations and abstention
 - [ ] Phase 6: LangGraph agent (query analysis, decomposition, memory, XBRL facts tool)
 - [ ] Phase 7: Full evaluation (RAGAS, Langfuse tracing, latency/cost)
-- [ ] Phase 8: FastAPI + Streamlit
+- [ ] Phase 8: Serving: FastAPI + glassmorphism React UI (search UI done; answers/streaming after Phase 5)
 - [ ] Phase 9: Postgres/pgvector, Docker Compose, CI eval gate
