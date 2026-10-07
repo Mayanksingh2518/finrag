@@ -28,6 +28,16 @@ class Settings(BaseSettings):
     gemini_api_key: str | None = None
     groq_api_key: str | None = None
     ollama_base_url: str = "http://localhost:11434"
+    # Tried in order. Local Ollama first (no rate limits, nothing leaves the machine); Groq before
+    # Gemini because Gemini's free tier was slow/unreliable (see progress.md).
+    llm_providers: str = "ollama,groq,gemini"
+    ollama_model: str = "granite4.1:3b"
+    ollama_num_ctx: int = 8192
+    groq_model: str = "openai/gpt-oss-120b"
+    gemini_model: str = "gemini-3.8-flash"
+    llm_timeout_s: float = 90.0
+    # Prompt context budget (tokens of sources). Groq's free tier allows 8k tokens/minute.
+    context_token_budget: int = 3500
 
     @property
     def raw_sec_dir(self) -> Path:
@@ -40,6 +50,10 @@ class Settings(BaseSettings):
     @property
     def index_dir(self) -> Path:
         return self.data_dir / "indexes"
+
+    @property
+    def llm_cache_dir(self) -> Path:
+        return self.data_dir / "cache" / "llm"
 
 
 @lru_cache
