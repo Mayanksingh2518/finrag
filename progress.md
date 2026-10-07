@@ -7,22 +7,25 @@ Single source of truth for project state. Update this file at the end of every w
 - **Last completed:** Phase 4 (evaluation v0): golden set, metrics, runner, ablations, decomposition preview
 - **In progress:** Phase 8 started early at the user's request: FastAPI + React glassmorphism UI over retrieval (done); answer panel waits for Phase 5
 - **Next up:** finish Phase 5 (see "Resume here" just below), then wire answers into the UI.
-- **Resume here (2026-10-07, before a forced restart):** Phase 5 code is written and mostly tested
-  (`app/generation/{llm,context,schemas,verify,answer,ask_cli}.py`, `app/evaluation/run_generation_eval.py`,
-  `/api/answer`, frontend `AnswerPanel`). User chose **Ollama first** (`granite4.1:3b`, installed,
-  `brew services start ollama`), Groq/Gemini as fallback. Open items:
-  1. Done: all 86 tests pass (claims are derived from inline [S#] markers when a model leaves
-     `claims` empty, as granite does; the sentence splitter handles lowercase starts like "iPhone"
-     and abbreviations like "U.S."). Everything up to here is committed and pushed (f3aafba+).
-  2. Re-run `python -m app.evaluation.run_generation_eval` for Ollama, and the Groq baseline
-     (`LLM_PROVIDERS=groq`; it crashed at ~40/84 when the disk filled; cached answers are reused).
-     Compare both in `reports/generation_v0.md`.
-  3. Then live-test the answer panel in the UI.
-- **Disk/memory warning (MacBook, 16 GB RAM):** the disk filled because swap grew to 10 GB while the
-  API server, an eval, test runs and Ollama all held models at once. Run one model-loading process
-  at a time and stop the API server during evals. Free disk was ~0.3 GB before the restart.
+- **Resume here (2026-10-07, end of session):** Phase 5 code works end to end; not ticked yet.
+  1. **Ollama eval done** (`reports/generation_v0_ollama.md`, granite4.1:3b, 84 questions, 0 errors):
+     abstention recall 1.000 but false abstention 0.324, citation hit 0.527, claim support 0.911,
+     figure recall 0.467, LLM p50 17.5 s. See "Generation eval v0 results" below.
+  2. **Fix false abstentions first.** All 24 answerable questions that were refused were withheld
+     by the verifier ("None of the answer's claims could be verified"), not refused by the model.
+     Inspect them (`reports/generation_v0_ollama.json`, `abstained` and `answerable` both true):
+     likely number-format misses in `verify.py` or granite citing the wrong [S#]. Also check
+     "citation miss" rows that look correct (e.g. L01): the gold page may be too narrow.
+  3. **Groq baseline is blocked until the daily cap resets.** Groq's free tier also has a
+     **200,000 tokens/day** cap per model (rolling, not shown in headers); ~57 questions used it.
+     Rerun `LLM_PROVIDERS=groq python -m app.evaluation.run_generation_eval --out reports/generation_v0_groq`
+     on a fresh day; cached answers are reused, so only ~27 questions cost tokens.
+  4. Then tick Phase 5, live-test the answer panel, and move on to Phase 6.
+- **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
+  while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
+  process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-07
+- **Last updated:** 2026-10-07 (Ollama generation eval)
 
 ## Phase checklist
 
@@ -80,6 +83,26 @@ the evidence doesn't support an answer. Measured on the golden set.
    precision/recall (10 unanswerable + retrieval misses), answer correctness by numeric/keyword
    match against `reference_answer` (LLM judge deferred to Phase 7 / RAGAS). Report to
    `reports/generation_v0.md`.
+
+## Generation eval v0 results (Phase 5, MacBook M4)
+
+Ollama `granite4.1:3b`, hybrid_rerank k=10, gold filters, automatic decomposition, 3,500-token
+source budget, 84 questions (`reports/generation_v0_ollama.md`).
+
+| Metric | Value |
+|---|---|
+| Abstention recall (unanswerable refused) | 1.000 (10/10) |
+| Abstention precision | 0.294 |
+| False abstention rate | 0.324 (24/74), all withheld by the verifier |
+| Citation hit (verified citation on a gold page) | 0.527 |
+| Evidence recall | 0.464 |
+| Claim support | 0.911 |
+| Figure recall | 0.467 |
+| LLM latency | p50 17.5 s, p95 24.6 s (local, M4) |
+
+Reading: the system never answers what it can't support, but it is too strict: a third of
+answerable questions are withheld. The verifier and the 3B model's citation habits are the next
+target. Groq gpt-oss-120b baseline still pending (daily token cap, see "Resume here").
 
 ## Evaluation v0 results (Phase 4, MacBook M4)
 
@@ -306,3 +329,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   rerank/BM25/dense meters, copyable `[TICKER FY p.N]` citations, latency per stage, URL state,
   `/` shortcut, reduced-motion and no-backdrop-filter fallbacks. Fixed during visual checks: the
   body background hid the aurora; phone layout. Lint and type-check clean.
+- **2026-10-07 (MacBook M4):** After a restart (disk full from 10 GB swap), fixed the claim
+  splitter, committed and pushed Phase 5 code, API and frontend. Eval reports now name the model
+  that answered. Groq run stopped at question 57: a 200k tokens/day cap (not in headers), so Groq
+  now fails over immediately on a daily-limit 429 instead of retrying (+1 test, 87 total). Ran
+  the full Ollama eval (results above). Published an interactive data-flow diagram of the
+  pipeline as a private claude.ai artifact.

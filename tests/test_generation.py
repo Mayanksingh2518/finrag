@@ -131,6 +131,15 @@ def test_groq_429_is_retryable_with_retry_after():
     assert e.value.retry_after == 2
 
 
+def test_groq_daily_limit_fails_over_without_retrying():
+    body = {"error": {"message": "Rate limit reached for model `m` in organization `org_123` on tokens per day (TPD)"}}
+    client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(429, json=body)))
+    with pytest.raises(LLMError) as e:
+        GroqProvider("k", "m", client=client).complete(MESSAGES, {}, "X")
+    assert not isinstance(e.value, RetryableError)
+    assert "tokens per day" in str(e.value) and "org_123" not in str(e.value)
+
+
 def test_gemini_interactions_response_is_parsed():
     def handler(request: httpx.Request) -> httpx.Response:
         body = json.loads(request.content)

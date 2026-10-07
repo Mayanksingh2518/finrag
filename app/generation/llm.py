@@ -16,6 +16,7 @@ import copy
 import hashlib
 import json
 import logging
+import re
 import threading
 import time
 from collections.abc import Sequence
@@ -142,6 +143,14 @@ def _parse_duration(value: str | None) -> float | None:
     return total + (float(num) if num else 0.0)
 
 
+def _error_message(res: httpx.Response) -> str:
+    try:
+        message = res.json()["error"]["message"]
+    except (ValueError, KeyError, TypeError):
+        message = res.text
+    return re.sub(r"organization `[^`]+`", "organization", message)[:200]  # keep org ids out of logs
+
+
 def _estimate_tokens(messages: Sequence[Message]) -> int:
     return sum(len(m["content"]) for m in messages) // 4 + 400  # + room for the answer
 
@@ -180,6 +189,9 @@ class GroqProvider:
             int(res.headers["x-ratelimit-remaining-tokens"]) if "x-ratelimit-remaining-tokens" in res.headers else None,
             _parse_duration(res.headers.get("x-ratelimit-reset-tokens")),
         )
+        if res.status_code == 429 and "per day" in res.text:
+            # Daily token/request cap (not in the headers): retrying within minutes can't succeed, fail over now.
+            raise LLMError(f"groq daily limit reached: {_error_message(res)}")
         if res.status_code == 429 or res.status_code >= 500:
             raise RetryableError(f"groq HTTP {res.status_code}", _parse_duration(res.headers.get("retry-after")))
         if res.status_code != 200:

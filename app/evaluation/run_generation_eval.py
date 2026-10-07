@@ -56,6 +56,7 @@ class GenerationRecord:
     latency_ms: dict[str, float]
     tokens: dict[str, int]
     error: str = ""
+    model: str = ""
 
 
 def figure_recall(reference: str, answer: str) -> float | None:
@@ -79,7 +80,7 @@ def score(q: GoldQuestion, r: AnswerResult) -> GenerationRecord:
         claim_support=sum(c.supported for c in r.claims) / len(r.claims) if r.claims else None,
         figure_recall=figure_recall(q.reference_answer, r.answer) if q.answerable else None,
         claims=len(r.claims), sources=len(r.sources), cited=[by_id[s].citation for s in r.cited_source_ids if s in by_id],
-        provider=r.provider, cached=r.cached, latency_ms=r.timings_ms, tokens=r.usage,
+        provider=r.provider, cached=r.cached, latency_ms=r.timings_ms, tokens=r.usage, model=r.model,
     )
 
 
@@ -105,6 +106,7 @@ def summarize(records: list[GenerationRecord]) -> dict:
         "figure_recall": _mean(r.figure_recall for r in ans),
         "confidence": dict(Counter(r.confidence for r in records)),
         "providers": dict(Counter(r.provider for r in records)),
+        "models": dict(Counter(r.model for r in records if r.model)),
         "llm_p50_ms": _pct([r.latency_ms.get("llm") for r in records if not r.cached], 0.5),
         "llm_p95_ms": _pct([r.latency_ms.get("llm") for r in records if not r.cached], 0.95),
         "retrieval_p50_ms": _pct([r.latency_ms.get("retrieval") for r in records], 0.5),
@@ -117,14 +119,14 @@ def _pct(values, p: float) -> float:
     return vals[min(len(vals) - 1, int(p * len(vals)))] if vals else float("nan")
 
 
-def render_report(records: list[GenerationRecord], model: str, budget: int) -> str:
+def render_report(records: list[GenerationRecord], budget: int) -> str:
     s = summarize(records)
     cats = sorted({r.category for r in records})
     f = lambda x: "n/a" if x != x else f"{x:.3f}"  # noqa: E731 (nan-safe)
     lines = [
         "# Generation evaluation v0",
         "",
-        f"Model: `{model}` (providers used: {s['providers']}). Retrieval: hybrid_rerank, k=10, gold filters, "
+        f"Models: {', '.join(f'`{m}` ({n})' for m, n in s['models'].items()) or 'none'} (providers: {s['providers']}). Retrieval: hybrid_rerank, k=10, gold filters, "
         f"automatic per-entity decomposition; source budget {budget} tokens. {s['questions']} questions, "
         f"{s['errors']} errors.",
         "",
@@ -194,7 +196,7 @@ def main() -> None:
               flush=True)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.with_suffix(".md").write_text(render_report(records, settings.groq_model, settings.context_token_budget),
+    args.out.with_suffix(".md").write_text(render_report(records, settings.context_token_budget),
                                            encoding="utf-8")
     args.out.with_suffix(".json").write_text(
         json.dumps({"summary": summarize(records), "records": [asdict(r) for r in records]}, indent=1, ensure_ascii=False),
