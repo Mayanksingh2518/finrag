@@ -5,6 +5,7 @@ import zlib
 import numpy as np
 import pytest
 
+from app.devices import check_torch_faiss_compatible
 from app.ingestion.models import Chunk
 from app.retrieval.bm25 import BM25Index, tokenize
 from app.retrieval.dense import DenseIndex
@@ -139,3 +140,44 @@ def test_embedding_cache_only_embeds_new_or_changed_chunks(tmp_path):
     assert embedder.calls == 4 + 3  # one edited + two new
     assert np.allclose(first[1:4], second[1:4])
     assert second.shape == (6, FakeEmbedder.dim)
+
+
+def test_macos_cpu_with_faiss_fails_fast():
+    with pytest.raises(RuntimeError, match="DEVICE=cpu"):
+        check_torch_faiss_compatible("cpu", platform="darwin")
+    check_torch_faiss_compatible("mps", platform="darwin")
+    check_torch_faiss_compatible("cpu", platform="win32")
+
+
+def test_split_filters_fans_out_over_ticker_year_pairs():
+    from app.retrieval.decompose import split_filters
+
+    parts = split_filters(SearchFilters(("MSFT", "AMZN"), (2024, 2025), ("Item 7",)))
+    assert [(f.tickers, f.fiscal_years) for f in parts] == [
+        (("MSFT",), (2024,)), (("MSFT",), (2025,)), (("AMZN",), (2024,)), (("AMZN",), (2025,))]
+    assert all(f.sections == ("Item 7",) for f in parts)
+    single = SearchFilters(("MSFT",), (2025,))
+    assert split_filters(single) == [single] and split_filters(SearchFilters()) == [SearchFilters()]
+
+
+def test_decomposed_search_gives_every_entity_a_top_slot(retriever):
+    from app.retrieval.decompose import search_decomposed
+
+    tickers = tuple(sorted({c.ticker for c in retriever.store.chunks}))[:2]
+    result = search_decomposed(retriever, "revenue", SearchFilters(tickers), k=4, mode="hybrid")
+    assert {h.chunk.ticker for h in result.hits[:2]} == set(tickers)
+    assert len({h.chunk.chunk_id for h in result.hits}) == len(result.hits)
+    assert result.timings_ms["total"] > 0
+
+
+def test_interleave_orders_each_tier_by_score_and_dedupes():
+    from types import SimpleNamespace
+
+    from app.retrieval.decompose import interleave
+    from app.retrieval.types import ScoredChunk
+
+    def h(cid, score):
+        return ScoredChunk(SimpleNamespace(chunk_id=cid), score)
+
+    merged = interleave([[h("a1", 0.2), h("a2", 0.1)], [h("b1", 0.9), h("a1", 0.5), h("b3", 0.3)]], k=10)
+    assert [x.chunk.chunk_id for x in merged] == ["b1", "a1", "a2", "b3"]

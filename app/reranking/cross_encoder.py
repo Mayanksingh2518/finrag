@@ -21,6 +21,7 @@ class CrossEncoderReranker:
         from app.devices import resolve_device
 
         self.model_name = model_name
+        self.max_length = max_length
         self.model = CrossEncoder(model_name, max_length=max_length, device=resolve_device(device))
         self.batch_size = batch_size
 
