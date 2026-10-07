@@ -5,8 +5,23 @@ Single source of truth for project state. Update this file at the end of every w
 ## Current status
 
 - **Last completed:** Phase 4 (evaluation v0): golden set, metrics, runner, ablations, decomposition preview
-- **In progress:** nothing
-- **Next up:** Phase 5 (grounded generation), see "Next task in detail" below. API keys are set and verified.
+- **In progress:** Phase 8 started early at the user's request: FastAPI + React glassmorphism UI over retrieval (done); answer panel waits for Phase 5
+- **Next up:** finish Phase 5 (see "Resume here" just below), then wire answers into the UI.
+- **Resume here (2026-10-07, before a forced restart):** Phase 5 code is written and mostly tested
+  (`app/generation/{llm,context,schemas,verify,answer,ask_cli}.py`, `app/evaluation/run_generation_eval.py`,
+  `/api/answer`, frontend `AnswerPanel`). User chose **Ollama first** (`granite4.1:3b`, installed,
+  `brew services start ollama`), Groq/Gemini as fallback. Open items:
+  1. 2 tests fail after adding `claims_from_text` (derives claims from inline [S#] markers when the
+     model leaves `claims` empty, as granite does): `test_answer_without_claims_is_treated_as_abstention`
+     (expectation now outdated: an answer with no markers should still abstain) and the
+     `Services grew 14% [S1]...` case of `test_claims_derived_from_inline_markers`. Fix, run pytest.
+  2. Re-run `python -m app.evaluation.run_generation_eval` for Ollama, and the Groq baseline
+     (`LLM_PROVIDERS=groq`; it crashed at ~40/84 when the disk filled; cached answers are reused).
+     Compare both in `reports/generation_v0.md`.
+  3. Then live-test the answer panel in the UI and commit (nothing since 968741e is committed).
+- **Disk/memory warning (MacBook, 16 GB RAM):** the disk filled because swap grew to 10 GB while the
+  API server, an eval, test runs and Ollama all held models at once. Run one model-loading process
+  at a time and stop the API server during evals. Free disk was ~0.3 GB before the restart.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
 - **Last updated:** 2026-10-07
 
@@ -19,7 +34,7 @@ Single source of truth for project state. Update this file at the end of every w
 - [ ] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier, abstention, confidence
 - [ ] **Phase 6: LangGraph agent.** Query analyzer, decomposition, conversational memory, XBRL financial-facts tool
 - [ ] **Phase 7: Full evaluation.** RAGAS, Langfuse tracing, latency/cost per stage
-- [ ] **Phase 8: Serving.** FastAPI (`/query`, `/health`, streaming) + Streamlit UI with citations
+- [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. Left: `/api/query` with streaming answers after Phase 5
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
@@ -192,6 +207,10 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 
 ## Key decisions (see docs/ARCHITECTURE.md for rationale)
 
+- Frontend: React + Vite + TypeScript with hand-written glassmorphism CSS (user asked for a
+  fully glassmorphism UI; Streamlit can't do that). FastAPI serves `frontend/dist` at `/`, so one
+  process runs the app; `npm run dev` proxies `/api` to :8010 for hot reload.
+
 - Gold evidence is quote-verified and page-level (not chunk ids); `data/eval/` and `reports/` are committed.
 - Reranker default `bge-reranker-base`, 30 candidates, max_length 512 (Phase 4 ablation).
 
@@ -241,6 +260,11 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `gh auth setup-git` done, so `git push` works over HTTPS. `~/.ssh/id_ed25519` is not
   registered with GitHub (SSH push would fail).
 - Full retrieval eval takes ~20 min on the M4 (mostly reranking); `--no-ablations` ~8 min.
+- Web app: API on **port 8010** (port 8000 on the MacBook is taken by another local app).
+  Node 24 / npm 11 on the MacBook. Startup loads the retriever and runs one warm-up search
+  (~15-20 s); reranked searches take ~1.3-2.5 s, plain hybrid ~10 ms.
+- UI checks: headless Chrome screenshots (`--headless=new --screenshot`); Chrome's minimum
+  window is ~500 px wide, so test phone widths inside a 390 px iframe.
 
 ## Session log
 
@@ -275,3 +299,11 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   into the gitignored `.env` before any commit. Verified both: Groq gpt-oss-120b works (8k
   TPM, 1k RPD free); Gemini works only through the Interactions API with `gemini-3.8-flash`,
   and was slow and unreliable. Updated the Phase 5 plan to make Groq primary.
+- **2026-10-07 (MacBook M4):** Frontend, at the user's request (glassmorphism, FastAPI + React,
+  search UI before Phase 5). Built `app/api/` (FastAPI: health, meta, search with filters and
+  decomposition, serves the built UI, warm-up at startup, lock around the models) + 6 API
+  tests (56 total). Built `frontend/`: aurora backdrop, frosted panels, filter sidebar
+  (collapsible on phones), evidence cards with highlighted terms, rendered Markdown tables,
+  rerank/BM25/dense meters, copyable `[TICKER FY p.N]` citations, latency per stage, URL state,
+  `/` shortcut, reduced-motion and no-backdrop-filter fallbacks. Fixed during visual checks: the
+  body background hid the aurora; phone layout. Lint and type-check clean.
