@@ -11,14 +11,13 @@ Single source of truth for project state. Update this file at the end of every w
   (`app/generation/{llm,context,schemas,verify,answer,ask_cli}.py`, `app/evaluation/run_generation_eval.py`,
   `/api/answer`, frontend `AnswerPanel`). User chose **Ollama first** (`granite4.1:3b`, installed,
   `brew services start ollama`), Groq/Gemini as fallback. Open items:
-  1. 2 tests fail after adding `claims_from_text` (derives claims from inline [S#] markers when the
-     model leaves `claims` empty, as granite does): `test_answer_without_claims_is_treated_as_abstention`
-     (expectation now outdated: an answer with no markers should still abstain) and the
-     `Services grew 14% [S1]...` case of `test_claims_derived_from_inline_markers`. Fix, run pytest.
+  1. Done: all 86 tests pass (claims are derived from inline [S#] markers when a model leaves
+     `claims` empty, as granite does; the sentence splitter handles lowercase starts like "iPhone"
+     and abbreviations like "U.S."). Everything up to here is committed and pushed (f3aafba+).
   2. Re-run `python -m app.evaluation.run_generation_eval` for Ollama, and the Groq baseline
      (`LLM_PROVIDERS=groq`; it crashed at ~40/84 when the disk filled; cached answers are reused).
      Compare both in `reports/generation_v0.md`.
-  3. Then live-test the answer panel in the UI and commit (nothing since 968741e is committed).
+  3. Then live-test the answer panel in the UI.
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk filled because swap grew to 10 GB while the
   API server, an eval, test runs and Ollama all held models at once. Run one model-loading process
   at a time and stop the API server during evals. Free disk was ~0.3 GB before the restart.
