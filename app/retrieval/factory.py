@@ -4,6 +4,7 @@ import logging
 import time
 
 from app.config import Settings, get_settings
+from app.devices import check_torch_faiss_compatible, resolve_device
 from app.retrieval.bm25 import BM25Index
 from app.retrieval.dense import DenseIndex
 from app.retrieval.embedder import EmbeddingCache, SentenceTransformerEmbedder, embed_chunks
@@ -15,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 def build_retriever(settings: Settings | None = None, with_reranker: bool = True) -> Retriever:
     settings = settings or get_settings()
+    check_torch_faiss_compatible(resolve_device(settings.device))
     start = time.perf_counter()
 
     store = ChunkStore.from_jsonl(settings.processed_dir / "chunks.jsonl")

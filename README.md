@@ -36,7 +36,7 @@ pytest
 
 - [x] Phase 1: EDGAR downloader (40 filings, manifest with source URLs)
 - [x] Phase 2: Parsing (pages, sections, tables) and chunking (17.6k chunks, quality report)
-- [ ] Phase 3: Indexing (embeddings + FAISS, BM25), hybrid retrieval, reranking (in progress)
+- [x] Phase 3: Indexing (embeddings + FAISS, BM25), hybrid retrieval, cross-encoder reranking (12/12 smoke queries in all modes; 1.3 s reranked p50 on Apple M4)
 - [ ] Phase 4: Evaluation harness v0 (golden set, retrieval metrics, ablations)
 - [ ] Phase 5: Grounded generation with citations and abstention
 - [ ] Phase 6: LangGraph agent (query analysis, decomposition, memory, XBRL facts tool)
