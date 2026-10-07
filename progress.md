@@ -7,6 +7,8 @@ Single source of truth for project state. Update this file at the end of every w
 - **Last completed:** Phase 2 (parsing and chunking)
 - **In progress:** Phase 3 (indexing and retrieval): code + 32 tests done; embeddings being built; smoke test not yet run
 - **Next up:** finish Phase 3 (see "Remaining Phase 3 steps" below), then Phase 4
+- **Machine switch:** user is moving to the MacBook (M4). First "go" there: run "New machine setup"
+  from `CLAUDE.md` (data and indexes are gitignored), then continue Phase 3.
 - **Last updated:** 2026-10-07
 
 ## Phase checklist
@@ -38,12 +40,13 @@ Single source of truth for project state. Update this file at the end of every w
   done when this was written; a resumed build was running.
 
 ### Remaining Phase 3 steps
-1. Finish embeddings: `.venv/Scripts/python -m app.retrieval.build_index` (resumes from cache;
-   prints "Done: 17602 x 384"). Throughput ~5.5 chunks/s on battery. See environment note on
-   Windows background throttling.
+1. Build embeddings: `python -m app.retrieval.build_index` (resumes from cache; prints
+   "Done: 17602 x 384"). Windows CPU: ~5.5 chunks/s (~55 min total). On the M4 it runs on `mps`;
+   record the measured throughput here (CPU vs MPS is a nice data point for the README).
 2. Run `.venv/Scripts/python -m app.retrieval.smoke` (12 target queries x 4 modes, top-3 keyword
    check + latency). Record the summary table here.
-3. Check reranker latency (`BAAI/bge-reranker-base`, 30 candidates). If p95 > ~3 s on CPU, make
+3. Check reranker latency (`BAAI/bge-reranker-base`, 30 candidates) on the current machine
+   (record both machines if possible). If p95 > ~3 s, make
    `cross-encoder/ms-marco-MiniLM-L-6-v2` the default (`reranker_model` in `app/config.py`) and
    note the trade-off. Consider `max_length=384` for the reranker.
 4. Inspect failures from the smoke test (e.g. table vs text chunks, unfiltered company
@@ -106,7 +109,10 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 
 ## Environment notes
 
-- Windows, Python 3.11.7, venv at `finrag/.venv` (`.venv/Scripts/python`).
+- Two machines: Windows laptop (CPU only) and MacBook M4 (MPS). Per-machine commands and
+  gotchas are in the "Machines" table in `CLAUDE.md`. `app/devices.py` picks mps/cuda/cpu
+  automatically (`DEVICE` env var overrides).
+- Windows: Python 3.11.7, venv at `finrag/.venv` (`.venv/Scripts/python`).
 - Hardware: CPU-only laptop, 16 GB RAM, i7-1165G7 (4 cores), MX350 2 GB (not usable for LLMs), ~74 GB free disk.
 - Docker not installed yet (needed in Phase 9). Ollama not installed yet (optional, offline LLM).
 - `.env` not created yet: user must copy `.env.example`, set `SEC_USER_AGENT` with their email,
@@ -122,7 +128,10 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `Get-Process python | ? WorkingSet64 -gt 100MB | % { $_.PriorityClass = 'AboveNormal' }`.
 - Models cached in `~/.cache/huggingface`: bge-small-en-v1.5 (downloaded); bge-reranker-base
   downloads on first reranked search.
-- `gh` CLI is not installed; the repo has no remote yet.
+- `gh` CLI is not installed on Windows; the repo has no remote yet (user to create a GitHub repo
+  and share the URL; then `git remote add origin <url>`, rename branch to `main`, push).
+- Windows embedding cache reached 13,312 / 17,602 before the switch; it isn't in git, so the M4
+  rebuilds from scratch (fast on MPS). Embeddings from MPS vs CPU differ only by float noise.
 
 ## Session log
 
@@ -139,3 +148,6 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - **2026-10-07:** Phase 3 started: retrieval stack written (store, embedder + cache, FAISS dense,
   BM25, RRF, cross-encoder reranker, retriever, CLIs, smoke test), 32/32 tests passing. Embedding
   build interrupted by Windows background throttling and a task time limit; resumes from cache.
+- **2026-10-07:** Prepared for the switch to the M4: `CLAUDE.md` moved into the repo with
+  per-machine setup, device auto-selection (`app/devices.py`: mps/cuda/cpu) for the embedder and
+  reranker, progress notes made machine-neutral.

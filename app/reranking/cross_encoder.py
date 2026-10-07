@@ -15,11 +15,13 @@ class Reranker(Protocol):
 
 
 class CrossEncoderReranker:
-    def __init__(self, model_name: str, max_length: int = 512, batch_size: int = 16):
+    def __init__(self, model_name: str, device: str = "auto", max_length: int = 512, batch_size: int = 16):
         from sentence_transformers import CrossEncoder
 
+        from app.devices import resolve_device
+
         self.model_name = model_name
-        self.model = CrossEncoder(model_name, max_length=max_length, device="cpu")
+        self.model = CrossEncoder(model_name, max_length=max_length, device=resolve_device(device))
         self.batch_size = batch_size
 
     def score(self, query: str, passages: list[str]) -> list[float]:

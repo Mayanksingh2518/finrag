@@ -18,7 +18,7 @@ def main() -> None:
     settings = get_settings()
 
     store = ChunkStore.from_jsonl(settings.processed_dir / "chunks.jsonl")
-    embedder = SentenceTransformerEmbedder(settings.embedding_model)
+    embedder = SentenceTransformerEmbedder(settings.embedding_model, device=settings.device)
     start = time.perf_counter()
     vectors = embed_chunks(store.chunks, embedder, EmbeddingCache(settings.index_dir, settings.embedding_model))
     logging.info(

@@ -33,11 +33,14 @@ class Embedder(Protocol):
 
 
 class SentenceTransformerEmbedder:
-    def __init__(self, model_name: str, batch_size: int = 32, max_seq_length: int = 512):
+    def __init__(self, model_name: str, device: str = "auto", batch_size: int = 32, max_seq_length: int = 512):
         from sentence_transformers import SentenceTransformer
 
+        from app.devices import resolve_device
+
         self.model_name = model_name
-        self.model = SentenceTransformer(model_name, device="cpu")
+        self.device = resolve_device(device)
+        self.model = SentenceTransformer(model_name, device=self.device)
         self.model.max_seq_length = max_seq_length
         self.dim = self.model.get_sentence_embedding_dimension()
         self.batch_size = batch_size

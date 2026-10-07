@@ -12,6 +12,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the design.
 ```bash
 python -m venv .venv
 .venv/Scripts/activate          # Windows; use `source .venv/bin/activate` on macOS/Linux
+pip install torch               # Windows/Linux CPU: add --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 cp .env.example .env            # set SEC_USER_AGENT to include your email
 
@@ -22,6 +23,12 @@ python -m app.ingestion.sec_downloader --years 2022 2023 2024 2025  # 40 filings
 # Parse, section and chunk all filings -> data/processed/ (chunks, pages, quality report)
 python -m app.ingestion.pipeline
 
+# Embed chunks for dense retrieval (local bge-small; uses Apple GPU / CUDA if available)
+python -m app.retrieval.build_index
+
+# Search: BM25 / dense / hybrid / hybrid + reranker, with metadata filters
+python -m app.retrieval.search_cli "Why did international transaction revenue change?" --tickers V --years 2025
+
 pytest
 ```
 
@@ -29,7 +36,7 @@ pytest
 
 - [x] Phase 1: EDGAR downloader (40 filings, manifest with source URLs)
 - [x] Phase 2: Parsing (pages, sections, tables) and chunking (17.6k chunks, quality report)
-- [ ] Phase 3: Indexing (embeddings + FAISS, BM25), hybrid retrieval, reranking
+- [ ] Phase 3: Indexing (embeddings + FAISS, BM25), hybrid retrieval, reranking (in progress)
 - [ ] Phase 4: Evaluation harness v0 (golden set, retrieval metrics, ablations)
 - [ ] Phase 5: Grounded generation with citations and abstention
 - [ ] Phase 6: LangGraph agent (query analysis, decomposition, memory, XBRL facts tool)

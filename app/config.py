@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     embedding_max_tokens: int = 512
     reranker_model: str = "BAAI/bge-reranker-base"
+    # "auto" = mps on Apple Silicon, cuda if available, else cpu. Override with DEVICE=cpu.
+    device: str = "auto"
 
     # Free-tier LLM providers; embeddings and reranking run locally
     gemini_api_key: str | None = None

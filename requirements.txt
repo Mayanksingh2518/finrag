@@ -17,7 +17,8 @@ lxml>=5.2
 tokenizers>=0.19
 
 # Phase 3 - retrieval (all local, CPU)
-# Install CPU-only torch FIRST to avoid the multi-GB CUDA build:
+# Install torch FIRST. macOS (Apple Silicon, MPS): `pip install torch`.
+# Windows/Linux without a GPU: avoid the multi-GB CUDA build with
 #   pip install torch --index-url https://download.pytorch.org/whl/cpu
 sentence-transformers>=3.0
 faiss-cpu>=1.8
