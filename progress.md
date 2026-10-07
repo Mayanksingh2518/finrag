@@ -128,8 +128,8 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `Get-Process python | ? WorkingSet64 -gt 100MB | % { $_.PriorityClass = 'AboveNormal' }`.
 - Models cached in `~/.cache/huggingface`: bge-small-en-v1.5 (downloaded); bge-reranker-base
   downloads on first reranked search.
-- `gh` CLI is not installed on Windows; the repo has no remote yet (user to create a GitHub repo
-  and share the URL; then `git remote add origin <url>`, rename branch to `main`, push).
+- GitHub: https://github.com/Mayanksingh2518/finrag (branch `main`, `origin` tracks it). On the M4,
+  `git clone` it; pull before starting work on either machine. `gh` CLI not installed on Windows.
 - Windows embedding cache reached 13,312 / 17,602 before the switch; it isn't in git, so the M4
   rebuilds from scratch (fast on MPS). Embeddings from MPS vs CPU differ only by float noise.
 
