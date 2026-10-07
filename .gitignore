@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+
+# Raw filings and derived indexes are reproducible from the downloader/pipeline
+data/raw/
+data/processed/
+data/indexes/
+!data/.gitkeep
