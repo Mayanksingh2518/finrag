@@ -6,7 +6,7 @@ Single source of truth for project state. Update this file at the end of every w
 
 - **Last completed:** Phase 4 (evaluation v0): golden set, metrics, runner, ablations, decomposition preview
 - **In progress:** nothing
-- **Next up:** Phase 5 (grounded generation), see "Next task in detail" below. Needs free API keys.
+- **Next up:** Phase 5 (grounded generation), see "Next task in detail" below. API keys are set and verified.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
 - **Last updated:** 2026-10-07
 
@@ -28,14 +28,30 @@ Single source of truth for project state. Update this file at the end of every w
 Goal: turn retrieved chunks into an answer whose every claim cites a page, and abstain when
 the evidence doesn't support an answer. Measured on the golden set.
 
-**Blocked on the user for real runs:** `GEMINI_API_KEY` (aistudio.google.com/apikey) and
-`GROQ_API_KEY` (console.groq.com/keys) in `.env`. Everything else can be built and unit-tested
-with a fake LLM first; Ollama is optional (not installed; on the M4 `qwen2.5:7b`).
+**API keys: set in `.env` (2026-10-07) and verified.** Provider facts measured that day:
+- **Groq** works: `openai/gpt-oss-120b` answered in 0.6 s. Free tier per model: 1,000
+  requests/day and **8,000 tokens/minute** (from `x-ratelimit-*` headers; same for
+  `openai/gpt-oss-20b` and `qwen/qwen3.8-27b`). The TPM cap means roughly one ~6k-token
+  answer per minute per model, so the eval needs a token-bucket limiter, a cache, and a
+  context budget of about 5k tokens.
+- **Gemini**: the key is a valid AI Studio key (prefix `AQ.`). Old models (`gemini-2.5-*`)
+  return 404 "no longer available to new users", and `generateContent` returns an empty 404
+  for the 3.x models. Current models work only through the **Interactions API**:
+  `POST https://generativelanguage.googleapis.com/v1beta/interactions`, header
+  `x-goog-api-key`, body `{"model": "gemini-3.8-flash", "input": ...}`, structured output via
+  `response_format: {type: "text", mime_type: "application/json", schema: {...}}`; the text
+  is in `steps[type=model_output].content[].text`, usage in `usage.total_*_tokens` (thinking
+  tokens counted separately). Free tier was slow and unreliable: 49 s for "OK", then a 503
+  and a 120 s timeout.
+- **Recommendation: make Groq (`gpt-oss-120b`) primary and Gemini 3.8 Flash the fallback**,
+  reversing the original Gemini-first plan, and keep the provider order in config. Ollama
+  stays an optional offline fallback (not installed).
 
 1. **LLM interface** `app/generation/llm.py`: one `LLM.generate(messages, schema) -> parsed
-   object` over Gemini (primary) → Groq (fallback) → Ollama (offline), with tenacity retries and
-   rate-limit backoff, an on-disk response cache keyed by (provider, model, prompt hash), and
-   token/latency accounting per call. Check current free-tier model names and limits first.
+   object` over Groq (OpenAI-compatible chat completions with JSON schema) → Gemini
+   (Interactions API) → optional Ollama, with tenacity retries, 429/503 backoff honoring
+   `retry-after`, a per-model token-per-minute limiter, an on-disk response cache keyed by
+   (provider, model, prompt hash), and token/latency accounting per call. Never log keys.
 2. **Context builder** `app/generation/context.py`: take retrieval hits, dedupe, apply a token
    budget, keep table chunks whole, label each chunk `[S1] AAPL FY2025 p.23 (Item 7)`. Use
    per-entity quotas when the filters span several companies/years (Phase 4 finding below).
@@ -196,9 +212,10 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Windows: Docker not installed. MacBook: Docker Desktop 29.0.1 installed (Docker Model Runner
   running, no models pulled). Ollama not installed on either machine (optional offline LLM;
   on the M4: `brew install ollama && ollama pull qwen2.5:7b`).
-- `.env` not created yet: user must copy `.env.example`, set `SEC_USER_AGENT` with their email,
-  and add free keys `GEMINI_API_KEY` (aistudio.google.com) and `GROQ_API_KEY` (console.groq.com)
-  before Phase 5. Phases 2–4 need no keys (local embeddings and reranker).
+- MacBook `.env` has `SEC_USER_AGENT`, `GEMINI_API_KEY` and `GROQ_API_KEY` (verified
+  2026-10-07; chmod 600). Keys go in `.env` only: `.env.example` is tracked by git (the keys
+  were first pasted there by mistake and moved before any commit). The Windows laptop needs
+  its own `.env`.
 - Git initialized in `finrag/`, no commits yet (commit only when the user asks).
 - Hugging Face cache: `~/.cache/huggingface` (bge tokenizer already downloaded). Windows has no
   symlink support there; the warning is silenced in `app/ingestion/tokens.py`.
@@ -253,3 +270,7 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   (`app/retrieval/decompose.py`). hybrid_rerank: recall@5 0.884, MRR 0.920; decomposition lifts
   comparison/trend recall@10 to 0.958/0.833. Kept bge-reranker-base. 48 tests passing.
   Committed Phase 3 + Phase 4 WIP locally; push blocked on GitHub login on this Mac.
+- **2026-10-07 (MacBook M4):** User added API keys. Moved them from the tracked `.env.example`
+  into the gitignored `.env` before any commit. Verified both: Groq gpt-oss-120b works (8k
+  TPM, 1k RPD free); Gemini works only through the Interactions API with `gemini-3.8-flash`,
+  and was slow and unreliable. Updated the Phase 5 plan to make Groq primary.
