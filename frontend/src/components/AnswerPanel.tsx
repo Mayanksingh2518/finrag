@@ -103,7 +103,7 @@ export function AnswerPanel({ enabled, onToggle, loading, answer, error, disable
           )}
 
           {answer.claims.length > 0 && (
-            <details className="claims" open={answer.claims.some((c) => c.status !== 'supported')}>
+            <details className="claims" open={answer.claims.some((c) => c.status !== 'supported' || c.repaired)}>
               <summary>
                 {verified}/{answer.claims.length} claims verified against their cited pages
               </summary>
@@ -118,7 +118,12 @@ export function AnswerPanel({ enabled, onToggle, loading, answer, error, disable
                       {c.status === 'unsupported_number' && (
                         <span className="claim__why"> Figure not found in the cited page: {c.unsupported_numbers.join(', ')}</span>
                       )}
-                      {c.status === 'invalid_citation' && <span className="claim__why"> Cites a source that wasn't provided.</span>}
+                      {c.repaired && <span className="claim__note"> Citation added by the verifier: the model didn't cite this page.</span>}
+                      {c.status === 'invalid_citation' && (
+                        <span className="claim__why">
+                          {c.citations.length ? " Cites a source that wasn't provided." : ' No source cited, and no provided page states it.'}
+                        </span>
+                      )}
                     </span>
                   </li>
                 ))}

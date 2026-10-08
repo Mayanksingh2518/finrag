@@ -257,16 +257,20 @@ class OllamaProvider:
     """Local model through Ollama's /api/chat with a JSON-schema `format` (no keys, no rate limits).
 
     `num_ctx` must be set explicitly: Ollama's default context window is smaller than FinRAG's
-    prompts and would silently truncate the sources.
+    prompts and would silently truncate the sources. `num_predict` caps the output: small models
+    under a JSON-schema grammar sometimes never close the object (seen with granite4.1:3b, which
+    then generated for 15+ minutes); answers need < 500 tokens, so a cut-off is invalid JSON and
+    fails over like any other bad response.
     """
 
     name = "ollama"
 
     def __init__(self, base_url: str, model: str, timeout_s: float = 180.0, num_ctx: int = 8192,
-                 client: httpx.Client | None = None):
+                 num_predict: int = 1500, client: httpx.Client | None = None):
         self.model = model
         self.url = base_url.rstrip("/") + "/api/chat"
         self.num_ctx = num_ctx
+        self.num_predict = num_predict
         self._client = client or httpx.Client(timeout=timeout_s)
 
     def complete(self, messages: Sequence[Message], schema: dict, schema_name: str) -> LLMResponse:
@@ -275,7 +279,7 @@ class OllamaProvider:
             "messages": list(messages),
             "stream": False,
             "format": schema,
-            "options": {"temperature": 0, "num_ctx": self.num_ctx},
+            "options": {"temperature": 0, "num_ctx": self.num_ctx, "num_predict": self.num_predict},
             "keep_alive": "30m",
         }
         start = time.perf_counter()

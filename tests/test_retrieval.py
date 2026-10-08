@@ -167,7 +167,7 @@ def test_decomposed_search_gives_every_entity_a_top_slot(retriever):
     result = search_decomposed(retriever, "revenue", SearchFilters(tickers), k=4, mode="hybrid")
     assert {h.chunk.ticker for h in result.hits[:2]} == set(tickers)
     assert len({h.chunk.chunk_id for h in result.hits}) == len(result.hits)
-    assert result.timings_ms["total"] > 0
+    assert result.timings_ms["total"] >= 0  # rounds to 0.0 ms on a fast machine
 
 
 def test_interleave_orders_each_tier_by_score_and_dedupes():

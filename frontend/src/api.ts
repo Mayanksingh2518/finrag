@@ -110,6 +110,7 @@ export interface AnswerClaim {
   status: ClaimStatus
   citations: string[]
   unsupported_numbers: string[]
+  repaired: boolean
 }
 
 export interface AnswerSource {

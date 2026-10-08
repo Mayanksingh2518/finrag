@@ -34,8 +34,10 @@ User query + history → │ condense follow-up → extract {companies, fiscal_y
                                                     │
                                 Generator (structured output: answer, claims, citations)
                                                     │
-                                Grounding check: every claim cites a chunk; citation
-                                verifier; insufficient evidence → abstain
+                                Grounding check: every claim cites a chunk and its figures
+                                appear in a cited chunk; mis-cited claims re-attributed only
+                                when the figure sits next to the claim's words; nothing
+                                verified → abstain
                                                     │
                                 Answer + [TICKER FY p.N] citations + confidence
 ```
@@ -52,6 +54,7 @@ User query + history → │ condense follow-up → extract {companies, fiscal_y
 | Decomposition for comparisons | One query for "MSFT vs AMZN" lets the bigger company crowd out the other. Per-entity sub-queries with quotas guarantee coverage. |
 | XBRL company facts as a structured tool | Numbers like revenue growth should come from reported figures, not from an LLM reading a table. Text retrieval explains *why*; facts answer *how much*. |
 | Abstention as a first-class output | The generator must cite chunks for every claim; uncited claims are dropped, and with no support it returns "insufficient evidence". Evaluated with unanswerable questions. |
+| Verify figures in code, repair citations, judge prose later | Small local models often answer correctly but cite nothing or the wrong source. A deterministic checker (figures matched by value across units) accepts a claim when its figures appear in the cited chunk, or re-attributes it when they appear in the same sentence/row as the claim's words in another provided chunk; invented figures are never rescued. It cannot tell *whose* figure it is (a segment's net income vs the firm's) or check figure-free claims: that needs an LLM faithfulness judge (Phase 7). |
 | Zero-cost, provider-agnostic models | Local bge embeddings and cross-encoder on CPU; Gemini free tier for generation with Groq and local Ollama as fallbacks, behind one LLM interface with caching and rate-limit backoff. No vendor lock-in, no spend. |
 | Storage behind interfaces | FAISS + local files first, Postgres (metadata/chunks) + pgvector or Pinecone later, with no changes to retrieval logic. |
 

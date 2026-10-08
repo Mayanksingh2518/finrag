@@ -37,7 +37,7 @@ def main() -> None:
     for c in r.claims:
         mark = "✓" if c.supported else "✗"
         extra = f" (not in source: {', '.join(c.unsupported_numbers)})" if c.unsupported_numbers else ""
-        print(f"  {mark} {c.text} {c.source_ids} {c.status}{extra}")
+        print(f"  {mark} {c.text} {c.source_ids} {c.status}{' (citation repaired)' if c.repaired else ''}{extra}")
     print("sources:", ", ".join(f"{s.id}={s.citation}" for s in r.sources))
 
 

@@ -259,7 +259,7 @@ def test_ollama_request_sets_context_window_and_schema():
     p = OllamaProvider("http://localhost:11434/", "granite4.1:3b", num_ctx=8192,
                        client=httpx.Client(transport=httpx.MockTransport(handler)))
     res = p.complete(MESSAGES, strict_json_schema(GeneratedAnswer), "GeneratedAnswer")
-    assert seen["options"] == {"temperature": 0, "num_ctx": 8192} and seen["stream"] is False
+    assert seen["options"] == {"temperature": 0, "num_ctx": 8192, "num_predict": 1500} and seen["stream"] is False
     assert seen["format"]["type"] == "object" and res.usage.prompt_tokens == 120 and res.provider == "ollama"
 
 
@@ -307,3 +307,60 @@ def test_answer_with_inline_citations_but_no_claims_is_verified_from_text():
                                       abstained=False, abstain_reason=""))
     result = _answerer(llm).answer("services", SearchFilters(("AAPL",), (2025,)))
     assert not result.abstained and result.claims[0].supported and result.answer.endswith("[AAPL FY2025 p.1].")
+
+
+# ---------------- citation repair, marker styles, arithmetic ----------------
+
+
+def test_marker_groups_in_other_styles_are_normalized():
+    from app.generation.answer import normalize_markers
+
+    assert normalize_markers("A (S1). B [S6, S2]. C (Source 3; S4).") == "A [S1]. B [S6][S2]. C [S3][S4]."
+    assert normalize_markers("Note (5) of the 2023 filing (2023).") == "Note (5) of the 2023 filing (2023)."
+
+
+def test_sentences_take_the_closing_citation_block_of_their_line():
+    from app.generation.answer import claims_from_text
+
+    got = [c.source_ids for c in claims_from_text("AWS grew 19%. Cloud grew 30%. [S1, S2]\nOther text [S3].")]
+    assert got == [["S1", "S2"], ["S1", "S2"], ["S3"]]
+
+
+def test_arithmetic_written_in_the_claim_supports_its_result():
+    sources = _sources("Customers A, B and C represented 12%, 11% and 11% of total revenue.")
+    ok = verify_claims([Claim(text="Top customers were 34% of revenue (12% + 11% + 11% = 34%).", source_ids=["S1"])], sources)
+    bad = verify_claims([Claim(text="Top customers were 35% of revenue (12% + 11% + 11% = 35%).", source_ids=["S1"])], sources)
+    assert ok[0].supported and not ok[0].repaired
+    assert bad[0].status == "unsupported_number"
+
+
+def test_uncited_or_miscited_claims_are_repaired_only_from_matching_context():
+    sources = _sources(
+        "Tesla delivered approximately 1.64 million consumer vehicles in 2025.",
+        "Net cash provided by operating activities was $115.80 billion.",
+        "Capital expenditures on servers were $39.23 billion for the year.",
+    )
+    claims = [
+        Claim(text="Tesla delivered approximately 1.64 million consumer vehicles.", source_ids=[]),  # uncited
+        Claim(text="Capital expenditures on servers were $39.23 billion.", source_ids=["S1"]),  # cites the wrong source
+        Claim(text="Capital expenditures on servers rose to $115.80 billion.", source_ids=["S3"]),  # figure exists, out of context
+        Claim(text="Tesla delivered 1.9 million vehicles.", source_ids=[]),  # invented figure: never rescued
+        Claim(text="14%", source_ids=[]),  # too short to attribute
+    ]
+    got = [(c.status, c.source_ids, c.repaired) for c in verify_claims(claims, sources)]
+    assert got == [
+        ("supported", ["S1"], True),
+        ("supported", ["S1", "S3"], True),
+        ("unsupported_number", ["S3"], False),
+        ("invalid_citation", [], False),
+        ("invalid_citation", [], False),
+    ]
+    assert [c.status for c in verify_claims(claims[:1], sources, repair=False)] == ["invalid_citation"]
+
+
+def test_repaired_answer_is_shown_with_medium_confidence_and_appended_citation():
+    llm = ScriptedLLM(GeneratedAnswer(answer="Services revenue grew on advertising and the App Store.", claims=[],
+                                      abstained=False, abstain_reason=""))
+    result = _answerer(llm).answer("services revenue", SearchFilters(("AAPL",), (2025,)))
+    assert not result.abstained and result.claims[0].repaired
+    assert result.confidence == "medium" and result.answer.endswith("[AAPL FY2025 p.1]")

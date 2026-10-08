@@ -87,6 +87,7 @@ class AnswerClaim(BaseModel):
     status: Literal["supported", "unsupported_number", "invalid_citation"]
     citations: list[str]  # human citations of the cited sources, e.g. "[AAPL FY2025 p.23]"
     unsupported_numbers: list[str]
+    repaired: bool = False  # citation added by the verifier: the model cited nothing or the wrong page
 
 
 class AnswerSource(BaseModel):

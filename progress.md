@@ -7,25 +7,21 @@ Single source of truth for project state. Update this file at the end of every w
 - **Last completed:** Phase 4 (evaluation v0): golden set, metrics, runner, ablations, decomposition preview
 - **In progress:** Phase 8 started early at the user's request: FastAPI + React glassmorphism UI over retrieval (done); answer panel waits for Phase 5
 - **Next up:** finish Phase 5 (see "Resume here" just below), then wire answers into the UI.
-- **Resume here (2026-10-07, end of session):** Phase 5 code works end to end; not ticked yet.
-  1. **Ollama eval done** (`reports/generation_v0_ollama.md`, granite4.1:3b, 84 questions, 0 errors):
-     abstention recall 1.000 but false abstention 0.324, citation hit 0.527, claim support 0.911,
-     figure recall 0.467, LLM p50 17.5 s. See "Generation eval v0 results" below.
-  2. **Fix false abstentions first.** All 24 answerable questions that were refused were withheld
-     by the verifier ("None of the answer's claims could be verified"), not refused by the model.
-     Inspect them (`reports/generation_v0_ollama.json`, `abstained` and `answerable` both true):
-     likely number-format misses in `verify.py` or granite citing the wrong [S#]. Also check
-     "citation miss" rows that look correct (e.g. L01): the gold page may be too narrow.
-  3. **Groq baseline is blocked until the daily cap resets.** Groq's free tier also has a
-     **200,000 tokens/day** cap per model (rolling, not shown in headers); ~57 questions used it.
-     Rerun `LLM_PROVIDERS=groq python -m app.evaluation.run_generation_eval --out reports/generation_v0_groq`
-     on a fresh day; cached answers are reused, so only ~27 questions cost tokens.
-  4. Then tick Phase 5, live-test the answer panel, and move on to Phase 6.
+- **Resume here (2026-10-08):** Phase 5 code works end to end and the false-abstention problem is
+  fixed (0.324 → 0.054 on Ollama granite4.1:3b, `reports/generation_v1_ollama.md`). Not ticked yet:
+  1. **Groq baseline.** The prompt changed on 2026-10-08, so every Groq answer is a cache miss
+     again (~3.5k tokens per question, ~300k for all 84 > the 200k/day cap). Run
+     `LLM_PROVIDERS=groq python -m app.evaluation.run_generation_eval --out reports/generation_v1_groq`;
+     it fails over (error rows) when the daily cap hits. Rerun the next day to fill the rest from cache.
+  2. **Live-test the answer panel** (API on :8010 + UI) with the repaired-citation note; stop the API
+     afterwards (memory).
+  3. Then tick Phase 5 and start Phase 6. Carry over: figure-free claims and "whose figure"
+     errors need an LLM faithfulness judge (Phase 7); T04 makes granite emit unbounded JSON.
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-07 (Ollama generation eval)
+- **Last updated:** 2026-10-08 (false-abstention fix, generation eval v1)
 
 ## Phase checklist
 
@@ -40,49 +36,70 @@ Single source of truth for project state. Update this file at the end of every w
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
-## Next task in detail: Phase 5 (grounded generation)
+## Next task in detail: finish Phase 5 (Groq baseline, live UI test)
 
-Goal: turn retrieved chunks into an answer whose every claim cites a page, and abstain when
-the evidence doesn't support an answer. Measured on the golden set.
+Phase 5 is built: `llm.py` (Groq → Gemini → Ollama, retries, TPM limiter, disk cache),
+`context.py`, `answer.py`, `verify.py`, `run_generation_eval.py`. Remaining before ticking it:
 
-**API keys: set in `.env` (2026-10-07) and verified.** Provider facts measured that day:
-- **Groq** works: `openai/gpt-oss-120b` answered in 0.6 s. Free tier per model: 1,000
-  requests/day and **8,000 tokens/minute** (from `x-ratelimit-*` headers; same for
-  `openai/gpt-oss-20b` and `qwen/qwen3.8-27b`). The TPM cap means roughly one ~6k-token
-  answer per minute per model, so the eval needs a token-bucket limiter, a cache, and a
-  context budget of about 5k tokens.
-- **Gemini**: the key is a valid AI Studio key (prefix `AQ.`). Old models (`gemini-2.5-*`)
-  return 404 "no longer available to new users", and `generateContent` returns an empty 404
-  for the 3.x models. Current models work only through the **Interactions API**:
-  `POST https://generativelanguage.googleapis.com/v1beta/interactions`, header
-  `x-goog-api-key`, body `{"model": "gemini-3.8-flash", "input": ...}`, structured output via
-  `response_format: {type: "text", mime_type: "application/json", schema: {...}}`; the text
-  is in `steps[type=model_output].content[].text`, usage in `usage.total_*_tokens` (thinking
-  tokens counted separately). Free tier was slow and unreliable: 49 s for "OK", then a 503
-  and a 120 s timeout.
-- **Recommendation: make Groq (`gpt-oss-120b`) primary and Gemini 3.8 Flash the fallback**,
-  reversing the original Gemini-first plan, and keep the provider order in config. Ollama
-  stays an optional offline fallback (not installed).
+1. **Groq gpt-oss-120b baseline** on the 84 questions with the current prompt (see "Resume here":
+   ~300k tokens > 200k/day, so it takes two days of cache-filling). Compare with
+   `reports/generation_v1_ollama.md`: expect fewer format failures than the 3B model, so the gap
+   shows how much the verifier repair is compensating for a small model.
+2. **Live test** `/api/answer` + the answer panel on a few lookup / comparison / unanswerable
+   questions; check that repaired claims show the "Citation added by the verifier" note.
+3. Tick Phase 5 in this file and the README, then plan Phase 6 (LangGraph agent: query analyzer
+   that extracts the filters the eval currently gets from gold, per-entity quotas, XBRL tool).
 
-1. **LLM interface** `app/generation/llm.py`: one `LLM.generate(messages, schema) -> parsed
-   object` over Groq (OpenAI-compatible chat completions with JSON schema) → Gemini
-   (Interactions API) → optional Ollama, with tenacity retries, 429/503 backoff honoring
-   `retry-after`, a per-model token-per-minute limiter, an on-disk response cache keyed by
-   (provider, model, prompt hash), and token/latency accounting per call. Never log keys.
-2. **Context builder** `app/generation/context.py`: take retrieval hits, dedupe, apply a token
-   budget, keep table chunks whole, label each chunk `[S1] AAPL FY2025 p.23 (Item 7)`. Use
-   per-entity quotas when the filters span several companies/years (Phase 4 finding below).
-3. **Generator** `app/generation/answer.py`: prompt + structured output (pydantic):
-   `answer`, `claims[{text, source_ids}]`, `abstained`, `confidence`. Render citations as
-   `[TICKER FY p.N]` using printed page labels.
-4. **Citation verifier** `app/generation/verify.py`: every claim cites at least one provided
-   source; numbers in a claim must appear in a cited chunk (normalize $, %, billions/millions);
-   drop or flag unsupported claims; no surviving claims → abstain.
-5. **Eval** `app/evaluation/run_generation_eval.py` on the 84 questions (cache every call; the
-   free tier allows the whole set): citation page accuracy vs gold pages, abstention
-   precision/recall (10 unanswerable + retrieval misses), answer correctness by numeric/keyword
-   match against `reference_answer` (LLM judge deferred to Phase 7 / RAGAS). Report to
-   `reports/generation_v0.md`.
+Provider facts (measured 2026-10-07): Groq free tier per model is 1,000 requests/day,
+8,000 tokens/minute and a rolling **200,000 tokens/day** (not in headers). Gemini works only
+through the Interactions API (`gemini-3.8-flash`) and was slow/unreliable. Ollama
+`granite4.1:3b` is the default local model (`LLM_PROVIDERS=ollama,groq,gemini`).
+
+## Generation eval v1: false-abstention fix (Phase 5, MacBook M4, 2026-10-08)
+
+All 24 v0 false abstentions were replayed from the LLM cache and diagnosed:
+
+| Cause | Questions | Fix |
+|---|---|---|
+| No citation markers at all (answer mostly right) | L05 L09 L16 L17 L23 L25 N11 N15 N16 F02 F05 T05 | citation repair |
+| Markers as `(S1)`, `[S6, S2]`, `[S4, S8, S9]` | L21 T12 C07 C10 | `normalize_markers` |
+| One marker block after several sentences | T04 C02 | sentences inherit the line's closing block |
+| Right figure, wrong source id | N13 T10 | citation repair |
+| Derived figure `12% + 11% + 11% = 34%` | L08 | arithmetic shown in the claim is checked |
+| Copied the prompt example "Revenue grew 14% [S1]." | N05 | prompt uses `<statement> [S1]` |
+| Wrong figure, correctly withheld | T01 C01 (T04 T05 partly) | none (verifier working) |
+
+**Citation repair** (`verify.py`): a claim with no valid citation, or whose figures are not in its
+cited sources, is re-attributed to provided sources that (a) share ≥60% of its content words and
+(b) state each missing figure in a sentence/table row sharing ≥2 content words with the claim.
+Rule (b) was added after the first version rescued wrong figures: T12's "$115.80 billion" capex
+(really operating cash flow) and C01's "Azure $168.9 billion" (really Microsoft Cloud). Applying
+rule (b) to model-cited claims too was tested and rejected: it failed 14/76 correct claims (table
+rows share too few words). Repaired claims are flagged (`repaired`, shown in the UI and CLI) and
+cap confidence at medium. Invented figures are never rescued.
+
+**Gold review:** 10 questions got alt quotes where the cited page restates the reference fact
+(L04 L22 L23 N01 N08 N13 C04 C07 F01 F04; e.g. Meta revenue "$200.97 billion" on p.60, not only
+the 200,966 tables). Like the Phase 4 review, this only looked at pages the system cited.
+`reports/retrieval_v0.md` predates these alts (not rerun).
+
+| Run (Ollama granite4.1:3b, 84 q) | Gold | False abst. | Citation hit | Evidence recall | Claim support | Figure recall |
+|---|---|---|---|---|---|---|
+| v0 (old verifier) | old | 0.324 | 0.527 | 0.464 | 0.911 | 0.467 |
+| v0 answers + new verifier | old | 0.068 | 0.743 | 0.661 | 0.978 | 0.579 |
+| v0 answers + new verifier | new | 0.068 | 0.878 | 0.783 | 0.978 | 0.579 |
+| **v1: new prompt + new verifier** | new | **0.054** | 0.863 | **0.797** | 0.978 | **0.583** |
+
+Abstention recall stays **1.000** in every run (all 10 unanswerable refused by the model).
+Reports: `reports/generation_v0_ollama_repair.md`, `reports/generation_v1_ollama.md`.
+
+Reading: the verifier fix is almost the whole gain; the prompt fix is within noise (fixes N05,
+but T04 now makes granite generate unbounded JSON → 1 error). Remaining v1 abstentions: L17
+("November 2023", too short to attribute), T05/T06/C01 (wrong or mislabelled figures). Known
+verifier limits, for Phase 7's LLM judge: (1) claims without figures are only checked for a valid
+citation (L01/L13 cite unrelated chunks; word overlap can't separate them from correct ones);
+(2) a real figure attached to the wrong metric/entity passes (C07: a JPM segment's $4.5B net
+income as the firm's; T05's $15.0B).
 
 ## Generation eval v0 results (Phase 5, MacBook M4)
 
@@ -253,6 +270,10 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Windows: Docker not installed. MacBook: Docker Desktop 29.0.1 installed (Docker Model Runner
   running, no models pulled). Ollama not installed on either machine (optional offline LLM;
   on the M4: `brew install ollama && ollama pull qwen2.5:7b`).
+- **Ollama output cap:** `OllamaProvider` sets `num_predict=1500` (answers need < 500 tokens).
+  Without it, granite on T04 never closed its JSON and generated for 15+ minutes; the 180 s HTTP
+  timeout did not fire, probably because the Mac slept on battery. Run long evals plugged in and
+  under `caffeinate -i` (the cache resumes a killed run).
 - MacBook `.env` has `SEC_USER_AGENT`, `GEMINI_API_KEY` and `GROQ_API_KEY` (verified
   2026-10-07; chmod 600). Keys go in `.env` only: `.env.example` is tracked by git (the keys
   were first pasted there by mistake and moved before any commit). The Windows laptop needs
@@ -335,3 +356,11 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   now fails over immediately on a daily-limit 429 instead of retrying (+1 test, 87 total). Ran
   the full Ollama eval (results above). Published an interactive data-flow diagram of the
   pipeline as a private claude.ai artifact.
+- **2026-10-08 (MacBook M4):** Fixed false abstentions. Replayed all 84 questions from the LLM
+  cache and diagnosed the 24 v0 false abstentions (table in "Generation eval v1"). Added
+  citation-marker normalization, closing-block inheritance, arithmetic support and context-checked
+  citation repair (`repaired` flag through API/CLI/UI); fixed the prompt example the 3B model
+  copied; added gold alt quotes for 10 questions; capped Ollama output (`num_predict`) after a
+  15-minute runaway generation; fixed a flaky timing assertion in a retrieval test. False
+  abstention 0.324 → 0.054, citation hit 0.527 → 0.863, abstention recall 1.000. 92 tests passing;
+  frontend lint/type-check clean.

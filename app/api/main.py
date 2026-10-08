@@ -184,7 +184,7 @@ def create_app(retriever: Retriever | None = None, frontend_dir: Path | None = F
             query=query, answer=r.answer, abstained=r.abstained, abstain_reason=r.abstain_reason,
             confidence=r.confidence,
             claims=[AnswerClaim(text=c.text, status=c.status, citations=[citation_of[i] for i in c.source_ids if i in citation_of],
-                                unsupported_numbers=c.unsupported_numbers) for c in r.claims],
+                                unsupported_numbers=c.unsupported_numbers, repaired=c.repaired) for c in r.claims],
             sources=[AnswerSource(id=s.id, citation=s.citation, cited=s.id in r.cited_source_ids,
                                   hit=_to_hit(*hits[s.chunk.chunk_id])) for s in r.sources],
             provider=r.provider, model=r.model, cached=r.cached,
