@@ -148,6 +148,11 @@ def main() -> None:
     parser.add_argument("--ids", nargs="+", help="only these question ids")
     parser.add_argument("--out", type=Path, help="default reports/judge_v0 (judge_v0_smoke with --ids)")
     parser.add_argument("--judge-providers", default="groq,gemini", help="never the model that wrote the answers")
+    parser.add_argument("--judge-model", help="Groq model for the judge (default: settings.groq_model). Groq's free "
+                        "limits are per model, so a second judge model has its own daily quota")
+    parser.add_argument("--route", action="store_true",
+                        help="answers from the routed agent (trend/comparison by Groq); judge those with gemini too, "
+                             "since a model grading its own answers is biased")
     args = parser.parse_args()
     args.out = args.out or PROJECT_ROOT / "reports" / ("judge_v0_smoke" if args.ids else "judge_v0")
     logging.basicConfig(level=logging.WARNING)
@@ -157,9 +162,11 @@ def main() -> None:
     from app.retrieval.factory import build_retriever
 
     settings = get_settings()
+    routed_llm = build_llm(settings.model_copy(update={"llm_providers": "groq,ollama"})) if args.route else None
     agent = FinRAGAgent(build_retriever(settings), build_llm(settings), xbrl=XbrlStore.from_settings(),
-                        token_budget=settings.context_token_budget)
-    judge = Judge(build_llm(settings.model_copy(update={"llm_providers": args.judge_providers})))
+                        token_budget=settings.context_token_budget, routed_llm=routed_llm)
+    judge_settings = {"llm_providers": args.judge_providers} | ({"groq_model": args.judge_model} if args.judge_model else {})
+    judge = Judge(build_llm(settings.model_copy(update=judge_settings)))
     labels = load_labels()
     previous = ({r["id"]: r["answer"] for r in json.loads(AGENT_REPORT.read_text())["records"]["agent"]}
                 if AGENT_REPORT.exists() else {})

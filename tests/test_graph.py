@@ -177,3 +177,14 @@ def test_lookup_prompt_has_no_intent_rule():
     make_agent(llm).run("What are NVIDIA's China export risks in fiscal 2025?")
     system = llm.prompts[0][0]["content"]
     assert "one line per fiscal year" not in system and "compares companies" not in system
+
+
+def test_trend_and_comparison_questions_are_routed_to_the_routed_llm(xbrl):
+    local = ScriptedLLM(answers=[answer("Export controls restrict sales to China.", "S1")])
+    big = ScriptedLLM(answers=[answer("Revenue rose from $26,914 million to $130,497 million.", "S1")])
+    agent = FinRAGAgent(FakeRetriever(CHUNKS), local, xbrl=xbrl, mode="hybrid", routed_llm=big)
+    trend = agent.run("How did NVIDIA's total revenue change from fiscal 2022 to fiscal 2025?")
+    lookup = agent.run("What are NVIDIA's China export risks in fiscal 2025?")
+    assert trend.plan.intent == "trend" and len(big.prompts) == 1 and not trend.result.abstained
+    assert lookup.plan.intent == "lookup" and len(local.prompts) == 1  # everything else stays local
+    assert "one line per fiscal year" in big.prompts[0][0]["content"]  # same intent rules for the big model

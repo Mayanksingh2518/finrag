@@ -36,7 +36,7 @@ from app.evaluation.run_generation_eval import GenerationRecord, _mean, _pct, sc
 from app.generation.llm import LLMError
 from app.generation.verify import _matches, extract_numbers
 
-CONFIGS = ("agent", "agent_no_xbrl")
+CONFIGS = ("agent", "agent_no_xbrl", "agent_routed")  # routed: trend/comparison answered by Groq gpt-oss-120b
 BASELINE = PROJECT_ROOT / "reports" / "generation_v1_ollama.json"  # gold filters, same model
 # Questions whose figure the company defines differently from the GAAP line item (reports/xbrl_v0.md).
 DEFINITION_MISMATCH = ("N09", "N16", "T11", "T12", "F06")
@@ -197,7 +197,7 @@ def main() -> None:
     parser.add_argument("--golden", type=Path, default=GOLDEN_PATH)
     parser.add_argument("--out", type=Path, help="default reports/agent_v0 (agent_v0_smoke with --limit)")
     parser.add_argument("--limit", type=int, help="only the first N questions")
-    parser.add_argument("--configs", nargs="+", default=list(CONFIGS), choices=CONFIGS)
+    parser.add_argument("--configs", nargs="+", default=["agent", "agent_no_xbrl"], choices=CONFIGS)
     args = parser.parse_args()
     # A partial run must never overwrite the full report.
     args.out = args.out or PROJECT_ROOT / "reports" / ("agent_v0_smoke" if args.limit else "agent_v0")
@@ -211,9 +211,12 @@ def main() -> None:
     retriever, llm, xbrl = build_retriever(settings), build_llm(settings), XbrlStore.from_settings()
     questions = load_golden(args.golden)[: args.limit]
     results: dict[str, list[AgentRecord]] = {}
+    routed_llm = (build_llm(settings.model_copy(update={"llm_providers": "groq,ollama"}))
+                  if "agent_routed" in args.configs else None)
     for config in args.configs:
         agent = FinRAGAgent(retriever, llm, xbrl=None if config == "agent_no_xbrl" else xbrl,
-                            token_budget=settings.context_token_budget)
+                            token_budget=settings.context_token_budget,
+                            routed_llm=routed_llm if config == "agent_routed" else None)
         records = results[config] = []
         for i, q in enumerate(questions, 1):
             start = time.perf_counter()

@@ -43,6 +43,9 @@ log = logging.getLogger(__name__)
 
 MAX_FACTS = 8  # e.g. 4 years x 2 metrics; more would crowd filing text out of the context
 MAX_TEXT_SOURCES = 12
+# The local 3B model's judged correctness is 0.54 on trend and 0.67 on comparison vs 0.94 on numeric
+# questions (reports/judge_v1.md); these are the intents worth a larger model.
+ROUTED_INTENTS = ("trend", "comparison")
 
 
 def _merge(a: dict, b: dict) -> dict:
@@ -110,9 +113,14 @@ def _ms(start: float) -> float:
 class FinRAGAgent:
     def __init__(self, retriever, llm: LLM, xbrl: XbrlStore | None = None, token_budget: int = 3500, k: int = 10,
                  mode: SearchMode = "hybrid_rerank", memory: ConversationMemory | None = None,
-                 rewrite_follow_ups: bool = True):
+                 rewrite_follow_ups: bool = True, routed_llm: LLM | None = None,
+                 routed_intents: tuple[str, ...] = ROUTED_INTENTS):
         self.retriever = retriever
         self.answerer = Answerer(retriever, llm, token_budget=token_budget, k=k, mode=mode)
+        # Model routing: questions whose plan intent is in `routed_intents` are answered by `routed_llm`
+        # (a larger free-tier model; its LLM falls back to the local one on rate limits).
+        self.routed_answerer = Answerer(retriever, routed_llm, token_budget=token_budget, k=k, mode=mode) if routed_llm else None
+        self.routed_intents = routed_intents
         self.analyzer = QueryAnalyzer(llm if rewrite_follow_ups else None)
         self.xbrl = xbrl
         self.token_budget = token_budget
@@ -165,7 +173,9 @@ class FinRAGAgent:
         timings: dict[str, float] = {}
         if not sources:
             return {"sources": [], "result": no_sources(state["analysis"].question, timings), "steps": ["generate"]}
-        generated, response = self.answerer.generate(state["analysis"].standalone_query, sources, timings, intent)
+        routed = self.routed_answerer is not None and intent in self.routed_intents
+        answerer = self.routed_answerer if routed else self.answerer
+        generated, response = answerer.generate(state["analysis"].standalone_query, sources, timings, intent)
         return {"sources": sources, "generated": generated, "response": response, "result": None,
                 "steps": ["generate"], "timings_ms": timings}
 
@@ -234,14 +244,17 @@ class FinRAGAgent:
         return turn
 
 
-def build_agent(rewrite_follow_ups: bool = True) -> FinRAGAgent:
+def build_agent(rewrite_follow_ups: bool = True, route: bool = False,
+                routed_providers: str = "groq,ollama") -> FinRAGAgent:
     from app.config import get_settings
     from app.generation.llm import build_llm
     from app.retrieval.factory import build_retriever
 
     settings = get_settings()
+    routed = build_llm(settings.model_copy(update={"llm_providers": routed_providers})) if route else None
     return FinRAGAgent(build_retriever(), build_llm(settings), xbrl=XbrlStore.from_settings(),
-                       token_budget=settings.context_token_budget, rewrite_follow_ups=rewrite_follow_ups)
+                       token_budget=settings.context_token_budget, rewrite_follow_ups=rewrite_follow_ups,
+                       routed_llm=routed)
 
 
 def main() -> None:
@@ -250,9 +263,10 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description=main.__doc__)
     parser.add_argument("questions", nargs="*", help="asked in order in one thread; none = interactive")
+    parser.add_argument("--route", action="store_true", help="answer trend/comparison questions with Groq")
     args = parser.parse_args()
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s %(message)s")
-    agent = build_agent()
+    agent = build_agent(route=args.route)
 
     def show(q: str) -> None:
         t = agent.ask(q, thread_id="cli")

@@ -68,3 +68,19 @@ def test_labels_file_parses(tmp_path):
     path.write_text("\n".join(json.dumps({"id": i, "correctness": c}) for i, c in [("A", "correct"), ("B", "incorrect")]))
     assert load_labels(path) == {"A": "correct", "B": "incorrect"}
     assert load_labels(tmp_path / "missing.jsonl") == {}
+
+
+def test_compare_judges_counts_agreement_on_identical_answers_only():
+    from app.evaluation.compare_judges import compare
+
+    def rec(i, grade, answer="a", cat="trend"):
+        score = {"correct": 1.0, "partially_correct": 0.5, "incorrect": 0.0}[grade]
+        return {"id": i, "judged": True, "answer": answer, "answerable": True, "error": "", "category": cat,
+                "correctness": grade, "correctness_score": score, "reason": "r"}
+
+    a = {"T1": rec("T1", "correct"), "T2": rec("T2", "incorrect"), "T3": rec("T3", "correct", answer="x")}
+    b = {"T1": rec("T1", "correct"), "T2": rec("T2", "partially_correct"), "T3": rec("T3", "correct", answer="y")}
+    c = compare(a, b)
+    assert c["judged_by_both"] == 2 and c["exact"] == 0.5 and c["binary"] == 1.0  # T3's answers differ
+    assert c["confusion"]["incorrect"]["partially_correct"] == 1
+    assert [d[0] for d in c["disagreements"]] == ["T2"]

@@ -14,19 +14,19 @@ Single source of truth for project state. Update this file at the end of every w
   **trend 0.250 → 0.542**, abstention recall 0.900 → 1.000.
   Phase 8 started early (FastAPI + React UI; streaming and `/api/ask` left).
   Phase 8 started early (FastAPI + React UI over retrieval and answers; streaming left).
-- **Next up:** Phase 7 step 3: Groq routing for trend/comparison questions (needs a fresh Groq
-  daily quota), see "Next task in detail".
-- **Resume here (2026-10-26):** Phase 6 committed (b12a011). Not committed yet: Phase 7 steps 1-2
-  (judge, labels, series table, intent rules, live-data rule; `reports/judge_v0/v1/v1_strict`,
-  `agent_v1`). Groq: ~160k of the 200k daily tokens used on 2026-10-26; wait for the next day before
-  any Groq run.
+- **Next up:** Phase 7 step 3: **run** the Groq routing eval (code, tests and a second judge are ready;
+  needs a fresh gpt-oss-120b daily quota, i.e. 2026-10-27 or later), see "Next task in detail".
+- **Resume here (2026-10-26, evening):** Phase 7 steps 1-2 committed (4202399). Not committed yet:
+  model routing (`FinRAGAgent(routed_llm=...)`, `--route` flags), the second judge (`--judge-model`,
+  `compare_judges.py`, `reports/judge_v1_qwen.*`, `judge_agreement_v1.md`). Groq gpt-oss-120b: ~160k
+  of 200k used on 2026-10-26; qwen3.8-27b: ~90k used (separate per-model quota).
 - **Disk nearly full (MacBook, 2026-10-26):** 2.2 GB free (was 4.2 GB at the start of the day) of 228 GB (98%). Free space before
   long evals or model pulls; Ollama models are several GB each.
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-26 (Phase 7 step 2: trend fixes)
+- **Last updated:** 2026-10-26 (Phase 7 step 3 prepared: routing + second judge)
 
 ## Phase checklist
 
@@ -48,22 +48,56 @@ stage, and fix what that shows. Zero cost: free-tier judge, every call cached.
 
 1. ~~LLM judge~~ **done 2026-10-26** (`app/evaluation/judge.py`; see "Judge v0" below).
 2. ~~Trend answers~~ **done 2026-10-26** (see "Trend fixes v1" below).
-3. **Model routing for trend/comparison (next)**, on a fresh Groq daily quota: the remaining trend and
-   comparison errors are the 3B model's (T06 computes "342.6%" over the period when it is +384.9%,
-   T04/T07 mis-copy figures, C01 says Azure grew ~20% when the source says 34%). Route
-   `plan.intent in ("trend", "comparison")` to Groq gpt-oss-120b in the graph (a second `LLM` built
-   with `llm_providers="groq,ollama"`; Ollama stays the fallback and the default for everything else).
-   Budget: 24 questions × ~3.5k tokens ≈ 85k for generation + ~40k for judging the changed answers:
-   one day's quota, nothing else on Groq that day. Report `reports/judge_v2.md` (+ `agent_v2`) per
-   category vs v1; keep the routing if trend/comparison improve without new abstentions. Note the
-   cost: Groq latency is lower but the free tier caps how many such questions a day the app can serve
-   (document the fallback behaviour).
+3. **Model routing for trend/comparison (next: run it)**. Built and tested 2026-10-26 (see "Routing
+   and second judge" below); only the run is left, on a fresh gpt-oss-120b daily quota:
+   ```bash
+   # 1. routed answers (24 trend/comparison questions by gpt-oss-120b, ~85k tokens) judged by gpt-oss (~40k)
+   python -m app.evaluation.run_judge_eval --route --out reports/judge_v2
+   # 2. same answers judged by qwen (no self-preference; separate quota; generation now cached)
+   python -m app.evaluation.run_judge_eval --route --judge-providers groq --judge-model qwen/qwen3.8-27b \
+       --out reports/judge_v2_qwen
+   # 3. agent metrics (abstention, citations, latency) for the routed config, all cached by now
+   python -m app.evaluation.run_agent_eval --configs agent_routed --out reports/agent_v2
+   python -m app.evaluation.compare_judges reports/judge_v2.json reports/judge_v2_qwen.json \
+       --out reports/judge_agreement_v2.md
+   ```
+   Decide with **qwen's** scores (v1_qwen → v2_qwen) and check gpt-oss agrees in direction: keep
+   routing if trend/comparison improve without new abstentions. If Groq hits its daily cap mid-run,
+   the routed LLM falls back to Ollama for the rest (those answers equal v1's): rerun the next day,
+   everything done so far is cached. Record Groq latency per routed question (it is not cached on the
+   first run) and the serving cost: the free tier allows ~50 routed questions/day for the app.
 4. **RAGAS** as a second opinion on the same records, only if it runs within the free tiers.
 5. **Tracing**: Langfuse callback on the graph + LLM calls (per-node latency, tokens). **Needs the
    user's keys** (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` in `.env`); a no-op
    without them.
 6. Report `reports/eval_v1.md`: ablation table (BM25 / dense / hybrid / +rerank / +analysis / +plan /
    +XBRL) with retrieval and judged answer metrics, latency p50/p95 per node.
+
+## Routing and second judge (Phase 7 step 3 prep, MacBook M4, 2026-10-26)
+
+- **Routing**: `FinRAGAgent(routed_llm=..., routed_intents=("trend", "comparison"))`; `_generate`
+  picks the routed `Answerer` by the plan's intent (same prompts and intent rules). `build_agent(route=True)`
+  builds it with `llm_providers="groq,ollama"`, so Groq's daily cap falls back to the local model.
+  `python -m app.agent.graph --route ...`, `run_agent_eval --configs agent_routed`,
+  `run_judge_eval --route`. Not run yet: gpt-oss-120b's daily quota was used by the judge runs.
+- **Why a second judge**: routed answers would come from gpt-oss-120b, the same model as the judge,
+  and LLM judges favour their own outputs. Gemini was tried first as the independent judge and failed
+  again (HTTP 503 and read timeouts on 2 of 2 calls, ~4 min each). Groq's free limits are per model,
+  so `run_judge_eval --judge-model qwen/qwen3.8-27b` judges with a different model family on its own
+  quota (~1.3k tokens/call). Models on this key: gpt-oss-120b, gpt-oss-20b, qwen3.8-27b, allam-2-7b
+  and speech/guard models.
+- **Judge agreement** (`reports/judge_agreement_v1.md`, `compare_judges.py`), same 70 v1 answers:
+
+  | | gpt-oss-120b judge | qwen3.8-27b judge |
+  |---|---|---|
+  | Correctness, all answerable | 0.777 | 0.764 |
+  | trend / comparison | 0.542 / 0.667 | 0.542 / 0.625 |
+  | Agreement with the 11 still-valid hand labels | 0.91 | 1.00 |
+
+  Exact agreement between judges 0.91, correct vs not-correct 0.93. Disagreements are strictness on
+  secondary details (L20, L22, C11, T05: qwen stricter) and one real miss each way: qwen calls T06's
+  wrong "342.6%" overall growth correct, gpt-oss calls L26 incorrect where the label says partial.
+  Conclusion: either judge alone is usable for category-level metrics; per-question verdicts need both.
 
 ## Trend fixes v1 (Phase 7 step 2, MacBook M4, 2026-10-26)
 
@@ -525,6 +559,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Trend/comparison prompts get intent rules and an XBRL series table with directions computed in
   code; prohibitive wording ("never compute...") was tested and rejected (more abstentions).
 - Live market data (current share price, market cap now) is out of scope at the analyzer.
+- Model routing by plan intent: trend/comparison to Groq gpt-oss-120b (local fallback), everything else
+  local. A routed run is judged by a second model family (qwen3.8-27b on Groq) because the default judge
+  is the generator's own model. Gemini dropped as a judge: free tier too unreliable (503/timeouts).
 - Agent memory is an explicit per-thread turn list passed into a stateless LangGraph graph, not a
   checkpointer (see "Agent graph v0"). Standalone questions mid-conversation skip the LLM rewrite.
 - XBRL facts come only from the fiscal year's own 10-K (accession + period end + ~1-year duration;
@@ -680,3 +717,8 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   abstention recall 1.000. A stricter rule variant was measured and rejected (judge_v1_strict).
   Judge label agreement now only counts answers identical to v0. Background runs were killed once by
   a Claude Code restart; rerun from cache.
+- **2026-10-26 (MacBook M4, evening):** Phase 7 step 3 prepared (gpt-oss quota spent, run deferred):
+  intent-based model routing in the graph and eval runners, `--judge-model` for a second Groq judge,
+  `compare_judges.py`. Gemini failed again as a judge (503/timeouts). qwen3.8-27b judged all v1
+  answers: agrees with gpt-oss 0.91 exact / 0.93 binary and with the still-valid labels 11/11.
+  174 tests passing.
