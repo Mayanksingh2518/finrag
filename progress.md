@@ -4,24 +4,21 @@ Single source of truth for project state. Update this file at the end of every w
 
 ## Current status
 
-- **Last completed:** Phase 4 (evaluation v0): golden set, metrics, runner, ablations, decomposition preview
-- **In progress:** Phase 8 started early at the user's request: FastAPI + React glassmorphism UI over retrieval (done); answer panel waits for Phase 5
-- **Next up:** finish Phase 5 (see "Resume here" just below), then wire answers into the UI.
-- **Resume here (2026-10-08):** Phase 5 code works end to end and the false-abstention problem is
-  fixed (0.324 → 0.054 on Ollama granite4.1:3b, `reports/generation_v1_ollama.md`). Not ticked yet:
-  1. **Groq baseline.** The prompt changed on 2026-10-08, so every Groq answer is a cache miss
-     again (~3.5k tokens per question, ~300k for all 84 > the 200k/day cap). Run
-     `LLM_PROVIDERS=groq python -m app.evaluation.run_generation_eval --out reports/generation_v1_groq`;
-     it fails over (error rows) when the daily cap hits. Rerun the next day to fill the rest from cache.
-  2. **Live-test the answer panel** (API on :8010 + UI) with the repaired-citation note; stop the API
-     afterwards (memory).
-  3. Then tick Phase 5 and start Phase 6. Carry over: figure-free claims and "whose figure"
-     errors need an LLM faithfulness judge (Phase 7); T04 makes granite emit unbounded JSON.
+- **Last completed:** Phase 6 step 4 (LangGraph agent graph, `app/agent/graph.py`): analyze →
+  refuse | (retrieve ∥ xbrl) → generate → verify → respond, one widen retry, per-thread memory;
+  verified on a real 5-turn conversation with Ollama granite4.1:3b. Step 3 (XBRL tool) before it.
+- **In progress:** Phase 6 (LangGraph agent): steps 1-4 done; step 5 (agent-mode eval) left.
+  Phase 8 started early (FastAPI + React UI over retrieval and answers; streaming left).
+- **Next up:** Phase 6 step 5, the agent-mode generation eval, see "Next task in detail".
+- **Resume here (2026-10-26):** nothing pending. Not committed yet: Phase 6 steps 1-4 (analyzer,
+  retrieval plan, XBRL tool, graph), reports, tests, the verifier's `$37.7B` fix.
+- **Disk nearly full (MacBook, 2026-10-26):** 3.2 GB free of 228 GB (98%). Free space before
+  long evals or model pulls; Ollama models are several GB each.
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-08 (false-abstention fix, generation eval v1)
+- **Last updated:** 2026-10-26 (Phase 6 step 4: LangGraph agent graph)
 
 ## Phase checklist
 
@@ -29,31 +26,249 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 2: Parsing and chunking.** 17,602 chunks (14,975 text / 2,627 table), 0 over the 512-token limit, all core items found in all 40 filings, 96.8% of chunks carry a printed page number
 - [x] **Phase 3: Indexing and retrieval.** Local bge-small embeddings + FAISS, BM25, RRF hybrid, metadata filters, bge-reranker-base cross-encoder; 12/12 smoke queries in all 4 modes; 33 tests
 - [x] **Phase 4: Evaluation v0.** 84-question golden set (quote-verified pages), Recall@K / MRR / nDCG, 4 modes × filters on/off, reranker ablations, decomposition preview; hybrid_rerank recall@5 0.884, MRR 0.920; 48 tests
-- [ ] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier, abstention, confidence
+- [x] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier with context-checked repair, abstention, confidence; Ollama granite4.1:3b false abstention 0.054, citation hit 0.863, abstention recall 1.000; Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 (84 q); 92 tests
 - [ ] **Phase 6: LangGraph agent.** Query analyzer, decomposition, conversational memory, XBRL financial-facts tool
 - [ ] **Phase 7: Full evaluation.** RAGAS, Langfuse tracing, latency/cost per stage
-- [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. Left: `/api/query` with streaming answers after Phase 5
+- [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. `/api/answer` with the answer panel (live-tested 2026-10-08). Left: streaming answers
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
-## Next task in detail: finish Phase 5 (Groq baseline, live UI test)
+## Next task in detail: Phase 6 (LangGraph agent)
 
-Phase 5 is built: `llm.py` (Groq → Gemini → Ollama, retries, TPM limiter, disk cache),
-`context.py`, `answer.py`, `verify.py`, `run_generation_eval.py`. Remaining before ticking it:
+Goal: replace the eval's hand-given gold filters with an agent that works out the filters and plan
+from the question itself, and measure what that costs. Today `run_generation_eval` passes gold
+`filters` (tickers/years) and the standalone rewrite for follow-ups; Phase 6 must earn both.
 
-1. **Groq gpt-oss-120b baseline** on the 84 questions with the current prompt (see "Resume here":
-   ~300k tokens > 200k/day, so it takes two days of cache-filling). Compare with
-   `reports/generation_v1_ollama.md`: expect fewer format failures than the 3B model, so the gap
-   shows how much the verifier repair is compensating for a small model.
-2. **Live test** `/api/answer` + the answer panel on a few lookup / comparison / unanswerable
-   questions; check that repaired claims show the "Citation added by the verifier" note.
-3. Tick Phase 5 in this file and the README, then plan Phase 6 (LangGraph agent: query analyzer
-   that extracts the filters the eval currently gets from gold, per-entity quotas, XBRL tool).
+0. ~~Finish the Groq baseline~~ **done 2026-10-14** (84/84, see "Groq baseline v1").
+1. ~~Query analyzer~~ **done 2026-10-08** (`app/agent/entities.py`, `app/agent/analyze.py`; results in
+   "Query analyzer v0" below).
+2. ~~Retrieval plan~~ **done 2026-10-14** (`app/agent/plan.py`, `Retriever.search_many`; results in
+   "Retrieval plan v0" below).
+3. ~~XBRL company-facts tool~~ **done 2026-10-26** (`app/agent/xbrl.py`; results in "XBRL tool v0" below).
+4. ~~LangGraph graph~~ **done 2026-10-26** (`app/agent/graph.py`; see "Agent graph v0" below).
+5. **Agent-mode eval (next)** `app/evaluation/run_agent_eval.py` (or `--agent` on
+   `run_generation_eval`): every golden question through `FinRAGAgent.run(q.question, q.history)`
+   with **no gold filters and no gold rewrite**, scored with the existing `score()`, next to the
+   gold-filter v1 run with the same model. Report `reports/agent_v0.md`:
+   - filter accuracy (from `turn.analysis`), false abstention, abstention recall (U01-U10: the
+     analyzer refuses 4 before retrieval, the generator must refuse the rest), citation hit,
+     evidence recall, figure recall, claim support, latency p50/p95 per node (`turn.timings_ms`),
+     LLM calls per question (rewrite + generation).
+   - **XBRL scoring:** XBRL sources have `page_start=0`, so `score()` never counts them as a gold
+     page hit. Count a verified XBRL citation as covering a gold evidence item with the same
+     (ticker, fiscal year) when the claim's figure matches the reference (or report "citation hit
+     incl. XBRL" as a separate column), otherwise the agent is penalised for using exact facts.
+   - Ablation: agent with vs without XBRL (`xbrl=None`) on numeric/trend/comparison, to show what
+     the tool buys (figure recall) and costs (definition-mismatch questions N09/N16/T11/T12/F06:
+     check the answer uses the text's figure).
+   - Use Ollama for the full run (granite4.1:3b, ~12-20 s/question, ~25 min for 84 under
+     `caffeinate -i`; stop the API server first). Groq for a subset only (daily cap ~50 q).
+   Then tick Phase 6. Phase 8 follow-up: `/api/ask` with a thread id over `FinRAGAgent.ask`, and
+   UI rendering for XBRL sources (no page/URL: show the concept and value instead of "p.#0").
 
-Provider facts (measured 2026-10-07): Groq free tier per model is 1,000 requests/day,
-8,000 tokens/minute and a rolling **200,000 tokens/day** (not in headers). Gemini works only
-through the Interactions API (`gemini-3.8-flash`) and was slow/unreliable. Ollama
-`granite4.1:3b` is the default local model (`LLM_PROVIDERS=ollama,groq,gemini`).
+## Query analyzer v0 (Phase 6 step 1, MacBook M4, 2026-10-08)
+
+Design: **rules where the domain is closed, LLM where language is open.** `entities.py` maps
+names/brands/products/segments to the 10 tickers (Azure → MSFT, Cybertruck → TSLA, Reality Labs →
+META; word boundaries, order of mention), parses years (`fiscal 2025`, `from/between X to/and Y`,
+`last/past N years`, `latest`, `the year before`, `that year`), and sets a section filter only on
+unambiguous cues (risk → Item 1A, cybersecurity → Item 1C; a wrong section filter hides the answer).
+`analyze.py` adds conversation handling: a follow-up inherits companies/years from the last user
+turn that named one ("the year before" = that year − 1), and the LLM (`StandaloneQuestion` schema)
+rewrites it into a standalone query; if the LLM fails, filters still come from the rules and the
+query falls back to "previous question + follow-up". Questions whose only years are outside
+FY2022-2025 are refused before retrieval.
+
+Results (`reports/analyzer_v0.md`, `python -m app.evaluation.run_analyzer_eval --rewrite`,
+Ollama granite4.1:3b for the 6 rewrites):
+
+| Check (74 answerable) | Exact | Compatible (none or superset of gold) |
+|---|---|---|
+| Tickers | 1.000 | 1.000 |
+| Fiscal years | 0.905 | 1.000 |
+| Sections | 1.000 | 1.000 |
+
+The 7 year misses are questions that name no year ("When did Tesla launch Robotaxi?"): the
+analyzer leaves years open and the reranker finds the right filing. Scope: 4/10 unanswerable
+refused before retrieval (2018, 2027, 2030, 2027), 0 answerable wrongly refused; the other 6
+(Netflix, Samsung, stock price, ...) are left to the generator, which refuses them.
+
+| Retrieval (hybrid_rerank k=10, auto-decomposition) | recall@5 | recall@10 | MRR |
+|---|---|---|---|
+| Gold filters + gold rewrite | 0.914 | 0.966 | 0.918 |
+| **Analyzer filters + analyzer rewrite** | **0.914** | **0.966** | 0.908 |
+
+The analyzer loses nothing in recall; MRR drops 0.01 only on the yearless lookups. Caveats for
+interviews: the rules were written while looking at this golden set, so `tests/test_agent.py`
+checks 20 different phrasings (all pass); the 3B rewrite sometimes drops the company ("What share
+of data center revenue came from China in fiscal 2024?") but the filters carry it. Trend is still
+the weak category (recall@5 0.597): the next step's per-entity quotas target it.
+
+## Retrieval plan v0 (Phase 6 step 2, MacBook M4, 2026-10-14)
+
+`app/agent/plan.py`: rule-based intent (lookup / numeric / trend / comparison), one sub-query per
+(company, year), a per-entity quota (`ceil(k / n)`, at least 2), an **MD&A section prior** (+0.05 on
+the reranker's 0-1 score for Item 7 chunks when the question names a reported metric: revenue, net
+income, capex, deliveries, growth...), and `execute_plan`, which reranks all sub-queries in one
+batched cross-encoder call (`Retriever.search_many`; `search_decomposed` uses it too).
+
+Why the prior: a diagnostic over every trend/comparison/numeric evidence item showed the gold page
+is almost always in Item 7, and the misses are Item 8 notes (JPM net income FY2023-24: rank 10/13;
+NVDA FY2024 revenue: rank 10), Item 1 overviews (Tesla deliveries: rank 3-19; Visa/Mastercard
+FY2025: rank 8/4) and Item 5 buyback tables. A prior, not a filter: risk (Item 1A), employees and
+cost-cutting (Item 1) answers live elsewhere.
+
+Results (`python -m app.evaluation.run_plan_eval`, gold filters/queries, 74 answerable q):
+
+| Config | recall@5 | MRR | ctx recall (3,500-token budget) | trend recall@5 | comparison MRR |
+|---|---|---|---|---|---|
+| v0 decomposition, k=10 | 0.914 | 0.918 | 0.966 | 0.597 | 0.831 |
+| plan, k=10, no prior | 0.914 | 0.918 | 0.966 | 0.597 | 0.831 |
+| plan, k=10, prior 0.02 | 0.911 | 0.926 | 0.966 | 0.618 | 0.887 |
+| **plan, k=10, prior 0.05 (default)** | **0.921** | **0.927** | 0.966 | **0.639** | **0.892** |
+| plan, k=10, prior 0.10 | 0.921 | 0.927 | 0.966 | 0.639 | 0.892 |
+| v0 decomposition, k=5 | 0.914 | 0.913 | 0.914 | 0.597 | 0.819 |
+| **plan, k=5, prior 0.05** | 0.921 | 0.927 | **0.949** | 0.639 | 0.892 |
+
+Reading (honest version for interviews):
+- **Quotas only matter when the context is small.** The interleaved top-k prefix is identical with
+  or without quotas, so at k=10 nothing changes; at k=5 quotas raise context recall 0.914 → 0.949
+  (trend 0.597 → 0.771) because each of 4 years keeps 2 chunks instead of the global top 5.
+- **The prior is a small, plateaued gain** (0.05 = 0.10): 7 questions improve (T04 T05 T08 T11 C03
+  C10 N14), 3 lose (N03 gold drops to rank 2; C07; T03, where the new top page, META FY2023 p.77
+  MD&A, states the reference Reality Labs figures but isn't labeled gold). Tuned on the golden set
+  with only 3 values tried, at the plateau's low end, to limit overfitting.
+- **Batching barely helps latency** (-7% mean on multi-entity questions; batch 32/64 is slower,
+  padding to 512 tokens): the cross-encoder is compute-bound on pairs × tokens. The real knob is the
+  rerank pool per sub-query: 30 → 20 → 15 gives mean 7.1 → 4.8 → 3.6 s but context recall
+  0.896 → 0.875 → 0.865 on multi-entity questions. **Decision: keep 30** (quality first, as in
+  Phase 4); `make_plan(rerank_candidates=15)` is the latency fallback.
+- Latency gotcha: in one long eval process the M4's latency drifts upward (single-entity p50 1.7 →
+  2.8 s across configs, with no swap or thermal warnings), so compare latency only with configs
+  alternated per question in a fresh process.
+- `Answerer` (generation evals, API) still uses v0 decomposition (now batched) so the v1 generation
+  baselines stay reproducible; the step 4 graph uses `execute_plan`.
+
+## Agent graph v0 (Phase 6 step 4, MacBook M4, 2026-10-26)
+
+`app/agent/graph.py` (`python -m app.agent.graph "Q1" "follow-up" ...` runs one conversation):
+
+```
+START → analyze ─out of range→ refuse → respond → END
+          └in corpus→ retrieve ∥ xbrl → generate → verify → respond
+                                generate ─no sources→ respond
+                                verify ─abstained under a section filter (once)→ widen → retrieve ∥ xbrl
+```
+
+- `retrieve` = `make_plan` + `execute_plan` on the analyzer's standalone query and filters;
+  `xbrl` = `detect_metrics` + `lookup_many` (only when the question names company, metric and year;
+  at most 8 facts). They run in the same LangGraph step; `generate` joins them, puts the facts first
+  (score 1.0) and allows 12 text sources besides.
+- `Answerer` was split into `generate()` + module-level `finalize()` (verify, abstain, render) so the
+  graph has separate generate/verify nodes; `answer_from_hits` behaves exactly as before. The XBRL
+  prompt rule (text wins on definitions) is appended to the system prompt **only** when facts are in
+  the context, so v1 prompts and their LLM cache entries are unchanged.
+- Memory: `ConversationMemory` (thread id → turns, last 6 exchanges, LRU over 1,000 threads),
+  passed into the graph as `history`. Not LangGraph's checkpointer: it would store every node's
+  chunks per thread and warns on every custom dataclass (blocked in a future langgraph version).
+- Analyzer fixes found in the real run: (1) an out-of-range year asked mid-conversation ("Apple's
+  iPhone sales in fiscal 2018" after a Meta question) inherited FY2025 instead of being refused;
+  the range check now runs before the follow-up path. (2) Every question after the first in a
+  thread paid an LLM rewrite (~1 s, plus Groq quota); a question that names its own company and year
+  and has no back-reference (its/that/they, "And ...?", "How about") is now standalone. Analyzer
+  eval unchanged (tickers 1.000, years 0.905, sections 1.000; 4/10 unanswerable refused, 0
+  answerable refused): the golden follow-ups all lack a company or a year.
+
+Real conversation (Ollama granite4.1:3b, reranker on mps):
+
+| Turn | Path | Result | Total |
+|---|---|---|---|
+| NVIDIA revenue FY2022→2025 | 4 XBRL facts + text | answered, high; but calls 114.2% (FY2025 YoY) a "CAGR" | 24.5 s (retrieval 4.8 s, first query warm-up) |
+| "And what was its net income in fiscal 2025?" | rewrite → NVDA FY2025, 1 fact | $72,880 million, high | 13.5 s |
+| Visa vs Mastercard FY2025 growth | 2 facts | Mastercard 16% vs Visa 11.3%, high | 17.2 s |
+| Meta capex 2025 | 1 fact (PP&E $69.69B) + text | **$72.22B from the text** (definition rule worked) | 13.3 s |
+| Apple iPhone fiscal 2018 | (before the fix: inherited FY2025) | generator abstained; now refused at analyze | 14.0 s |
+
+Generation dominates latency (11-20 s on the 3B model); analyze ≈ 1 s only when a rewrite runs.
+Verifier limit seen again: it checks figures, not their meaning (the "CAGR" label passes because
+114.2% is in the source); that's the Phase 7 faithfulness judge's job.
+
+## XBRL tool v0 (Phase 6 step 3, MacBook M4, 2026-10-26)
+
+`app/agent/xbrl.py`: SEC companyfacts JSON per company (`python -m app.agent.xbrl --download`,
+~45 MB for 10 companies under `data/raw/xbrl/`, gitignored), 13 metrics, each a priority list of
+us-gaap concepts (revenue: `Revenues` → `RevenueFromContractWithCustomerExcludingAssessedTax` →
+`RevenuesNetOfInterestExpense` → `SalesRevenueNet`; net income: `NetIncomeLoss` → `ProfitLoss`, for
+Mastercard; equity: Visa uses the incl.-NCI concept; cash: JPM's `CashAndDueFromBanks`).
+
+Fact selection (the part that matters): only facts from the fiscal year's own 10-K (`accn` from the
+manifest), period end within 7 days of the manifest's report date, duration 340-380 days (flow) or
+an instant (balance sheet). The `fy` field is **not** used: it's the filing's year, so comparatives
+inside a 10-K carry the wrong label. The same filing's prior-year value gives the YoY change, which
+is what makes growth questions answerable and is split-safe (NVDA FY2025 EPS $2.94 vs prior $1.19,
+both split-adjusted; across filings it would be $11.93 → $2.94). Fallback: when the filing tags none
+of the concepts, use the next 10-K's comparative and mark the fact `comparative` (NVDA FY2022-23
+capex was tagged with a custom `nvda:` concept, which companyfacts omits).
+
+Coverage: 459/520 cells. Every gap is a real absence, not a bug: banks have no operating income /
+gross profit / R&D (JPM), Tesla doesn't buy back stock, Amazon had no buybacks in FY2025 and
+doesn't report gross profit or R&D as such, Visa tags EPS per share class only.
+
+`detect_metrics(question)`: regex per metric plus a segment guard (Data Center, AWS, Services,
+iPhone, cloud, China, customers, deliveries... → no facts: XBRL has the company total only).
+
+Golden set (`python -m app.evaluation.run_xbrl_eval`, rule-based analyzer filters, no gold filters,
+figures matched with the verifier's number matching):
+
+| Category | Answerable | Tool fires | Gold figures covered |
+|---|---|---|---|
+| numeric | 17 | 11 | 17/23 |
+| trend | 12 | 6 | 22/28 |
+| comparison | 12 | 6 | 14/16 |
+| lookup + follow-up | 33 | 3 | 2/5 |
+| **all** | 74 | 26 | **55/72 (76%)** |
+
+All 4 targeted retrieval misses are fully covered: T05 JPM net income (8/8 figures incl. growth),
+T06 NVDA revenue (6/6), T07/T08 Visa/Mastercard growth rates (4/4 each), C03 (2/2 GAAP figures).
+The 17 uncovered figures are the honest limit:
+- **Definition mismatch (5 questions, the risk to handle in step 4):** Meta capex "including
+  principal payments on finance leases" ($72.22B vs XBRL purchases of PP&E $69.69B: N09, T12, F06),
+  Amazon "cash capex" net of proceeds/incentives ($48.1B vs $52.7B gross: N16), Apple buybacks
+  ($90.2B program total vs $89.4B cash paid: T11). XBRL is right about its line item; the question
+  means the company's definition. Hence "XBRL is an extra source, text wins on definitions".
+- Non-GAAP: currency-neutral growth ("15% currency-neutral"), share of sales (8% of net sales).
+- EPS in N12's answer when the question only asks net income.
+
+Side fix found on the way: the verifier didn't read "$37.7B"/"$450M" as scaled numbers (only
+"billion"/"bn"), so a correct claim written that way failed as `unsupported_number`. It now accepts
+`B`/`M` attached to the digits (not after a space: "Item 7 B" stays 7). This can only turn failures
+into passes; the v1 generation reports predate it.
+
+## Groq baseline v1 (Phase 5, completed 2026-10-14)
+
+`openai/gpt-oss-120b`, same prompt/verifier/retrieval as Ollama v1, `reports/generation_v1_groq.md`.
+Run over two days (Groq's 200k-token daily cap stopped day 1 at 53 questions; cached answers were
+reused on 2026-10-14). All 84 questions, 0 errors, 307k tokens in total.
+
+| Model (84 q) | False abst. | Abst. recall | Citation hit | Evidence recall | Claim support | Figure recall | LLM p50 |
+|---|---|---|---|---|---|---|---|
+| Groq gpt-oss-120b | **0.014** | 1.000 | **0.959** | **0.884** | 0.966 | **0.653** | 1.1 s |
+| Ollama granite4.1:3b | 0.054 | 1.000 | 0.863 | 0.797 | 0.978 | 0.583 | 18 s |
+
+The big model cites properly, so the verifier's repair matters less; the 3B model is ~9 points
+behind on grounding but fully offline. Its only false abstention (F05) is defensible: the filing
+gives China's data-center share only as "mid-single digit percentage". Trend is Groq's weak spot
+(evidence recall 0.701): T04 "the 2025 delivery figure is not provided", T05 only endpoint years,
+C03 "Visa's growth not disclosed". These are **retrieval** misses: those entities' gold pages rank
+4-19 in their own sub-search, behind Item 1/Item 8 chunks (Phase 6 step 2 diagnostic).
+Figure recall stays ~0.6-0.65 because references often contain secondary figures ("up 4%") that a
+correct short answer omits; the LLM judge in Phase 7 should replace it as the correctness metric.
+
+Live UI test (API on :8010, `LLM_PROVIDERS=ollama`): a lookup (TSLA deliveries) renders with
+medium confidence and the "Citation added by the verifier" note; Azure vs AWS is withheld with
+"Figure not found in the cited page: $168.9 billion"; Netflix (not in corpus) abstains. Screenshots
+were checked in headless Chrome. Gotcha: `--virtual-time-budget` hangs on this page (pending
+fetches/animations); use `--timeout=12000` instead.
 
 ## Generation eval v1: false-abstention fix (Phase 5, MacBook M4, 2026-10-08)
 
@@ -259,6 +474,13 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Dependencies are added to `requirements.txt` phase by phase.
 - Build eval v0 (Phase 4) before generation so retrieval tuning is measured.
 - Multi-entity questions use per-(company, year) decomposition with per-entity quotas (Phase 4 data).
+- Agent memory is an explicit per-thread turn list passed into a stateless LangGraph graph, not a
+  checkpointer (see "Agent graph v0"). Standalone questions mid-conversation skip the LLM rewrite.
+- XBRL facts come only from the fiscal year's own 10-K (accession + period end + ~1-year duration;
+  never the `fy` field); YoY change from the same filing. They are added next to retrieved text,
+  never instead of it (company definitions differ from GAAP line items). See "XBRL tool v0".
+- Retrieval plan: MD&A section prior +0.05 for metric questions (soft, never a filter); rerank pool
+  stays 30 per sub-query (15 halves latency for -0.03 context recall). See "Retrieval plan v0".
 
 ## Environment notes
 
@@ -364,3 +586,31 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   15-minute runaway generation; fixed a flaky timing assertion in a retrieval test. False
   abstention 0.324 → 0.054, citation hit 0.527 → 0.863, abstention recall 1.000. 92 tests passing;
   frontend lint/type-check clean.
+- **2026-10-08 (MacBook M4):** Groq gpt-oss-120b baseline: 52/84 questions before the daily cap
+  (false abstention 0.000, citation hit 0.981 vs Ollama 0.058 / 0.882 on the same questions).
+  Live-tested `/api/answer` and the answer panel (repaired note, withheld answer, abstention).
+  Ticked Phase 5; planned Phase 6.
+- **2026-10-08 (MacBook M4):** Phase 6 step 1: query analyzer (`app/agent/`): rule-based
+  companies/years/sections, follow-up carry-over + LLM standalone rewrite, early out-of-range
+  refusal; `run_analyzer_eval.py`. Analyzer filters match gold retrieval (recall@5 0.914 both,
+  MRR 0.908 vs 0.918); 4/10 unanswerable refused early, 0 false refusals. +20 tests (112 total).
+  Groq retry added one question (53/84). Not committed yet.
+- **2026-10-14 (MacBook M4):** Groq baseline v1 finished on a fresh daily quota (84/84, 0 errors:
+  false abstention 0.014, citation hit 0.959, evidence recall 0.884). Phase 6 step 2: retrieval plan
+  (`app/agent/plan.py`: intent, sub-queries, quotas, MD&A prior; `Retriever.search_many` batched
+  reranking with `score_pairs`; `run_plan_eval.py`, `reports/plan_v0.md`). Prior 0.05: recall@5
+  0.914 → 0.921, MRR 0.918 → 0.927, trend recall@5 0.597 → 0.639; quotas at k=5: context recall
+  0.914 → 0.949. Batching -7% latency only; the rerank pool size is the real latency knob. +11 tests
+  (123 total). Not committed yet.
+- **2026-10-26 (MacBook M4):** Phase 6 step 3: XBRL company-facts tool (`app/agent/xbrl.py`:
+  download + cache, 13 metrics with concept fallbacks, own-filing fact selection, next-10-K
+  comparative fallback, YoY change, facts as chunks/sources, `detect_metrics`), coverage CLI,
+  `run_xbrl_eval` (`reports/xbrl_v0.md`: 459/520 cells, 55/72 gold figures where it fires).
+  Verifier now reads `$37.7B`/`$450M`. `Source` formats XBRL citations. Real-data NVDA fixture;
+  148 tests passing. Disk at 98% (4.2 GB free).
+- **2026-10-26 (MacBook M4):** Phase 6 step 4: LangGraph agent (`app/agent/graph.py`: analyze →
+  refuse | retrieve ∥ xbrl → generate → verify → respond, widen retry, `ConversationMemory`, CLI),
+  `Answerer` split into generate/finalize, XBRL prompt rule only with facts, `langgraph` added to
+  requirements. Real 5-turn run on granite4.1:3b found two analyzer bugs (out-of-range year inherited
+  mid-conversation; LLM rewrite on standalone questions), both fixed with tests. Analyzer report
+  regenerated (it was overwritten by a `--no-retrieval` run; numbers unchanged). 157 tests passing.

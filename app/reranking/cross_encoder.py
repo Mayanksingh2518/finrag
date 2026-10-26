@@ -26,9 +26,11 @@ class CrossEncoderReranker:
         self.batch_size = batch_size
 
     def score(self, query: str, passages: list[str]) -> list[float]:
-        if not passages:
+        return self.score_pairs([(query, p) for p in passages])
+
+    def score_pairs(self, pairs: list[tuple[str, str]]) -> list[float]:
+        """Scores (query, passage) pairs in one call; lets several sub-queries share batches."""
+        if not pairs:
             return []
-        scores = self.model.predict(
-            [(query, p) for p in passages], batch_size=self.batch_size, show_progress_bar=False
-        )
+        scores = self.model.predict(pairs, batch_size=self.batch_size, show_progress_bar=False)
         return [float(s) for s in scores]

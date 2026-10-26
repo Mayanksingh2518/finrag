@@ -1,0 +1,1559 @@
+[
+  {
+    "id": "L01",
+    "category": "lookup",
+    "question": "Why did Apple's Services net sales increase in fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "AAPL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L02",
+    "category": "lookup",
+    "question": "Why did Apple's Greater China net sales decline in fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "AAPL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L03",
+    "category": "lookup",
+    "question": "How many employees did Apple have at the end of fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "AAPL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "166,000",
+      "27"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L04",
+    "category": "lookup",
+    "question": "How fast did Microsoft's Azure and other cloud services revenue grow in fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "34%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L05",
+    "category": "lookup",
+    "question": "When did Activision Blizzard join Microsoft?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L06",
+    "category": "lookup",
+    "question": "How many full-time employees did Microsoft have as of June 30, 2025?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "228,000",
+      "125,000",
+      "103,000"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L07",
+    "category": "lookup",
+    "question": "What did NVIDIA record when its acquisition of Arm was terminated?",
+    "metrics": [],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [],
+    "facts": [],
+    "gold_figures": [
+      "$1.35 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L08",
+    "category": "lookup",
+    "question": "How concentrated was NVIDIA's revenue among its largest customers in fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "12%",
+      "11%",
+      "11%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L09",
+    "category": "lookup",
+    "question": "What new architecture did NVIDIA launch in fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L10",
+    "category": "lookup",
+    "question": "How many people did Amazon employ at the end of 2025?",
+    "metrics": [],
+    "tickers": [
+      "AMZN"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "1,576,000",
+      "31"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L11",
+    "category": "lookup",
+    "question": "What drove AWS sales growth in 2024?",
+    "metrics": [],
+    "tickers": [
+      "AMZN"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "19%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L12",
+    "category": "lookup",
+    "question": "What cloud security company did Alphabet agree to acquire in 2025, and for how much?",
+    "metrics": [],
+    "tickers": [
+      "GOOGL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$32.0 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L13",
+    "category": "lookup",
+    "question": "What drove Google Cloud revenue growth in 2025?",
+    "metrics": [],
+    "tickers": [
+      "GOOGL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$15.5 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L14",
+    "category": "lookup",
+    "question": "How many daily active people did Meta's Family of Apps have in December 2025?",
+    "metrics": [],
+    "tickers": [
+      "META"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "3.58 billion",
+      "7%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L15",
+    "category": "lookup",
+    "question": "What is Meta's approach to open-sourcing its AI models?",
+    "metrics": [],
+    "tickers": [
+      "META"
+    ],
+    "years": [],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L16",
+    "category": "lookup",
+    "question": "When did Tesla launch its Robotaxi service?",
+    "metrics": [],
+    "tickers": [
+      "TSLA"
+    ],
+    "years": [],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L17",
+    "category": "lookup",
+    "question": "When did Tesla start delivering the Cybertruck?",
+    "metrics": [],
+    "tickers": [
+      "TSLA"
+    ],
+    "years": [],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L18",
+    "category": "lookup",
+    "question": "Why did Tesla's automotive regulatory credits revenue rise in 2024?",
+    "metrics": [],
+    "tickers": [
+      "TSLA"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$973 million",
+      "(54%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L19",
+    "category": "lookup",
+    "question": "What did JPMorgan Chase acquire from the FDIC in May 2023?",
+    "metrics": [],
+    "tickers": [
+      "JPM"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L20",
+    "category": "lookup",
+    "question": "What was JPMorgan's Standardized CET1 capital ratio requirement at the end of 2025?",
+    "metrics": [],
+    "tickers": [
+      "JPM"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "11.5%",
+      "31",
+      "2.5%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L21",
+    "category": "lookup",
+    "question": "Why did Visa's international transaction revenue increase in fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "V"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "13%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L22",
+    "category": "lookup",
+    "question": "How much did Visa accrue for the interchange multidistrict litigation in fiscal 2023?",
+    "metrics": [],
+    "tickers": [
+      "V"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$906 million",
+      "$1.0 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L23",
+    "category": "lookup",
+    "question": "What threat intelligence company did Mastercard acquire in 2024?",
+    "metrics": [],
+    "tickers": [
+      "MA"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L24",
+    "category": "lookup",
+    "question": "What drove Mastercard's net revenue growth in 2025?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "MA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL MA FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "16%",
+      "(15%"
+    ],
+    "covered": [
+      "16%"
+    ]
+  },
+  {
+    "id": "L25",
+    "category": "lookup",
+    "question": "Who presents cybersecurity topics to Microsoft's Board of Directors?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "L26",
+    "category": "lookup",
+    "question": "What workforce reduction did Alphabet announce in 2023?",
+    "metrics": [],
+    "tickers": [
+      "GOOGL"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$3.9 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "L27",
+    "category": "lookup",
+    "question": "What are NVIDIA's risks related to Chinese government actions?",
+    "metrics": [],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "N01",
+    "category": "numeric",
+    "question": "What were Apple's total net sales in fiscal 2023?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "AAPL"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [
+      "[XBRL AAPL FY2023 Total revenue]"
+    ],
+    "gold_figures": [
+      "$383,285 million",
+      "3%"
+    ],
+    "covered": [
+      "$383,285 million",
+      "3%"
+    ]
+  },
+  {
+    "id": "N02",
+    "category": "numeric",
+    "question": "How much did Apple spend on research and development in fiscal 2025?",
+    "metrics": [
+      "rnd"
+    ],
+    "tickers": [
+      "AAPL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL AAPL FY2025 Research and development expense]"
+    ],
+    "gold_figures": [
+      "$34,550 million",
+      "10%",
+      "(8%"
+    ],
+    "covered": [
+      "$34,550 million",
+      "10%"
+    ]
+  },
+  {
+    "id": "N03",
+    "category": "numeric",
+    "question": "What was Microsoft Cloud revenue in fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$168.9 billion",
+      "23%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N04",
+    "category": "numeric",
+    "question": "What was NVIDIA's total revenue for fiscal 2025?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL NVDA FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "$130.5 billion",
+      "114%"
+    ],
+    "covered": [
+      "$130.5 billion",
+      "114%"
+    ]
+  },
+  {
+    "id": "N05",
+    "category": "numeric",
+    "question": "What was NVIDIA's Data Center revenue in fiscal 2023?",
+    "metrics": [],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$15.01 billion",
+      "41%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N06",
+    "category": "numeric",
+    "question": "What were Amazon's total net sales in 2025?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "AMZN"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL AMZN FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "$716,924 million"
+    ],
+    "covered": [
+      "$716,924 million"
+    ]
+  },
+  {
+    "id": "N07",
+    "category": "numeric",
+    "question": "How much revenue did Google Search & other generate in 2025?",
+    "metrics": [],
+    "tickers": [
+      "GOOGL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$224,532 million",
+      "$198,084 million"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N08",
+    "category": "numeric",
+    "question": "What was Meta's total revenue in 2025?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "META"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL META FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "$200,966 million",
+      "22%"
+    ],
+    "covered": [
+      "$200,966 million",
+      "22%"
+    ]
+  },
+  {
+    "id": "N09",
+    "category": "numeric",
+    "question": "What were Meta's capital expenditures in 2025?",
+    "metrics": [
+      "capex"
+    ],
+    "tickers": [
+      "META"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL META FY2025 Purchases of property and equipment]"
+    ],
+    "gold_figures": [
+      "$72.22 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N10",
+    "category": "numeric",
+    "question": "How much revenue did Tesla's energy generation and storage business generate in 2024?",
+    "metrics": [],
+    "tickers": [
+      "TSLA"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$10,086 million"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N11",
+    "category": "numeric",
+    "question": "How many consumer vehicles did Tesla deliver in 2025?",
+    "metrics": [],
+    "tickers": [
+      "TSLA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "1.64 million",
+      "1.66 million"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N12",
+    "category": "numeric",
+    "question": "What was JPMorgan Chase's net income for 2025?",
+    "metrics": [
+      "net_income"
+    ],
+    "tickers": [
+      "JPM"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL JPM FY2025 Net income]"
+    ],
+    "gold_figures": [
+      "$57.0 billion",
+      "2%",
+      "$20.02"
+    ],
+    "covered": [
+      "$57.0 billion",
+      "2%"
+    ]
+  },
+  {
+    "id": "N13",
+    "category": "numeric",
+    "question": "What was JPMorgan's firmwide net interest income in 2024?",
+    "metrics": [],
+    "tickers": [
+      "JPM"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$92.6 billion",
+      "4%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N14",
+    "category": "numeric",
+    "question": "What was Visa's net revenue in fiscal 2024?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "V"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [
+      "[XBRL V FY2024 Total revenue]"
+    ],
+    "gold_figures": [
+      "$35,926 million",
+      "10%"
+    ],
+    "covered": [
+      "$35,926 million",
+      "10%"
+    ]
+  },
+  {
+    "id": "N15",
+    "category": "numeric",
+    "question": "What was Mastercard's net revenue in 2022?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "MA"
+    ],
+    "years": [
+      2022
+    ],
+    "facts": [
+      "[XBRL MA FY2022 Total revenue]"
+    ],
+    "gold_figures": [
+      "$22,237 million",
+      "18%",
+      "(23%"
+    ],
+    "covered": [
+      "$22,237 million",
+      "18%"
+    ]
+  },
+  {
+    "id": "N16",
+    "category": "numeric",
+    "question": "What were Amazon's cash capital expenditures in 2023?",
+    "metrics": [
+      "capex"
+    ],
+    "tickers": [
+      "AMZN"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [
+      "[XBRL AMZN FY2023 Purchases of property and equipment]"
+    ],
+    "gold_figures": [
+      "$48.1 billion",
+      "$58.3 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "N17",
+    "category": "numeric",
+    "question": "What was NVIDIA's revenue in fiscal 2023?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [
+      "[XBRL NVDA FY2023 Total revenue]"
+    ],
+    "gold_figures": [
+      "$26.97 billion",
+      "$26,974 million"
+    ],
+    "covered": [
+      "$26.97 billion",
+      "$26,974 million"
+    ]
+  },
+  {
+    "id": "T01",
+    "category": "trend",
+    "question": "How has Microsoft's Azure growth rate changed from fiscal 2022 to fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "45%",
+      "29%",
+      "30%",
+      "34%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "T02",
+    "category": "trend",
+    "question": "How did AWS sales growth evolve from 2022 to 2025?",
+    "metrics": [],
+    "tickers": [
+      "AMZN"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "29%",
+      "13%",
+      "19%",
+      "20%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "T03",
+    "category": "trend",
+    "question": "How much did Reality Labs reduce Meta's operating profit each year from 2022 to 2025?",
+    "metrics": [],
+    "tickers": [
+      "META"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$13.72B",
+      "$16.12B",
+      "$17.73B",
+      "$19.19B"
+    ],
+    "covered": []
+  },
+  {
+    "id": "T04",
+    "category": "trend",
+    "question": "How have Tesla's vehicle deliveries trended from 2022 to 2025?",
+    "metrics": [],
+    "tickers": [
+      "TSLA"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "1,313,851",
+      "1,808,581",
+      "1,789,000",
+      "1.64 million"
+    ],
+    "covered": []
+  },
+  {
+    "id": "T05",
+    "category": "trend",
+    "question": "How did JPMorgan Chase's net income change from 2022 to 2025?",
+    "metrics": [
+      "net_income"
+    ],
+    "tickers": [
+      "JPM"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [
+      "[XBRL JPM FY2022 Net income]",
+      "[XBRL JPM FY2023 Net income]",
+      "[XBRL JPM FY2024 Net income]",
+      "[XBRL JPM FY2025 Net income]"
+    ],
+    "gold_figures": [
+      "$37.7B",
+      "22%",
+      "$49.6B",
+      "32%",
+      "$58.5B",
+      "18%",
+      "$57.0B",
+      "2%"
+    ],
+    "covered": [
+      "$37.7B",
+      "22%",
+      "$49.6B",
+      "32%",
+      "$58.5B",
+      "18%",
+      "$57.0B",
+      "2%"
+    ]
+  },
+  {
+    "id": "T06",
+    "category": "trend",
+    "question": "How did NVIDIA's total revenue grow from fiscal 2022 to fiscal 2025?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [
+      "[XBRL NVDA FY2022 Total revenue]",
+      "[XBRL NVDA FY2023 Total revenue]",
+      "[XBRL NVDA FY2024 Total revenue]",
+      "[XBRL NVDA FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "$26.91B",
+      "$26.97B",
+      "$60.9B",
+      "126%",
+      "$130.5B",
+      "114%"
+    ],
+    "covered": [
+      "$26.91B",
+      "$26.97B",
+      "$60.9B",
+      "126%",
+      "$130.5B",
+      "114%"
+    ]
+  },
+  {
+    "id": "T07",
+    "category": "trend",
+    "question": "How has Visa's net revenue growth rate changed from fiscal 2022 to 2025?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "V"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [
+      "[XBRL V FY2022 Total revenue]",
+      "[XBRL V FY2023 Total revenue]",
+      "[XBRL V FY2024 Total revenue]",
+      "[XBRL V FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "22%",
+      "11%",
+      "10%",
+      "11%"
+    ],
+    "covered": [
+      "22%",
+      "11%",
+      "10%",
+      "11%"
+    ]
+  },
+  {
+    "id": "T08",
+    "category": "trend",
+    "question": "How did Mastercard's net revenue growth change between 2022 and 2025?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "MA"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [
+      "[XBRL MA FY2022 Total revenue]",
+      "[XBRL MA FY2023 Total revenue]",
+      "[XBRL MA FY2024 Total revenue]",
+      "[XBRL MA FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "18%",
+      "13%",
+      "12%",
+      "16%"
+    ],
+    "covered": [
+      "18%",
+      "13%",
+      "12%",
+      "16%"
+    ]
+  },
+  {
+    "id": "T09",
+    "category": "trend",
+    "question": "How has Microsoft Cloud revenue grown from fiscal 2023 to fiscal 2025?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$111.6B",
+      "22%",
+      "$137.4B",
+      "23%",
+      "$168.9B",
+      "23%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "T10",
+    "category": "trend",
+    "question": "How much did Google Cloud revenue increase each year from 2022 to 2025?",
+    "metrics": [],
+    "tickers": [
+      "GOOGL"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$7.1B",
+      "$6.8B",
+      "$10.1B",
+      "$15.5B"
+    ],
+    "covered": []
+  },
+  {
+    "id": "T11",
+    "category": "trend",
+    "question": "How much stock did Apple repurchase in each fiscal year from 2022 to 2025?",
+    "metrics": [
+      "buybacks"
+    ],
+    "tickers": [
+      "AAPL"
+    ],
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "facts": [
+      "[XBRL AAPL FY2022 Repurchases of common stock]",
+      "[XBRL AAPL FY2023 Repurchases of common stock]",
+      "[XBRL AAPL FY2024 Repurchases of common stock]",
+      "[XBRL AAPL FY2025 Repurchases of common stock]"
+    ],
+    "gold_figures": [
+      "$90.2B",
+      "$76.6B",
+      "$95.0B",
+      "$89.3B"
+    ],
+    "covered": []
+  },
+  {
+    "id": "T12",
+    "category": "trend",
+    "question": "How did Meta's capital expenditures change from 2024 to 2025?",
+    "metrics": [
+      "capex"
+    ],
+    "tickers": [
+      "META"
+    ],
+    "years": [
+      2024,
+      2025
+    ],
+    "facts": [
+      "[XBRL META FY2024 Purchases of property and equipment]",
+      "[XBRL META FY2025 Purchases of property and equipment]"
+    ],
+    "gold_figures": [
+      "$39.23 billion",
+      "$72.22 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "C01",
+    "category": "comparison",
+    "question": "Compare the growth of Microsoft Azure and Amazon AWS in their fiscal 2025.",
+    "metrics": [],
+    "tickers": [
+      "MSFT",
+      "AMZN"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "34%",
+      "20%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "C02",
+    "category": "comparison",
+    "question": "How did Google Cloud and AWS revenue growth compare in 2024?",
+    "metrics": [],
+    "tickers": [
+      "GOOGL",
+      "AMZN"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$10.1 billion",
+      "19%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "C03",
+    "category": "comparison",
+    "question": "Which grew net revenue faster in fiscal 2025, Visa or Mastercard?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "V",
+      "MA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL V FY2025 Total revenue]",
+      "[XBRL MA FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "16%",
+      "(15%",
+      "11%"
+    ],
+    "covered": [
+      "16%",
+      "11%"
+    ]
+  },
+  {
+    "id": "C04",
+    "category": "comparison",
+    "question": "Compare Visa's and Mastercard's net revenue growth in 2024.",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "V",
+      "MA"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [
+      "[XBRL V FY2024 Total revenue]",
+      "[XBRL MA FY2024 Total revenue]"
+    ],
+    "gold_figures": [
+      "10%",
+      "12%",
+      "(13%"
+    ],
+    "covered": [
+      "10%",
+      "12%"
+    ]
+  },
+  {
+    "id": "C05",
+    "category": "comparison",
+    "question": "Which had more employees in 2025, Apple or Microsoft?",
+    "metrics": [],
+    "tickers": [
+      "AAPL",
+      "MSFT"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "228,000",
+      "166,000"
+    ],
+    "covered": []
+  },
+  {
+    "id": "C06",
+    "category": "comparison",
+    "question": "Compare Apple's Services net sales growth with Google Cloud's revenue growth in 2025.",
+    "metrics": [],
+    "tickers": [
+      "AAPL",
+      "GOOGL"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$109,158 million",
+      "14%",
+      "$15.5 billion"
+    ],
+    "covered": []
+  },
+  {
+    "id": "C07",
+    "category": "comparison",
+    "question": "Which earned more net income in 2025, Meta or JPMorgan Chase?",
+    "metrics": [
+      "net_income"
+    ],
+    "tickers": [
+      "META",
+      "JPM"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL META FY2025 Net income]",
+      "[XBRL JPM FY2025 Net income]"
+    ],
+    "gold_figures": [
+      "$60.46 billion",
+      "$57.0 billion"
+    ],
+    "covered": [
+      "$60.46 billion",
+      "$57.0 billion"
+    ]
+  },
+  {
+    "id": "C08",
+    "category": "comparison",
+    "question": "Compare Tesla's 2024 total revenues with NVIDIA's fiscal 2024 revenue.",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "TSLA",
+      "NVDA"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [
+      "[XBRL TSLA FY2024 Total revenue]",
+      "[XBRL NVDA FY2024 Total revenue]"
+    ],
+    "gold_figures": [
+      "$97,690 million",
+      "$60.9 billion"
+    ],
+    "covered": [
+      "$97,690 million",
+      "$60.9 billion"
+    ]
+  },
+  {
+    "id": "C09",
+    "category": "comparison",
+    "question": "Compare Apple's and Amazon's total net sales in fiscal 2025.",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "AAPL",
+      "AMZN"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL AAPL FY2025 Total revenue]",
+      "[XBRL AMZN FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "$716,924 million",
+      "$416,161 million"
+    ],
+    "covered": [
+      "$716,924 million",
+      "$416,161 million"
+    ]
+  },
+  {
+    "id": "C10",
+    "category": "comparison",
+    "question": "How did cross-border activity drive Visa's and Mastercard's revenue in 2025?",
+    "metrics": [],
+    "tickers": [
+      "V",
+      "MA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "13%",
+      "12%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "C11",
+    "category": "comparison",
+    "question": "What cost-cutting steps did Meta and Alphabet take in 2023?",
+    "metrics": [],
+    "tickers": [
+      "META",
+      "GOOGL"
+    ],
+    "years": [
+      2023
+    ],
+    "facts": [],
+    "gold_figures": [],
+    "covered": []
+  },
+  {
+    "id": "C12",
+    "category": "comparison",
+    "question": "Compare JPMorgan's and NVIDIA's revenue growth in their 2024 fiscal years.",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "JPM",
+      "NVDA"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [
+      "[XBRL JPM FY2024 Total revenue]",
+      "[XBRL NVDA FY2024 Total revenue]"
+    ],
+    "gold_figures": [
+      "$177.6 billion",
+      "12%",
+      "$60.9 billion",
+      "126%"
+    ],
+    "covered": [
+      "$177.6 billion",
+      "12%",
+      "$60.9 billion",
+      "126%"
+    ]
+  },
+  {
+    "id": "F01",
+    "category": "follow_up",
+    "question": "And what about the year before?",
+    "metrics": [],
+    "tickers": [
+      "MSFT"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "30%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "F02",
+    "category": "follow_up",
+    "question": "How about in 2025?",
+    "metrics": [],
+    "tickers": [
+      "TSLA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [],
+    "gold_figures": [
+      "1.64 million"
+    ],
+    "covered": []
+  },
+  {
+    "id": "F03",
+    "category": "follow_up",
+    "question": "What drove its net interest income that year?",
+    "metrics": [],
+    "tickers": [
+      "JPM"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "$92.6 billion",
+      "4%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "F04",
+    "category": "follow_up",
+    "question": "And Mastercard's?",
+    "metrics": [
+      "revenue"
+    ],
+    "tickers": [
+      "MA"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL MA FY2025 Total revenue]"
+    ],
+    "gold_figures": [
+      "16%",
+      "(15%"
+    ],
+    "covered": [
+      "16%"
+    ]
+  },
+  {
+    "id": "F05",
+    "category": "follow_up",
+    "question": "What share of data center revenue came from China?",
+    "metrics": [],
+    "tickers": [
+      "NVDA"
+    ],
+    "years": [
+      2024
+    ],
+    "facts": [],
+    "gold_figures": [
+      "19%",
+      "14%"
+    ],
+    "covered": []
+  },
+  {
+    "id": "F06",
+    "category": "follow_up",
+    "question": "And in 2025?",
+    "metrics": [
+      "capex"
+    ],
+    "tickers": [
+      "META"
+    ],
+    "years": [
+      2025
+    ],
+    "facts": [
+      "[XBRL META FY2025 Purchases of property and equipment]"
+    ],
+    "gold_figures": [
+      "$72.22 billion"
+    ],
+    "covered": []
+  }
+]

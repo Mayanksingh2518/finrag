@@ -166,6 +166,11 @@ def test_numbers_extracted_with_units_and_years_ignored():
     assert [(n.value, n.scale, n.percent) for n in nums] == [(14, 1, True), (109.2, 1e9, False), (2345, 1, False)]
 
 
+def test_short_scale_suffixes_only_when_attached():
+    nums = extract_numbers("Net income was $37.7B and $450M; see Item 7 B.")
+    assert [(n.value, n.scale) for n in nums] == [(37.7, 1e9), (450, 1e6), (7, 1)]
+
+
 def test_verifier_matches_figures_across_units_and_catches_inventions():
     sources = _sources("| Services | 109,158 | 14% | 96,169 |", "Revenue was $60.9 billion, up 126%.")
     claims = [

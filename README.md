@@ -58,8 +58,8 @@ API: `GET /api/health`, `GET /api/meta`, `POST /api/search` (schemas in `app/api
 - [x] Phase 2: Parsing (pages, sections, tables) and chunking (17.6k chunks, quality report)
 - [x] Phase 3: Indexing (embeddings + FAISS, BM25), hybrid retrieval, cross-encoder reranking (12/12 smoke queries in all modes; 1.3 s reranked p50 on Apple M4)
 - [x] Phase 4: Evaluation harness v0 (84-question golden set, Recall@K/MRR/nDCG, ablations): hybrid + rerank recall@5 0.884, MRR 0.920 ([report](reports/retrieval_v0.md))
-- [ ] Phase 5: Grounded generation with citations and abstention (built; local 3B model: false abstention 0.054, citation hit 0.863, all unanswerable refused ([report](reports/generation_v1_ollama.md)); Groq baseline pending)
-- [ ] Phase 6: LangGraph agent (query analysis, decomposition, memory, XBRL facts tool)
+- [x] Phase 5: Grounded generation with verified page citations and abstention: local 3B model false abstention 0.054, citation hit 0.863, all unanswerable refused ([report](reports/generation_v1_ollama.md)); Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 on all 84 questions ([report](reports/generation_v1_groq.md))
+- [ ] Phase 6: LangGraph agent (query analysis, decomposition, memory, XBRL facts tool) (in progress: query analyzer matches gold-filter retrieval ([report](reports/analyzer_v0.md)); retrieval plan with per-entity quotas and an MD&A prior lifts recall@5 0.914 → 0.921, MRR 0.918 → 0.927 ([report](reports/plan_v0.md)); XBRL company-facts tool resolves 459/520 metric cells and covers 76% of gold figures on the questions it fires for ([report](reports/xbrl_v0.md)); LangGraph agent graph with conversation memory done, agent-mode eval next)
 - [ ] Phase 7: Full evaluation (RAGAS, Langfuse tracing, latency/cost)
-- [ ] Phase 8: Serving: FastAPI + glassmorphism React UI (search UI done; answers/streaming after Phase 5)
+- [ ] Phase 8: Serving: FastAPI + glassmorphism React UI (search and answer UI done; streaming left)
 - [ ] Phase 9: Postgres/pgvector, Docker Compose, CI eval gate

@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from typing import Literal
 
 from app.generation.context import Source, build_sources, render_sources
-from app.generation.llm import LLM, Message
+from app.generation.llm import LLM, LLMResponse, Message
 from app.generation.schemas import Claim, GeneratedAnswer
 from app.generation.verify import VerifiedClaim, verify_claims
 from app.retrieval.decompose import search_decomposed, split_filters
@@ -35,6 +35,15 @@ Rules:
 6. Be concise: 1-4 sentences, or a short list for multi-company or multi-year questions.
 7. List every factual statement of the answer in claims, each with its source ids."""
 
+# Appended only when XBRL facts are among the sources, so prompts without them (and the cached
+# v1 baselines) stay byte-identical.
+XBRL_RULE = """
+8. Sources marked "XBRL financial data" are the company's tagged GAAP line items (figures in millions,
+   with the prior year and the change). Prefer them for exact totals and growth rates. When a filing
+   passage defines the asked metric differently (e.g. capital expenditures "including finance leases",
+   net of incentives, or a buyback program total), answer with the passage's figure and its definition,
+   and cite the XBRL figure only as the GAAP line item."""
+
 Confidence = Literal["high", "medium", "low", "none"]
 
 
@@ -56,8 +65,9 @@ class AnswerResult:
 
 
 def build_messages(question: str, sources: Sequence[Source]) -> list[Message]:
+    system = SYSTEM_PROMPT + (XBRL_RULE if any(s.is_xbrl for s in sources) else "")
     return [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": system},
         {"role": "user", "content": f"Sources:\n\n{render_sources(sources)}\n\nQuestion: {question}"},
     ]
 
@@ -156,42 +166,55 @@ class Answerer:
         sources = build_sources(hits, self.token_budget)
         timings = {"retrieval": retrieval_ms}
         if not sources:
-            return AnswerResult(question, "", True, "No passages matched the question and filters.", "none", [], [], [],
-                                timings)
+            return no_sources(question, timings)
+        generated, response = self.generate(question, sources, timings)
+        return finalize(question, generated, response, sources, timings)
 
+    def generate(self, question: str, sources: Sequence[Source],
+                 timings: dict[str, float]) -> tuple[GeneratedAnswer, LLMResponse]:
         start = time.perf_counter()
         generated, response = self.llm.generate(build_messages(question, sources), GeneratedAnswer)
         timings["generation"] = round((time.perf_counter() - start) * 1000, 1)  # incl. rate-limit waits
         timings["llm"] = 0.0 if response.cached else response.latency_ms  # the provider call itself
+        return generated, response
 
-        text = normalize_markers(generated.answer.strip())
-        model_claims = generated.claims or ([] if generated.abstained else claims_from_text(text))
-        claims = verify_claims(model_claims, sources)
-        # An answer is only shown if at least one claim checks out against its cited page;
-        # an answer with no claims at all can't be verified, so it is treated as an abstention.
-        abstained = generated.abstained or not any(c.supported for c in claims)
-        reason = generated.abstain_reason if generated.abstained else ""
-        if abstained and not generated.abstained:
-            reason = ("None of the answer's claims could be verified against the cited sources." if claims
-                      else "The model gave no verifiable, cited claims for its answer.")
-        cited = list(dict.fromkeys(sid for c in claims if c.supported for sid in c.source_ids))
-        # Citations the model didn't write inline (missing, or repaired by the verifier) go at the end.
-        extra = [sid for sid in cited if f"[{sid}]" not in text]
-        if extra:
-            text = f"{text} {''.join(f'[{sid}]' for sid in extra)}"
-        return AnswerResult(
-            question=question,
-            answer="" if abstained else render_citations(text, sources),
-            abstained=abstained,
-            abstain_reason=reason,
-            confidence=confidence_of(claims, sources, abstained),
-            claims=claims,
-            sources=sources,
-            cited_source_ids=cited,
-            timings_ms=timings,
-            usage={"prompt": response.usage.prompt_tokens, "completion": response.usage.completion_tokens,
-                   "reasoning": response.usage.reasoning_tokens},
-            provider=response.provider,
-            model=response.model,
-            cached=response.cached,
-        )
+
+def no_sources(question: str, timings: dict[str, float]) -> AnswerResult:
+    return AnswerResult(question, "", True, "No passages matched the question and filters.", "none", [], [], [], timings)
+
+
+def finalize(question: str, generated: GeneratedAnswer, response: LLMResponse, sources: Sequence[Source],
+             timings: dict[str, float]) -> AnswerResult:
+    """Verify the model's claims against the sources, decide abstention, render citations."""
+    sources = list(sources)
+    text = normalize_markers(generated.answer.strip())
+    model_claims = generated.claims or ([] if generated.abstained else claims_from_text(text))
+    claims = verify_claims(model_claims, sources)
+    # An answer is only shown if at least one claim checks out against its cited page;
+    # an answer with no claims at all can't be verified, so it is treated as an abstention.
+    abstained = generated.abstained or not any(c.supported for c in claims)
+    reason = generated.abstain_reason if generated.abstained else ""
+    if abstained and not generated.abstained:
+        reason = ("None of the answer's claims could be verified against the cited sources." if claims
+                  else "The model gave no verifiable, cited claims for its answer.")
+    cited = list(dict.fromkeys(sid for c in claims if c.supported for sid in c.source_ids))
+    # Citations the model didn't write inline (missing, or repaired by the verifier) go at the end.
+    extra = [sid for sid in cited if f"[{sid}]" not in text]
+    if extra:
+        text = f"{text} {''.join(f'[{sid}]' for sid in extra)}"
+    return AnswerResult(
+        question=question,
+        answer="" if abstained else render_citations(text, sources),
+        abstained=abstained,
+        abstain_reason=reason,
+        confidence=confidence_of(claims, sources, abstained),
+        claims=claims,
+        sources=sources,
+        cited_source_ids=cited,
+        timings_ms=timings,
+        usage={"prompt": response.usage.prompt_tokens, "completion": response.usage.completion_tokens,
+               "reasoning": response.usage.reasoning_tokens},
+        provider=response.provider,
+        model=response.model,
+        cached=response.cached,
+    )

@@ -1,0 +1,2771 @@
+{
+ "summary": {
+  "questions": 84,
+  "errors": 0,
+  "abstention_recall": 1.0,
+  "abstention_precision": 0.9090909090909091,
+  "false_abstention_rate": 0.013513513513513514,
+  "citation_hit": 0.9594594594594594,
+  "evidence_recall": 0.884009009009009,
+  "claim_support": 0.9657534246575342,
+  "figure_recall": 0.6534391534391534,
+  "confidence": {
+   "high": 65,
+   "medium": 8,
+   "none": 11
+  },
+  "providers": {
+   "groq": 84
+  },
+  "models": {
+   "openai/gpt-oss-120b": 84
+  },
+  "llm_p50_ms": 1090.6,
+  "llm_p95_ms": 1728.2,
+  "retrieval_p50_ms": 1669.1,
+  "total_tokens": 307188
+ },
+ "records": [
+  {
+   "id": "L01",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple's Services net sales increased in fiscal 2025 primarily due to higher net sales from advertising, the App Store and cloud services [AAPL FY2025 p.23].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2025 p.23]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1761.0,
+    "generation": 3.4,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 2835,
+    "completion": 126,
+    "reasoning": 8
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L02",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple's Greater China net sales declined in fiscal 2025 because iPhone sales were lower, which was only partially offset by higher Mac sales [AAPL FY2025 p.22].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2025 p.22]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1233.1,
+    "generation": 1.3,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3323,
+    "completion": 156,
+    "reasoning": 33
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L03",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple had approximately 166,000 full‑time equivalent employees as of September 27, 2025, the end of its fiscal 2025 year [AAPL FY2025 p.4].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2025 p.4]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1216.4,
+    "generation": 1.4,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3824,
+    "completion": 169,
+    "reasoning": 40
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L04",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Azure and other cloud services revenue grew 34% in fiscal 2025 compared with fiscal 2024 [MSFT FY2025 p.35].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[MSFT FY2025 p.35]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1359.8,
+    "generation": 1.8,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3702,
+    "completion": 216,
+    "reasoning": 107
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L05",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Activision Blizzard joined Microsoft in October 2023. [MSFT FY2024 p.5-6]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[MSFT FY2024 p.5-6]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1380.6,
+    "generation": 1.6,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3844,
+    "completion": 123,
+    "reasoning": 40
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L06",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Microsoft employed approximately 228,000 full-time employees as of June 30, 2025. [MSFT FY2025 p.9]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.3333333333333333,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[MSFT FY2025 p.9]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1175.2,
+    "generation": 1.6,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3627,
+    "completion": 113,
+    "reasoning": 12
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L07",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA recorded an acquisition termination cost of $1.35 billion in fiscal year 2023, reflecting the write‑off of the prepayment made for the Arm acquisition. [NVDA FY2023 p.64-65][NVDA FY2023 p.5][NVDA FY2023 p.43][NVDA FY2023 p.37][NVDA FY2023 p.11][NVDA FY2023 p.11-12]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2023 p.64-65]",
+    "[NVDA FY2023 p.5]",
+    "[NVDA FY2023 p.43]",
+    "[NVDA FY2023 p.37]",
+    "[NVDA FY2023 p.11]",
+    "[NVDA FY2023 p.11-12]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1398.1,
+    "generation": 1.8,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3216,
+    "completion": 187,
+    "reasoning": 32
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L08",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "In fiscal 2025, NVIDIA’s three largest direct customers each accounted for roughly one‑tenth of total revenue—12% for Direct Customer A and 11% each for Direct Customers B and C—while an estimated indirect customer also represented 10% or more of total revenue, all primarily in the Compute & Networking segment. [NVDA FY2025 p.41][NVDA FY2025 p.41-42]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2025 p.41]",
+    "[NVDA FY2025 p.41-42]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1192.4,
+    "generation": 0.8,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3363,
+    "completion": 262,
+    "reasoning": 40
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L09",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA launched the Blackwell architecture in fiscal 2025. [NVDA FY2025 p.6]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2025 p.6]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1166.1,
+    "generation": 2.5,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3369,
+    "completion": 103,
+    "reasoning": 16
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L10",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Amazon employed approximately 1,576,000 full‑time and part‑time employees as of December 31, 2025 [AMZN FY2025 p.4].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AMZN FY2025 p.4]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1334.8,
+    "generation": 1.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3480,
+    "completion": 157,
+    "reasoning": 38
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L11",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "AWS sales grew 19% in 2024, driven primarily by increased customer usage, partially offset by pricing changes from long‑term contracts [AMZN FY2024 p.24-25].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 2,
+   "sources": 9,
+   "cited": [
+    "[AMZN FY2024 p.24-25]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1435.0,
+    "generation": 1.2,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3768,
+    "completion": 164,
+    "reasoning": 20
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L12",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Alphabet agreed to acquire the cloud security company Wiz for $32.0 billion in 2025 [GOOGL FY2025 p.32-33][GOOGL FY2025 p.40][GOOGL FY2025 p.74].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[GOOGL FY2025 p.32-33]",
+    "[GOOGL FY2025 p.40]",
+    "[GOOGL FY2025 p.74]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1126.6,
+    "generation": 1.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3427,
+    "completion": 146,
+    "reasoning": 23
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L13",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Google Cloud revenue growth in 2025 was primarily driven by growth in Google Cloud Platform, especially infrastructure and platform services. [GOOGL FY2025 p.34]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[GOOGL FY2025 p.34]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1103.2,
+    "generation": 1.1,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3012,
+    "completion": 170,
+    "reasoning": 57
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L14",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta's Family of Apps had an average of 3.58 billion daily active people in December 2025. [META FY2025 p.61][META FY2025 p.65-66]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[META FY2025 p.61]",
+    "[META FY2025 p.65-66]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1438.1,
+    "generation": 0.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3736,
+    "completion": 139,
+    "reasoning": 24
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L15",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta continues to open‑source AI models, such as its Llama foundation models, while also maintaining a mix of open and closed models for future development, and makes AI technology available to third parties under open‑source, commercial and non‑commercial license agreements. [META FY2025 p.8][META FY2025 p.19]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[META FY2025 p.8]",
+    "[META FY2025 p.19]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1170.9,
+    "generation": 0.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3273,
+    "completion": 244,
+    "reasoning": 54
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L16",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla launched its Robotaxi service in June 2025. [TSLA FY2025 p.2][TSLA FY2025 p.15]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[TSLA FY2025 p.2]",
+    "[TSLA FY2025 p.15]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1101.9,
+    "generation": 1.6,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3220,
+    "completion": 105,
+    "reasoning": 16
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L17",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla began delivering the Cybertruck in November 2023. [TSLA FY2024 p.2]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[TSLA FY2024 p.2]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1171.8,
+    "generation": 1.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3452,
+    "completion": 117,
+    "reasoning": 32
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L18",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla's automotive regulatory credits revenue rose in 2024 because demand for credits in North America increased as other automobile manufacturers scaled back their battery electric vehicle plans, leading to higher sales of these credits [TSLA FY2024 p.37-38].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[TSLA FY2024 p.37-38]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1452.3,
+    "generation": 1.6,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3542,
+    "completion": 184,
+    "reasoning": 49
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L19",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "In May 2023, JPMorgan Chase acquired certain assets and assumed certain liabilities of First Republic Bank from the FDIC. [JPM FY2023 p.307][JPM FY2023 p.53][JPM FY2023 p.171][JPM FY2023 p.1]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[JPM FY2023 p.307]",
+    "[JPM FY2023 p.53]",
+    "[JPM FY2023 p.171]",
+    "[JPM FY2023 p.1]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1349.4,
+    "generation": 1.6,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3596,
+    "completion": 139,
+    "reasoning": 17
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L20",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "JPMorgan's Standardized CET1 capital ratio requirement at the end of 2025 was 11.5% [JPM FY2025 p.293].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 0.0,
+   "evidence_recall": 0.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.3333333333333333,
+   "claims": 1,
+   "sources": 9,
+   "cited": [
+    "[JPM FY2025 p.293]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1479.0,
+    "generation": 1.5,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3800,
+    "completion": 214,
+    "reasoning": 99
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L21",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Visa’s international transaction revenue grew in fiscal 2025 because nominal cross‑border transaction volume increased about 13%, driven by higher cross‑border payments and currency volatility, which boosted the revenue from processing those transactions [V FY2025 p.46].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[V FY2025 p.46]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1297.8,
+    "generation": 1.2,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3813,
+    "completion": 177,
+    "reasoning": 26
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L22",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Visa accrued $906 million for the interchange multidistrict litigation in fiscal 2023 [V FY2023 p.35-36][V FY2023 p.95].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[V FY2023 p.35-36]",
+    "[V FY2023 p.95]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1489.0,
+    "generation": 1.1,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3661,
+    "completion": 145,
+    "reasoning": 37
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L23",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Mastercard acquired Recorded Future, a global threat intelligence company, in 2024. [MA FY2024 p.78][MA FY2024 p.15]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 9,
+   "cited": [
+    "[MA FY2024 p.78]",
+    "[MA FY2024 p.15]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1198.6,
+    "generation": 0.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3538,
+    "completion": 121,
+    "reasoning": 22
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L24",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Mastercard’s 2025 net‑revenue increase was driven primarily by organic growth in its payment network (≈12% growth) and its value‑added services and solutions (≈23% growth), with additional contributions from acquisitions (about 1% of net revenue) and a modest positive currency impact (about 1%) [MA FY2025 p.56][MA FY2025 p.56].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.3333333333333333,
+   "claims": 4,
+   "sources": 10,
+   "cited": [
+    "[MA FY2025 p.56]",
+    "[MA FY2025 p.56]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1329.4,
+    "generation": 0.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3282,
+    "completion": 319,
+    "reasoning": 33
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L25",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Senior management—including the Chief Information Security Officer (CISO), the EVP of Microsoft Security, the EVP of Cloud + AI, and the head of the Customer Security and Trust organization—present cybersecurity topics to Microsoft’s Board of Directors [MSFT FY2025 p.31][MSFT FY2025 p.31].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 1,
+   "sources": 4,
+   "cited": [
+    "[MSFT FY2025 p.31]",
+    "[MSFT FY2025 p.31]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 157.6,
+    "generation": 0.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 1643,
+    "completion": 246,
+    "reasoning": 78
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L26",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "In January 2023, Alphabet announced a reduction of its workforce, which resulted in $2.1 billion of employee severance and related charges for the year ended December 31, 2023. [GOOGL FY2023 p.76]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.0,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[GOOGL FY2023 p.76]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 995.6,
+    "generation": 1.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3094,
+    "completion": 194,
+    "reasoning": 28
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "L27",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA faces several risks from Chinese government actions, including potential restrictions on automotive product imports and sales that could limit its ability to develop and supply solutions for automotive customers; limits on gaming activities and game access that could hurt Gaming revenue; increased oversight of digital platforms that could affect Data Center revenue; encouragement for customers to buy from China‑based competitors; restrictions on sales of products containing components from suppliers such as Micron; and new standards or action plans that could prevent NVIDIA from designing products to meet required compute‑performance‑per‑watt or memory‑bandwidth metrics, all of which could materially and adversely impact its business, operating results, and financial condition [NVDA FY2025 p.28-29]. Additionally, broader government actions such as export controls, increased gaming usage restrictions, or tariffs are cited as factors that could create supply‑demand mismatches and further harm NVIDIA’s operations [NVDA FY2025 p.16-17].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 7,
+   "sources": 9,
+   "cited": [
+    "[NVDA FY2025 p.28-29]",
+    "[NVDA FY2025 p.16-17]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1309.0,
+    "generation": 1.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3413,
+    "completion": 527,
+    "reasoning": 16
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N01",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple's total net sales in fiscal 2023 were $383.3 billion [AAPL FY2023 p.20][AAPL FY2023 p.34-35].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2023 p.20]",
+    "[AAPL FY2023 p.34-35]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1283.0,
+    "generation": 1.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3380,
+    "completion": 132,
+    "reasoning": 22
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N02",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple spent $34,550 million on research and development in fiscal 2025 [AAPL FY2025 p.24][AAPL FY2025 p.29].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.3333333333333333,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2025 p.24]",
+    "[AAPL FY2025 p.29]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1194.5,
+    "generation": 1.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3362,
+    "completion": 138,
+    "reasoning": 30
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N03",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Microsoft Cloud revenue was $168.9 billion in fiscal 2025 [MSFT FY2025 p.85].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 9,
+   "cited": [
+    "[MSFT FY2025 p.85]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1428.0,
+    "generation": 1.4,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3797,
+    "completion": 112,
+    "reasoning": 13
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N04",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA's total revenue for fiscal 2025 was $130.5 billion. [NVDA FY2025 p.38][NVDA FY2025 p.52]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2025 p.38]",
+    "[NVDA FY2025 p.52]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1353.1,
+    "generation": 1.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3588,
+    "completion": 122,
+    "reasoning": 19
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N05",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA's Data Center revenue in fiscal 2023 was $15.01 billion [NVDA FY2023 p.38][NVDA FY2023 p.86].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2023 p.38]",
+    "[NVDA FY2023 p.86]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1451.2,
+    "generation": 1.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3208,
+    "completion": 129,
+    "reasoning": 17
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N06",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Amazon's total net sales in 2025 were $716,924 million [AMZN FY2025 p.24][AMZN FY2025 p.37].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AMZN FY2025 p.24]",
+    "[AMZN FY2025 p.37]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1518.6,
+    "generation": 1.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3826,
+    "completion": 140,
+    "reasoning": 35
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N07",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Google Search & other generated $224,532 million in 2025, i.e., about $224.5 billion [GOOGL FY2025 p.60][GOOGL FY2025 p.33].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[GOOGL FY2025 p.60]",
+    "[GOOGL FY2025 p.33]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1199.0,
+    "generation": 1.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 2843,
+    "completion": 162,
+    "reasoning": 36
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N08",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta's total revenue in 2025 was $200.97 billion [META FY2025 p.102].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[META FY2025 p.102]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1461.5,
+    "generation": 1.1,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3213,
+    "completion": 131,
+    "reasoning": 32
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N09",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta's capital expenditures in 2025 were $72.22 billion. [META FY2025 p.61][META FY2025 p.77]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[META FY2025 p.61]",
+    "[META FY2025 p.77]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1280.5,
+    "generation": 1.6,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 2994,
+    "completion": 135,
+    "reasoning": 36
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N10",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla's energy generation and storage segment generated $10.086 billion in revenue in 2024 [TSLA FY2024 p.90][TSLA FY2024 p.37].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 9,
+   "cited": [
+    "[TSLA FY2024 p.90]",
+    "[TSLA FY2024 p.37]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1570.0,
+    "generation": 2.0,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3586,
+    "completion": 153,
+    "reasoning": 37
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N11",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla delivered approximately 1.64 million consumer vehicles in 2025. [TSLA FY2025 p.31]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[TSLA FY2025 p.31]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1669.1,
+    "generation": 0.6,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3843,
+    "completion": 113,
+    "reasoning": 20
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N12",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "JPMorgan Chase reported net income of $57.0 billion for 2025 [JPM FY2025 p.47][JPM FY2025 p.165].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.3333333333333333,
+   "claims": 1,
+   "sources": 9,
+   "cited": [
+    "[JPM FY2025 p.47]",
+    "[JPM FY2025 p.165]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1623.4,
+    "generation": 0.8,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3768,
+    "completion": 153,
+    "reasoning": 41
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N13",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "JPMorgan's firmwide net interest income in 2024 was $92.6 billion [JPM FY2024 p.54][JPM FY2024 p.68].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 9,
+   "cited": [
+    "[JPM FY2024 p.54]",
+    "[JPM FY2024 p.68]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1586.1,
+    "generation": 0.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3710,
+    "completion": 158,
+    "reasoning": 42
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N14",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Visa's net revenue in fiscal 2024 was $35,926 million [V FY2024 p.71][V FY2024 p.44][V FY2024 p.38][V FY2024 p.44].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[V FY2024 p.71]",
+    "[V FY2024 p.44]",
+    "[V FY2024 p.38]",
+    "[V FY2024 p.44]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1477.8,
+    "generation": 1.1,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3482,
+    "completion": 146,
+    "reasoning": 26
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N15",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Mastercard reported net revenue of $22,237 million for 2022 [MA FY2022 p.66][MA FY2022 p.53].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.3333333333333333,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[MA FY2022 p.66]",
+    "[MA FY2022 p.53]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1509.1,
+    "generation": 0.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3777,
+    "completion": 128,
+    "reasoning": 22
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N16",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Amazon's cash capital expenditures were $48.1 billion in 2023. [AMZN FY2023 p.22-23]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[AMZN FY2023 p.22-23]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1668.8,
+    "generation": 0.8,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3730,
+    "completion": 120,
+    "reasoning": 23
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "N17",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA reported revenue of $26.97 billion in fiscal 2023 [NVDA FY2023 p.37-38][NVDA FY2023 p.37].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2023 p.37-38]",
+    "[NVDA FY2023 p.37]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 1534.5,
+    "generation": 0.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3682,
+    "completion": 133,
+    "reasoning": 25
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T01",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Microsoft's Azure growth rate fell from 45% in fiscal 2022 to 34% in fiscal 2025, a decline of 11 percentage points. [MSFT FY2022 p.45][MSFT FY2025 p.39-40]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.5,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 3,
+   "sources": 9,
+   "cited": [
+    "[MSFT FY2022 p.45]",
+    "[MSFT FY2025 p.39-40]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 5729.5,
+    "generation": 4.0,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3795,
+    "completion": 249,
+    "reasoning": 74
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T02",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "AWS sales grew 29% in 2022, slowed to 13% in 2023, then increased to 19% in 2024 and 20% in 2025. [AMZN FY2022 p.23-24][AMZN FY2023 p.24-25][AMZN FY2024 p.24-25][AMZN FY2025 p.24-25]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 4,
+   "sources": 9,
+   "cited": [
+    "[AMZN FY2022 p.23-24]",
+    "[AMZN FY2023 p.24-25]",
+    "[AMZN FY2024 p.24-25]",
+    "[AMZN FY2025 p.24-25]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 11246.7,
+    "generation": 3.8,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3623,
+    "completion": 251,
+    "reasoning": 52
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T03",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Reality Labs reduced Meta's operating profit by approximately $13.72 billion in 2022, $16.12 billion in 2023, $17.73 billion in 2024, and $19.19 billion in 2025. [META FY2022 p.27][META FY2023 p.29][META FY2024 p.28][META FY2025 p.26]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 4,
+   "sources": 10,
+   "cited": [
+    "[META FY2022 p.27]",
+    "[META FY2023 p.29]",
+    "[META FY2024 p.28]",
+    "[META FY2025 p.26]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 11024.1,
+    "generation": 3.0,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3334,
+    "completion": 274,
+    "reasoning": 17
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T04",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "In 2022 Tesla delivered 1,313,851 consumer vehicles [TSLA FY2022 p.32]. The 2025 vehicle delivery figure is not provided in the available sources.",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.25,
+   "claim_support": 0.5,
+   "figure_recall": 0.25,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[TSLA FY2022 p.32]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 12376.2,
+    "generation": 3.3,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3616,
+    "completion": 201,
+    "reasoning": 62
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T05",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "JPMorgan Chase's net income increased from $37.7 billion in 2022 to $57.0 billion in 2025, a rise of $19.3 billion. [JPM FY2022 p.47][JPM FY2025 p.47]",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.5,
+   "claim_support": 0.6666666666666666,
+   "figure_recall": 0.25,
+   "claims": 3,
+   "sources": 9,
+   "cited": [
+    "[JPM FY2022 p.47]",
+    "[JPM FY2025 p.47]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 12528.4,
+    "generation": 2.3,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3796,
+    "completion": 264,
+    "reasoning": 58
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T06",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA's total revenue grew from $26.91 billion in fiscal 2022 to $130.5 billion in fiscal 2025, an increase of $103.59 billion (about 385%). [NVDA FY2022 p.31][NVDA FY2025 p.38]",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.5,
+   "claim_support": 0.6666666666666666,
+   "figure_recall": 0.3333333333333333,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2022 p.31]",
+    "[NVDA FY2025 p.38]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 11612.2,
+    "generation": 2.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3476,
+    "completion": 324,
+    "reasoning": 110
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T07",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Visa's net revenue grew 11% from fiscal 2022 ($29,310 million) to 2023 ($32,653 million) [V FY2023 p.40], 10% from 2023 to 2024 ($35,926 million) [V FY2024 p.44][V FY2024 p.38], and 11% from 2024 to 2025 ($40,000 million) [V FY2025 p.46].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.25,
+   "claim_support": 1.0,
+   "figure_recall": 0.75,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[V FY2023 p.40]",
+    "[V FY2024 p.44]",
+    "[V FY2024 p.38]",
+    "[V FY2025 p.46]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 12823.3,
+    "generation": 3.7,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3529,
+    "completion": 388,
+    "reasoning": 107
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T08",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Mastercard's net revenue grew 18% in 2022, slowed to 13% in 2023, 12% in 2024, and was 16% in 2025, meaning the growth rate fell from 18% to 16% between 2022 and 2025 (a 2‑percentage‑point decline). [MA FY2022 p.53][MA FY2023 p.55][MA FY2024 p.53][MA FY2025 p.56]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 5,
+   "sources": 10,
+   "cited": [
+    "[MA FY2022 p.53]",
+    "[MA FY2023 p.55]",
+    "[MA FY2024 p.53]",
+    "[MA FY2025 p.56]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 12816.5,
+    "generation": 1543.0,
+    "llm": 1540.5
+   },
+   "tokens": {
+    "prompt": 3587,
+    "completion": 397,
+    "reasoning": 100
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T09",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Microsoft Cloud revenue grew from $111.6 billion in fiscal 2023 to $168.9 billion in fiscal 2025, an increase of $57.3 billion or about 51% [MSFT FY2023 p.40][MSFT FY2025 p.35].",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.6666666666666666,
+   "claim_support": 0.6666666666666666,
+   "figure_recall": 0.3333333333333333,
+   "claims": 3,
+   "sources": 9,
+   "cited": [
+    "[MSFT FY2023 p.40]",
+    "[MSFT FY2025 p.35]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 10103.8,
+    "generation": 20922.3,
+    "llm": 1361.7
+   },
+   "tokens": {
+    "prompt": 3708,
+    "completion": 299,
+    "reasoning": 79
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T10",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Google Cloud revenue increased by $6.8 billion from 2022 to 2023, by $10.1 billion from 2023 to 2024, and by $15.5 billion from 2024 to 2025. [GOOGL FY2023 p.36][GOOGL FY2024 p.37][GOOGL FY2025 p.34]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.75,
+   "claim_support": 1.0,
+   "figure_recall": 0.75,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[GOOGL FY2023 p.36]",
+    "[GOOGL FY2024 p.37]",
+    "[GOOGL FY2025 p.34]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 12891.7,
+    "generation": 1732.0,
+    "llm": 1728.2
+   },
+   "tokens": {
+    "prompt": 2544,
+    "completion": 329,
+    "reasoning": 113
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T11",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple repurchased $90.2 billion of its common stock in fiscal 2022, $76.6 billion in fiscal 2023, $95.0 billion in fiscal 2024, and $89.3 billion in fiscal 2025. [AAPL FY2022 p.46][AAPL FY2023 p.44-45][AAPL FY2024 p.44][AAPL FY2025 p.44-45]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 4,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2022 p.46]",
+    "[AAPL FY2023 p.44-45]",
+    "[AAPL FY2024 p.44]",
+    "[AAPL FY2025 p.44-45]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 13716.7,
+    "generation": 26324.3,
+    "llm": 2518.6
+   },
+   "tokens": {
+    "prompt": 3267,
+    "completion": 326,
+    "reasoning": 71
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "T12",
+   "category": "trend",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta's capital expenditures rose from $39.23 billion in 2024 to $72.22 billion in 2025, an increase of about $32.99 billion. [META FY2024 p.60][META FY2025 p.77]",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 0.6666666666666666,
+   "figure_recall": 1.0,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[META FY2024 p.60]",
+    "[META FY2025 p.77]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 6570.5,
+    "generation": 1220.8,
+    "llm": 1217.8
+   },
+   "tokens": {
+    "prompt": 2939,
+    "completion": 274,
+    "reasoning": 78
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C01",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Microsoft Azure revenue grew 34% in fiscal 2025, while Amazon AWS revenue grew 20% in fiscal 2025, indicating Azure’s growth rate was higher than AWS’s. [MSFT FY2025 p.35][AMZN FY2025 p.24-25]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.5,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[MSFT FY2025 p.35]",
+    "[AMZN FY2025 p.24-25]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 7580.0,
+    "generation": 36421.5,
+    "llm": 1094.1
+   },
+   "tokens": {
+    "prompt": 3800,
+    "completion": 204,
+    "reasoning": 29
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C02",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "AWS sales grew 19% in 2024 [AMZN FY2024 p.24-25]. Google Cloud revenues increased by $10.1 billion from 2023 to 2024, though the percentage growth is not disclosed in the sources [GOOGL FY2024 p.37].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[AMZN FY2024 p.24-25]",
+    "[GOOGL FY2024 p.37]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 7370.9,
+    "generation": 24813.3,
+    "llm": 1228.4
+   },
+   "tokens": {
+    "prompt": 3468,
+    "completion": 273,
+    "reasoning": 77
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C03",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Mastercard’s net revenue grew 16% in fiscal 2025, while Visa’s net revenue growth rate is not disclosed in the provided sources. [MA FY2025 p.50][V FY2025 p.45-46]",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 0.0,
+   "evidence_recall": 0.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.3333333333333333,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[MA FY2025 p.50]",
+    "[V FY2025 p.45-46]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 2811.4,
+    "generation": 1145.1,
+    "llm": 1142.0
+   },
+   "tokens": {
+    "prompt": 3422,
+    "completion": 243,
+    "reasoning": 108
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C04",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Mastercard’s net revenue grew 12% in fiscal 2024, while Visa’s net revenue grew 10% in fiscal 2024. [MA FY2024 p.47][V FY2024 p.38][V FY2024 p.44]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.6666666666666666,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[MA FY2024 p.47]",
+    "[V FY2024 p.38]",
+    "[V FY2024 p.44]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 3099.1,
+    "generation": 50670.1,
+    "llm": 1040.4
+   },
+   "tokens": {
+    "prompt": 3184,
+    "completion": 191,
+    "reasoning": 49
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C05",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Microsoft had more employees in 2025, with approximately 228,000 full‑time employees, compared to Apple’s approximately 166,000 full‑time equivalent employees [MSFT FY2025 p.9][AAPL FY2025 p.4].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[MSFT FY2025 p.9]",
+    "[AAPL FY2025 p.4]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 2497.5,
+    "generation": 1059.6,
+    "llm": 1055.4
+   },
+   "tokens": {
+    "prompt": 3496,
+    "completion": 223,
+    "reasoning": 36
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C06",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple's Services net sales grew 14% year‑over‑year to $109.2 billion in 2025, while Google Cloud revenue grew about 36% year‑over‑year, increasing by $15.5 billion in 2025. [AAPL FY2025 p.23][GOOGL FY2025 p.34][GOOGL FY2025 p.32]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2025 p.23]",
+    "[GOOGL FY2025 p.34]",
+    "[GOOGL FY2025 p.32]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 2382.0,
+    "generation": 50014.3,
+    "llm": 1347.4
+   },
+   "tokens": {
+    "prompt": 3091,
+    "completion": 291,
+    "reasoning": 97
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C07",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta earned more net income in 2025, reporting $60,458 million versus JPMorgan Chase’s $4,520 million. [META FY2025 p.92][JPM FY2025 p.80]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.5,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 3,
+   "sources": 9,
+   "cited": [
+    "[META FY2025 p.92]",
+    "[JPM FY2025 p.80]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 2652.1,
+    "generation": 1470.0,
+    "llm": 1467.1
+   },
+   "tokens": {
+    "prompt": 3500,
+    "completion": 274,
+    "reasoning": 82
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C08",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla reported total revenues of $97.69 billion for 2024, while NVIDIA reported total revenue of $60.9 billion for its fiscal year 2024, meaning Tesla's revenue was about $36.8 billion higher. [TSLA FY2024 p.32][NVDA FY2024 p.36]",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.5,
+   "claim_support": 0.6666666666666666,
+   "figure_recall": 1.0,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[TSLA FY2024 p.32]",
+    "[NVDA FY2024 p.36]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 2768.3,
+    "generation": 48862.2,
+    "llm": 1482.9
+   },
+   "tokens": {
+    "prompt": 3434,
+    "completion": 256,
+    "reasoning": 43
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C09",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Apple reported total net sales of $416,161 million in fiscal 2025, while Amazon reported total net sales of $716,924 million in fiscal 2025, making Amazon’s 2025 net sales about $300,763 million higher than Apple’s. [AAPL FY2025 p.48][AMZN FY2025 p.24]",
+   "abstain_reason": "",
+   "confidence": "medium",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 0.6666666666666666,
+   "figure_recall": 1.0,
+   "claims": 3,
+   "sources": 10,
+   "cited": [
+    "[AAPL FY2025 p.48]",
+    "[AMZN FY2025 p.24]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 2730.0,
+    "generation": 1091.3,
+    "llm": 1090.6
+   },
+   "tokens": {
+    "prompt": 3891,
+    "completion": 262,
+    "reasoning": 48
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C10",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "In 2025, Mastercard’s payment‑network revenue rose 12% as higher domestic and cross‑border dollar volumes boosted switched transactions, while Visa’s international‑transaction revenue grew about 13% driven by higher nominal cross‑border volume. [MA FY2025 p.56][V FY2025 p.46]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[MA FY2025 p.56]",
+    "[V FY2025 p.46]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 2374.1,
+    "generation": 54197.9,
+    "llm": 1391.0
+   },
+   "tokens": {
+    "prompt": 3716,
+    "completion": 233,
+    "reasoning": 53
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C11",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta reduced expenses by scaling back budgets, cutting company perks, shrinking its real‑estate footprint and conducting employee layoffs with generous severance packages. Alphabet cut costs by announcing a workforce reduction that generated $2.1 billion in severance and related charges, optimizing global office space with $1.8 billion in exit charges, incurring $269 million in accelerated rent and depreciation, and extending the useful life of servers and network equipment to lower depreciation expense. [META FY2023 p.12][GOOGL FY2023 p.34][GOOGL FY2023 p.76][GOOGL FY2023 p.39]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": null,
+   "claims": 5,
+   "sources": 10,
+   "cited": [
+    "[META FY2023 p.12]",
+    "[GOOGL FY2023 p.34]",
+    "[GOOGL FY2023 p.76]",
+    "[GOOGL FY2023 p.39]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 5993.8,
+    "generation": 1603.7,
+    "llm": 1600.4
+   },
+   "tokens": {
+    "prompt": 3281,
+    "completion": 414,
+    "reasoning": 76
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "C12",
+   "category": "comparison",
+   "answerable": true,
+   "abstained": false,
+   "answer": "NVIDIA’s fiscal 2024 revenue grew 126% year‑over‑year to $60.9 billion, while JPMorgan Chase’s fiscal 2024 net revenue grew 9% year‑over‑year to $70.1 billion. [NVDA FY2024 p.36][JPM FY2024 p.79]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 0.5,
+   "claim_support": 1.0,
+   "figure_recall": 0.5,
+   "claims": 2,
+   "sources": 10,
+   "cited": [
+    "[NVDA FY2024 p.36]",
+    "[JPM FY2024 p.79]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 6168.9,
+    "generation": 44409.1,
+    "llm": 1247.7
+   },
+   "tokens": {
+    "prompt": 3799,
+    "completion": 258,
+    "reasoning": 69
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "F01",
+   "category": "follow_up",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Microsoft's Azure and other cloud services revenue grew 30% in fiscal 2024. [MSFT FY2024 p.44-45][MSFT FY2024 p.39]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[MSFT FY2024 p.44-45]",
+    "[MSFT FY2024 p.39]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4125.2,
+    "generation": 28391.2,
+    "llm": 1046.9
+   },
+   "tokens": {
+    "prompt": 3921,
+    "completion": 164,
+    "reasoning": 63
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "F02",
+   "category": "follow_up",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla delivered approximately 1.64 million consumer vehicles in 2025. [TSLA FY2025 p.31]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[TSLA FY2025 p.31]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 4931.3,
+    "generation": 2.9,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 3843,
+    "completion": 113,
+    "reasoning": 20
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "F03",
+   "category": "follow_up",
+   "answerable": true,
+   "abstained": false,
+   "answer": "JPMorgan Chase’s firmwide net interest income in 2024 was driven by balance‑sheet actions such as reinvestments in the investment securities portfolio, higher revolving balances in Card Services, the timing impact of the First Republic acquisition, higher wholesale deposit balances and higher Markets net interest income, while being partially offset by deposit‑margin compression and lower average deposit balances in Consumer & Community Banking [JPM FY2024 p.54].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 0.0,
+   "claims": 2,
+   "sources": 9,
+   "cited": [
+    "[JPM FY2024 p.54]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4240.8,
+    "generation": 1246.9,
+    "llm": 1244.2
+   },
+   "tokens": {
+    "prompt": 3750,
+    "completion": 298,
+    "reasoning": 56
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "F04",
+   "category": "follow_up",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Mastercard's net revenue increased 16% in 2025 versus the prior year (15% on a currency‑neutral basis) [MA FY2025 p.56][MA FY2025 p.50].",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[MA FY2025 p.56]",
+    "[MA FY2025 p.50]"
+   ],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4271.8,
+    "generation": 44533.2,
+    "llm": 981.3
+   },
+   "tokens": {
+    "prompt": 3421,
+    "completion": 150,
+    "reasoning": 22
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "F05",
+   "category": "follow_up",
+   "answerable": true,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources give only qualitative descriptions (mid‑single digit percentage) of China’s contribution to Data Center revenue and do not state a specific share percentage for fiscal year 2024.",
+   "confidence": "none",
+   "citation_hit": 0.0,
+   "evidence_recall": 0.0,
+   "claim_support": null,
+   "figure_recall": 0.0,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4563.5,
+    "generation": 810.2,
+    "llm": 806.9
+   },
+   "tokens": {
+    "prompt": 3653,
+    "completion": 113,
+    "reasoning": 35
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "F06",
+   "category": "follow_up",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta's capital expenditures in 2025 were $72.22 billion. [META FY2025 p.61][META FY2025 p.77]",
+   "abstain_reason": "",
+   "confidence": "high",
+   "citation_hit": 1.0,
+   "evidence_recall": 1.0,
+   "claim_support": 1.0,
+   "figure_recall": 1.0,
+   "claims": 1,
+   "sources": 10,
+   "cited": [
+    "[META FY2025 p.61]",
+    "[META FY2025 p.77]"
+   ],
+   "provider": "groq",
+   "cached": true,
+   "latency_ms": {
+    "retrieval": 3829.6,
+    "generation": 3.2,
+    "llm": 0.0
+   },
+   "tokens": {
+    "prompt": 2994,
+    "completion": 135,
+    "reasoning": 36
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U01",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "None of the provided sources contain information about Netflix paid subscriber numbers for 2024.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 3727.9,
+    "generation": 41138.5,
+    "llm": 846.7
+   },
+   "tokens": {
+    "prompt": 3202,
+    "completion": 69,
+    "reasoning": 11
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U02",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources only contain iPhone net sales figures for fiscal years 2022‑2025; there is no information about fiscal 2018.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 3771.5,
+    "generation": 649.6,
+    "llm": 648.5
+   },
+   "tokens": {
+    "prompt": 3654,
+    "completion": 85,
+    "reasoning": 14
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U03",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources only contain vehicle production and delivery figures up to fiscal year 2025 and do not include any projections or actual delivery numbers for 2027.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4159.2,
+    "generation": 47038.7,
+    "llm": 839.1
+   },
+   "tokens": {
+    "prompt": 3754,
+    "completion": 90,
+    "reasoning": 17
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U04",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources do not contain information about Microsoft's current stock price.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4084.8,
+    "generation": 714.6,
+    "llm": 711.1
+   },
+   "tokens": {
+    "prompt": 3355,
+    "completion": 65,
+    "reasoning": 12
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U05",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources contain no information about Visa acquiring Mastercard or any related acquisition amount.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 3792.0,
+    "generation": 49454.3,
+    "llm": 975.4
+   },
+   "tokens": {
+    "prompt": 3315,
+    "completion": 89,
+    "reasoning": 32
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U06",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "None of the provided sources contain information about Samsung's semiconductor revenue in 2024.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4426.9,
+    "generation": 889.5,
+    "llm": 888.3
+   },
+   "tokens": {
+    "prompt": 3355,
+    "completion": 70,
+    "reasoning": 12
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U07",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources only contain net income figures for fiscal years up to 2025; there is no information about net income for the year 2030.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 9,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4158.2,
+    "generation": 44723.6,
+    "llm": 1008.1
+   },
+   "tokens": {
+    "prompt": 3633,
+    "completion": 86,
+    "reasoning": 14
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U08",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "None of the provided sources contain information about an acquisition of Twitter by Alphabet.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 8,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 4109.1,
+    "generation": 781.0,
+    "llm": 777.1
+   },
+   "tokens": {
+    "prompt": 3681,
+    "completion": 68,
+    "reasoning": 12
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U09",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources only include fiscal years up to 2025; there is no information on Apple’s total net sales for fiscal year 2027.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 3838.4,
+    "generation": 46209.0,
+    "llm": 911.0
+   },
+   "tokens": {
+    "prompt": 3913,
+    "completion": 84,
+    "reasoning": 13
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "U10",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "abstain_reason": "The provided sources do not contain any information about the salary of Amazon's warehouse employees in Germany.",
+   "confidence": "none",
+   "citation_hit": null,
+   "evidence_recall": null,
+   "claim_support": null,
+   "figure_recall": null,
+   "claims": 0,
+   "sources": 10,
+   "cited": [],
+   "provider": "groq",
+   "cached": false,
+   "latency_ms": {
+    "retrieval": 5561.9,
+    "generation": 27764.1,
+    "llm": 869.7
+   },
+   "tokens": {
+    "prompt": 3090,
+    "completion": 71,
+    "reasoning": 11
+   },
+   "error": "",
+   "model": "openai/gpt-oss-120b"
+  }
+ ]
+}

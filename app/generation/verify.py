@@ -29,9 +29,10 @@ from app.generation.schemas import Claim
 
 ClaimStatus = Literal["supported", "unsupported_number", "invalid_citation"]
 
-_NUM = re.compile(r"(?<![\w.])\$?\(?(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?\)?\s*(%|percent|billion|million|thousand|bn|mn)?",
+# "B"/"M" only directly after the digits ("$37.7B"), so a stray letter after a space isn't a unit.
+_NUM = re.compile(r"(?<![\w.])\$?\(?(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?\)?(\s*(?:%|percent|billion|million|thousand|bn|mn)|[BM]\b)?",
                   re.IGNORECASE)
-_SCALE = {"billion": 1e9, "bn": 1e9, "million": 1e6, "mn": 1e6, "thousand": 1e3}
+_SCALE = {"billion": 1e9, "bn": 1e9, "b": 1e9, "million": 1e6, "mn": 1e6, "m": 1e6, "thousand": 1e3}
 
 
 @dataclass(frozen=True)
@@ -46,7 +47,7 @@ class Number:
 def extract_numbers(text: str) -> list[Number]:
     out = []
     for m in _NUM.finditer(text):
-        whole, frac, unit = m.group(1), m.group(2) or "", (m.group(3) or "").lower()
+        whole, frac, unit = m.group(1), m.group(2) or "", (m.group(3) or "").strip().lower()
         value = float(whole.replace(",", "") + frac)
         if not frac and not unit and "," not in whole and 1990 <= value <= 2035:
             continue  # a year

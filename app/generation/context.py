@@ -29,11 +29,19 @@ class Source:
         return c.page_label_start
 
     @property
+    def is_xbrl(self) -> bool:
+        return self.chunk.section == "XBRL"  # a structured fact (app/agent/xbrl.py), not a filing page
+
+    @property
     def citation(self) -> str:
+        if self.is_xbrl:
+            return f"[XBRL {self.chunk.ticker} FY{self.chunk.fiscal_year} {self.chunk.section_title.split(': ', 1)[-1]}]"
         return f"[{self.chunk.ticker} FY{self.chunk.fiscal_year} p.{self.page}]"
 
     def render(self) -> str:
         c = self.chunk
+        if self.is_xbrl:
+            return f"[{self.id}] {c.context}\n{c.text}"
         header = (f"[{self.id}] {c.company} ({c.ticker}) Form 10-K, fiscal year {c.fiscal_year}, "
                   f"{c.section}: {c.section_title}, page {self.page}")
         if c.subsection:

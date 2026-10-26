@@ -11,7 +11,7 @@ without asking for clarification:
 
 1. Read `progress.md` and `docs/ARCHITECTURE.md`.
 2. Check the machine is set up (see "Machines" and "New machine setup" below); if `.venv`,
-   `data/raw`, `data/processed` or the embedding cache are missing, set them up first.
+   `data/raw` (incl. `data/raw/xbrl`), `data/processed` or the embedding cache are missing, set them up first.
 3. Work on the task under "Next task in detail". Complete one phase per "go" (or one
    self-contained step if a phase is too large), following any notes the user added.
 4. Verify: run the tests (`python -m pytest` inside the venv) and run the new code on real data
@@ -57,6 +57,7 @@ cp .env.example .env             # set SEC_USER_AGENT (name + email); API keys f
 python -m app.ingestion.sec_downloader --years 2022 2023 2024 2025   # 40 filings, ~2 min
 python -m app.ingestion.pipeline                                     # chunks, ~1 min
 python -m app.retrieval.build_index                                  # embeddings (cached)
+python -m app.agent.xbrl --download                                  # XBRL company facts, ~45 MB
 python -m pytest
 ```
 

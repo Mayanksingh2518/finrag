@@ -51,7 +51,10 @@ def search_decomposed(searcher, query: str, filters: SearchFilters, k: int, mode
     parts = split_filters(filters)
     if len(parts) == 1:
         return searcher.search(query, filters, k=k, mode=mode)
-    results = [searcher.search(query, f, k=k, mode=mode) for f in parts]
+    if hasattr(searcher, "search_many"):  # one batched rerank over all sub-queries
+        results = searcher.search_many([(query, f) for f in parts], k=k, mode=mode)
+    else:
+        results = [searcher.search(query, f, k=k, mode=mode) for f in parts]
     timings: dict[str, float] = {}
     for r in results:
         for stage, ms in r.timings_ms.items():

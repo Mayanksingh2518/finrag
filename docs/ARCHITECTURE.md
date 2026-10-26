@@ -16,7 +16,7 @@ abstention, structured XBRL financial facts, offline evaluation, tracing, API, U
 ## Pipeline
 
 ```
-                       ┌──────────────────────── Query Analyzer (LLM, structured output) ─────────────┐
+                       ┌──────────── Query Analyzer (rules; LLM only to rewrite follow-ups) ─────────┐
 User query + history → │ condense follow-up → extract {companies, fiscal_years, sections, metric}    │
                        │ classify intent: lookup | compare | trend | numeric | out_of_scope           │
                        │ decompose: "Compare MSFT vs AMZN cloud" → one sub-query per company × year   │
@@ -42,6 +42,24 @@ User query + history → │ condense follow-up → extract {companies, fiscal_y
                                 Answer + [TICKER FY p.N] citations + confidence
 ```
 
+### Agent graph (LangGraph, `app/agent/graph.py`)
+
+```
+START → analyze ─out of range─→ refuse ───────────────────────────────→ respond → END
+           └─in corpus─→ retrieve ─┐                                     ↑
+           └───────────→ xbrl ─────┴→ generate ─→ verify ─(answered)────┘
+                                          └(no sources)→ respond
+                                     verify ─(abstained under a section filter, once)→ widen → retrieve + xbrl
+```
+
+`retrieve` (retrieval plan: per-(company, year) sub-queries, quotas, MD&A prior, one batched
+rerank) and `xbrl` (company facts for detected company-level metrics and named years) run in the
+same step; `generate` waits for both and puts the facts first in the context. Conversation memory is
+the thread's turn list (`ConversationMemory`, LRU over threads, last 6 exchanges), passed in as
+`history`; per-turn chunks are not checkpointed. A question that names its own company and year and
+doesn't refer back ("its", "that year", "And ...?") is treated as standalone: no carry-over, no LLM
+rewrite call.
+
 ## Key design decisions
 
 | Decision | Why |
@@ -53,6 +71,8 @@ User query + history → │ condense follow-up → extract {companies, fiscal_y
 | Cross-encoder reranker | Large precision gain at small k; cheap at this corpus size. |
 | Decomposition for comparisons | One query for "MSFT vs AMZN" lets the bigger company crowd out the other. Per-entity sub-queries with quotas guarantee coverage. |
 | XBRL company facts as a structured tool | Numbers like revenue growth should come from reported figures, not from an LLM reading a table. Text retrieval explains *why*; facts answer *how much*. |
+| XBRL facts next to text, never instead | The GAAP line item can differ from the company's own definition (Meta capex incl. finance leases, Amazon net cash capex). Facts come only from the fiscal year's own 10-K (accession + period), with YoY change from the same filing; the prompt says the filing text wins on definitions. |
+| Explicit turn memory instead of a LangGraph checkpointer | The analyzer needs only the turns; checkpointing would store every step's chunks per thread and warns on every custom dataclass. Swappable for Redis/Postgres in Phase 9. |
 | Abstention as a first-class output | The generator must cite chunks for every claim; uncited claims are dropped, and with no support it returns "insufficient evidence". Evaluated with unanswerable questions. |
 | Verify figures in code, repair citations, judge prose later | Small local models often answer correctly but cite nothing or the wrong source. A deterministic checker (figures matched by value across units) accepts a claim when its figures appear in the cited chunk, or re-attributes it when they appear in the same sentence/row as the claim's words in another provided chunk; invented figures are never rescued. It cannot tell *whose* figure it is (a segment's net income vs the firm's) or check figure-free claims: that needs an LLM faithfulness judge (Phase 7). |
 | Zero-cost, provider-agnostic models | Local bge embeddings and cross-encoder on CPU; Gemini free tier for generation with Groq and local Ollama as fallbacks, behind one LLM interface with caching and rate-limit backoff. No vendor lock-in, no spend. |

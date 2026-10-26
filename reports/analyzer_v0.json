@@ -1,0 +1,3232 @@
+{
+ "summary": {
+  "tickers_exact": 1.0,
+  "years_exact": 0.9054054054054054,
+  "sections_exact": 1.0,
+  "tickers_ok": 1.0,
+  "years_ok": 1.0,
+  "sections_ok": 1.0,
+  "all_exact": 0.9054054054054054,
+  "all_ok": 1.0,
+  "refused_unanswerable": 4,
+  "unanswerable": 10,
+  "refused_answerable": 0,
+  "gold_recall@5": NaN,
+  "gold_recall@10": NaN,
+  "gold_mrr": NaN,
+  "analyzer_recall@5": NaN,
+  "analyzer_recall@10": NaN,
+  "analyzer_mrr": NaN
+ },
+ "records": [
+  {
+   "id": "L01",
+   "category": "lookup",
+   "answerable": true,
+   "question": "Why did Apple's Services net sales increase in fiscal 2025?",
+   "standalone_query": "Why did Apple's Services net sales increase in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L02",
+   "category": "lookup",
+   "answerable": true,
+   "question": "Why did Apple's Greater China net sales decline in fiscal 2025?",
+   "standalone_query": "Why did Apple's Greater China net sales decline in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L03",
+   "category": "lookup",
+   "answerable": true,
+   "question": "How many employees did Apple have at the end of fiscal 2025?",
+   "standalone_query": "How many employees did Apple have at the end of fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L04",
+   "category": "lookup",
+   "answerable": true,
+   "question": "How fast did Microsoft's Azure and other cloud services revenue grow in fiscal 2025?",
+   "standalone_query": "How fast did Microsoft's Azure and other cloud services revenue grow in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L05",
+   "category": "lookup",
+   "answerable": true,
+   "question": "When did Activision Blizzard join Microsoft?",
+   "standalone_query": "When did Activision Blizzard join Microsoft?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L06",
+   "category": "lookup",
+   "answerable": true,
+   "question": "How many full-time employees did Microsoft have as of June 30, 2025?",
+   "standalone_query": "How many full-time employees did Microsoft have as of June 30, 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L07",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What did NVIDIA record when its acquisition of Arm was terminated?",
+   "standalone_query": "What did NVIDIA record when its acquisition of Arm was terminated?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L08",
+   "category": "lookup",
+   "answerable": true,
+   "question": "How concentrated was NVIDIA's revenue among its largest customers in fiscal 2025?",
+   "standalone_query": "How concentrated was NVIDIA's revenue among its largest customers in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L09",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What new architecture did NVIDIA launch in fiscal 2025?",
+   "standalone_query": "What new architecture did NVIDIA launch in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L10",
+   "category": "lookup",
+   "answerable": true,
+   "question": "How many people did Amazon employ at the end of 2025?",
+   "standalone_query": "How many people did Amazon employ at the end of 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L11",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What drove AWS sales growth in 2024?",
+   "standalone_query": "What drove AWS sales growth in 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L12",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What cloud security company did Alphabet agree to acquire in 2025, and for how much?",
+   "standalone_query": "What cloud security company did Alphabet agree to acquire in 2025, and for how much?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L13",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What drove Google Cloud revenue growth in 2025?",
+   "standalone_query": "What drove Google Cloud revenue growth in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L14",
+   "category": "lookup",
+   "answerable": true,
+   "question": "How many daily active people did Meta's Family of Apps have in December 2025?",
+   "standalone_query": "How many daily active people did Meta's Family of Apps have in December 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L15",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What is Meta's approach to open-sourcing its AI models?",
+   "standalone_query": "What is Meta's approach to open-sourcing its AI models?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L16",
+   "category": "lookup",
+   "answerable": true,
+   "question": "When did Tesla launch its Robotaxi service?",
+   "standalone_query": "When did Tesla launch its Robotaxi service?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L17",
+   "category": "lookup",
+   "answerable": true,
+   "question": "When did Tesla start delivering the Cybertruck?",
+   "standalone_query": "When did Tesla start delivering the Cybertruck?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L18",
+   "category": "lookup",
+   "answerable": true,
+   "question": "Why did Tesla's automotive regulatory credits revenue rise in 2024?",
+   "standalone_query": "Why did Tesla's automotive regulatory credits revenue rise in 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L19",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What did JPMorgan Chase acquire from the FDIC in May 2023?",
+   "standalone_query": "What did JPMorgan Chase acquire from the FDIC in May 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L20",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What was JPMorgan's Standardized CET1 capital ratio requirement at the end of 2025?",
+   "standalone_query": "What was JPMorgan's Standardized CET1 capital ratio requirement at the end of 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L21",
+   "category": "lookup",
+   "answerable": true,
+   "question": "Why did Visa's international transaction revenue increase in fiscal 2025?",
+   "standalone_query": "Why did Visa's international transaction revenue increase in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L22",
+   "category": "lookup",
+   "answerable": true,
+   "question": "How much did Visa accrue for the interchange multidistrict litigation in fiscal 2023?",
+   "standalone_query": "How much did Visa accrue for the interchange multidistrict litigation in fiscal 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L23",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What threat intelligence company did Mastercard acquire in 2024?",
+   "standalone_query": "What threat intelligence company did Mastercard acquire in 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L24",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What drove Mastercard's net revenue growth in 2025?",
+   "standalone_query": "What drove Mastercard's net revenue growth in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L25",
+   "category": "lookup",
+   "answerable": true,
+   "question": "Who presents cybersecurity topics to Microsoft's Board of Directors?",
+   "standalone_query": "Who presents cybersecurity topics to Microsoft's Board of Directors?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [],
+    "sections": [
+     "Item 1C"
+    ]
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": [
+     "Item 1C"
+    ]
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L26",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What workforce reduction did Alphabet announce in 2023?",
+   "standalone_query": "What workforce reduction did Alphabet announce in 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "L27",
+   "category": "lookup",
+   "answerable": true,
+   "question": "What are NVIDIA's risks related to Chinese government actions?",
+   "standalone_query": "What are NVIDIA's risks related to Chinese government actions?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [],
+    "sections": [
+     "Item 1A"
+    ]
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": [
+     "Item 1A"
+    ]
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N01",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What were Apple's total net sales in fiscal 2023?",
+   "standalone_query": "What were Apple's total net sales in fiscal 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N02",
+   "category": "numeric",
+   "answerable": true,
+   "question": "How much did Apple spend on research and development in fiscal 2025?",
+   "standalone_query": "How much did Apple spend on research and development in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N03",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was Microsoft Cloud revenue in fiscal 2025?",
+   "standalone_query": "What was Microsoft Cloud revenue in fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N04",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was NVIDIA's total revenue for fiscal 2025?",
+   "standalone_query": "What was NVIDIA's total revenue for fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N05",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was NVIDIA's Data Center revenue in fiscal 2023?",
+   "standalone_query": "What was NVIDIA's Data Center revenue in fiscal 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N06",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What were Amazon's total net sales in 2025?",
+   "standalone_query": "What were Amazon's total net sales in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N07",
+   "category": "numeric",
+   "answerable": true,
+   "question": "How much revenue did Google Search & other generate in 2025?",
+   "standalone_query": "How much revenue did Google Search & other generate in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N08",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was Meta's total revenue in 2025?",
+   "standalone_query": "What was Meta's total revenue in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N09",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What were Meta's capital expenditures in 2025?",
+   "standalone_query": "What were Meta's capital expenditures in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N10",
+   "category": "numeric",
+   "answerable": true,
+   "question": "How much revenue did Tesla's energy generation and storage business generate in 2024?",
+   "standalone_query": "How much revenue did Tesla's energy generation and storage business generate in 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N11",
+   "category": "numeric",
+   "answerable": true,
+   "question": "How many consumer vehicles did Tesla deliver in 2025?",
+   "standalone_query": "How many consumer vehicles did Tesla deliver in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N12",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was JPMorgan Chase's net income for 2025?",
+   "standalone_query": "What was JPMorgan Chase's net income for 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N13",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was JPMorgan's firmwide net interest income in 2024?",
+   "standalone_query": "What was JPMorgan's firmwide net interest income in 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N14",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was Visa's net revenue in fiscal 2024?",
+   "standalone_query": "What was Visa's net revenue in fiscal 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N15",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was Mastercard's net revenue in 2022?",
+   "standalone_query": "What was Mastercard's net revenue in 2022?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2022
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2022
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N16",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What were Amazon's cash capital expenditures in 2023?",
+   "standalone_query": "What were Amazon's cash capital expenditures in 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "N17",
+   "category": "numeric",
+   "answerable": true,
+   "question": "What was NVIDIA's revenue in fiscal 2023?",
+   "standalone_query": "What was NVIDIA's revenue in fiscal 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T01",
+   "category": "trend",
+   "answerable": true,
+   "question": "How has Microsoft's Azure growth rate changed from fiscal 2022 to fiscal 2025?",
+   "standalone_query": "How has Microsoft's Azure growth rate changed from fiscal 2022 to fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T02",
+   "category": "trend",
+   "answerable": true,
+   "question": "How did AWS sales growth evolve from 2022 to 2025?",
+   "standalone_query": "How did AWS sales growth evolve from 2022 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T03",
+   "category": "trend",
+   "answerable": true,
+   "question": "How much did Reality Labs reduce Meta's operating profit each year from 2022 to 2025?",
+   "standalone_query": "How much did Reality Labs reduce Meta's operating profit each year from 2022 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T04",
+   "category": "trend",
+   "answerable": true,
+   "question": "How have Tesla's vehicle deliveries trended from 2022 to 2025?",
+   "standalone_query": "How have Tesla's vehicle deliveries trended from 2022 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T05",
+   "category": "trend",
+   "answerable": true,
+   "question": "How did JPMorgan Chase's net income change from 2022 to 2025?",
+   "standalone_query": "How did JPMorgan Chase's net income change from 2022 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T06",
+   "category": "trend",
+   "answerable": true,
+   "question": "How did NVIDIA's total revenue grow from fiscal 2022 to fiscal 2025?",
+   "standalone_query": "How did NVIDIA's total revenue grow from fiscal 2022 to fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T07",
+   "category": "trend",
+   "answerable": true,
+   "question": "How has Visa's net revenue growth rate changed from fiscal 2022 to 2025?",
+   "standalone_query": "How has Visa's net revenue growth rate changed from fiscal 2022 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "V"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T08",
+   "category": "trend",
+   "answerable": true,
+   "question": "How did Mastercard's net revenue growth change between 2022 and 2025?",
+   "standalone_query": "How did Mastercard's net revenue growth change between 2022 and 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T09",
+   "category": "trend",
+   "answerable": true,
+   "question": "How has Microsoft Cloud revenue grown from fiscal 2023 to fiscal 2025?",
+   "standalone_query": "How has Microsoft Cloud revenue grown from fiscal 2023 to fiscal 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T10",
+   "category": "trend",
+   "answerable": true,
+   "question": "How much did Google Cloud revenue increase each year from 2022 to 2025?",
+   "standalone_query": "How much did Google Cloud revenue increase each year from 2022 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T11",
+   "category": "trend",
+   "answerable": true,
+   "question": "How much stock did Apple repurchase in each fiscal year from 2022 to 2025?",
+   "standalone_query": "How much stock did Apple repurchase in each fiscal year from 2022 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL"
+    ],
+    "fiscal_years": [
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "T12",
+   "category": "trend",
+   "answerable": true,
+   "question": "How did Meta's capital expenditures change from 2024 to 2025?",
+   "standalone_query": "How did Meta's capital expenditures change from 2024 to 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2024,
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C01",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Compare the growth of Microsoft Azure and Amazon AWS in their fiscal 2025.",
+   "standalone_query": "Compare the growth of Microsoft Azure and Amazon AWS in their fiscal 2025.",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT",
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT",
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C02",
+   "category": "comparison",
+   "answerable": true,
+   "question": "How did Google Cloud and AWS revenue growth compare in 2024?",
+   "standalone_query": "How did Google Cloud and AWS revenue growth compare in 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "GOOGL",
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "GOOGL",
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C03",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Which grew net revenue faster in fiscal 2025, Visa or Mastercard?",
+   "standalone_query": "Which grew net revenue faster in fiscal 2025, Visa or Mastercard?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V",
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "V",
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C04",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Compare Visa's and Mastercard's net revenue growth in 2024.",
+   "standalone_query": "Compare Visa's and Mastercard's net revenue growth in 2024.",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V",
+     "MA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "V",
+     "MA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C05",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Which had more employees in 2025, Apple or Microsoft?",
+   "standalone_query": "Which had more employees in 2025, Apple or Microsoft?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL",
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL",
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C06",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Compare Apple's Services net sales growth with Google Cloud's revenue growth in 2025.",
+   "standalone_query": "Compare Apple's Services net sales growth with Google Cloud's revenue growth in 2025.",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL",
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL",
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C07",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Which earned more net income in 2025, Meta or JPMorgan Chase?",
+   "standalone_query": "Which earned more net income in 2025, Meta or JPMorgan Chase?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META",
+     "JPM"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META",
+     "JPM"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C08",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Compare Tesla's 2024 total revenues with NVIDIA's fiscal 2024 revenue.",
+   "standalone_query": "Compare Tesla's 2024 total revenues with NVIDIA's fiscal 2024 revenue.",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA",
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA",
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C09",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Compare Apple's and Amazon's total net sales in fiscal 2025.",
+   "standalone_query": "Compare Apple's and Amazon's total net sales in fiscal 2025.",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AAPL",
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "AAPL",
+     "AMZN"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C10",
+   "category": "comparison",
+   "answerable": true,
+   "question": "How did cross-border activity drive Visa's and Mastercard's revenue in 2025?",
+   "standalone_query": "How did cross-border activity drive Visa's and Mastercard's revenue in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V",
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "V",
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C11",
+   "category": "comparison",
+   "answerable": true,
+   "question": "What cost-cutting steps did Meta and Alphabet take in 2023?",
+   "standalone_query": "What cost-cutting steps did Meta and Alphabet take in 2023?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META",
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META",
+     "GOOGL"
+    ],
+    "fiscal_years": [
+     2023
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "C12",
+   "category": "comparison",
+   "answerable": true,
+   "question": "Compare JPMorgan's and NVIDIA's revenue growth in their 2024 fiscal years.",
+   "standalone_query": "Compare JPMorgan's and NVIDIA's revenue growth in their 2024 fiscal years.",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "JPM",
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "JPM",
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "F01",
+   "category": "follow_up",
+   "answerable": true,
+   "question": "And what about the year before?",
+   "standalone_query": "How much did Microsoft's Azure revenue grow in fiscal 2025? And what about the year before?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "F02",
+   "category": "follow_up",
+   "answerable": true,
+   "question": "How about in 2025?",
+   "standalone_query": "How many vehicles did Tesla deliver in 2024? How about in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "TSLA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "F03",
+   "category": "follow_up",
+   "answerable": true,
+   "question": "What drove its net interest income that year?",
+   "standalone_query": "What was JPMorgan's net income in 2024? What drove its net interest income that year?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "JPM"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "F04",
+   "category": "follow_up",
+   "answerable": true,
+   "question": "And Mastercard's?",
+   "standalone_query": "How did Visa's net revenue change in fiscal 2025? And Mastercard's?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "MA"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "F05",
+   "category": "follow_up",
+   "answerable": true,
+   "question": "What share of data center revenue came from China?",
+   "standalone_query": "What did NVIDIA say about US export controls on China in fiscal 2024? What share of data center revenue came from China?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "NVDA"
+    ],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "F06",
+   "category": "follow_up",
+   "answerable": true,
+   "question": "And in 2025?",
+   "standalone_query": "What were Meta's capital expenditures in 2024? And in 2025?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [
+     "META"
+    ],
+    "fiscal_years": [
+     2025
+    ],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U01",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "How many paid subscribers did Netflix have at the end of 2024?",
+   "standalone_query": "How many paid subscribers did Netflix have at the end of 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": false,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": false
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U02",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "What were Apple's iPhone net sales in fiscal 2018?",
+   "standalone_query": "What were Apple's iPhone net sales in fiscal 2018?",
+   "scope": "out_of_range",
+   "reason": "The filings cover fiscal 2022-2025; the question asks about 2018.",
+   "pred": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U03",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "How many vehicles will Tesla deliver in 2027?",
+   "standalone_query": "How many vehicles will Tesla deliver in 2027?",
+   "scope": "out_of_range",
+   "reason": "The filings cover fiscal 2022-2025; the question asks about 2027.",
+   "pred": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U04",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "What is Microsoft's current stock price?",
+   "standalone_query": "What is Microsoft's current stock price?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "MSFT"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": false,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": false,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": false
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U05",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "How much did Visa pay to acquire Mastercard?",
+   "standalone_query": "How much did Visa pay to acquire Mastercard?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "V",
+     "MA"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": false,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": false,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": false
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U06",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "What was Samsung's semiconductor revenue in 2024?",
+   "standalone_query": "What was Samsung's semiconductor revenue in 2024?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [],
+    "fiscal_years": [
+     2024
+    ],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": false,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": false,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": false
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U07",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "What was JPMorgan Chase's net income in 2030?",
+   "standalone_query": "What was JPMorgan Chase's net income in 2030?",
+   "scope": "out_of_range",
+   "reason": "The filings cover fiscal 2022-2025; the question asks about 2030.",
+   "pred": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U08",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "How much did Alphabet pay to acquire Twitter?",
+   "standalone_query": "How much did Alphabet pay to acquire Twitter?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "GOOGL"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": false,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": false,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": false
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U09",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "What were Apple's total net sales in fiscal 2027?",
+   "standalone_query": "What were Apple's total net sales in fiscal 2027?",
+   "scope": "out_of_range",
+   "reason": "The filings cover fiscal 2022-2025; the question asks about 2027.",
+   "pred": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": true,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": true,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": true,
+    "all_ok": true
+   },
+   "retrieval": {}
+  },
+  {
+   "id": "U10",
+   "category": "unanswerable",
+   "answerable": false,
+   "question": "What is the salary of Amazon's warehouse employees in Germany?",
+   "standalone_query": "What is the salary of Amazon's warehouse employees in Germany?",
+   "scope": "in_corpus",
+   "reason": "",
+   "pred": {
+    "tickers": [
+     "AMZN"
+    ],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "gold": {
+    "tickers": [],
+    "fiscal_years": [],
+    "sections": []
+   },
+   "checks": {
+    "tickers_exact": false,
+    "years_exact": true,
+    "sections_exact": true,
+    "tickers_ok": false,
+    "years_ok": true,
+    "sections_ok": true,
+    "all_exact": false,
+    "all_ok": false
+   },
+   "retrieval": {}
+  }
+ ]
+}

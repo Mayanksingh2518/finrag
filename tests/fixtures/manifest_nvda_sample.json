@@ -1,0 +1,46 @@
+[
+ {
+  "ticker": "NVDA",
+  "company": "NVIDIA Corporation",
+  "cik": 1045810,
+  "form": "10-K",
+  "fiscal_year": 2022,
+  "accession_number": "0001045810-22-000036",
+  "filing_date": "2022-03-18",
+  "report_date": "2022-01-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000036/nvda-20220130.htm"
+ },
+ {
+  "ticker": "NVDA",
+  "company": "NVIDIA Corporation",
+  "cik": 1045810,
+  "form": "10-K",
+  "fiscal_year": 2023,
+  "accession_number": "0001045810-23-000017",
+  "filing_date": "2023-02-24",
+  "report_date": "2023-01-29",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000017/nvda-20230129.htm"
+ },
+ {
+  "ticker": "NVDA",
+  "company": "NVIDIA Corporation",
+  "cik": 1045810,
+  "form": "10-K",
+  "fiscal_year": 2024,
+  "accession_number": "0001045810-24-000029",
+  "filing_date": "2024-02-21",
+  "report_date": "2024-01-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm"
+ },
+ {
+  "ticker": "NVDA",
+  "company": "NVIDIA Corporation",
+  "cik": 1045810,
+  "form": "10-K",
+  "fiscal_year": 2025,
+  "accession_number": "0001045810-25-000023",
+  "filing_date": "2025-02-26",
+  "report_date": "2025-01-26",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+ }
+]
