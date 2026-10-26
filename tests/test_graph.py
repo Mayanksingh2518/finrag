@@ -12,7 +12,7 @@ from app.agent.analyze import StandaloneQuestion
 from app.agent.graph import ConversationMemory, FinRAGAgent
 from app.agent.xbrl import XbrlStore, load_filing_periods
 from app.generation.llm import LLMResponse
-from app.retrieval.types import ScoredChunk, SearchResult
+from app.retrieval.types import ScoredChunk, SearchFilters, SearchResult
 from tests.test_retrieval import make_chunk
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -145,3 +145,17 @@ def test_memory_trims_turns_and_evicts_old_threads():
     memory.append("b", "q", "a")
     memory.append("c", "q", "a")
     assert memory.history("a") == []  # least recently used thread dropped
+
+
+def test_agent_eval_counts_a_verified_xbrl_citation_as_an_evidence_hit(xbrl):
+    from app.evaluation.golden import GoldEvidence, GoldQuestion
+    from app.evaluation.run_agent_eval import record, summarize_agent
+
+    llm = ScriptedLLM(answers=[answer("NVIDIA's fiscal 2025 revenue was $130.5 billion, up 114%.", "S1")])
+    turn = make_agent(llm, xbrl).run("What was NVIDIA's total revenue for fiscal 2025?")
+    q = GoldQuestion("N04", "numeric", turn.question, "$130.5 billion, up 114% from a year ago.",
+                     (GoldEvidence("NVDA", 2025, (40,), ("Revenue",)),), SearchFilters(("NVDA",), (2025,)))
+    rec = record(q, turn, "agent")
+    assert rec.citation_hit == 0.0  # the page-based metric can't see an XBRL citation
+    assert rec.citation_hit_xbrl == 1.0 and rec.xbrl_cited and rec.facts == 1 and rec.filters_ok
+    assert summarize_agent([rec])["questions_with_facts"] == 1

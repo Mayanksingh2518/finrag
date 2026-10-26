@@ -4,21 +4,22 @@ Single source of truth for project state. Update this file at the end of every w
 
 ## Current status
 
-- **Last completed:** Phase 6 step 4 (LangGraph agent graph, `app/agent/graph.py`): analyze →
-  refuse | (retrieve ∥ xbrl) → generate → verify → respond, one widen retry, per-thread memory;
-  verified on a real 5-turn conversation with Ollama granite4.1:3b. Step 3 (XBRL tool) before it.
-- **In progress:** Phase 6 (LangGraph agent): steps 1-4 done; step 5 (agent-mode eval) left.
+- **Last completed:** Phase 6 (LangGraph agent), finished with step 5, the agent-mode eval
+  (`reports/agent_v0.md`): with **no gold filters or rewrite**, the agent matches the gold-filter v1
+  run on false abstention (0.054 = 0.054) and figure recall (0.573 vs 0.583), and beats it on
+  citation hit counting XBRL (0.878 vs 0.863); abstention recall drops 1.000 → 0.900 (U04).
+- **In progress:** Phase 8 started early (FastAPI + React UI; streaming and `/api/ask` left).
   Phase 8 started early (FastAPI + React UI over retrieval and answers; streaming left).
-- **Next up:** Phase 6 step 5, the agent-mode generation eval, see "Next task in detail".
-- **Resume here (2026-10-26):** nothing pending. Not committed yet: Phase 6 steps 1-4 (analyzer,
-  retrieval plan, XBRL tool, graph), reports, tests, the verifier's `$37.7B` fix.
-- **Disk nearly full (MacBook, 2026-10-26):** 3.2 GB free of 228 GB (98%). Free space before
+- **Next up:** Phase 7 (full evaluation: LLM judge, tracing, cost per stage), see "Next task in detail".
+- **Resume here (2026-10-26):** nothing pending. Not committed yet: all of Phase 6 (analyzer,
+  retrieval plan, XBRL tool, graph, agent eval), reports, tests, the verifier's `$37.7B` fix.
+- **Disk nearly full (MacBook, 2026-10-26):** 2.2 GB free (was 4.2 GB at the start of the day) of 228 GB (98%). Free space before
   long evals or model pulls; Ollama models are several GB each.
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-26 (Phase 6 step 4: LangGraph agent graph)
+- **Last updated:** 2026-10-26 (Phase 6 done: agent-mode eval)
 
 ## Phase checklist
 
@@ -27,127 +28,86 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 3: Indexing and retrieval.** Local bge-small embeddings + FAISS, BM25, RRF hybrid, metadata filters, bge-reranker-base cross-encoder; 12/12 smoke queries in all 4 modes; 33 tests
 - [x] **Phase 4: Evaluation v0.** 84-question golden set (quote-verified pages), Recall@K / MRR / nDCG, 4 modes × filters on/off, reranker ablations, decomposition preview; hybrid_rerank recall@5 0.884, MRR 0.920; 48 tests
 - [x] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier with context-checked repair, abstention, confidence; Ollama granite4.1:3b false abstention 0.054, citation hit 0.863, abstention recall 1.000; Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 (84 q); 92 tests
-- [ ] **Phase 6: LangGraph agent.** Query analyzer, decomposition, conversational memory, XBRL financial-facts tool
+- [x] **Phase 6: LangGraph agent.** Rule-based analyzer + LLM follow-up rewrite, retrieval plan (quotas, MD&A prior), XBRL company-facts tool, LangGraph graph with memory and a widen retry; agent with no gold filters: false abstention 0.054 (= gold-filter run), citation hit incl. XBRL 0.878, figure recall 0.573; 158 tests
 - [ ] **Phase 7: Full evaluation.** RAGAS, Langfuse tracing, latency/cost per stage
 - [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. `/api/answer` with the answer panel (live-tested 2026-10-08). Left: streaming answers
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
-## Next task in detail: Phase 6 (LangGraph agent)
+## Next task in detail: Phase 7 (full evaluation)
 
-Goal: replace the eval's hand-given gold filters with an agent that works out the filters and plan
-from the question itself, and measure what that costs. Today `run_generation_eval` passes gold
-`filters` (tickers/years) and the standalone rewrite for follow-ups; Phase 6 must earn both.
+Goal: measure what the deterministic verifier can't (whether an answer is *right*, not just
+grounded in figures), trace every stage, and close the gaps the agent eval found. Zero cost: judge
+with the free tiers, cache every judge call.
 
-0. ~~Finish the Groq baseline~~ **done 2026-10-14** (84/84, see "Groq baseline v1").
-1. ~~Query analyzer~~ **done 2026-10-08** (`app/agent/entities.py`, `app/agent/analyze.py`; results in
-   "Query analyzer v0" below).
-2. ~~Retrieval plan~~ **done 2026-10-14** (`app/agent/plan.py`, `Retriever.search_many`; results in
-   "Retrieval plan v0" below).
-3. ~~XBRL company-facts tool~~ **done 2026-10-26** (`app/agent/xbrl.py`; results in "XBRL tool v0" below).
-4. ~~LangGraph graph~~ **done 2026-10-26** (`app/agent/graph.py`; see "Agent graph v0" below).
-5. **Agent-mode eval (next)** `app/evaluation/run_agent_eval.py` (or `--agent` on
-   `run_generation_eval`): every golden question through `FinRAGAgent.run(q.question, q.history)`
-   with **no gold filters and no gold rewrite**, scored with the existing `score()`, next to the
-   gold-filter v1 run with the same model. Report `reports/agent_v0.md`:
-   - filter accuracy (from `turn.analysis`), false abstention, abstention recall (U01-U10: the
-     analyzer refuses 4 before retrieval, the generator must refuse the rest), citation hit,
-     evidence recall, figure recall, claim support, latency p50/p95 per node (`turn.timings_ms`),
-     LLM calls per question (rewrite + generation).
-   - **XBRL scoring:** XBRL sources have `page_start=0`, so `score()` never counts them as a gold
-     page hit. Count a verified XBRL citation as covering a gold evidence item with the same
-     (ticker, fiscal year) when the claim's figure matches the reference (or report "citation hit
-     incl. XBRL" as a separate column), otherwise the agent is penalised for using exact facts.
-   - Ablation: agent with vs without XBRL (`xbrl=None`) on numeric/trend/comparison, to show what
-     the tool buys (figure recall) and costs (definition-mismatch questions N09/N16/T11/T12/F06:
-     check the answer uses the text's figure).
-   - Use Ollama for the full run (granite4.1:3b, ~12-20 s/question, ~25 min for 84 under
-     `caffeinate -i`; stop the API server first). Groq for a subset only (daily cap ~50 q).
-   Then tick Phase 6. Phase 8 follow-up: `/api/ask` with a thread id over `FinRAGAgent.ask`, and
-   UI rendering for XBRL sources (no page/URL: show the concept and value instead of "p.#0").
+1. **LLM judge** `app/evaluation/judge.py` (structured output through the existing `LLM`, cached):
+   per answer, (a) correctness vs the reference answer (correct / partially / incorrect + which
+   reference facts are missing or contradicted), (b) faithfulness: each claim entailed by its cited
+   source, in meaning not just figures. Judge model: Groq gpt-oss-120b (daily cap ~50 q of
+   generation; judging is shorter, so check the token budget first) with Gemini as fallback; never
+   the same 3B model that answered. Validate the judge on ~15 hand-labelled answers before trusting
+   it. Targets it must catch (all pass the verifier today): T06 "CAGR of 114.2%" (that's FY2025
+   YoY), T05 "decreased from $37.7B to $57.0B", N16 2022's $58.3B given as 2023 capex, T11 XBRL
+   buyback cash paid instead of the program totals.
+2. **RAGAS** on the same records (faithfulness, answer relevancy, context precision/recall) as a
+   second opinion, pointed at the free judge model; report where it disagrees with (1). Only if it
+   runs within the free tiers; otherwise document why it was dropped.
+3. **Tracing**: Langfuse (free cloud) callback on the LangGraph graph + LLM calls: per-node latency,
+   tokens per query. **Needs the user's Langfuse keys** (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`,
+   `LANGFUSE_HOST` in `.env`); build it so it's a no-op without them.
+4. **Fixes the agent eval pointed at** (re-run `run_agent_eval` after each, cache makes it cheap):
+   - U04 "current stock price" answered from a buyback table's average price: a scope rule for live
+     market data (current/today's stock or share price, market cap now) in the analyzer, phrased
+     generally and tested on other wordings (it was found on the golden set).
+   - T12/T11: when facts and text disagree on a defined metric the 3B model abstains (T12) or uses
+     the XBRL figure (T11). Options: skip XBRL for buybacks/capex when the text has a figure, or
+     label the fact more explicitly in the source ("GAAP cash paid; companies may report a different
+     total"). Measure both.
+   - Groq subset (~40 q, numeric/trend/comparison) of the agent eval to separate model capacity
+     from pipeline faults.
+5. Report `reports/eval_v1.md`: the ablation table from ARCHITECTURE.md (BM25 / dense / hybrid /
+   +rerank / +analysis / +plan / +XBRL) with retrieval and judged answer metrics, latency p50/p95
+   per node.
 
-## Query analyzer v0 (Phase 6 step 1, MacBook M4, 2026-10-08)
+## Agent eval v0 (Phase 6 step 5, MacBook M4, 2026-10-26)
 
-Design: **rules where the domain is closed, LLM where language is open.** `entities.py` maps
-names/brands/products/segments to the 10 tickers (Azure → MSFT, Cybertruck → TSLA, Reality Labs →
-META; word boundaries, order of mention), parses years (`fiscal 2025`, `from/between X to/and Y`,
-`last/past N years`, `latest`, `the year before`, `that year`), and sets a section filter only on
-unambiguous cues (risk → Item 1A, cybersecurity → Item 1C; a wrong section filter hides the answer).
-`analyze.py` adds conversation handling: a follow-up inherits companies/years from the last user
-turn that named one ("the year before" = that year − 1), and the LLM (`StandaloneQuestion` schema)
-rewrites it into a standalone query; if the LLM fails, filters still come from the rules and the
-query falls back to "previous question + follow-up". Questions whose only years are outside
-FY2022-2025 are refused before retrieval.
+`python -m app.evaluation.run_agent_eval` (`reports/agent_v0.md`, ~45 min on granite4.1:3b; the
+no-XBRL pass reuses cached prompts). All 84 questions through `FinRAGAgent.run(question,
+history)`: analyzer filters and rewrites, retrieval plan, XBRL. Baseline: v1 with gold filters
+and the gold rewrite, v0 decomposition, same model.
 
-Results (`reports/analyzer_v0.md`, `python -m app.evaluation.run_analyzer_eval --rewrite`,
-Ollama granite4.1:3b for the 6 rewrites):
-
-| Check (74 answerable) | Exact | Compatible (none or superset of gold) |
-|---|---|---|
-| Tickers | 1.000 | 1.000 |
-| Fiscal years | 0.905 | 1.000 |
-| Sections | 1.000 | 1.000 |
-
-The 7 year misses are questions that name no year ("When did Tesla launch Robotaxi?"): the
-analyzer leaves years open and the reranker finds the right filing. Scope: 4/10 unanswerable
-refused before retrieval (2018, 2027, 2030, 2027), 0 answerable wrongly refused; the other 6
-(Netflix, Samsung, stock price, ...) are left to the generator, which refuses them.
-
-| Retrieval (hybrid_rerank k=10, auto-decomposition) | recall@5 | recall@10 | MRR |
+| Metric | gold filters (v1) | **agent** | agent, no XBRL |
 |---|---|---|---|
-| Gold filters + gold rewrite | 0.914 | 0.966 | 0.918 |
-| **Analyzer filters + analyzer rewrite** | **0.914** | **0.966** | 0.908 |
+| False abstention | 0.054 | **0.054** | 0.095 |
+| Abstention recall | 1.000 | 0.900 | 0.900 |
+| Citation hit (gold page) | 0.863 | 0.689 | 0.824 |
+| Citation hit incl. XBRL | - | **0.878** | 0.824 |
+| Figure recall | 0.583 | 0.573 | 0.553 |
+| Claim support | 0.978 | 0.975 | 0.985 |
+| Filters compatible with gold | - | 1.000 | 1.000 |
+| LLM p50 / p95 ms | 18,166 / 21,662 | 17,629 / 24,604 | 17,053 / 21,321 |
 
-The analyzer loses nothing in recall; MRR drops 0.01 only on the yearless lookups. Caveats for
-interviews: the rules were written while looking at this golden set, so `tests/test_agent.py`
-checks 20 different phrasings (all pass); the 3B rewrite sometimes drops the company ("What share
-of data center revenue came from China in fiscal 2024?") but the filters carry it. Trend is still
-the weak category (recall@5 0.597): the next step's per-entity quotas target it.
-
-## Retrieval plan v0 (Phase 6 step 2, MacBook M4, 2026-10-14)
-
-`app/agent/plan.py`: rule-based intent (lookup / numeric / trend / comparison), one sub-query per
-(company, year), a per-entity quota (`ceil(k / n)`, at least 2), an **MD&A section prior** (+0.05 on
-the reranker's 0-1 score for Item 7 chunks when the question names a reported metric: revenue, net
-income, capex, deliveries, growth...), and `execute_plan`, which reranks all sub-queries in one
-batched cross-encoder call (`Retriever.search_many`; `search_decomposed` uses it too).
-
-Why the prior: a diagnostic over every trend/comparison/numeric evidence item showed the gold page
-is almost always in Item 7, and the misses are Item 8 notes (JPM net income FY2023-24: rank 10/13;
-NVDA FY2024 revenue: rank 10), Item 1 overviews (Tesla deliveries: rank 3-19; Visa/Mastercard
-FY2025: rank 8/4) and Item 5 buyback tables. A prior, not a filter: risk (Item 1A), employees and
-cost-cutting (Item 1) answers live elsewhere.
-
-Results (`python -m app.evaluation.run_plan_eval`, gold filters/queries, 74 answerable q):
-
-| Config | recall@5 | MRR | ctx recall (3,500-token budget) | trend recall@5 | comparison MRR |
-|---|---|---|---|---|---|
-| v0 decomposition, k=10 | 0.914 | 0.918 | 0.966 | 0.597 | 0.831 |
-| plan, k=10, no prior | 0.914 | 0.918 | 0.966 | 0.597 | 0.831 |
-| plan, k=10, prior 0.02 | 0.911 | 0.926 | 0.966 | 0.618 | 0.887 |
-| **plan, k=10, prior 0.05 (default)** | **0.921** | **0.927** | 0.966 | **0.639** | **0.892** |
-| plan, k=10, prior 0.10 | 0.921 | 0.927 | 0.966 | 0.639 | 0.892 |
-| v0 decomposition, k=5 | 0.914 | 0.913 | 0.914 | 0.597 | 0.819 |
-| **plan, k=5, prior 0.05** | 0.921 | 0.927 | **0.949** | 0.639 | 0.892 |
-
-Reading (honest version for interviews):
-- **Quotas only matter when the context is small.** The interleaved top-k prefix is identical with
-  or without quotas, so at k=10 nothing changes; at k=5 quotas raise context recall 0.914 → 0.949
-  (trend 0.597 → 0.771) because each of 4 years keeps 2 chunks instead of the global top 5.
-- **The prior is a small, plateaued gain** (0.05 = 0.10): 7 questions improve (T04 T05 T08 T11 C03
-  C10 N14), 3 lose (N03 gold drops to rank 2; C07; T03, where the new top page, META FY2023 p.77
-  MD&A, states the reference Reality Labs figures but isn't labeled gold). Tuned on the golden set
-  with only 3 values tried, at the plateau's low end, to limit overfitting.
-- **Batching barely helps latency** (-7% mean on multi-entity questions; batch 32/64 is slower,
-  padding to 512 tokens): the cross-encoder is compute-bound on pairs × tokens. The real knob is the
-  rerank pool per sub-query: 30 → 20 → 15 gives mean 7.1 → 4.8 → 3.6 s but context recall
-  0.896 → 0.875 → 0.865 on multi-entity questions. **Decision: keep 30** (quality first, as in
-  Phase 4); `make_plan(rerank_candidates=15)` is the latency fallback.
-- Latency gotcha: in one long eval process the M4's latency drifts upward (single-entity p50 1.7 →
-  2.8 s across configs, with no swap or thermal warnings), so compare latency only with configs
-  alternated per question in a fresh process.
-- `Answerer` (generation evals, API) still uses v0 decomposition (now batched) so the v1 generation
-  baselines stay reproducible; the step 4 graph uses `execute_plan`.
+Reading:
+- **The agent loses nothing against gold filters** on false abstention and nearly nothing on
+  figure recall. Without XBRL it would be clearly worse (0.095): the facts rescue N12, T05, T06 and
+  C03, the trend/comparison questions retrieval kept missing. Comparison figure recall 0.667 → 0.773.
+- Gold-page citation hit drops 0.863 → 0.689 *because* the model cites the exact facts instead of
+  pages (18 of the 26 questions with facts cite one); counting a verified XBRL citation that states a
+  reference figure, 0.878.
+- **Costs of XBRL:** T12 (Meta capex 2024 → 2025) now abstains: facts ($37.26B / $69.69B purchases
+  of PP&E) and text ($39.23B / $72.22B incl. finance leases) disagree and the 3B model gives up.
+  T11 (Apple buybacks) answers with XBRL cash paid instead of the program totals, despite the rule.
+  N09/F06 (Meta capex) follow the rule and use the text's $72.22B. N16 uses the text but picks
+  2022's $58.3B for 2023: a meaning error the verifier can't see.
+- **U04 ("Microsoft's current stock price") answered:** the agent filters to MSFT (v1 gave
+  unanswerable questions no filters), retrieval finds the Item 5 buyback table and granite
+  "estimates" the price from the $376.90 average repurchase price. Needs a live-market-data scope
+  rule (Phase 7 step 4).
+- Granite's trend prose is weak even with the right facts (T05 "decreased from $37.7 billion to
+  $57.0 billion"; T06 calls FY2025 YoY growth a "CAGR"). The verifier only checks figures, so
+  these pass: this is what the Phase 7 judge must measure.
+- Latency: generation dominates (p50 ~18 s on the 3B model); retrieval p50 ~1.3-2 s; the analyzer
+  costs ~1 s only on the 6 follow-ups that need a rewrite.
 
 ## Agent graph v0 (Phase 6 step 4, MacBook M4, 2026-10-26)
 
@@ -614,3 +574,8 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   requirements. Real 5-turn run on granite4.1:3b found two analyzer bugs (out-of-range year inherited
   mid-conversation; LLM rewrite on standalone questions), both fixed with tests. Analyzer report
   regenerated (it was overwritten by a `--no-retrieval` run; numbers unchanged). 157 tests passing.
+- **2026-10-26 (MacBook M4):** Phase 6 step 5, Phase 6 done: `run_agent_eval` (agent vs agent without
+  XBRL vs the gold-filter v1 baseline; XBRL-aware citation hit; definition-mismatch table; a
+  `--limit` run writes `agent_v0_smoke` so it can't overwrite the report). Agent = gold filters on
+  false abstention (0.054), citation hit incl. XBRL 0.878; found U04 live-price leak and the T11/T12
+  definition conflicts. Analyzer report regenerated, identical. 158 tests passing.

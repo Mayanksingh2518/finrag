@@ -11,12 +11,12 @@
   "refused_unanswerable": 4,
   "unanswerable": 10,
   "refused_answerable": 0,
-  "gold_recall@5": NaN,
-  "gold_recall@10": NaN,
-  "gold_mrr": NaN,
-  "analyzer_recall@5": NaN,
-  "analyzer_recall@10": NaN,
-  "analyzer_mrr": NaN
+  "gold_recall@5": 0.9144144144144145,
+  "gold_recall@10": 0.9662162162162162,
+  "gold_mrr": 0.9184094809094808,
+  "analyzer_recall@5": 0.9144144144144145,
+  "analyzer_recall@10": 0.9662162162162162,
+  "analyzer_mrr": 0.9082743457743457
  },
  "records": [
   {
@@ -55,7 +55,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1723.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1191.3
+    }
+   }
   },
   {
    "id": "L02",
@@ -93,7 +116,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1232.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1236.7
+    }
+   }
   },
   {
    "id": "L03",
@@ -131,7 +177,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1197.3
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1202.0
+    }
+   }
   },
   {
    "id": "L04",
@@ -169,7 +238,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1341.9
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1332.3
+    }
+   }
   },
   {
    "id": "L05",
@@ -205,7 +297,30 @@
     "all_exact": false,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1375.6
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1370.6
+    }
+   }
   },
   {
    "id": "L06",
@@ -243,7 +358,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1172.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1184.8
+    }
+   }
   },
   {
    "id": "L07",
@@ -279,7 +417,30 @@
     "all_exact": false,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1459.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1177.5
+    }
+   }
   },
   {
    "id": "L08",
@@ -317,7 +478,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1255.9
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1241.3
+    }
+   }
   },
   {
    "id": "L09",
@@ -355,7 +539,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1235.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1235.5
+    }
+   }
   },
   {
    "id": "L10",
@@ -393,7 +600,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1400.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1395.4
+    }
+   }
   },
   {
    "id": "L11",
@@ -431,7 +661,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1497.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1508.5
+    }
+   }
   },
   {
    "id": "L12",
@@ -469,7 +722,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1188.3
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1180.1
+    }
+   }
   },
   {
    "id": "L13",
@@ -507,7 +783,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1171.4
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1164.2
+    }
+   }
   },
   {
    "id": "L14",
@@ -545,7 +844,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1548.8
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1549.4
+    }
+   }
   },
   {
    "id": "L15",
@@ -581,7 +903,30 @@
     "all_exact": false,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1281.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1125.2
+    }
+   }
   },
   {
    "id": "L16",
@@ -617,7 +962,30 @@
     "all_exact": false,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1201.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1119.7
+    }
+   }
   },
   {
    "id": "L17",
@@ -653,7 +1021,30 @@
     "all_exact": false,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1236.9
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1200.2
+    }
+   }
   },
   {
    "id": "L18",
@@ -691,7 +1082,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1561.9
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1563.3
+    }
+   }
   },
   {
    "id": "L19",
@@ -729,7 +1143,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1451.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1471.0
+    }
+   }
   },
   {
    "id": "L20",
@@ -767,7 +1204,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1596.6
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1604.7
+    }
+   }
   },
   {
    "id": "L21",
@@ -805,7 +1265,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1386.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1414.2
+    }
+   }
   },
   {
    "id": "L22",
@@ -843,7 +1326,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1609.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1608.1
+    }
+   }
   },
   {
    "id": "L23",
@@ -881,7 +1387,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1311.3
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1287.4
+    }
+   }
   },
   {
    "id": "L24",
@@ -919,7 +1448,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1411.6
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1428.8
+    }
+   }
   },
   {
    "id": "L25",
@@ -959,7 +1511,30 @@
     "all_exact": false,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 166.8
+    },
+    "analyzer": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6309297535714575,
+     "latency_ms": 491.3
+    }
+   }
   },
   {
    "id": "L26",
@@ -997,7 +1572,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1051.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1053.7
+    }
+   }
   },
   {
    "id": "L27",
@@ -1037,7 +1635,30 @@
     "all_exact": false,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6309297535714575,
+     "latency_ms": 1333.1
+    },
+    "analyzer": {
+     "mrr": 0.25,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.43067655807339306,
+     "latency_ms": 1371.5
+    }
+   }
   },
   {
    "id": "N01",
@@ -1075,7 +1696,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1318.3
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1317.5
+    }
+   }
   },
   {
    "id": "N02",
@@ -1113,7 +1757,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1231.4
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1213.1
+    }
+   }
   },
   {
    "id": "N03",
@@ -1151,7 +1818,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1507.3
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1513.4
+    }
+   }
   },
   {
    "id": "N04",
@@ -1189,7 +1879,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1411.7
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1368.0
+    }
+   }
   },
   {
    "id": "N05",
@@ -1227,7 +1940,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1514.8
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1489.4
+    }
+   }
   },
   {
    "id": "N06",
@@ -1265,7 +2001,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1562.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1559.7
+    }
+   }
   },
   {
    "id": "N07",
@@ -1303,7 +2062,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1223.4
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1242.2
+    }
+   }
   },
   {
    "id": "N08",
@@ -1341,7 +2123,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1486.7
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1538.4
+    }
+   }
   },
   {
    "id": "N09",
@@ -1379,7 +2184,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1323.4
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1304.9
+    }
+   }
   },
   {
    "id": "N10",
@@ -1417,7 +2245,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.25,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.43067655807339306,
+     "latency_ms": 1583.3
+    },
+    "analyzer": {
+     "mrr": 0.25,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.43067655807339306,
+     "latency_ms": 1650.1
+    }
+   }
   },
   {
    "id": "N11",
@@ -1455,7 +2306,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1660.7
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1623.6
+    }
+   }
   },
   {
    "id": "N12",
@@ -1493,7 +2367,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1590.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1601.7
+    }
+   }
   },
   {
    "id": "N13",
@@ -1531,7 +2428,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1621.9
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1642.2
+    }
+   }
   },
   {
    "id": "N14",
@@ -1569,7 +2489,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6309297535714575,
+     "latency_ms": 1564.2
+    },
+    "analyzer": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6309297535714575,
+     "latency_ms": 1522.2
+    }
+   }
   },
   {
    "id": "N15",
@@ -1607,7 +2550,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1573.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1585.4
+    }
+   }
   },
   {
    "id": "N16",
@@ -1645,7 +2611,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1729.6
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1729.1
+    }
+   }
   },
   {
    "id": "N17",
@@ -1683,7 +2672,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1571.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1575.2
+    }
+   }
   },
   {
    "id": "T01",
@@ -1727,7 +2739,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 5474.4
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 5510.5
+    }
+   }
   },
   {
    "id": "T02",
@@ -1771,7 +2806,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.75,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.9619991470595832,
+     "latency_ms": 5927.6
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.75,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.9619991470595832,
+     "latency_ms": 5984.2
+    }
+   }
   },
   {
    "id": "T03",
@@ -1815,7 +2873,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 5855.900000000001
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 5933.4
+    }
+   }
   },
   {
    "id": "T04",
@@ -1859,7 +2940,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.1111111111111111,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.0,
+     "hit@5": 0.0,
+     "recall@10": 0.25,
+     "hit@10": 1.0,
+     "ndcg@10": 0.11751610475642714,
+     "latency_ms": 6030.8
+    },
+    "analyzer": {
+     "mrr": 0.1111111111111111,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.0,
+     "hit@5": 0.0,
+     "recall@10": 0.25,
+     "hit@10": 1.0,
+     "ndcg@10": 0.11751610475642714,
+     "latency_ms": 6112.9
+    }
+   }
   },
   {
    "id": "T05",
@@ -1903,7 +3007,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.25,
+     "hit@5": 1.0,
+     "recall@10": 0.5,
+     "hit@10": 1.0,
+     "ndcg@10": 0.3764290720714305,
+     "latency_ms": 7118.700000000001
+    },
+    "analyzer": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.25,
+     "hit@5": 1.0,
+     "recall@10": 0.5,
+     "hit@10": 1.0,
+     "ndcg@10": 0.3764290720714305,
+     "latency_ms": 7088.200000000001
+    }
+   }
   },
   {
    "id": "T06",
@@ -1947,7 +3074,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.25,
+     "hit@5": 1.0,
+     "recall@10": 0.75,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6595629128335778,
+     "latency_ms": 6136.700000000001
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.25,
+     "hit@5": 1.0,
+     "recall@10": 0.75,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6595629128335778,
+     "latency_ms": 6345.700000000001
+    }
+   }
   },
   {
    "id": "T07",
@@ -1991,7 +3141,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.125,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.0,
+     "hit@5": 0.0,
+     "recall@10": 0.5,
+     "hit@10": 1.0,
+     "ndcg@10": 0.2406672991267921,
+     "latency_ms": 6709.1
+    },
+    "analyzer": {
+     "mrr": 0.125,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.0,
+     "hit@5": 0.0,
+     "recall@10": 0.5,
+     "hit@10": 1.0,
+     "ndcg@10": 0.2406672991267921,
+     "latency_ms": 6776.799999999999
+    }
+   }
   },
   {
    "id": "T08",
@@ -2035,7 +3208,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.5,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8988898126139723,
+     "latency_ms": 7131.2
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.5,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8988898126139723,
+     "latency_ms": 7249.099999999999
+    }
+   }
   },
   {
    "id": "T09",
@@ -2077,7 +3273,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.3333333333333333,
+     "hit@1": 1.0,
+     "recall@5": 0.6666666666666666,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.9325210919548239,
+     "latency_ms": 5087.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.3333333333333333,
+     "hit@1": 1.0,
+     "recall@5": 0.6666666666666666,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.9325210919548239,
+     "latency_ms": 4639.7
+    }
+   }
   },
   {
    "id": "T10",
@@ -2121,7 +3340,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 5688.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 5615.0
+    }
+   }
   },
   {
    "id": "T11",
@@ -2165,7 +3407,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.75,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8927537907700456,
+     "latency_ms": 6577.400000000001
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.25,
+     "hit@1": 1.0,
+     "recall@5": 0.75,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8927537907700456,
+     "latency_ms": 6572.200000000001
+    }
+   }
   },
   {
    "id": "T12",
@@ -2205,7 +3470,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2675.3999999999996
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2698.0
+    }
+   }
   },
   {
    "id": "C01",
@@ -2245,7 +3533,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6509209298071326,
+     "latency_ms": 3569.7
+    },
+    "analyzer": {
+     "mrr": 0.5,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.6509209298071326,
+     "latency_ms": 3789.2
+    }
+   }
   },
   {
    "id": "C02",
@@ -2285,7 +3596,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3693.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3614.6
+    }
+   }
   },
   {
    "id": "C03",
@@ -2325,7 +3659,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.14285714285714285,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.0,
+     "hit@5": 0.0,
+     "recall@10": 0.5,
+     "hit@10": 1.0,
+     "ndcg@10": 0.20438239758848611,
+     "latency_ms": 3569.3
+    },
+    "analyzer": {
+     "mrr": 0.14285714285714285,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.0,
+     "hit@5": 0.0,
+     "recall@10": 0.5,
+     "hit@10": 1.0,
+     "ndcg@10": 0.20438239758848611,
+     "latency_ms": 3655.3
+    }
+   }
   },
   {
    "id": "C04",
@@ -2365,7 +3722,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3589.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3761.5
+    }
+   }
   },
   {
    "id": "C05",
@@ -2405,7 +3785,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3081.6000000000004
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3006.1
+    }
+   }
   },
   {
    "id": "C06",
@@ -2445,7 +3848,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3410.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3452.8999999999996
+    }
+   }
   },
   {
    "id": "C07",
@@ -2485,7 +3911,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8772153153380493,
+     "latency_ms": 3766.8999999999996
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8772153153380493,
+     "latency_ms": 3651.1
+    }
+   }
   },
   {
    "id": "C08",
@@ -2525,7 +3974,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8772153153380493,
+     "latency_ms": 3785.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8772153153380493,
+     "latency_ms": 3633.1
+    }
+   }
   },
   {
    "id": "C09",
@@ -2565,7 +4037,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3719.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 3768.6
+    }
+   }
   },
   {
    "id": "C10",
@@ -2605,7 +4100,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 0.3333333333333333,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.5,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.48381288316677695,
+     "latency_ms": 3333.5
+    },
+    "analyzer": {
+     "mrr": 0.3333333333333333,
+     "recall@1": 0.0,
+     "hit@1": 0.0,
+     "recall@5": 0.5,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.48381288316677695,
+     "latency_ms": 3520.4
+    }
+   }
   },
   {
    "id": "C11",
@@ -2645,7 +4163,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2939.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2686.8999999999996
+    }
+   }
   },
   {
    "id": "C12",
@@ -2685,14 +4226,37 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8772153153380493,
+     "latency_ms": 3668.1
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 0.5,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 0.8772153153380493,
+     "latency_ms": 3884.5
+    }
+   }
   },
   {
    "id": "F01",
    "category": "follow_up",
    "answerable": true,
    "question": "And what about the year before?",
-   "standalone_query": "How much did Microsoft's Azure revenue grow in fiscal 2025? And what about the year before?",
+   "standalone_query": "What was the revenue growth for Azure and other cloud services at Microsoft in the fiscal year prior to 2025?",
    "scope": "in_corpus",
    "reason": "",
    "pred": {
@@ -2723,14 +4287,37 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2199.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1958.8
+    }
+   }
   },
   {
    "id": "F02",
    "category": "follow_up",
    "answerable": true,
    "question": "How about in 2025?",
-   "standalone_query": "How many vehicles did Tesla deliver in 2024? How about in 2025?",
+   "standalone_query": "How many vehicles did Tesla deliver in 2025?",
    "scope": "in_corpus",
    "reason": "",
    "pred": {
@@ -2761,14 +4348,37 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2331.0
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2333.3
+    }
+   }
   },
   {
    "id": "F03",
    "category": "follow_up",
    "answerable": true,
    "question": "What drove its net interest income that year?",
-   "standalone_query": "What was JPMorgan's net income in 2024? What drove its net interest income that year?",
+   "standalone_query": "What drove JPMorgan's net interest income in 2024?",
    "scope": "in_corpus",
    "reason": "",
    "pred": {
@@ -2799,14 +4409,37 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2111.8
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2042.8
+    }
+   }
   },
   {
    "id": "F04",
    "category": "follow_up",
    "answerable": true,
    "question": "And Mastercard's?",
-   "standalone_query": "How did Visa's net revenue change in fiscal 2025? And Mastercard's?",
+   "standalone_query": "What was the change in net revenue for Mastercard in fiscal 2025?",
    "scope": "in_corpus",
    "reason": "",
    "pred": {
@@ -2837,14 +4470,37 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1871.9
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2007.4
+    }
+   }
   },
   {
    "id": "F05",
    "category": "follow_up",
    "answerable": true,
    "question": "What share of data center revenue came from China?",
-   "standalone_query": "What did NVIDIA say about US export controls on China in fiscal 2024? What share of data center revenue came from China?",
+   "standalone_query": "What share of data center revenue came from China in fiscal 2024?",
    "scope": "in_corpus",
    "reason": "",
    "pred": {
@@ -2875,14 +4531,37 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1941.6
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 2000.7
+    }
+   }
   },
   {
    "id": "F06",
    "category": "follow_up",
    "answerable": true,
    "question": "And in 2025?",
-   "standalone_query": "What were Meta's capital expenditures in 2024? And in 2025?",
+   "standalone_query": "What were Meta's capital expenditures in 2025?",
    "scope": "in_corpus",
    "reason": "",
    "pred": {
@@ -2913,7 +4592,30 @@
     "all_exact": true,
     "all_ok": true
    },
-   "retrieval": {}
+   "retrieval": {
+    "gold": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1903.5
+    },
+    "analyzer": {
+     "mrr": 1.0,
+     "recall@1": 1.0,
+     "hit@1": 1.0,
+     "recall@5": 1.0,
+     "hit@5": 1.0,
+     "recall@10": 1.0,
+     "hit@10": 1.0,
+     "ndcg@10": 1.0,
+     "latency_ms": 1674.2
+    }
+   }
   },
   {
    "id": "U01",
