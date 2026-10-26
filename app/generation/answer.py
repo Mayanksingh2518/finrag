@@ -64,8 +64,25 @@ class AnswerResult:
     cached: bool = False
 
 
-def build_messages(question: str, sources: Sequence[Source]) -> list[Message]:
-    system = SYSTEM_PROMPT + (XBRL_RULE if any(s.is_xbrl for s in sources) else "")
+# Appended by intent (the agent's retrieval plan). A 3B model drops years, flips directions and calls a
+# one-year change a CAGR on these questions even with every figure in its sources (reports/judge_v0.md).
+# A stricter "never compute a percentage the sources don't state" wording made it abstain on 6 more
+# questions (trend 0.542 -> 0.375 judged correctness, reports/judge_v1_strict.md), so it was reverted.
+INTENT_RULES = {
+    "trend": """
+9. This question is about change over several years. Answer with one line per fiscal year asked, oldest
+   first: the figure and its change versus the prior year, each with its citation. Then one sentence on the
+   overall direction. A figure smaller than the year before is a decrease. A one-year change is not a CAGR or
+   an average rate; do not compute multi-year rates. If a year is missing from the sources, say so.""",
+    "comparison": """
+9. This question compares companies (or segments). State each one's figure with its citation first, then
+   the comparison. Check it against the numbers: the larger figure is the larger one, the larger growth rate
+   grew faster. Each company's fiscal year is its own; say so when they end in different months.""",
+}
+
+
+def build_messages(question: str, sources: Sequence[Source], intent: str | None = None) -> list[Message]:
+    system = SYSTEM_PROMPT + (XBRL_RULE if any(s.is_xbrl for s in sources) else "") + INTENT_RULES.get(intent or "", "")
     return [
         {"role": "system", "content": system},
         {"role": "user", "content": f"Sources:\n\n{render_sources(sources)}\n\nQuestion: {question}"},
@@ -170,10 +187,10 @@ class Answerer:
         generated, response = self.generate(question, sources, timings)
         return finalize(question, generated, response, sources, timings)
 
-    def generate(self, question: str, sources: Sequence[Source],
-                 timings: dict[str, float]) -> tuple[GeneratedAnswer, LLMResponse]:
+    def generate(self, question: str, sources: Sequence[Source], timings: dict[str, float],
+                 intent: str | None = None) -> tuple[GeneratedAnswer, LLMResponse]:
         start = time.perf_counter()
-        generated, response = self.llm.generate(build_messages(question, sources), GeneratedAnswer)
+        generated, response = self.llm.generate(build_messages(question, sources, intent), GeneratedAnswer)
         timings["generation"] = round((time.perf_counter() - start) * 1000, 1)  # incl. rate-limit waits
         timings["llm"] = 0.0 if response.cached else response.latency_ms  # the provider call itself
         return generated, response

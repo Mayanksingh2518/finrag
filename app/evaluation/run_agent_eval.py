@@ -67,8 +67,8 @@ def xbrl_covered(q: GoldQuestion, turn: AgentTurn) -> set[int]:
             continue
         fact_numbers = extract_numbers(s.chunk.text)
         if any(_matches(g, n) for g in reference for n in fact_numbers):
-            covered |= {i for i, e in enumerate(q.evidence)
-                        if (e.ticker, e.fiscal_year) == (s.chunk.ticker, s.chunk.fiscal_year)}
+            years = s.chunk.metadata.get("years") or [s.chunk.fiscal_year]  # a series covers several
+            covered |= {i for i, e in enumerate(q.evidence) if e.ticker == s.chunk.ticker and e.fiscal_year in years}
     return covered
 
 

@@ -20,7 +20,17 @@ from app.retrieval.types import SearchFilters
 
 log = logging.getLogger(__name__)
 
-Scope = Literal["in_corpus", "out_of_range"]
+Scope = Literal["in_corpus", "out_of_range", "live_data"]
+
+# Live market data (a share price now, today's market cap): 10-Ks are annual snapshots, so any number
+# found would be a stale proxy. A 3B model "estimated" Microsoft's current price from a buyback table's
+# average purchase price (reports/agent_v0.md, U04). Needs both a live-time cue and a market quantity:
+# "the stock price at fiscal year-end" or "current liabilities" stay answerable.
+_LIVE_TIME = re.compile(r"\b(?:current(?:ly)?|today'?s?|right now|now|at the moment|live|real[- ]time|this (?:week|month))\b",
+                        re.IGNORECASE)
+_MARKET = re.compile(r"\b(?:(?:stock|share) price|price per share|share price|market (?:cap|capitalization|value)|"
+                     r"trading (?:at|price)|(?:stock|shares?) (?:is |are )?trad(?:e|es|ing)|stock quote)\b",
+                     re.IGNORECASE)
 
 REWRITE_PROMPT = """Rewrite the user's last question as one standalone question that can be understood without
 the conversation. Resolve pronouns and ellipsis ("its", "that year", "And Mastercard's?", "the year before")
@@ -83,6 +93,10 @@ class QueryAnalyzer:
             years = ", ".join(map(str, own.out_of_range_years))
             return QueryAnalysis(question, question, SearchFilters(), "out_of_range",
                                  f"The filings cover fiscal {CORPUS_YEARS[0]}-{CORPUS_YEARS[-1]}; the question asks about {years}.")
+        if _LIVE_TIME.search(question) and _MARKET.search(question):
+            return QueryAnalysis(question, question, SearchFilters(), "live_data",
+                                 "10-K filings are annual reports; they don't contain live market data such as "
+                                 "today's stock price or market capitalization.")
         if history and not is_standalone(question, own):
             return self._follow_up(question, own, history)
         return QueryAnalysis(question, question, _filters(own.tickers, own.fiscal_years, own.sections), "in_corpus")

@@ -1,0 +1,22 @@
+{"id": "L01", "correctness": "correct", "note": "matches reference"}
+{"id": "L05", "correctness": "correct", "note": "October 2023"}
+{"id": "L16", "correctness": "correct", "note": "June 2025"}
+{"id": "N04", "correctness": "correct", "note": "$130,497 million; YoY not asked"}
+{"id": "N12", "correctness": "correct", "note": "$57.0 billion; EPS/change not asked"}
+{"id": "N09", "correctness": "correct", "note": "$72.22 billion (text definition)"}
+{"id": "C07", "correctness": "correct", "note": "Meta $60,458M > JPM $57,048M"}
+{"id": "C09", "correctness": "correct", "note": "both totals right"}
+{"id": "C12", "correctness": "correct", "note": "both figures and growth rates right"}
+{"id": "F01", "correctness": "correct", "note": "30% in FY2024"}
+{"id": "T02", "correctness": "partially_correct", "note": "only 2022 and 2025 of four years"}
+{"id": "T03", "correctness": "partially_correct", "note": "2024 missing, other three right"}
+{"id": "T09", "correctness": "partially_correct", "note": "endpoints only, no FY2024 or growth rates"}
+{"id": "C06", "correctness": "partially_correct", "note": "Apple right; Google Cloud given Alphabet total revenue (36%, $402.8B)"}
+{"id": "L26", "correctness": "partially_correct", "note": "January 2023 right; $2.1B severance only, reference total ~$3.9B"}
+{"id": "L17", "correctness": "incorrect", "note": "says December 2022 (Semi); Cybertruck deliveries began November 2023"}
+{"id": "C05", "correctness": "incorrect", "note": "says Apple had more employees; Microsoft 228k > Apple 166k"}
+{"id": "T04", "correctness": "incorrect", "note": "says deliveries increased 2022-2025; they fell in 2024 and 2025"}
+{"id": "T05", "correctness": "incorrect", "note": "says net income decreased from $37.7B to $57.0B"}
+{"id": "T06", "correctness": "incorrect", "note": "calls FY2025 YoY growth (114.2%) a CAGR from FY2022; misses FY2022/FY2024"}
+{"id": "T07", "correctness": "incorrect", "note": "growth 'increased from 11% to 10%'; FY2022 22% missing"}
+{"id": "N16", "correctness": "incorrect", "note": "gives 2022's $58.3B as 2023 cash capex ($48.1B)"}

@@ -34,7 +34,7 @@ import argparse
 import json
 import logging
 import re
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import dataclass
 from datetime import date, timedelta
 from functools import cached_property
@@ -155,6 +155,60 @@ class XbrlFact:
             metadata={"concept": self.concept, "accession_number": self.accession_number,
                       "value": self.value, "unit": self.unit, "comparative": self.comparative},
         )
+
+
+def direction(change_pct: float | None) -> str:
+    """In words, computed here so the generator doesn't have to (a 3B model flips directions)."""
+    if change_pct is None:
+        return "-"
+    return "up" if change_pct >= 1 else "down" if change_pct <= -1 else "flat"
+
+
+def series_chunk(facts: Sequence[XbrlFact]) -> Chunk:
+    """One table for a company's metric over several fiscal years: value, YoY change, direction.
+
+    For trend questions the separate per-year facts left the model to line years up and work out
+    directions; it dropped years and said "decreased from $37.7B to $57.0B" (reports/judge_v0.md).
+    """
+    facts = sorted(facts, key=lambda f: f.fiscal_year)
+    first, last = facts[0], facts[-1]
+    m = first.metric
+    years = f"FY{first.fiscal_year}-FY{last.fiscal_year}"
+    rows = [f"| Fiscal year | Period | {m.label} | Change vs prior year | Direction |", "|---|---|---|---|---|"]
+    for f in facts:
+        period = f"as of {f.end}" if m.instant else f"{f.start} to {f.end}"
+        change = "-" if f.change_pct is None else f"{f.change_pct:+.1f}%"
+        rows.append(f"| FY{f.fiscal_year} | {period} | {format_value(f.value, f.unit)} | {change} | {direction(f.change_pct)} |")
+    overall = (last.value - first.value) / abs(first.value) * 100 if first.value else None
+    concepts = ", ".join(dict.fromkeys(f"us-gaap:{f.concept}" for f in facts))
+    text = (f"{m.label} by fiscal year, {years} (each year from its own Form 10-K; changes are year over year):\n"
+            + "\n".join(rows)
+            + f"\nFrom FY{first.fiscal_year} to FY{last.fiscal_year}: {format_value(first.value, m.unit)} to "
+            f"{format_value(last.value, m.unit)} ({direction(overall)}). Source: XBRL {concepts}.")
+    if any(f.comparative for f in facts):
+        text += " Years marked comparative come from the next 10-K: " + ", ".join(
+            f"FY{f.fiscal_year}" for f in facts if f.comparative) + "."
+    return Chunk(
+        chunk_id=f"xbrl:{first.ticker}:{years}:{m.key}",
+        doc_id=f"{first.ticker}_{years}_10-K",
+        ticker=first.ticker, company=first.company, fiscal_year=last.fiscal_year, form="10-K",
+        filing_date=last.filed, period_end=last.end, part=None,
+        section="XBRL", section_title=f"Company facts: {m.label} {years}", subsection=None,
+        page_start=0, page_end=0, page_label_start=None, page_label_end=None,
+        chunk_type="table", context=f"{first.company} ({first.ticker}) XBRL financial data, {years}", text=text,
+        token_count=len(text.split()) * 2, source_url=last.source_url,
+        metadata={"series": True, "years": [f.fiscal_year for f in facts], "metric": m.key},
+    )
+
+
+def fact_chunks(facts: Sequence[XbrlFact], series: bool) -> list[Chunk]:
+    """Facts as chunks; with `series`, a company's metric over 2+ years becomes one table."""
+    if not series:
+        return [f.to_chunk() for f in facts]
+    groups: dict[tuple[str, str], list[XbrlFact]] = {}
+    for f in facts:
+        groups.setdefault((f.ticker, f.metric.key), []).append(f)
+    return [series_chunk(g) if len(g) > 1 else g[0].to_chunk() for g in groups.values()]
 
 
 def format_value(value: float, unit: str) -> str:

@@ -60,6 +60,6 @@ API: `GET /api/health`, `GET /api/meta`, `POST /api/search` (schemas in `app/api
 - [x] Phase 4: Evaluation harness v0 (84-question golden set, Recall@K/MRR/nDCG, ablations): hybrid + rerank recall@5 0.884, MRR 0.920 ([report](reports/retrieval_v0.md))
 - [x] Phase 5: Grounded generation with verified page citations and abstention: local 3B model false abstention 0.054, citation hit 0.863, all unanswerable refused ([report](reports/generation_v1_ollama.md)); Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 on all 84 questions ([report](reports/generation_v1_groq.md))
 - [x] Phase 6: LangGraph agent (query analysis, retrieval plan, conversational memory, XBRL facts tool): with no gold filters it matches the gold-filter run on false abstention (0.054) and reaches citation hit 0.878 counting XBRL facts ([report](reports/agent_v0.md); [analyzer](reports/analyzer_v0.md), [plan](reports/plan_v0.md), [XBRL](reports/xbrl_v0.md))
-- [ ] Phase 7: Full evaluation (RAGAS, Langfuse tracing, latency/cost)
+- [ ] Phase 7: Full evaluation (RAGAS, Langfuse tracing, latency/cost) (in progress: LLM judge agrees with hand labels 0.86 and finds the agent's answers 0.730 correct ([report](reports/judge_v0.md)); XBRL series tables and intent prompt rules lift that to 0.777, trend 0.250 → 0.542 ([report](reports/judge_v1.md)))
 - [ ] Phase 8: Serving: FastAPI + glassmorphism React UI (search and answer UI done; streaming left)
 - [ ] Phase 9: Postgres/pgvector, Docker Compose, CI eval gate

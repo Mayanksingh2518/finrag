@@ -128,3 +128,20 @@ def test_fact_source_verifies_answer_figures(nvda):
 ])
 def test_detect_metrics(question, metrics):
     assert detect_metrics(question) == metrics
+
+
+def test_series_chunk_lists_years_with_changes_and_directions(nvda):
+    from app.agent.xbrl import fact_chunks
+
+    facts = [nvda.lookup("revenue", y) for y in (2025, 2022, 2024, 2023)]
+    chunks = fact_chunks(facts, series=True)
+    assert len(chunks) == 1
+    text = chunks[0].text
+    lines = [line for line in text.splitlines() if line.startswith("| FY")]
+    assert [line.split(" | ")[0] for line in lines] == ["| FY2022", "| FY2023", "| FY2024", "| FY2025"]  # sorted
+    assert "| $26,974 million | +0.2% | flat |" in lines[1] and lines[2].endswith("| +125.9% | up |")
+    assert "$26,914 million to $130,497 million (up)" in text
+    source = Source("S1", chunks[0], 1.0)
+    assert source.citation == "[XBRL NVDA Total revenue FY2022-FY2025]"
+    assert chunks[0].metadata["years"] == [2022, 2023, 2024, 2025]
+    assert len(fact_chunks(facts, series=False)) == 4

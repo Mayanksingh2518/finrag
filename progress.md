@@ -8,18 +8,25 @@ Single source of truth for project state. Update this file at the end of every w
   (`reports/agent_v0.md`): with **no gold filters or rewrite**, the agent matches the gold-filter v1
   run on false abstention (0.054 = 0.054) and figure recall (0.573 vs 0.583), and beats it on
   citation hit counting XBRL (0.878 vs 0.863); abstention recall drops 1.000 → 0.900 (U04).
-- **In progress:** Phase 8 started early (FastAPI + React UI; streaming and `/api/ask` left).
+- **In progress:** Phase 7 (full evaluation): steps 1-2 done. LLM judge (`reports/judge_v0.md`,
+  agrees with hand labels 0.86 / 1.00); trend fixes (`reports/judge_v1.md`): XBRL series table +
+  intent prompt rules + live-data scope rule lift judged correctness 0.730 → 0.777 (all answerable),
+  **trend 0.250 → 0.542**, abstention recall 0.900 → 1.000.
+  Phase 8 started early (FastAPI + React UI; streaming and `/api/ask` left).
   Phase 8 started early (FastAPI + React UI over retrieval and answers; streaming left).
-- **Next up:** Phase 7 (full evaluation: LLM judge, tracing, cost per stage), see "Next task in detail".
-- **Resume here (2026-10-26):** nothing pending. Not committed yet: all of Phase 6 (analyzer,
-  retrieval plan, XBRL tool, graph, agent eval), reports, tests, the verifier's `$37.7B` fix.
+- **Next up:** Phase 7 step 3: Groq routing for trend/comparison questions (needs a fresh Groq
+  daily quota), see "Next task in detail".
+- **Resume here (2026-10-26):** Phase 6 committed (b12a011). Not committed yet: Phase 7 steps 1-2
+  (judge, labels, series table, intent rules, live-data rule; `reports/judge_v0/v1/v1_strict`,
+  `agent_v1`). Groq: ~160k of the 200k daily tokens used on 2026-10-26; wait for the next day before
+  any Groq run.
 - **Disk nearly full (MacBook, 2026-10-26):** 2.2 GB free (was 4.2 GB at the start of the day) of 228 GB (98%). Free space before
   long evals or model pulls; Ollama models are several GB each.
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-26 (Phase 6 done: agent-mode eval)
+- **Last updated:** 2026-10-26 (Phase 7 step 2: trend fixes)
 
 ## Phase checklist
 
@@ -29,45 +36,126 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 4: Evaluation v0.** 84-question golden set (quote-verified pages), Recall@K / MRR / nDCG, 4 modes × filters on/off, reranker ablations, decomposition preview; hybrid_rerank recall@5 0.884, MRR 0.920; 48 tests
 - [x] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier with context-checked repair, abstention, confidence; Ollama granite4.1:3b false abstention 0.054, citation hit 0.863, abstention recall 1.000; Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 (84 q); 92 tests
 - [x] **Phase 6: LangGraph agent.** Rule-based analyzer + LLM follow-up rewrite, retrieval plan (quotas, MD&A prior), XBRL company-facts tool, LangGraph graph with memory and a widen retry; agent with no gold filters: false abstention 0.054 (= gold-filter run), citation hit incl. XBRL 0.878, figure recall 0.573; 158 tests
-- [ ] **Phase 7: Full evaluation.** RAGAS, Langfuse tracing, latency/cost per stage
+- [ ] **Phase 7: Full evaluation.** LLM judge done (agrees with hand labels 0.86; agent correctness 0.771 answered, trend 0.250); trend fixes lift judged correctness 0.730 → 0.777 (trend 0.250 → 0.542); next: model routing, RAGAS, Langfuse tracing, latency/cost per stage
 - [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. `/api/answer` with the answer panel (live-tested 2026-10-08). Left: streaming answers
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
 ## Next task in detail: Phase 7 (full evaluation)
 
-Goal: measure what the deterministic verifier can't (whether an answer is *right*, not just
-grounded in figures), trace every stage, and close the gaps the agent eval found. Zero cost: judge
-with the free tiers, cache every judge call.
+Goal: measure what the deterministic verifier can't (whether an answer is *right*), trace every
+stage, and fix what that shows. Zero cost: free-tier judge, every call cached.
 
-1. **LLM judge** `app/evaluation/judge.py` (structured output through the existing `LLM`, cached):
-   per answer, (a) correctness vs the reference answer (correct / partially / incorrect + which
-   reference facts are missing or contradicted), (b) faithfulness: each claim entailed by its cited
-   source, in meaning not just figures. Judge model: Groq gpt-oss-120b (daily cap ~50 q of
-   generation; judging is shorter, so check the token budget first) with Gemini as fallback; never
-   the same 3B model that answered. Validate the judge on ~15 hand-labelled answers before trusting
-   it. Targets it must catch (all pass the verifier today): T06 "CAGR of 114.2%" (that's FY2025
-   YoY), T05 "decreased from $37.7B to $57.0B", N16 2022's $58.3B given as 2023 capex, T11 XBRL
-   buyback cash paid instead of the program totals.
-2. **RAGAS** on the same records (faithfulness, answer relevancy, context precision/recall) as a
-   second opinion, pointed at the free judge model; report where it disagrees with (1). Only if it
-   runs within the free tiers; otherwise document why it was dropped.
-3. **Tracing**: Langfuse (free cloud) callback on the LangGraph graph + LLM calls: per-node latency,
-   tokens per query. **Needs the user's Langfuse keys** (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`,
-   `LANGFUSE_HOST` in `.env`); build it so it's a no-op without them.
-4. **Fixes the agent eval pointed at** (re-run `run_agent_eval` after each, cache makes it cheap):
-   - U04 "current stock price" answered from a buyback table's average price: a scope rule for live
-     market data (current/today's stock or share price, market cap now) in the analyzer, phrased
-     generally and tested on other wordings (it was found on the golden set).
-   - T12/T11: when facts and text disagree on a defined metric the 3B model abstains (T12) or uses
-     the XBRL figure (T11). Options: skip XBRL for buybacks/capex when the text has a figure, or
-     label the fact more explicitly in the source ("GAAP cash paid; companies may report a different
-     total"). Measure both.
-   - Groq subset (~40 q, numeric/trend/comparison) of the agent eval to separate model capacity
-     from pipeline faults.
-5. Report `reports/eval_v1.md`: the ablation table from ARCHITECTURE.md (BM25 / dense / hybrid /
-   +rerank / +analysis / +plan / +XBRL) with retrieval and judged answer metrics, latency p50/p95
-   per node.
+1. ~~LLM judge~~ **done 2026-10-26** (`app/evaluation/judge.py`; see "Judge v0" below).
+2. ~~Trend answers~~ **done 2026-10-26** (see "Trend fixes v1" below).
+3. **Model routing for trend/comparison (next)**, on a fresh Groq daily quota: the remaining trend and
+   comparison errors are the 3B model's (T06 computes "342.6%" over the period when it is +384.9%,
+   T04/T07 mis-copy figures, C01 says Azure grew ~20% when the source says 34%). Route
+   `plan.intent in ("trend", "comparison")` to Groq gpt-oss-120b in the graph (a second `LLM` built
+   with `llm_providers="groq,ollama"`; Ollama stays the fallback and the default for everything else).
+   Budget: 24 questions × ~3.5k tokens ≈ 85k for generation + ~40k for judging the changed answers:
+   one day's quota, nothing else on Groq that day. Report `reports/judge_v2.md` (+ `agent_v2`) per
+   category vs v1; keep the routing if trend/comparison improve without new abstentions. Note the
+   cost: Groq latency is lower but the free tier caps how many such questions a day the app can serve
+   (document the fallback behaviour).
+4. **RAGAS** as a second opinion on the same records, only if it runs within the free tiers.
+5. **Tracing**: Langfuse callback on the graph + LLM calls (per-node latency, tokens). **Needs the
+   user's keys** (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` in `.env`); a no-op
+   without them.
+6. Report `reports/eval_v1.md`: ablation table (BM25 / dense / hybrid / +rerank / +analysis / +plan /
+   +XBRL) with retrieval and judged answer metrics, latency p50/p95 per node.
+
+## Trend fixes v1 (Phase 7 step 2, MacBook M4, 2026-10-26)
+
+Three changes, judged with the same judge (`python -m app.evaluation.run_judge_eval --out
+reports/judge_v1`; only changed answers cost judge tokens: 42,847):
+- **XBRL series table** (`xbrl.series_chunk`, `fact_chunks`): on trend/comparison questions a
+  company's metric over 2+ years becomes one table (year, period, value, YoY change, direction word
+  computed in code: up / down / flat within ±1%), cited as `[XBRL JPM Net income FY2022-FY2025]`.
+- **Intent prompt rules** (`answer.INTENT_RULES`, appended only for the plan's trend/comparison
+  intent, so other prompts and their cache entries are unchanged): one line per year, oldest first,
+  directions from the figures, a one-year change is not a CAGR; for comparisons, each figure first,
+  then a comparison checked against the numbers.
+- **Live-data scope rule** (analyzer `live_data` scope): a live-time cue (current, today, right now,
+  live...) plus a market quantity (stock/share price, market cap, trading at) is refused before
+  retrieval. "Current liabilities", "current market position", "current valuation allowance" stay in
+  scope (tests).
+
+| Judged correctness | v0 | **v1** | v1 strict (rejected) |
+|---|---|---|---|
+| All answerable (abstention = 0) | 0.730 | **0.777** | 0.736 |
+| Answered | 0.771 | 0.821 | 0.838 |
+| trend (12) | 0.250 | **0.542** | 0.375 |
+| comparison (12) | 0.667 | 0.667 | 0.583 |
+| numeric / lookup / follow-up | 0.941 / 0.815 / 0.833 | unchanged (same prompts, cached) | unchanged |
+
+| Agent metrics (`reports/agent_v1.md`) | v0 | v1 |
+|---|---|---|
+| False abstention | 0.054 | 0.054 |
+| Abstention recall | 0.900 | **1.000** (U04 refused at analyze) |
+| Figure recall | 0.573 | **0.612** |
+| Citation hit incl. XBRL | 0.878 | 0.865 |
+| Claim support (verifier) | 0.975 | 0.942 |
+
+Reading:
+- Trend fixed where the model now lists every year (T01, T02, T03, T05, T09 → correct). Still wrong:
+  T06 computes "342.6%" over FY2022-25 (it's +384.9%), T04/T07 mis-copy figures, T10 misses 2022
+  (likely retrieval), T11 is the buyback definition case.
+- Comparison is flat: C06 and C10 improve to partial, C02 (correct in v0) now abstains because the
+  model computes a 31% Google Cloud growth rate no source states and the verifier rejects the claim.
+- **Rejected experiment** (`reports/judge_v1_strict.md`): adding "never compute a percentage the
+  sources don't state" made the 3B model abstain on 6 more questions (T01, T04, T05, T06, C02, C06):
+  answered-only correctness rose (0.838) but all-answerable fell (0.736). Prohibitions push a small
+  model into abstaining; reverted. The remaining errors look like model capacity: next step routes
+  trend/comparison to the 120B model.
+- Judge agreement on the 11 labelled answers still identical to v0: 0.91 exact / 1.00 (labels
+  describe v0 answers, so changed answers are excluded from the agreement now).
+- L27 (lookup) has been answered by Groq since v0: Ollama returned invalid JSON and the LLM layer
+  fell back. Unchanged between runs, cached.
+- Latency was not re-measured (everything came from cache); v0's p50 ~18 s for generation stands.
+
+## Judge v0 (Phase 7 step 1, MacBook M4, 2026-10-26)
+
+`app/evaluation/judge.py` + `python -m app.evaluation.run_judge_eval` (`reports/judge_v0.md`):
+one Groq gpt-oss-120b call per answered question (Gemini fallback; never the 3B model that
+answered) with the question, the reference answer, the candidate answer and **only the cited
+sources** (~1.6k tokens/call; 70 calls = 98,920 tokens, half of Groq's daily 200k). Returns
+correctness (correct / partially / incorrect, with missing and contradicted reference facts) and
+per-claim faithfulness in meaning. Abstentions are scored by rule (no call). The runner re-runs the
+agent from the LLM cache and checks every answer equals `agent_v0` (all 84 matched).
+
+**Validation first:** 22 answers labelled by reading reference vs answer
+(`data/eval/judge_labels_v0.jsonl`, labelled by Claude Code, review welcome): exact agreement
+0.86, correct-vs-not 1.00. The 3 disagreements are partial-vs-incorrect boundary cases (T06 judged
+partial although it flags the "CAGR" claim; L26 and C06 judged harsher than the label). Judge
+errors seen: T11 "FY2025 figure lacks a source" (it is cited), C10 possibly too strict on a
+Mastercard figure the reference doesn't mention.
+
+| Agent answers (granite4.1:3b) | Value |
+|---|---|
+| Correctness, answered (70) | 0.771 (50 correct, 8 partial, 12 incorrect) |
+| Correctness, all answerable (abstention = 0) | 0.730 |
+| Judge faithfulness (claims, in meaning) | 0.842 |
+| Verifier claim support (figures only) | 0.975 |
+
+| Category | Correctness | Faithfulness |
+|---|---|---|
+| numeric | 0.941 | 0.941 |
+| follow_up | 0.833 | 1.000 |
+| lookup | 0.815 | 0.821 |
+| comparison | 0.667 | 0.879 |
+| **trend** | **0.250** | 0.630 |
+
+Reading:
+- **17 answers pass the verifier and are judged not correct**: the verifier's blind spot measured.
+  Wrong direction (T04, T05, T07), wrong comparison (C05), wrong year for a figure (N16, L17),
+  mislabel (T06), fabricated or mismatched figures (C06, T01), and dropped years (T02, T03, T09, T10).
+- Faithfulness < correctness on lookups: right answers citing a page that doesn't state the fact
+  (L01 cites p.24, the drivers are on another page; L08, L20). Citation quality, not answer quality.
+- Trend is the worst category by far; the context usually has every year (retrieval/XBRL), so the
+  fix is on the generation side (Phase 7 step 2).
+- Hand labels were written by the same assistant that wrote the judge prompt: a real limit. The
+  user reviewing the 22 labels (5 minutes) would make the validation independent.
 
 ## Agent eval v0 (Phase 6 step 5, MacBook M4, 2026-10-26)
 
@@ -434,6 +522,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Dependencies are added to `requirements.txt` phase by phase.
 - Build eval v0 (Phase 4) before generation so retrieval tuning is measured.
 - Multi-entity questions use per-(company, year) decomposition with per-entity quotas (Phase 4 data).
+- Trend/comparison prompts get intent rules and an XBRL series table with directions computed in
+  code; prohibitive wording ("never compute...") was tested and rejected (more abstentions).
+- Live market data (current share price, market cap now) is out of scope at the analyzer.
 - Agent memory is an explicit per-thread turn list passed into a stateless LangGraph graph, not a
   checkpointer (see "Agent graph v0"). Standalone questions mid-conversation skip the LLM rewrite.
 - XBRL facts come only from the fiscal year's own 10-K (accession + period end + ~1-year duration;
@@ -579,3 +670,13 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `--limit` run writes `agent_v0_smoke` so it can't overwrite the report). Agent = gold filters on
   false abstention (0.054), citation hit incl. XBRL 0.878; found U04 live-price leak and the T11/T12
   definition conflicts. Analyzer report regenerated, identical. 158 tests passing.
+- **2026-10-26 (MacBook M4):** Phase 7 step 1: LLM judge (`judge.py`: correctness vs reference +
+  per-claim faithfulness, Groq gpt-oss-120b, cited sources only), `run_judge_eval` (rule-scored
+  abstentions, answers re-run from cache and checked against agent_v0, label agreement, "passed the
+  verifier but wrong" table), 22 hand labels. Judge agrees 0.86 / 1.00 with labels; agent answers
+  0.771 correct (answered), trend 0.250; 17 verifier-passed answers are wrong. 161 tests passing.
+- **2026-10-26 (MacBook M4):** Phase 7 step 2: XBRL series table, trend/comparison intent rules,
+  live-data scope rule (+11 tests, 172 passing). Judged correctness 0.730 → 0.777, trend 0.250 → 0.542,
+  abstention recall 1.000. A stricter rule variant was measured and rejected (judge_v1_strict).
+  Judge label agreement now only counts answers identical to v0. Background runs were killed once by
+  a Claude Code restart; rerun from cache.

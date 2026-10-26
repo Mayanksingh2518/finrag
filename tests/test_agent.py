@@ -202,3 +202,24 @@ def test_plan_applies_section_prior_before_the_quota_cut(plan_retriever):
     boosted = execute_plan(plan_retriever, make_plan("revenue grew", filters, k=1, section_bonus=0.5))
     assert plain.hits[0].chunk.section == "Item 8"  # same length; ties keep candidate order
     assert boosted.hits[0].chunk.section == "Item 7"
+
+
+@pytest.mark.parametrize("question", [
+    "What is Microsoft's current stock price?",
+    "How much is a Tesla share trading at right now?",
+    "What's Apple's market cap today?",
+    "What is NVIDIA's current market capitalization?",
+])
+def test_live_market_data_is_out_of_scope(question):
+    a = QueryAnalyzer().analyze(question)
+    assert a.scope == "live_data" and not a.answerable_scope
+
+
+@pytest.mark.parametrize("question", [
+    "What were Apple's current liabilities in fiscal 2025?",  # "current" without a market quantity
+    "What was the average price per share Microsoft paid for repurchases in fiscal 2025?",  # no live cue
+    "How does Visa describe its current market position?",
+    "What is Tesla's current valuation allowance on deferred tax assets in 2024?",  # a tax term, not a price
+])
+def test_live_data_rule_leaves_filing_questions_alone(question):
+    assert QueryAnalyzer().analyze(question).scope == "in_corpus"

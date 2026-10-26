@@ -35,7 +35,10 @@ class Source:
     @property
     def citation(self) -> str:
         if self.is_xbrl:
-            return f"[XBRL {self.chunk.ticker} FY{self.chunk.fiscal_year} {self.chunk.section_title.split(': ', 1)[-1]}]"
+            title = self.chunk.section_title.split(": ", 1)[-1]
+            if self.chunk.metadata.get("series"):  # title carries the years: "Total revenue FY2022-FY2025"
+                return f"[XBRL {self.chunk.ticker} {title}]"
+            return f"[XBRL {self.chunk.ticker} FY{self.chunk.fiscal_year} {title}]"
         return f"[{self.chunk.ticker} FY{self.chunk.fiscal_year} p.{self.page}]"
 
     def render(self) -> str:

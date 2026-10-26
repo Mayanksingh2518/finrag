@@ -159,3 +159,21 @@ def test_agent_eval_counts_a_verified_xbrl_citation_as_an_evidence_hit(xbrl):
     assert rec.citation_hit == 0.0  # the page-based metric can't see an XBRL citation
     assert rec.citation_hit_xbrl == 1.0 and rec.xbrl_cited and rec.facts == 1 and rec.filters_ok
     assert summarize_agent([rec])["questions_with_facts"] == 1
+
+
+def test_trend_question_gets_a_series_table_and_the_trend_rule(xbrl):
+    llm = ScriptedLLM(answers=[answer("Revenue rose from $26,914 million to $130,497 million.", "S1")])
+    turn = make_agent(llm, xbrl).run("How did NVIDIA's total revenue change from fiscal 2022 to fiscal 2025?")
+    assert turn.plan.intent == "trend" and len(turn.facts) == 4
+    xbrl_sources = [s for s in turn.result.sources if s.is_xbrl]
+    assert [s.citation for s in xbrl_sources] == ["[XBRL NVDA Total revenue FY2022-FY2025]"]
+    system = llm.prompts[0][0]["content"]
+    assert "one line per fiscal year asked" in system and "not a CAGR" in system
+    assert not turn.result.abstained
+
+
+def test_lookup_prompt_has_no_intent_rule():
+    llm = ScriptedLLM(answers=[answer("Export controls restrict sales to China.", "S1")])
+    make_agent(llm).run("What are NVIDIA's China export risks in fiscal 2025?")
+    system = llm.prompts[0][0]["content"]
+    assert "one line per fiscal year" not in system and "compares companies" not in system

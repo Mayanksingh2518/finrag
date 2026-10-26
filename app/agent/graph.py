@@ -32,7 +32,7 @@ from langgraph.graph import END, START, StateGraph
 
 from app.agent.analyze import QueryAnalysis, QueryAnalyzer
 from app.agent.plan import RetrievalPlan, execute_plan, make_plan
-from app.agent.xbrl import XbrlFact, XbrlStore, detect_metrics
+from app.agent.xbrl import XbrlFact, XbrlStore, detect_metrics, fact_chunks
 from app.generation.answer import AnswerResult, Answerer, finalize, no_sources
 from app.generation.context import Source, build_sources
 from app.generation.llm import LLM, LLMResponse
@@ -154,13 +154,18 @@ class FinRAGAgent:
 
     def _generate(self, state: AgentState) -> dict:
         facts = state.get("facts") or []
-        fact_hits = [ScoredChunk(f.to_chunk(), 1.0, {"xbrl": 1.0}) for f in facts]
+        plan = state.get("plan")
+        intent = plan.intent if plan else None
+        # Trend/comparison: a company's metric over several years goes in as one table with YoY
+        # changes and directions computed in code (see `series_chunk`).
+        chunks = fact_chunks(facts, series=intent in ("trend", "comparison"))
+        fact_hits = [ScoredChunk(c, 1.0, {"xbrl": 1.0}) for c in chunks]
         sources = build_sources(fact_hits + list(state.get("hits") or []), self.token_budget,
                                 max_sources=MAX_TEXT_SOURCES + len(fact_hits))
         timings: dict[str, float] = {}
         if not sources:
             return {"sources": [], "result": no_sources(state["analysis"].question, timings), "steps": ["generate"]}
-        generated, response = self.answerer.generate(state["analysis"].standalone_query, sources, timings)
+        generated, response = self.answerer.generate(state["analysis"].standalone_query, sources, timings, intent)
         return {"sources": sources, "generated": generated, "response": response, "result": None,
                 "steps": ["generate"], "timings_ms": timings}
 
