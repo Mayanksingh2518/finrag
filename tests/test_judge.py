@@ -48,7 +48,7 @@ def test_judge_sends_reference_answer_and_only_given_sources():
 def test_summary_scores_abstentions_by_rule_and_measures_label_agreement():
     records = [
         JudgedRecord("T06", "trend", True, False, "a", "incorrect", 0.0, 0.5, True, label="incorrect",
-                     verifier_supported=1.0, provider="groq", tokens=2000),
+                     verifier_supported=1.0, provider="groq", judge_model="qwen", answer_model="gpt-oss", tokens=2000),
         JudgedRecord("N04", "numeric", True, False, "a", "correct", 1.0, 1.0, True, label="partially_correct",
                      verifier_supported=1.0, provider="groq", tokens=1500),
         JudgedRecord("L21", "lookup", True, True, "", "incorrect", 0.0, reason="abstained (rule)"),
@@ -61,6 +61,8 @@ def test_summary_scores_abstentions_by_rule_and_measures_label_agreement():
     assert s["judge_tokens"] == 3500
     report = render_report(records, s)
     assert "Passed the verifier, judged not correct (1)" in report and "| T06 | incorrect |" in report
+    assert s["answer_models"] == {"gpt-oss": 1} and "- Answers by: gpt-oss (1)" in report
+    assert "- Judge: qwen (1)" in report
 
 
 def test_labels_file_parses(tmp_path):

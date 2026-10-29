@@ -8,25 +8,26 @@ Single source of truth for project state. Update this file at the end of every w
   (`reports/agent_v0.md`): with **no gold filters or rewrite**, the agent matches the gold-filter v1
   run on false abstention (0.054 = 0.054) and figure recall (0.573 vs 0.583), and beats it on
   citation hit counting XBRL (0.878 vs 0.863); abstention recall drops 1.000 → 0.900 (U04).
-- **In progress:** Phase 7 (full evaluation): steps 1-2 done. LLM judge (`reports/judge_v0.md`,
-  agrees with hand labels 0.86 / 1.00); trend fixes (`reports/judge_v1.md`): XBRL series table +
-  intent prompt rules + live-data scope rule lift judged correctness 0.730 → 0.777 (all answerable),
-  **trend 0.250 → 0.542**, abstention recall 0.900 → 1.000.
-  Phase 8 started early (FastAPI + React UI; streaming and `/api/ask` left).
+- **In progress:** Phase 7 (full evaluation): steps 1-3 done. LLM judge (`reports/judge_v0.md`,
+  agrees with hand labels 0.86 / 1.00); trend fixes (`reports/judge_v1.md`, 0.730 → 0.777);
+  **model routing** (`reports/judge_v2_qwen.md`): trend/comparison answered by Groq gpt-oss-120b lifts
+  judged correctness 0.764 → **0.865** (independent qwen judge; gpt-oss judge 0.777 → 0.865), trend
+  0.542 → 0.792, comparison 0.625 → 1.000, false abstention 0.054 → 0.041. Routing kept.
   Phase 8 started early (FastAPI + React UI over retrieval and answers; streaming left).
-- **Next up:** Phase 7 step 3: **run** the Groq routing eval (code, tests and a second judge are ready;
-  needs a fresh gpt-oss-120b daily quota, i.e. 2026-10-27 or later), see "Next task in detail".
-- **Resume here (2026-10-26, evening):** Phase 7 steps 1-2 committed (4202399). Not committed yet:
-  model routing (`FinRAGAgent(routed_llm=...)`, `--route` flags), the second judge (`--judge-model`,
-  `compare_judges.py`, `reports/judge_v1_qwen.*`, `judge_agreement_v1.md`). Groq gpt-oss-120b: ~160k
-  of 200k used on 2026-10-26; qwen3.8-27b: ~90k used (separate per-model quota).
-- **Disk nearly full (MacBook, 2026-10-26):** 2.2 GB free (was 4.2 GB at the start of the day) of 228 GB (98%). Free space before
-  long evals or model pulls; Ollama models are several GB each.
+  **RAGAS second opinion** (`reports/ragas_v0.md`, 26-question stratified sample): faithfulness agrees
+  with the judge (0.813 vs 0.808, Spearman 0.86), factual correctness doesn't (f1 0.294 vs 0.808):
+  RAGAS's literal NLI rejects correct answers over rounding, dates and extra detail. Judge stays the
+  correctness metric.
+- **Next up:** Phase 7 step 5: Langfuse tracing (needs the user's Langfuse keys), then step 6, the
+  `eval_v1` report. See "Next task in detail".
+- **Resume here (2026-10-29):** RAGAS step done, nothing committed since f039daa (the 2026-10-27 report
+  fixes and the RAGAS work are both uncommitted). qwen3.8-27b used ~140k tokens on 2026-10-29.
+- **Disk (MacBook, 2026-10-27):** 127 GB free again (was 2.2 GB on 2026-10-26).
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-26 (Phase 7 step 3 prepared: routing + second judge)
+- **Last updated:** 2026-10-29 (Phase 7 step 4: RAGAS second opinion)
 
 ## Phase checklist
 
@@ -36,7 +37,7 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 4: Evaluation v0.** 84-question golden set (quote-verified pages), Recall@K / MRR / nDCG, 4 modes × filters on/off, reranker ablations, decomposition preview; hybrid_rerank recall@5 0.884, MRR 0.920; 48 tests
 - [x] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier with context-checked repair, abstention, confidence; Ollama granite4.1:3b false abstention 0.054, citation hit 0.863, abstention recall 1.000; Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 (84 q); 92 tests
 - [x] **Phase 6: LangGraph agent.** Rule-based analyzer + LLM follow-up rewrite, retrieval plan (quotas, MD&A prior), XBRL company-facts tool, LangGraph graph with memory and a widen retry; agent with no gold filters: false abstention 0.054 (= gold-filter run), citation hit incl. XBRL 0.878, figure recall 0.573; 158 tests
-- [ ] **Phase 7: Full evaluation.** LLM judge done (agrees with hand labels 0.86; agent correctness 0.771 answered, trend 0.250); trend fixes lift judged correctness 0.730 → 0.777 (trend 0.250 → 0.542); next: model routing, RAGAS, Langfuse tracing, latency/cost per stage
+- [ ] **Phase 7: Full evaluation.** LLM judge done (agrees with hand labels 0.86; agent correctness 0.771 answered, trend 0.250); trend fixes lift judged correctness 0.730 → 0.777 (trend 0.250 → 0.542); routing trend/comparison to gpt-oss-120b lifts it to 0.865 (independent judge; trend 0.792, comparison 1.000); RAGAS agrees on faithfulness (Spearman 0.86), not on correctness (f1 0.29 vs 0.81); next: Langfuse tracing, latency/cost per stage, eval_v1 report
 - [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. `/api/answer` with the answer panel (live-tested 2026-10-08). Left: streaming answers
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
@@ -48,8 +49,8 @@ stage, and fix what that shows. Zero cost: free-tier judge, every call cached.
 
 1. ~~LLM judge~~ **done 2026-10-26** (`app/evaluation/judge.py`; see "Judge v0" below).
 2. ~~Trend answers~~ **done 2026-10-26** (see "Trend fixes v1" below).
-3. **Model routing for trend/comparison (next: run it)**. Built and tested 2026-10-26 (see "Routing
-   and second judge" below); only the run is left, on a fresh gpt-oss-120b daily quota:
+3. ~~Model routing for trend/comparison~~ **done 2026-10-27** (see "Routing v2 results" below).
+   Commands, for reruns (all cached now):
    ```bash
    # 1. routed answers (24 trend/comparison questions by gpt-oss-120b, ~85k tokens) judged by gpt-oss (~40k)
    python -m app.evaluation.run_judge_eval --route --out reports/judge_v2
@@ -61,17 +62,108 @@ stage, and fix what that shows. Zero cost: free-tier judge, every call cached.
    python -m app.evaluation.compare_judges reports/judge_v2.json reports/judge_v2_qwen.json \
        --out reports/judge_agreement_v2.md
    ```
-   Decide with **qwen's** scores (v1_qwen → v2_qwen) and check gpt-oss agrees in direction: keep
-   routing if trend/comparison improve without new abstentions. If Groq hits its daily cap mid-run,
-   the routed LLM falls back to Ollama for the rest (those answers equal v1's): rerun the next day,
-   everything done so far is cached. Record Groq latency per routed question (it is not cached on the
-   first run) and the serving cost: the free tier allows ~50 routed questions/day for the app.
-4. **RAGAS** as a second opinion on the same records, only if it runs within the free tiers.
-5. **Tracing**: Langfuse callback on the graph + LLM calls (per-node latency, tokens). **Needs the
-   user's keys** (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` in `.env`); a no-op
-   without them.
+   If Groq fails mid-run (daily cap or network), the routed LLM silently falls back to Ollama:
+   check the log for "groq failed" and the report's "Answers by" line, then rerun (only the
+   fallen-back questions reach Groq; the cache is per provider).
+4. ~~RAGAS second opinion~~ **done 2026-10-29** on a 26-question sample (see "RAGAS v0" below).
+   Full 74-question rerun, if ever wanted (the 26 are cached; ~48 × ~5k tokens = ~240k, more than one
+   day of qwen's quota, so it stops at the cap and resumes the next day):
+   `python -m app.evaluation.run_ragas_eval --out reports/ragas_v1`
+5. **Tracing (next)**: Langfuse callback on the graph + LLM calls (per-node latency, tokens). **Needs the
+   user's keys** (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` in `.env`, from a free
+   Langfuse Cloud Hobby project); a no-op without them. Plan: add `langfuse` to requirements, a
+   `app/tracing.py` that returns the LangGraph callback handler when keys are set (else `None`), pass it
+   via `config={"callbacks": [...]}` in `FinRAGAgent.run`, and record LLM calls (provider, model,
+   tokens, cached, latency) as generations from `LLM.generate`. Test the no-key path offline; with keys,
+   trace a 5-question routed run and read per-node p50/p95 from Langfuse. If the user has no keys yet,
+   build the per-node latency table from the agent's own step timings (agent_v2 records) instead, so
+   step 6 isn't blocked.
 6. Report `reports/eval_v1.md`: ablation table (BM25 / dense / hybrid / +rerank / +analysis / +plan /
    +XBRL) with retrieval and judged answer metrics, latency p50/p95 per node.
+
+## RAGAS v0 (Phase 7 step 4, MacBook M4, 2026-10-29)
+
+`app/evaluation/ragas_metrics.py` + `python -m app.evaluation.run_ragas_eval` (`reports/ragas_v0.md`).
+RAGAS 0.4.3 collection metrics run through FinRAG's own `LLM` layer: `RagasLLM` implements RAGAS's
+`InstructorBaseRagasLLM` (`agenerate(prompt, PydanticModel)`) over `LLM.generate`, so every call is
+cached, rate limited and strict-schema, with no OpenAI client. Model: Groq qwen3.8-27b (wrote no
+answer). Metrics: `Faithfulness` vs the cited sources (2 calls) and `FactualCorrectness` vs the
+reference (4 calls), the latter reported as precision, **coverage** (reference claims the answer
+entails: the judge's correctness counterpart) and RAGAS's own f1. RAGAS's "recall" mode was not used:
+it's tp / (tp + fn) with tp from the precision direction.
+
+**Cost decided the sample:** 6 calls and ~5k tokens per question, ~30 s each under Groq's per-minute
+limit; all 74 answered questions = ~400k tokens (2 days of qwen quota) and ~40 min. Run on a stratified
+26: L01-L10, three judged not correct (L13, L17, L22), N01 N04 N12 N16, T01 T06 T09 T12, C02 C05 C10, F01 F05.
+
+| 26 answers (routed v2) | RAGAS | Judge (qwen, judge_v2_qwen) |
+|---|---|---|
+| Faithfulness to cited sources | 0.813 | 0.808 (Spearman **0.86**, MAE 0.08) |
+| Correctness | coverage 0.500 / f1 **0.294** / precision 0.302 | **0.808** |
+| Spearman vs judge correctness | coverage 0.55 / f1 0.27 | |
+
+| Judge grade | n | RAGAS coverage | RAGAS f1 |
+|---|---|---|---|
+| correct | 20 | 0.62 | 0.35 |
+| partially_correct | 2 | 0.33 | 0.38 |
+| incorrect | 4 | **0.00** | 0.00 |
+
+Reading:
+- **Faithfulness: RAGAS corroborates the judge.** Same mean, 0.86 rank correlation. It confirms the
+  judge's citation finding on L01/L02 (correct answer, cited page doesn't state it). One clear split:
+  T12 (Meta capex), RAGAS 0.00 vs judge 1.00.
+- **Factual correctness: rejected as a correctness metric.** RAGAS never passes a judge-incorrect
+  answer (4/4 score 0), but scores correct answers 0.35 f1 because its NLI is literal: "$26,914 million"
+  isn't entailed by "$26.91B", "228,000 … in 2025" doesn't entail "(June 2025)", and correct extra
+  detail (prior-year growth) counts as a false positive (T06 f1 0.18, C05 coverage 0.00, L03 0.00: all
+  correct). 12 of 26 correctness disagreements of ≥0.5, all RAGAS stricter. Fixing that means rewriting
+  its prompts, i.e. rebuilding the judge. The judge (validated on hand labels) stays the correctness
+  metric, with RAGAS faithfulness as an independent corroboration.
+- Install: ragas 0.4.3 needs `langchain-community<0.4` (it imports a module removed in 0.4); it also
+  downgrades tenacity 9 → 8.5 and rich 15 → 13 (instructor pins). All 178 tests pass.
+- Ops: long trend answers hit Groq's per-minute 429 three times in a row (T01, T09), and `LLM` gives
+  up after 3 retries; rerunning the same command filled them (everything else came from the cache).
+  The first uncached smoke once hung with 0% CPU for 10+ min (likely a stalled connection; a rerun was fine).
+
+## Routing v2 results (Phase 7 step 3, MacBook M4, 2026-10-27)
+
+Routed agent: trend/comparison (by plan intent) answered by Groq gpt-oss-120b, the rest by granite4.1:3b
+("Answers by: granite4.1:3b (53), openai/gpt-oss-120b (26)": 24 routed + L27's usual fallback + U05,
+an unanswerable two-company question planned as a comparison, correctly abstained). Same answers judged twice:
+
+| Judged correctness | v1 gpt-oss | **v2 gpt-oss** | v1 qwen | **v2 qwen** |
+|---|---|---|---|---|
+| All answerable (abstention = 0) | 0.777 | **0.865** | 0.764 | **0.865** |
+| Answered | 0.821 | 0.901 | - | 0.901 |
+| trend (12) | 0.542 | **0.792** | 0.542 | **0.792** |
+| comparison (12) | 0.667 | **0.958** | 0.625 | **1.000** |
+| lookup / numeric / follow-up | unchanged (same local answers) | | | |
+| Hand-label agreement (10 still valid) | 0.91 | 0.90 / 1.00 | 1.00 | 1.00 / 1.00 |
+
+| Agent metrics | v1 (`agent_v1`) | **v2 routed** (`agent_v2`) |
+|---|---|---|
+| False abstention | 0.054 | **0.041** |
+| Abstention recall | 1.000 | 1.000 |
+| Figure recall | 0.612 | **0.653** |
+| Citation hit incl. XBRL | 0.865 | 0.878 |
+| Claim support (verifier) | 0.942 | 0.965 |
+
+- **Decision: keep routing.** The independent judge (qwen) and the generator's own model (gpt-oss)
+  agree on every category score within 0.04; judges agree 0.94 exact / 0.96 binary on the v2 answers
+  (`judge_agreement_v2.md`), so self-preference isn't driving the gain. No new abstentions.
+- **Latency** (Groq, uncached, net of rate-limit waits; retrieval + answer + judge call): p50 ~9 s,
+  p95 ~20 s over 22 routed questions (local 3B generation alone was p50 ~18 s). The logged ~45 s per
+  question was mostly `TokenRateLimiter` waiting for Groq's ~8k tokens/minute window.
+- **Serving cost on the free tier**: ~3.5k tokens per routed answer → ~55 routed questions/day on the
+  200k daily quota and ~2/minute on the TPM limit; past that the local model answers (v1 quality).
+  The API doesn't use the agent yet (it calls `Answerer` directly): wiring `build_agent(route=True)`
+  into `/api/answer` is Phase 8 work.
+- **Network outage mid-run**: 5 routed calls (C06-C10) hit `ConnectError` and silently fell back to
+  Ollama; caught from the log, rerun the same command (only those 5 reached Groq). Reports now print
+  "Answers by" / "Judge" model counts (`answer_model`, `judge_model` per record) so a mixed run is
+  visible; the hardcoded "granite4.1:3b answers" title is gone.
+- Agent report: title uses the output name; "End-to-end p50 (uncached)" no longer counts analyzer
+  refusals (they showed as 0.7 ms when everything else was cached).
 
 ## Routing and second judge (Phase 7 step 3 prep, MacBook M4, 2026-10-26)
 
@@ -559,8 +651,11 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Trend/comparison prompts get intent rules and an XBRL series table with directions computed in
   code; prohibitive wording ("never compute...") was tested and rejected (more abstentions).
 - Live market data (current share price, market cap now) is out of scope at the analyzer.
+- RAGAS is a second opinion, not the metric: its faithfulness agrees with the judge (Spearman 0.86),
+  its factual correctness is too literal for 10-K answers (rounding, dates, extra detail) and was
+  rejected as the correctness metric. RAGAS calls go through FinRAG's cached `LLM`, never an OpenAI client.
 - Model routing by plan intent: trend/comparison to Groq gpt-oss-120b (local fallback), everything else
-  local. A routed run is judged by a second model family (qwen3.8-27b on Groq) because the default judge
+  local. Kept after the v2 run (judged correctness 0.764 → 0.865 by the independent judge). A routed run is judged by a second model family (qwen3.8-27b on Groq) because the default judge
   is the generator's own model. Gemini dropped as a judge: free tier too unreliable (503/timeouts).
 - Agent memory is an explicit per-thread turn list passed into a stateless LangGraph graph, not a
   checkpointer (see "Agent graph v0"). Standalone questions mid-conversation skip the LLM rewrite.
@@ -722,3 +817,15 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `compare_judges.py`. Gemini failed again as a judge (503/timeouts). qwen3.8-27b judged all v1
   answers: agrees with gpt-oss 0.91 exact / 0.93 binary and with the still-valid labels 11/11.
   174 tests passing.
+- **2026-10-27 (MacBook M4):** Phase 7 step 3 run: routed judge eval (gpt-oss judge), a network outage
+  made 5 routed calls fall back to Ollama, rerun filled them; qwen judge on the same answers; agent_v2;
+  judge_agreement_v2. Judged correctness 0.764 → 0.865 (qwen), trend 0.792, comparison 1.000, false
+  abstention 0.041: routing kept. Judge reports now record answering and judge models; agent report
+  title and uncached latency fixed. Groq latency net of rate-limit waits p50 ~9 s. 174 tests passing.
+- **2026-10-29 (MacBook M4):** Phase 7 step 4: RAGAS second opinion. `ragas_metrics.py` (RAGAS 0.4.3
+  collection metrics over FinRAG's cached `LLM` via an `InstructorBaseRagasLLM` adapter; factual
+  correctness split into precision / coverage / f1), `run_ragas_eval.py` (vs judge_v2_qwen, rank
+  correlation, per-grade means, disagreements), 4 tests (178 passing). Full run stopped at the user's
+  request (too slow on the free tier, ~30 s/question); 26-question stratified sample instead.
+  Faithfulness agrees with the judge (0.813 vs 0.808, Spearman 0.86); factual correctness rejects
+  correct answers (f1 0.294 vs 0.808). Judge kept as the correctness metric.

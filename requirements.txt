@@ -29,6 +29,11 @@ numpy>=1.26
 # Phase 6 - agent graph
 langgraph>=1.2
 
+# Phase 7 - RAGAS second opinion (app/evaluation/ragas_metrics.py; calls go through app.generation.llm)
+# ragas 0.4.3 imports langchain_community.chat_models.vertexai, removed in langchain-community 0.4
+ragas>=0.4.3,<0.5
+langchain-community<0.4
+
 # Phase 8 - serving (API for the web frontend in frontend/)
 fastapi>=0.115
 uvicorn[standard]>=0.30
