@@ -11,9 +11,10 @@ Single source of truth for project state. Update this file at the end of every w
   FAISS, 740/740); `docker compose up --build` (API + UI + Postgres); GitHub Actions CI green
   (run 41048182690: 209 tests incl. real Postgres, frontend lint + build, eval gate 10/10). CI badge in
   the README.
-- **Next up:** Phase 10 (expansion): earnings releases (8-K Ex-99.1). See "Next task in detail".
-- **Resume here (2026-10-30):** Phase 9 done and pushed (a5632b6); nothing uncommitted except this
-  progress/README update.
+- **In progress:** Phase 10 (earnings releases): step 1 done 2026-10-30, 160 releases (10 companies ×
+  16 quarters, FY2022-2025) downloaded from 8-K Exhibit 99.1 and mapped to fiscal quarters.
+- **Next up:** Phase 10 step 2: parse + chunk the releases. See "Next task in detail".
+- **Resume here (2026-10-30):** Phase 10 step 1 uncommitted (downloader, tests, CLAUDE.md setup line).
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
   0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
@@ -23,7 +24,7 @@ Single source of truth for project state. Update this file at the end of every w
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-30 (Phase 9 done: CI green)
+- **Last updated:** 2026-10-30 (Phase 10 step 1: earnings release downloader)
 
 ## Phase checklist
 
@@ -45,23 +46,55 @@ revenue?", "How did Apple's quarterly revenue trend in fiscal 2025?") from earni
 with the same citations, verification and abstention. Zero cost: SEC EDGAR only (earnings releases are
 filed as 8-K Exhibit 99.1, Item 2.02; stable URLs, same User-Agent rule as Phase 1).
 
-1. **Downloader (first "go").** Read `app/ingestion/sec_downloader.py`, `models.py` and `companies.py`
-   first. Extend (don't fork) the EDGAR client: select 8-Ks whose `items` include 2.02 for the 10
-   companies, FY2022-2025 (~16 per company, ~160 filings), fetch the filing index and pick Exhibit 99.1
-   (the press release; skip 99.2+ for now). Map each to company, fiscal year and fiscal quarter from the
-   period it reports (not the filing date; NVIDIA and Apple fiscal calendars differ; reuse the 10-K
-   manifest's fiscal-year-end logic). Store under `data/raw/sec/<ticker>/8-K/...` with a manifest like
-   the 10-K one. Tests with recorded fixtures (no network). Verify on real data: count per company and
-   quarter, spot-check 3 releases against the IR numbers in the text itself.
-2. **Parse + chunk**: reuse the HTML parser and table handling; new `doc_type` ("10-K" / "8-K Ex-99.1")
-   and `fiscal_quarter` metadata on `Chunk`; no page numbers in press releases, so citations become
-   `[NVDA Q3 FY2025 release]` (+ section/heading). Store, BM25, FAISS and pgvector schema gain the fields.
+1. ~~Downloader~~ **done 2026-10-30** (see "Earnings releases v0" below).
+2. **Parse + chunk (next "go").** Read `app/ingestion/pipeline.py`, `html_parser.py`, `tables.py`,
+   `chunker.py`, `models.py` first. Input: `data/raw/sec/manifest_earnings.json` (160 rows; `report_date`
+   = period end, `fiscal_quarter` 1-4, `form` "8-K EX-99.1"). Reuse the HTML parser and table
+   handling (releases are mostly tables: income statement, segments, non-GAAP reconciliations; sizes
+   22 KB-1.6 MB, JPM's narrative + Tesla's letter are the large ones). No 10-K items, so sections come
+   from headings (or one section "Earnings release"); no printed pages, so the page fields stay empty and
+   citations become `[NVDA Q3 FY2025 release]`. `Chunk` gains `fiscal_quarter: int | None` (and the form
+   value distinguishes doc types); check every consumer of `Chunk` (store, BM25 text, embedding cache
+   keys, pgvector `COLUMNS` + a test keeps them in sync, API `Hit`, citations in `context.py`, UI
+   chips) and keep 10-K chunks byte-identical so cached embeddings and LLM prompts stay valid. Write
+   releases to a separate `chunks_earnings.jsonl` first; merging into the index is step 3. Quality
+   report like Phase 2's (chunks per release, tables, token limit, empty sections). Tests with a small
+   fixture release.
 3. **Retrieval + analyzer**: quarter detection ("Q3", "third quarter", "three months ended"), filters
    on doc type and quarter, plan intent for quarterly trends; the 10-K stays the default for annual
    questions.
 4. **Golden set extension** (~20 quarterly questions with quote-verified evidence, incl. unanswerable
    ones such as guidance for a quarter not yet reported), then retrieval + agent + judge evals and a
    gate update. Investor presentations (PDF) come after, if at all: most are not on EDGAR.
+
+## Earnings releases v0 (Phase 10 step 1, MacBook M4, 2026-10-30)
+
+`app/ingestion/earnings_downloader.py` (`python -m app.ingestion.earnings_downloader --years 2022 2023
+2024 2025`, ~2-3.5 min): 160 releases, 16 per company, all of FY2022-2025, into
+`data/raw/sec/<ticker>/8-K/FY<y>_Q<q>_EX-99.1.htm` + `data/raw/sec/manifest_earnings.json` (separate from
+the 10-K `manifest.json`, which the pipeline reads; `EarningsReleaseRef` = `FilingRef` + `fiscal_quarter`,
+`report_date` = period end, `primary_document` = the exhibit).
+
+- **Quarter mapping:** an 8-K's `reportDate` is the announcement date, so the period comes from the
+  company's own 10-Q/10-K period ends in the same submissions feed: the latest one before the filing
+  date (within 120 days). Fiscal year = the year the fiscal year ends (same rule as the 10-K corpus);
+  quarter = days since the previous fiscal-year end / 91.3, or Q4 when the period is a 10-K date.
+  Checked: Apple Q1 FY2022 = 2021-12-25, Microsoft Q1 FY2022 = 2021-09-30, NVIDIA Q1 FY2022 = 2021-05-02,
+  Visa Q1 FY2022 = 2021-12-31.
+- **Choosing the release:** Item 2.02 isn't only earnings. Tesla files quarterly deliveries reports
+  under 2.02 (with 7.01 until 2022, then plain 2.02 + 9.01), NVIDIA pre-announced Q2 FY2023 revenue on
+  2022-08-08, Alphabet filed a blog post (2.02 + 8.01) before its Q1 2023 release. Candidates are ranked
+  (no items beyond 2.02/9.01 first, then earliest) and, when there is more than one, the first whose
+  Exhibit 99.1 has an income statement (net income/earnings/loss + "diluted") wins. 18 periods had a
+  choice (16 Tesla, NVIDIA Q2 FY2023, Alphabet Q1 FY2023); all now pick the real release. The first
+  version (earliest filing) picked Tesla's deliveries reports, caught by their filing dates (~3 days
+  after quarter end vs Tesla's ~20th-of-month earnings).
+- **Verified:** all 160 exhibits contain an income statement; spot checks against the text: NVIDIA Q4
+  FY2025 revenue $39.3 billion, Apple Q1 FY2025 revenue $124.3 billion, JPMorgan Q4 2024 net income
+  $14.0 billion. Exhibit lookup reads the filing's `-index.htm` table (EX-99.1 row's document).
+- Tests (5): fiscal mapping on NVIDIA's and Apple's calendars, candidate ranking/lag/year filters, content
+  choice with a fake fetch (preliminary vs release; single candidate unchecked; fallback warning),
+  exhibit lookup, manifest merge. 213 passing + 1 skipped.
 
 ## CI v0 (Phase 9 step 3, MacBook M4, 2026-10-30)
 
@@ -1040,3 +1073,7 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - **2026-10-30 (MacBook M4):** CI green on GitHub after the tie fix (run 41048182690: 209 passed incl. the
   pgvector integration test, frontend, gate 10/10). Phase 9 done: README CI badge, Phase 10 planned
   (earnings releases from 8-K Ex-99.1).
+- **2026-10-30 (MacBook M4):** Phase 10 step 1: earnings release downloader (8-K Item 2.02 Ex-99.1, fiscal
+  quarter from 10-Q/10-K period ends, content check among several 2.02 8-Ks). 160/160 releases; Tesla's
+  deliveries reports and NVIDIA's preliminary revenue 8-K caught and excluded. 5 tests (213 passing).
+  CLAUDE.md setup gains the download line.

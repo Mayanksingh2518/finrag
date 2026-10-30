@@ -58,6 +58,7 @@ python -m app.ingestion.sec_downloader --years 2022 2023 2024 2025   # 40 filing
 python -m app.ingestion.pipeline                                     # chunks, ~1 min
 python -m app.retrieval.build_index                                  # embeddings (cached)
 python -m app.agent.xbrl --download                                  # XBRL company facts, ~45 MB
+python -m app.ingestion.earnings_downloader --years 2022 2023 2024 2025  # 160 earnings releases, ~3 min
 python -m pytest
 ```
 
