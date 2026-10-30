@@ -68,17 +68,19 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     ...init,
     headers: { 'Content-Type': 'application/json', ...init?.headers },
   })
-  if (!res.ok) {
-    let detail = `${res.status} ${res.statusText}`
-    try {
-      const body = await res.json()
-      if (typeof body.detail === 'string') detail = body.detail
-    } catch {
-      /* non-JSON error body */
-    }
-    throw new ApiError(res.status, detail)
-  }
+  if (!res.ok) throw await errorFrom(res)
   return res.json() as Promise<T>
+}
+
+async function errorFrom(res: Response): Promise<ApiError> {
+  let detail = `${res.status} ${res.statusText}`
+  try {
+    const body = await res.json()
+    if (typeof body.detail === 'string') detail = body.detail
+  } catch {
+    /* non-JSON error body */
+  }
+  return new ApiError(res.status, detail)
 }
 
 export const api = {
@@ -103,6 +105,8 @@ export interface AnswerRequest {
   fiscal_years: number[]
   sections: string[]
   decompose: boolean | null
+  /** Same id across requests = one conversation, so follow-ups ("And in 2024?") are understood. */
+  thread_id: string | null
 }
 
 export interface AnswerClaim {
@@ -122,6 +126,14 @@ export interface AnswerSource {
 
 export interface AnswerResponse {
   query: string
+  /** The question as the agent read it (follow-ups rewritten to stand alone). */
+  standalone_query: string
+  filters: { tickers: string[]; fiscal_years: number[]; sections: string[] }
+  intent: string | null
+  steps: string[]
+  /** XBRL facts given to the model, as citations: [XBRL NVDA Total revenue FY2025] */
+  facts: string[]
+  thread_id: string | null
   answer: string
   abstained: boolean
   abstain_reason: string
@@ -143,7 +155,67 @@ export class ApiError extends Error {
   }
 }
 
+/** One agent node finished (POST /api/answer/stream `step` event); fields depend on the node. */
+export interface AnswerStep {
+  node: string
+  elapsed_ms: number
+  standalone_query?: string
+  in_scope?: boolean
+  filters?: AnswerResponse['filters']
+  hits?: number
+  intent?: string | null
+  answer_model?: string | null
+  facts?: string[]
+  model?: string | null
+  sources?: number
+  claims?: number
+  verified?: number
+  abstained?: boolean
+}
+
+/** The stream ended without an answer or error event (connection dropped, proxy buffering...). */
+export class StreamBrokenError extends Error {}
+
+/** Read Server-Sent Events from a POST (EventSource can only GET). */
+async function streamAnswer(body: AnswerRequest, onStep: (step: AnswerStep) => void,
+  signal?: AbortSignal): Promise<AnswerResponse> {
+  const res = await fetch('/api/answer/stream', {
+    method: 'POST', body: JSON.stringify(body), signal, headers: { 'Content-Type': 'application/json' },
+  })
+  if (!res.ok) throw await errorFrom(res)
+  if (!res.body) throw new StreamBrokenError('No response body')
+  const reader = res.body.pipeThrough(new TextDecoderStream()).getReader()
+  let buffer = ''
+  for (;;) {
+    const { value, done } = await reader.read()
+    if (done) throw new StreamBrokenError('The answer stream ended early')
+    buffer += value
+    let end: number
+    while ((end = buffer.indexOf('\n\n')) >= 0) {
+      const block = buffer.slice(0, end)
+      buffer = buffer.slice(end + 2)
+      const kind = /^event: (.*)$/m.exec(block)?.[1]
+      const data = /^data: (.*)$/m.exec(block)?.[1]
+      if (!kind || data === undefined) continue
+      const payload = JSON.parse(data)
+      if (kind === 'step') onStep(payload as AnswerStep)
+      else if (kind === 'answer') return payload as AnswerResponse
+      else if (kind === 'error') throw new ApiError(payload.status ?? 500, payload.detail ?? 'Answer failed')
+    }
+  }
+}
+
 export const answerApi = {
   answer: (body: AnswerRequest, signal?: AbortSignal) =>
     request<AnswerResponse>('/answer', { method: 'POST', body: JSON.stringify(body), signal }),
+  /** Streams progress; falls back to the plain endpoint if streaming isn't available or breaks. */
+  stream: async (body: AnswerRequest, onStep: (step: AnswerStep) => void, signal?: AbortSignal) => {
+    try {
+      return await streamAnswer(body, onStep, signal)
+    } catch (e) {
+      const unavailable = e instanceof StreamBrokenError || (e instanceof ApiError && e.status === 404) || e instanceof TypeError
+      if (!unavailable || signal?.aborted) throw e
+      return answerApi.answer(body, signal)
+    }
+  },
 }

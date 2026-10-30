@@ -38,6 +38,8 @@ class Settings(BaseSettings):
     llm_timeout_s: float = 90.0
     # Prompt context budget (tokens of sources). Groq's free tier allows 8k tokens/minute.
     context_token_budget: int = 3500
+    # API answers: trend/comparison questions by Groq (falls back to the local model); see Phase 7 routing.
+    answer_route: bool = True
 
     # Tracing (Phase 7): Langfuse Cloud Hobby tier (free). Without keys, traces stay local.
     langfuse_public_key: str | None = None

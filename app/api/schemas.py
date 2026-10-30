@@ -75,11 +75,14 @@ class HealthResponse(BaseModel):
 
 class AnswerRequest(BaseModel):
     query: str = Field(min_length=1, max_length=500)
+    # Optional: filters chosen in the UI override the agent's own (per field); empty = the agent decides.
     tickers: list[str] = Field(default_factory=list)
     fiscal_years: list[int] = Field(default_factory=list)
     sections: list[str] = Field(default_factory=list)
-    # None = decompose automatically when several companies/years are selected.
+    # Ignored since the agent answers: its retrieval plan decomposes multi-entity questions itself.
     decompose: bool | None = None
+    # Same id across requests = one conversation (follow-ups like "And in 2024?"); None = standalone.
+    thread_id: str | None = Field(default=None, min_length=1, max_length=100, pattern=r"^[A-Za-z0-9_-]+$")
 
 
 class AnswerClaim(BaseModel):
@@ -97,8 +100,20 @@ class AnswerSource(BaseModel):
     hit: Hit
 
 
+class AnswerFilters(BaseModel):
+    tickers: list[str]
+    fiscal_years: list[int]
+    sections: list[str]
+
+
 class AnswerResponse(BaseModel):
     query: str
+    standalone_query: str  # the follow-up rewritten to stand alone (= query for standalone questions)
+    filters: AnswerFilters  # what retrieval used: the analyzer's, overridden by the request's
+    intent: str | None  # retrieval plan intent (lookup, numeric, trend, comparison); None if refused
+    steps: list[str]  # graph nodes in order, e.g. analyze > retrieve > xbrl > generate > verify > respond
+    facts: list[str]  # XBRL facts given to the model, as citations
+    thread_id: str | None
     answer: str
     abstained: bool
     abstain_reason: str

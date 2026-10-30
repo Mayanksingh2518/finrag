@@ -28,7 +28,7 @@ import logging
 import operator
 import time
 from collections import OrderedDict
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, field, replace
 from typing import Annotated, Literal, TypedDict
 
@@ -41,7 +41,7 @@ from app.generation.answer import AnswerResult, Answerer, finalize, no_sources
 from app.generation.context import Source, build_sources
 from app.generation.llm import LLM, LLMResponse
 from app.generation.schemas import GeneratedAnswer
-from app.retrieval.types import ScoredChunk, SearchMode
+from app.retrieval.types import ScoredChunk, SearchFilters, SearchMode
 from app.tracing import Trace, TraceSink, build_sinks, span, start_trace
 
 log = logging.getLogger(__name__)
@@ -60,6 +60,7 @@ def _merge(a: dict, b: dict) -> dict:
 class AgentState(TypedDict, total=False):
     question: str
     history: list[str]  # earlier turns, oldest first: user, assistant, user, ...
+    user_filters: SearchFilters | None  # chosen in the UI; each set field overrides the analyzer's
     analysis: QueryAnalysis
     plan: RetrievalPlan
     hits: list[ScoredChunk]
@@ -83,12 +84,22 @@ class AgentTurn:
     steps: list[str] = field(default_factory=list)
     timings_ms: dict[str, float] = field(default_factory=dict)
     trace: Trace | None = None
+    hits: list[ScoredChunk] = field(default_factory=list)  # retrieved text (sources are built from these + facts)
 
     @property
     def assistant_text(self) -> str:
         """What the conversation remembers as the assistant's turn."""
         r = self.result
         return r.answer if not r.abstained else f"I could not answer from the filings: {r.abstain_reason}"
+
+
+@dataclass
+class AgentEvent:
+    """A graph node finished: its state update and the time since the turn started (for progress UIs)."""
+
+    node: str
+    update: dict
+    elapsed_ms: float
 
 
 class ConversationMemory:
@@ -110,6 +121,16 @@ class ConversationMemory:
 
     def clear(self, thread_id: str) -> None:
         self._threads.pop(thread_id, None)
+
+
+def merge_filters(analyzed: SearchFilters, user: SearchFilters) -> SearchFilters:
+    """Filters the user selected explicitly win, field by field; unset fields keep the analyzer's.
+
+    Scope refusals (unknown company, year outside the corpus) still come from the question: a filter
+    can narrow an answerable question, not make an unanswerable one answerable.
+    """
+    return replace(analyzed, **{f: getattr(user, f) for f in ("tickers", "fiscal_years", "sections", "chunk_types")
+                                if getattr(user, f)})
 
 
 def _ms(start: float) -> float:
@@ -141,6 +162,8 @@ class FinRAGAgent:
     def _analyze(self, state: AgentState) -> dict:
         start = time.perf_counter()
         analysis = self.analyzer.analyze(state["question"], state.get("history") or ())
+        if (user := state.get("user_filters")) and analysis.answerable_scope:
+            analysis = replace(analysis, filters=merge_filters(analysis.filters, user))
         return {"analysis": analysis, "steps": ["analyze"], "timings_ms": {"analyze": _ms(start)}}
 
     def _refuse(self, state: AgentState) -> dict:
@@ -238,11 +261,28 @@ class FinRAGAgent:
 
     # --- public API ----------------------------------------------------------------------------
 
-    def run(self, question: str, history: Sequence[str] = ()) -> AgentTurn:
-        """One turn with an explicit history (stateless; evals use this)."""
+    def answer_model(self, intent: str | None) -> str | None:
+        """The model that will answer a question of this plan intent (first provider; it may fall back)."""
+        answerer = self.routed_answerer if self.routed_answerer is not None and intent in self.routed_intents else self.answerer
+        providers = getattr(answerer.llm, "providers", None)
+        return providers[0].model if providers else None
+
+    def stream(self, question: str, history: Sequence[str] = (),
+               filters: SearchFilters | None = None) -> Iterator[AgentEvent | AgentTurn]:
+        """One turn, yielding an `AgentEvent` as each node finishes and the `AgentTurn` last.
+
+        Consume it to the end in one thread: the turn's trace is a contextvar opened and closed here.
+        """
         start = time.perf_counter()
+        inputs = {"question": question, "history": list(history), "user_filters": filters, "steps": [], "timings_ms": {}}
         with start_trace("agent", question, self.trace_sinks, history_turns=len(history)) as trace:
-            state = self.graph.invoke({"question": question, "history": list(history), "steps": [], "timings_ms": {}})
+            state: dict = {}
+            for mode, chunk in self.graph.stream(inputs, stream_mode=["updates", "values"]):
+                if mode == "values":
+                    state = chunk
+                    continue
+                for node, update in chunk.items():
+                    yield AgentEvent(node, update or {}, _ms(start))
             result: AnswerResult = state["result"]
             plan = state.get("plan")
             trace.output = result.answer or f"[abstained] {result.abstain_reason}"
@@ -250,14 +290,32 @@ class FinRAGAgent:
                                   abstained=result.abstained, model=result.model, facts=len(state.get("facts") or []))
         timings = {**state.get("timings_ms", {}), "total": _ms(start)}
         result.timings_ms = {**result.timings_ms, **timings}
-        return AgentTurn(question, state["analysis"], result, plan, state.get("facts") or [],
-                         state.get("steps", []), timings, trace)
+        yield AgentTurn(question, state["analysis"], result, plan, state.get("facts") or [],
+                        state.get("steps", []), timings, trace, list(state.get("hits") or []))
 
-    def ask(self, question: str, thread_id: str) -> AgentTurn:
+    def stream_ask(self, question: str, thread_id: str,
+                   filters: SearchFilters | None = None) -> Iterator[AgentEvent | AgentTurn]:
+        """`stream` for one turn of a conversation (history from, and back to, the thread's memory)."""
+        for event in self.stream(question, self.memory.history(thread_id), filters):
+            if isinstance(event, AgentTurn):
+                self.memory.append(thread_id, question, event.assistant_text)
+            yield event
+
+    def run(self, question: str, history: Sequence[str] = (), filters: SearchFilters | None = None) -> AgentTurn:
+        """One turn with an explicit history (stateless; evals use this). `filters`: see `merge_filters`."""
+        return _last_turn(self.stream(question, history, filters))
+
+    def ask(self, question: str, thread_id: str, filters: SearchFilters | None = None) -> AgentTurn:
         """One turn of a conversation: history comes from, and goes back to, the thread's memory."""
-        turn = self.run(question, self.memory.history(thread_id))
-        self.memory.append(thread_id, question, turn.assistant_text)
-        return turn
+        return _last_turn(self.stream_ask(question, thread_id, filters))
+
+
+def _last_turn(events: Iterator[AgentEvent | AgentTurn]) -> AgentTurn:
+    turn = None
+    for turn in events:
+        pass
+    assert isinstance(turn, AgentTurn)
+    return turn
 
 
 def build_agent(rewrite_follow_ups: bool = True, route: bool = False,

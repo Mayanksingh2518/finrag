@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { answerApi, api, ApiError, type AnswerResponse, type Meta, type SearchResponse } from './api'
+import { answerApi, api, ApiError, type AnswerResponse, type AnswerStep, type Meta, type SearchResponse } from './api'
 import { MODE_LABELS } from './brand'
 import { AnswerPanel } from './components/AnswerPanel'
 import { Aurora } from './components/Aurora'
@@ -7,6 +7,13 @@ import { EvidenceCard } from './components/EvidenceCard'
 import { Filters } from './components/Filters'
 import { DEFAULT_FILTERS, type FilterState } from './filters'
 import { ClockIcon, DocIcon, SearchIcon } from './components/Icons'
+
+/** Conversation id for the agent's memory (the API accepts letters, digits, '-' and '_'). */
+function newThreadId(): string {
+  return typeof crypto !== 'undefined' && 'randomUUID' in crypto
+    ? crypto.randomUUID()
+    : `t-${Date.now()}-${Math.random().toString(36).slice(2)}`
+}
 
 interface Example {
   label: string
@@ -124,6 +131,17 @@ export default function App() {
     return () => controller.abort()
   }, [submitted, filters])
 
+  // One conversation per session: the agent remembers earlier turns of this thread for follow-ups.
+  // A ref, not part of the request key, so starting a new conversation doesn't re-ask the question.
+  const threadRef = useRef(newThreadId())
+  const [turns, setTurns] = useState(0)
+  // Agent steps of the answer being prepared (streamed), keyed like the answer so stale ones are ignored.
+  const [progress, setProgress] = useState<{ key: string; steps: AnswerStep[] }>({ key: '', steps: [] })
+  const newConversation = () => {
+    threadRef.current = newThreadId()
+    setTurns(0)
+  }
+
   // Grounded answer for the same query + filters (mode/k/content type don't apply to answers).
   const answerKey = submitted && answersOn
     ? JSON.stringify([submitted, filters.tickers, filters.fiscal_years, filters.sections, filters.decompose])
@@ -133,10 +151,17 @@ export default function App() {
     // The key is the request: rebuilding it from the key keeps this effect's only input explicit.
     const [query, tickers, fiscal_years, sections, decompose] = JSON.parse(answerKey)
     const controller = new AbortController()
+    // The first step of a new answer starts a fresh list; steps of a superseded answer are shown nowhere.
+    const onStep = (step: AnswerStep) =>
+      setProgress((p) => ({ key: answerKey, steps: p.key === answerKey ? [...p.steps, step] : [step] }))
     answerApi
-      .answer({ query, tickers, fiscal_years, sections, decompose: decompose ? true : null }, controller.signal)
+      .stream({ query, tickers, fiscal_years, sections, decompose: decompose ? true : null, thread_id: threadRef.current },
+        onStep, controller.signal)
       .then(
-        (data) => setAnswered({ key: answerKey, data }),
+        (data) => {
+          setAnswered({ key: answerKey, data })
+          setTurns((n) => n + 1)
+        },
         (e: Error) => {
           if (e.name === 'AbortError') return
           if (e instanceof ApiError && e.status === 503) setAnswered({ key: answerKey, disabled: e.message.replace(/^Answers are disabled: /, '') })
@@ -256,6 +281,9 @@ export default function App() {
               error={currentAnswer?.error ?? null}
               disabledReason={currentAnswer?.disabled ?? null}
               hasQuery={Boolean(submitted)}
+              turns={turns}
+              onNewConversation={newConversation}
+              progress={progress.key === answerKey ? progress.steps : []}
             />
 
             {error && <div className="glass error" role="alert">Search failed: {error}</div>}

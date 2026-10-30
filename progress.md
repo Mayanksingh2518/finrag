@@ -4,33 +4,25 @@ Single source of truth for project state. Update this file at the end of every w
 
 ## Current status
 
-- **Last completed:** Phase 6 (LangGraph agent), finished with step 5, the agent-mode eval
-  (`reports/agent_v0.md`): with **no gold filters or rewrite**, the agent matches the gold-filter v1
-  run on false abstention (0.054 = 0.054) and figure recall (0.573 vs 0.583), and beats it on
-  citation hit counting XBRL (0.878 vs 0.863); abstention recall drops 1.000 → 0.900 (U04).
-- **In progress:** Phase 7 (full evaluation): steps 1-3 done. LLM judge (`reports/judge_v0.md`,
-  agrees with hand labels 0.86 / 1.00); trend fixes (`reports/judge_v1.md`, 0.730 → 0.777);
-  **model routing** (`reports/judge_v2_qwen.md`): trend/comparison answered by Groq gpt-oss-120b lifts
-  judged correctness 0.764 → **0.865** (independent qwen judge; gpt-oss judge 0.777 → 0.865), trend
-  0.542 → 0.792, comparison 0.625 → 1.000, false abstention 0.054 → 0.041. Routing kept.
-  Phase 8 started early (FastAPI + React UI over retrieval and answers; streaming left).
-  **RAGAS second opinion** (`reports/ragas_v0.md`, 26-question stratified sample): faithfulness agrees
-  with the judge (0.813 vs 0.808, Spearman 0.86), factual correctness doesn't (f1 0.294 vs 0.808):
-  RAGAS's literal NLI rejects correct answers over rounding, dates and extra detail. Judge stays the
-  correctness metric.
-  **Tracing** (`app/tracing.py`): every agent turn is a trace (node spans + every LLM call with
-  provider, tokens, cache hit, retries); JSONL sink and a Langfuse sink (ingestion API, active once keys
-  are in `.env`). Traced routed run: retrieval p50 1.5 s, but **trend 6.6 s / comparison 4.5 s**
-  (per-entity sub-queries, each reranked): more than the 1.8 s gpt-oss call that answers them.
-- **Next up:** Phase 7 step 6, the `eval_v1` report (last Phase 7 step). See "Next task in detail".
-- **Resume here (2026-10-30):** tracing done and verified offline + on real data; Langfuse export is
-  tested against a mock only (no keys yet). RAGAS work committed in e6ba310; tracing uncommitted.
+- **Last completed:** Phase 7 (full evaluation), finished with step 6, `reports/eval_v1.md`: the
+  one-page summary built from the committed reports (`python -m app.evaluation.build_eval_report`, no
+  model calls). Headline: judged correctness 0.730 → **0.865** (v0 → routed v2; 0.865 by both judges),
+  trend 0.250 → 0.792, comparison 0.667 → 0.958/1.000; retrieval plan recall@10 0.966, MRR 0.927;
+  abstention recall 1.000, false abstention 0.041; judge validated (hand labels 0.86-1.00, judge-vs-judge
+  0.94), RAGAS corroborates faithfulness only; per-node latency from traces; zero cost.
+- **Phase 8 done 2026-10-30:** `/api/answer` runs the routed agent; `/api/answer/stream` sends a
+  Server-Sent Event per agent node, and the UI shows the stages live (reading → retrieving + XBRL →
+  generating with <model> → verifying) with a fallback to the plain endpoint.
+- **Next up:** Phase 9 (production): Postgres + pgvector behind the store interfaces, Docker Compose,
+  CI with an eval regression gate. See "Next task in detail".
+- **Resume here (2026-10-30):** Phase 8 done, uncommitted (also uncommitted: Phase 8 step 1 and the
+  Phase 7 eval_v1 report). Langfuse export still tested against a mock only.
 - **Disk (MacBook, 2026-10-27):** 127 GB free again (was 2.2 GB on 2026-10-26).
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-30 (Phase 7 step 5: tracing)
+- **Last updated:** 2026-10-30 (Phase 8 done: streaming progress)
 
 ## Phase checklist
 
@@ -40,59 +32,81 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 4: Evaluation v0.** 84-question golden set (quote-verified pages), Recall@K / MRR / nDCG, 4 modes × filters on/off, reranker ablations, decomposition preview; hybrid_rerank recall@5 0.884, MRR 0.920; 48 tests
 - [x] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier with context-checked repair, abstention, confidence; Ollama granite4.1:3b false abstention 0.054, citation hit 0.863, abstention recall 1.000; Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 (84 q); 92 tests
 - [x] **Phase 6: LangGraph agent.** Rule-based analyzer + LLM follow-up rewrite, retrieval plan (quotas, MD&A prior), XBRL company-facts tool, LangGraph graph with memory and a widen retry; agent with no gold filters: false abstention 0.054 (= gold-filter run), citation hit incl. XBRL 0.878, figure recall 0.573; 158 tests
-- [ ] **Phase 7: Full evaluation.** LLM judge done (agrees with hand labels 0.86; agent correctness 0.771 answered, trend 0.250); trend fixes lift judged correctness 0.730 → 0.777 (trend 0.250 → 0.542); routing trend/comparison to gpt-oss-120b lifts it to 0.865 (independent judge; trend 0.792, comparison 1.000); RAGAS agrees on faithfulness (Spearman 0.86), not on correctness (f1 0.29 vs 0.81); per-turn tracing (JSONL + Langfuse) with per-node p50/p95; next: eval_v1 report
-- [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. `/api/answer` with the answer panel (live-tested 2026-10-08). Left: streaming answers
+- [x] **Phase 7: Full evaluation.** LLM judge validated on hand labels (0.86-1.00) and by a second judge family (0.94); trend fixes + routing trend/comparison to gpt-oss-120b: judged correctness 0.730 → 0.865 (trend 0.792, comparison 1.000); RAGAS corroborates faithfulness (Spearman 0.86), rejected for correctness; tracing (JSONL + Langfuse) with per-node p50/p95; vector index benchmark; summary `reports/eval_v1.md`; 189 tests
+- [x] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit): search with filters, citations, tables, latency; answers from the routed LangGraph agent (UI filters as per-field overrides, XBRL facts as sources, per-thread memory, traces) streamed as per-node progress events (SSE) with a plain-endpoint fallback; read-as line, intent/model/steps pills; 195 tests
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
-## Next task in detail: Phase 7 (full evaluation)
+## Next task in detail: Phase 9 (production)
 
-Goal: measure what the deterministic verifier can't (whether an answer is *right*), trace every
-stage, and fix what that shows. Zero cost: free-tier judge, every call cached.
+Goal: the same app on production-style infrastructure, reproducible with one command, and a CI gate
+that blocks a change that makes retrieval or grounding worse. Zero cost: Docker Desktop (installed on
+the MacBook), Postgres + pgvector in a container, GitHub Actions (free for public repos).
 
-1. ~~LLM judge~~ **done 2026-10-26** (`app/evaluation/judge.py`; see "Judge v0" below).
-2. ~~Trend answers~~ **done 2026-10-26** (see "Trend fixes v1" below).
-3. ~~Model routing for trend/comparison~~ **done 2026-10-27** (see "Routing v2 results" below).
-   Commands, for reruns (all cached now):
-   ```bash
-   # 1. routed answers (24 trend/comparison questions by gpt-oss-120b, ~85k tokens) judged by gpt-oss (~40k)
-   python -m app.evaluation.run_judge_eval --route --out reports/judge_v2
-   # 2. same answers judged by qwen (no self-preference; separate quota; generation now cached)
-   python -m app.evaluation.run_judge_eval --route --judge-providers groq --judge-model qwen/qwen3.8-27b \
-       --out reports/judge_v2_qwen
-   # 3. agent metrics (abstention, citations, latency) for the routed config, all cached by now
-   python -m app.evaluation.run_agent_eval --configs agent_routed --out reports/agent_v2
-   python -m app.evaluation.compare_judges reports/judge_v2.json reports/judge_v2_qwen.json \
-       --out reports/judge_agreement_v2.md
-   ```
-   If Groq fails mid-run (daily cap or network), the routed LLM silently falls back to Ollama:
-   check the log for "groq failed" and the report's "Answers by" line, then rerun (only the
-   fallen-back questions reach Groq; the cache is per provider).
-4. ~~RAGAS second opinion~~ **done 2026-10-29** on a 26-question sample (see "RAGAS v0" below).
-   Full 74-question rerun, if ever wanted (the 26 are cached; ~48 × ~5k tokens = ~240k, more than one
-   day of qwen's quota, so it stops at the cap and resumes the next day):
-   `python -m app.evaluation.run_ragas_eval --out reports/ragas_v1`
-5. ~~Tracing~~ **done 2026-10-30** (see "Tracing v0" below). To turn on Langfuse: create a free Langfuse
-   Cloud Hobby project, put `LANGFUSE_PUBLIC_KEY` / `LANGFUSE_SECRET_KEY` (and `LANGFUSE_HOST` if not
-   the EU cloud) in `.env`, run any traced command, check the trace appears (only tested against a mock).
-6. **Report `reports/eval_v1.md` (next, last Phase 7 step).** One page that a reviewer reads first,
-   built by a small script (`app/evaluation/build_eval_report.py`) from the committed JSON reports, no
-   new LLM calls:
-   - Retrieval ablation from `reports/retrieval_v0.json` (BM25 / dense / hybrid / hybrid+rerank, filters
-     on/off: recall@5/10, MRR, nDCG) and `plan_v0.json` (+ retrieval plan).
-   - Answer ablation: gold-filter v1 (`generation_v1_ollama.json`) → agent (`agent_v0`) → − XBRL
-     (`agent_v0` no-XBRL config) → trend fixes (`agent_v1`, `judge_v1`) → routing (`agent_v2`,
-     `judge_v2_qwen`): false abstention, citation hit incl. XBRL, figure recall, judged correctness
-     (all answerable / per category), judge faithfulness. Check each JSON's summary keys first; mark
-     cells a report doesn't have as "-", never re-derive them.
-   - Evaluation of the evaluators: judge vs hand labels (judge_v0/v2), judge vs judge
-     (`judge_agreement_v2.md`), RAGAS vs judge (`ragas_v0.json`).
-   - Latency/cost: per-node p50/p95 from `data/traces/agent_v2.jsonl` (regenerate it with the traced
-     command below if missing: all cached, ~3 min, 0 tokens), provider latency per model, tokens per
-     answer and free-tier capacity (~55 routed answers/day).
-   - Known limits (definition mismatches T11/T12/N16, literal RAGAS, labels by the same assistant).
-   Test the table builders on small fixture dicts. Then Phase 7 is done: tick it, and the next phase is
-   Phase 8's remaining item (streaming answers; wire `build_agent(route=True)` into `/api/answer`).
+1. **Postgres + pgvector store (next "go").** Read `app/retrieval/store.py`, `dense.py` and `factory.py`
+   first. Add a `PgVectorDense` (same interface as `DenseIndex`: search with ID-selector-style
+   filters) and a Postgres chunk store; a `VECTOR_BACKEND=faiss|pgvector` setting, FAISS stays the
+   default. Schema: `chunks` (all metadata columns + text) and `embeddings` (chunk_id, vector(384)),
+   filters as SQL `WHERE` on indexed metadata columns, exact search first (`ORDER BY embedding <#> q`,
+   no index: matches FAISS exactly; see "Vector index choice"), an HNSW index as an option. A loader
+   (`python -m app.retrieval.pg_load`) from `chunks.jsonl` + the embedding cache. `psycopg[binary]` +
+   `pgvector` to requirements. Verify: the retrieval eval in pgvector mode equals the FAISS numbers
+   (recall@5 0.884, MRR 0.920 for hybrid_rerank with gold filters), latency compared. Tests: unit tests
+   with a fake connection; an integration test that runs only when `PG_TEST_DSN` is set.
+2. **Docker Compose:** `api` (uvicorn + built frontend; multi-stage build: node build → python slim,
+   CPU torch wheel inside Linux) and `db` (pgvector/pgvector image, volume); data volumes mounted, not
+   baked in; Ollama stays on the host (`OLLAMA_BASE_URL=http://host.docker.internal:11434`). Check image
+   size and the macOS torch-CPU + FAISS OpenMP note (Linux container: CPU torch, so verify no crash).
+3. **CI (GitHub Actions):** lint + pytest + frontend build on every push; an eval regression gate that
+   needs no LLM keys: `build_eval_report`'s inputs checked against thresholds (e.g. a small script that
+   fails if retrieval recall@5 / judged correctness in committed reports drop below the eval_v1
+   values), plus the offline retrieval eval if data download fits the runner (40 filings ~2 min,
+   embeddings ~4+ min on CPU; cache them as a workflow cache). Decide after measuring.
+4. Then Phase 10 (earnings releases, presentations).
+
+## Streaming v0 (Phase 8 step 2, MacBook M4, 2026-10-30)
+
+- `FinRAGAgent.stream()` yields an `AgentEvent` (node, update, elapsed ms) per finished node from
+  LangGraph `stream(stream_mode=["updates", "values"])`, then the `AgentTurn`; `run`, `ask` and
+  `stream_ask` all consume it (one code path for trace, memory, user filters). `answer_model(intent)`
+  names the model that will answer before generation starts.
+- `POST /api/answer/stream` (SSE): `step` events (analyze: read-as query, filters, in_scope; retrieve:
+  hits, intent, answer_model; xbrl: fact citations; generate: model, sources; verify: claims/verified/
+  abstained), then `answer` (the `/api/answer` body, shared `answer_response`) or `error` (LLM failure
+  → 502 detail). 503/422 are plain HTTP errors before streaming starts. The turn runs in its own thread
+  feeding a queue: Starlette iterates sync generators on varying pool threads, and the trace contextvar
+  must open and close in one thread; a disconnecting client doesn't cut a turn short.
+- Not token streaming: answers are structured JSON shown only after verification.
+- UI: `answerApi.stream` (fetch + ReadableStream; `EventSource` can't POST) with fallback to
+  `/api/answer` on 404 / network error / a stream that ends without an answer. The answer panel's
+  skeleton became a stage list with live details and times.
+- Live check: an uncached Tesla FY2024 revenue question streamed analyze at 4 ms, xbrl 33 ms, retrieve
+  1.5 s, generate 13.6 s, verify, answer, arriving in real time (curl timestamps). Screenshots: desktop
+  and phone mid-generation ("Generating with granite4.1:3b" active), refusal, completed answer; all 5
+  UI answers used the stream endpoint (0 fallbacks).
+
+## API on the agent v0 (Phase 8 step 1, MacBook M4, 2026-10-30)
+
+- `/api/answer` builds a `FinRAGAgent` at startup (production: XBRL store, routed Groq LLM when
+  `ANSWER_ROUTE` (default on) and a Groq key exist, trace sinks from settings; tests: fakes only, never
+  data, keys or trace settings). `LockedRetriever` serializes only the model calls (search /
+  search_many), so one request's LLM call overlaps another's retrieval.
+- Filters: the UI's selected filters override the analyzer's per field (`merge_filters`); unset fields
+  come from the question. Scope refusals still come from the question (a filter can narrow an
+  answerable question, not make an unanswerable one answerable).
+- Request: optional `thread_id` (`[A-Za-z0-9_-]`, ≤100) → `agent.ask` with per-thread memory; `decompose`
+  is ignored (the plan decomposes). Response adds `standalone_query`, `filters`, `intent`, `steps`, `facts`,
+  `thread_id`; XBRL sources come back as hits with section "XBRL" and stage `xbrl`.
+- UI: per-session thread id (a ref, so "New conversation" doesn't re-ask), "Read as …" / scope line,
+  intent, model, XBRL fact count and agent-step pills, XBRL citations as dashed chips, out-of-scope
+  refusals titled "Outside what the filings cover." Answer header wraps at phone width (was clipped).
+- Live check (:8010, one thread): Apple Services lookup 1.3 s (cached); NVIDIA FY2022-25 revenue trend
+  routed to gpt-oss-120b, 4 XBRL facts as one series table, 5/5 claims verified, 4.5 s (cached); follow-up
+  "And what was its net income in fiscal 2025?" rewritten to NVIDIA FY2025, answered from the XBRL fact
+  ($72,880 million) in 19.3 s (rewrite 6.4 s incl. Ollama warm-up, generation 11.5 s); "Microsoft's
+  current stock price" refused at analyze in 3 ms.
+- In the browser, the page's search and answer queue on the same model lock, so an answer's total
+  includes waiting for the search (trend: 6.1 s vs 4.5 s alone).
 
 ## Tracing v0 (Phase 7 step 5, MacBook M4, 2026-10-30)
 
@@ -779,8 +793,10 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Web app: API on **port 8010** (port 8000 on the MacBook is taken by another local app).
   Node 24 / npm 11 on the MacBook. Startup loads the retriever and runs one warm-up search
   (~15-20 s); reranked searches take ~1.3-2.5 s, plain hybrid ~10 ms.
-- UI checks: headless Chrome screenshots (`--headless=new --screenshot`); Chrome's minimum
-  window is ~500 px wide, so test phone widths inside a 390 px iframe.
+- UI checks: `python scripts/ui_screenshot.py URL out.png WIDTH HEIGHT SELECTOR` (Chrome DevTools,
+  waits for the selector, e.g. `.answer__text, .answer__abstain`; emulates phone widths directly).
+  Chrome's `--screenshot` now fires before the page's fetches settle (captures the loading state), and
+  `--virtual-time-budget` hangs on this page.
 
 ## Session log
 
@@ -908,3 +924,18 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   recall@10 unfiltered and under gold filters), `reports/index_benchmark.md`, and a "Vector index
   choice" section in `docs/ARCHITECTURE.md` comparing every index family. Exact search 0.36 ms; ANN
   filtered recall is the weak spot. 184 tests passing.
+- **2026-10-30 (MacBook M4):** Phase 7 step 6, Phase 7 done: `build_eval_report.py` (retrieval ablation from
+  per-question metrics, matches retrieval_v0.md; answer ablation v1 → agent → XBRL → trend fixes → routing
+  with both judges; per-category judged correctness; evaluator agreement incl. judge-vs-judge computed with
+  `compare_judges`; latency/cost from traces; known limits) → `reports/eval_v1.md`, 5 tests (189 passing).
+  Checking the narrative against the data corrected two claims (T11 is now correct; v0/v2 headline
+  compares judges explicitly).
+- **2026-10-30 (MacBook M4):** Phase 8 step 1: `/api/answer` runs the routed agent (`LockedRetriever`,
+  `merge_filters` for UI filters, `thread_id` memory, XBRL facts as sources, read-as/intent/steps/facts in
+  the response), `answer_route` setting, UI thread id + "New conversation" + read-as line + XBRL chips,
+  `scripts/ui_screenshot.py`. 5 new API tests (193 passing). Live check of lookup, routed trend, follow-up
+  rewrite + XBRL, live-price refusal; screenshots desktop/phone found and fixed a clipped header on phones.
+- **2026-10-30 (MacBook M4):** Phase 8 step 2, Phase 8 done: `FinRAGAgent.stream`/`stream_ask` (run and ask
+  built on it), `/api/answer/stream` SSE endpoint with per-node payloads, shared `answer_response`, UI
+  streaming client with fallback and a live stage list; 2 streaming tests (195 passing). Live-checked with
+  curl timestamps and screenshots (desktop, phone, refusal, completed answer).
