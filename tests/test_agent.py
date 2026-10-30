@@ -178,8 +178,10 @@ def plan_retriever():
     from app.retrieval.retriever import Retriever
     from app.retrieval.store import ChunkStore
 
-    chunks = CHUNKS + [make_chunk(10 + i, "MSFT", y, s, f"Revenue grew {y} {s} cloud") for i, (y, s) in
-                       enumerate([(2024, "Item 8"), (2024, "Item 7"), (2025, "Item 1")])]
+    # Item 7's text is longer, so the length-based PairReranker strictly prefers Item 8: no tie whose
+    # outcome depends on first-stage candidate order (that differed on GitHub's x86 runners).
+    chunks = CHUNKS + [make_chunk(10 + i, "MSFT", y, s, f"Revenue grew {y} {s} cloud{extra}") for i, (y, s, extra) in
+                       enumerate([(2024, "Item 8", ""), (2024, "Item 7", " services"), (2025, "Item 1", "")])]
     emb = FakeEmbedder()
     return Retriever(ChunkStore(chunks), BM25Index([c.embed_text for c in chunks]),
                      DenseIndex(emb.embed_documents([c.embed_text for c in chunks])), emb, PairReranker(),
@@ -200,8 +202,8 @@ def test_plan_applies_section_prior_before_the_quota_cut(plan_retriever):
     filters = SearchFilters(("MSFT",), (2024,))
     plain = execute_plan(plan_retriever, make_plan("revenue grew", filters, k=1, section_bonus=0.0))
     boosted = execute_plan(plan_retriever, make_plan("revenue grew", filters, k=1, section_bonus=0.5))
-    assert plain.hits[0].chunk.section == "Item 8"  # same length; ties keep candidate order
-    assert boosted.hits[0].chunk.section == "Item 7"
+    assert plain.hits[0].chunk.section == "Item 8"  # the reranker prefers the shorter Item 8 chunk
+    assert boosted.hits[0].chunk.section == "Item 7"  # the MD&A prior outweighs that preference
 
 
 @pytest.mark.parametrize("question", [

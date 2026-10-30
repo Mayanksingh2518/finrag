@@ -19,9 +19,9 @@ Single source of truth for project state. Update this file at the end of every w
   209 tests pass in a clean Linux container incl. the pgvector round trip; gate 10/10.
 - **Next up:** confirm the first CI run on GitHub is green (needs the user's push, see below), then
   tick Phase 9 and start Phase 10. See "Next task in detail".
-- **Resume here (2026-10-30):** CI files and the retrieval_v1 refresh uncommitted. **Blocked on the
-  user:** the gh token lacks the `workflow` scope; `gh auth refresh -h github.com -s workflow`, then
-  commit + push, then the next "go" checks the first CI run.
+- **Resume here (2026-10-30):** CI is on GitHub (run 41040951355, commit 18a1323): eval-gate and
+  frontend green, `test` failed on one tie-dependent test (fixed locally, uncommitted; see "CI v0").
+  Next: the user pushes the fix; the next "go" confirms a green run, ticks Phase 9, adds the badge.
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
   0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
@@ -78,6 +78,13 @@ the MacBook), Postgres + pgvector in a container, GitHub Actions (free for publi
 - What the gate can't do: it checks committed results, not a fresh run (CI has no filings, models or
   LLM quota). A change to retrieval code that isn't followed by a regenerated report isn't caught; the
   discipline is "regenerate the affected report in the same PR", and the gate then enforces the floor.
+- First GitHub run (2026-10-30): eval-gate (5 s) and frontend (16 s) green; `test` (1.5 min) failed
+  1/209: `test_plan_applies_section_prior_before_the_quota_cut` relied on a tie (two chunks of equal
+  length under the length-based fake reranker; `sorted` then keeps first-stage candidate order, which
+  differed on GitHub's x86 runners vs ARM locally). Fixed by making the fixture's Item 7 text longer, so
+  the reranker strictly prefers Item 8 and the +0.5 MD&A prior must overturn it, which is what the test
+  claims. An emulated linux/amd64 dry run timed out in pip (32 min under emulation), so the fix is
+  verified by reading the code path (all candidates reranked before the cut) and on ARM, not on x86 yet.
 - Dry run: the files CI would check out (no `.env`, no data) in `python:3.11-slim` with a pgvector
   container: 209 passed (5 min incl. installs). Frontend `npm ci` + build already ran on Linux in the
   Docker image build; lint passes locally.
@@ -1029,3 +1036,5 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - **2026-10-30 (MacBook M4):** while blocked on the `workflow` scope: retrieval eval rerun with the reviewed
   gold (`retrieval_v1`: recall@5 0.891, MRR 0.933), gate and eval_v1 switched to it (10/10 pass), report
   title from the output name, eval_v1 prose numbers computed instead of hard-coded. 208 passing + 1 skipped.
+- **2026-10-30 (MacBook M4):** first CI run on GitHub: gate + frontend green, 1 test failed on x86 only
+  (tie broken by candidate order); fixture changed to remove the tie. 208 passing + 1 skipped locally.
