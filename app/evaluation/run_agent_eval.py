@@ -16,6 +16,8 @@ configs (no facts attached) costs one generation.
 Usage:
     python -m app.evaluation.run_agent_eval                  # agent + agent without XBRL
     python -m app.evaluation.run_agent_eval --limit 5 --configs agent
+    TRACE_FILE=data/traces/agent_v2.jsonl python -m app.evaluation.run_agent_eval --configs agent_routed \
+        --out <dir>/agent_traced   # + per-node latency: python -m app.tracing data/traces/agent_v2.jsonl
 """
 
 import argparse
@@ -35,6 +37,7 @@ from app.evaluation.run_analyzer_eval import _compatible
 from app.evaluation.run_generation_eval import GenerationRecord, _mean, _pct, score, summarize
 from app.generation.llm import LLMError
 from app.generation.verify import _matches, extract_numbers
+from app.tracing import build_sinks, start_trace
 
 CONFIGS = ("agent", "agent_no_xbrl", "agent_routed")  # routed: trend/comparison answered by Groq gpt-oss-120b
 BASELINE = PROJECT_ROOT / "reports" / "generation_v1_ollama.json"  # gold filters, same model
@@ -210,6 +213,7 @@ def main() -> None:
 
     settings = get_settings()
     retriever, llm, xbrl = build_retriever(settings), build_llm(settings), XbrlStore.from_settings()
+    sinks = build_sinks(settings)
     questions = load_golden(args.golden)[: args.limit]
     results: dict[str, list[AgentRecord]] = {}
     routed_llm = (build_llm(settings.model_copy(update={"llm_providers": "groq,ollama"}))
@@ -222,7 +226,10 @@ def main() -> None:
         for i, q in enumerate(questions, 1):
             start = time.perf_counter()
             try:
-                rec = record(q, agent.run(q.question, q.history), config)
+                # TRACE_FILE / Langfuse keys in .env: one trace per question, tagged with id and config
+                with start_trace("agent_eval", q.question, sinks, id=q.id, config=config, category=q.category):
+                    turn = agent.run(q.question, q.history)
+                rec = record(q, turn, config)
             except LLMError as e:
                 rec = AgentRecord(q.id, q.category, q.answerable, False, "", "", "none", None, None, None, None,
                                   0, 0, [], "", False, {}, {}, error=str(e)[:300], config=config)

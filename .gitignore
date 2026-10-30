@@ -10,3 +10,4 @@ data/processed/
 data/indexes/
 !data/.gitkeep
 data/cache/
+data/traces/

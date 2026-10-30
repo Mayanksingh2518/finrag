@@ -181,3 +181,21 @@ def test_interleave_orders_each_tier_by_score_and_dedupes():
 
     merged = interleave([[h("a1", 0.2), h("a2", 0.1)], [h("b1", 0.9), h("a1", 0.5), h("b3", 0.3)]], k=10)
     assert [x.chunk.chunk_id for x in merged] == ["b1", "a1", "a2", "b3"]
+
+
+def test_index_benchmark_scores_ann_indexes_against_exact_search():
+    import numpy as np
+
+    from app.retrieval.index_benchmark import run
+
+    rng = np.random.default_rng(0)
+    vectors = rng.standard_normal((1500, 96)).astype(np.float32)
+    vectors /= np.linalg.norm(vectors, axis=1, keepdims=True)
+    queries = vectors[:20] + 0.01 * rng.standard_normal((20, 96)).astype(np.float32)
+    allowed = [np.arange(0, 1500, 3, dtype=np.int64)] * 10 + [None] * 10
+    rows = {r.name: r for r in run(vectors, queries, allowed)}
+    flat = rows["Flat (exact)"]
+    assert flat.recall == 1.0 and flat.recall_filtered == 1.0
+    assert rows["HNSW M=32 efSearch=128"].recall > rows["IVF-Flat nprobe=1"].recall
+    assert not rows["PQ (flat scan)"].filter_supported and rows["PQ (flat scan)"].recall_filtered is None
+    assert all(0.0 <= r.recall <= 1.0 and r.size_mb > 0 for r in rows.values())

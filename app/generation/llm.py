@@ -27,6 +27,8 @@ from typing import Protocol, TypeVar
 import httpx
 from pydantic import BaseModel, ValidationError
 
+from app.tracing import record_generation
+
 logger = logging.getLogger(__name__)
 T = TypeVar("T", bound=BaseModel)
 Message = dict[str, str]  # {"role": "system" | "user" | "assistant", "content": ...}
@@ -345,12 +347,15 @@ class LLM:
     def generate(self, messages: Sequence[Message], output: type[T]) -> tuple[T, LLMResponse]:
         schema = strict_json_schema(output)
         attempts: list[str] = []
+        started = time.time()
         for provider in self.providers:
             key = ResponseCache.key(provider.name, provider.model, messages, schema)
             if self.cache and (hit := self.cache.get(key)):
                 try:
                     hit.attempts = attempts
-                    return output.model_validate_json(hit.text), hit
+                    parsed = output.model_validate_json(hit.text)
+                    self._record(output, hit, started)
+                    return parsed, hit
                 except ValidationError:
                     pass  # stale/corrupt entry: call the provider again
             for attempt in range(1, self.max_retries + 1):
@@ -373,9 +378,15 @@ class LLM:
                 response.attempts = attempts
                 if self.cache:
                     self.cache.put(key, response)
+                self._record(output, response, started)
                 return parsed, response
             logger.warning("LLM provider %s failed; trying next. %s", provider.name, attempts[-1:])
         raise LLMError("All LLM providers failed: " + "; ".join(attempts))
+
+    @staticmethod
+    def _record(output: type[BaseModel], r: LLMResponse, started: float) -> None:
+        record_generation(output.__name__, r.provider, r.model, started, r.usage.prompt_tokens,
+                          r.usage.completion_tokens, r.cached, r.latency_ms, r.attempts)
 
 
 def build_llm(settings=None) -> LLM:

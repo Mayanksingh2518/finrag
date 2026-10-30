@@ -18,13 +18,17 @@ Memory: a conversation is the list of its turns (user question, assistant answer
 kept per thread id by `ConversationMemory` and passed into the graph as `history`. Per-turn work
 (chunks, sources, claims) is not checkpointed: LangGraph's checkpointer would store every step's
 chunks for every thread, and the analyzer only needs the turns.
+
+Tracing: every turn is a `Trace` (`app/tracing.py`) with a span per node and every LLM call;
+`AgentTurn.trace` has it, and `trace_sinks` (JSONL, Langfuse; `build_agent` reads them from settings)
+export it after the turn.
 """
 
 import logging
 import operator
 import time
 from collections import OrderedDict
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field, replace
 from typing import Annotated, Literal, TypedDict
 
@@ -38,6 +42,7 @@ from app.generation.context import Source, build_sources
 from app.generation.llm import LLM, LLMResponse
 from app.generation.schemas import GeneratedAnswer
 from app.retrieval.types import ScoredChunk, SearchMode
+from app.tracing import Trace, TraceSink, build_sinks, span, start_trace
 
 log = logging.getLogger(__name__)
 
@@ -77,6 +82,7 @@ class AgentTurn:
     facts: list[XbrlFact] = field(default_factory=list)
     steps: list[str] = field(default_factory=list)
     timings_ms: dict[str, float] = field(default_factory=dict)
+    trace: Trace | None = None
 
     @property
     def assistant_text(self) -> str:
@@ -114,7 +120,7 @@ class FinRAGAgent:
     def __init__(self, retriever, llm: LLM, xbrl: XbrlStore | None = None, token_budget: int = 3500, k: int = 10,
                  mode: SearchMode = "hybrid_rerank", memory: ConversationMemory | None = None,
                  rewrite_follow_ups: bool = True, routed_llm: LLM | None = None,
-                 routed_intents: tuple[str, ...] = ROUTED_INTENTS):
+                 routed_intents: tuple[str, ...] = ROUTED_INTENTS, trace_sinks: Sequence[TraceSink] = ()):
         self.retriever = retriever
         self.answerer = Answerer(retriever, llm, token_budget=token_budget, k=k, mode=mode)
         # Model routing: questions whose plan intent is in `routed_intents` are answered by `routed_llm`
@@ -127,6 +133,7 @@ class FinRAGAgent:
         self.k = k
         self.mode = mode
         self.memory = memory or ConversationMemory()
+        self.trace_sinks = list(trace_sinks)
         self.graph = self._build()
 
     # --- nodes ---------------------------------------------------------------------------------
@@ -204,15 +211,19 @@ class FinRAGAgent:
             return "widen"
         return "respond"
 
+    @staticmethod
+    def _traced(name: str, node: Callable[[AgentState], dict]) -> Callable[[AgentState], dict]:
+        def run(state: AgentState) -> dict:
+            with span(name):
+                return node(state)
+        return run
+
     def _build(self):
         g = StateGraph(AgentState)
-        g.add_node("analyze", self._analyze)
-        g.add_node("refuse", self._refuse)
-        g.add_node("retrieve", self._retrieve)
-        g.add_node("xbrl", self._lookup_facts)
-        g.add_node("generate", self._generate)
-        g.add_node("verify", self._verify)
-        g.add_node("widen", self._widen)
+        for name, node in (("analyze", self._analyze), ("refuse", self._refuse), ("retrieve", self._retrieve),
+                           ("xbrl", self._lookup_facts), ("generate", self._generate), ("verify", self._verify),
+                           ("widen", self._widen)):
+            g.add_node(name, self._traced(name, node))
         g.add_node("respond", lambda state: {"steps": ["respond"]})
         g.add_edge(START, "analyze")
         g.add_conditional_edges("analyze", self._scope, ["retrieve", "xbrl", "refuse"])
@@ -230,12 +241,17 @@ class FinRAGAgent:
     def run(self, question: str, history: Sequence[str] = ()) -> AgentTurn:
         """One turn with an explicit history (stateless; evals use this)."""
         start = time.perf_counter()
-        state = self.graph.invoke({"question": question, "history": list(history), "steps": [], "timings_ms": {}})
-        result: AnswerResult = state["result"]
+        with start_trace("agent", question, self.trace_sinks, history_turns=len(history)) as trace:
+            state = self.graph.invoke({"question": question, "history": list(history), "steps": [], "timings_ms": {}})
+            result: AnswerResult = state["result"]
+            plan = state.get("plan")
+            trace.output = result.answer or f"[abstained] {result.abstain_reason}"
+            trace.metadata.update(steps=state.get("steps", []), intent=plan.intent if plan else None,
+                                  abstained=result.abstained, model=result.model, facts=len(state.get("facts") or []))
         timings = {**state.get("timings_ms", {}), "total": _ms(start)}
         result.timings_ms = {**result.timings_ms, **timings}
-        return AgentTurn(question, state["analysis"], result, state.get("plan"), state.get("facts") or [],
-                         state.get("steps", []), timings)
+        return AgentTurn(question, state["analysis"], result, plan, state.get("facts") or [],
+                         state.get("steps", []), timings, trace)
 
     def ask(self, question: str, thread_id: str) -> AgentTurn:
         """One turn of a conversation: history comes from, and goes back to, the thread's memory."""
@@ -254,7 +270,7 @@ def build_agent(rewrite_follow_ups: bool = True, route: bool = False,
     routed = build_llm(settings.model_copy(update={"llm_providers": routed_providers})) if route else None
     return FinRAGAgent(build_retriever(), build_llm(settings), xbrl=XbrlStore.from_settings(),
                        token_budget=settings.context_token_budget, rewrite_follow_ups=rewrite_follow_ups,
-                       routed_llm=routed)
+                       routed_llm=routed, trace_sinks=build_sinks(settings))
 
 
 def main() -> None:

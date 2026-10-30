@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     # Prompt context budget (tokens of sources). Groq's free tier allows 8k tokens/minute.
     context_token_budget: int = 3500
 
+    # Tracing (Phase 7): Langfuse Cloud Hobby tier (free). Without keys, traces stay local.
+    langfuse_public_key: str | None = None
+    langfuse_secret_key: str | None = None
+    langfuse_host: str = "https://cloud.langfuse.com"
+    trace_file: Path | None = None  # JSONL of every agent turn's trace, e.g. data/traces/agent.jsonl
+
     @property
     def raw_sec_dir(self) -> Path:
         return self.data_dir / "raw" / "sec"

@@ -18,16 +18,19 @@ Single source of truth for project state. Update this file at the end of every w
   with the judge (0.813 vs 0.808, Spearman 0.86), factual correctness doesn't (f1 0.294 vs 0.808):
   RAGAS's literal NLI rejects correct answers over rounding, dates and extra detail. Judge stays the
   correctness metric.
-- **Next up:** Phase 7 step 5: Langfuse tracing (needs the user's Langfuse keys), then step 6, the
-  `eval_v1` report. See "Next task in detail".
-- **Resume here (2026-10-29):** RAGAS step done, nothing committed since f039daa (the 2026-10-27 report
-  fixes and the RAGAS work are both uncommitted). qwen3.8-27b used ~140k tokens on 2026-10-29.
+  **Tracing** (`app/tracing.py`): every agent turn is a trace (node spans + every LLM call with
+  provider, tokens, cache hit, retries); JSONL sink and a Langfuse sink (ingestion API, active once keys
+  are in `.env`). Traced routed run: retrieval p50 1.5 s, but **trend 6.6 s / comparison 4.5 s**
+  (per-entity sub-queries, each reranked): more than the 1.8 s gpt-oss call that answers them.
+- **Next up:** Phase 7 step 6, the `eval_v1` report (last Phase 7 step). See "Next task in detail".
+- **Resume here (2026-10-30):** tracing done and verified offline + on real data; Langfuse export is
+  tested against a mock only (no keys yet). RAGAS work committed in e6ba310; tracing uncommitted.
 - **Disk (MacBook, 2026-10-27):** 127 GB free again (was 2.2 GB on 2026-10-26).
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-29 (Phase 7 step 4: RAGAS second opinion)
+- **Last updated:** 2026-10-30 (Phase 7 step 5: tracing)
 
 ## Phase checklist
 
@@ -37,7 +40,7 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 4: Evaluation v0.** 84-question golden set (quote-verified pages), Recall@K / MRR / nDCG, 4 modes × filters on/off, reranker ablations, decomposition preview; hybrid_rerank recall@5 0.884, MRR 0.920; 48 tests
 - [x] **Phase 5: Grounded generation.** Structured output, page citations, citation verifier with context-checked repair, abstention, confidence; Ollama granite4.1:3b false abstention 0.054, citation hit 0.863, abstention recall 1.000; Groq gpt-oss-120b false abstention 0.014, citation hit 0.959 (84 q); 92 tests
 - [x] **Phase 6: LangGraph agent.** Rule-based analyzer + LLM follow-up rewrite, retrieval plan (quotas, MD&A prior), XBRL company-facts tool, LangGraph graph with memory and a widen retry; agent with no gold filters: false abstention 0.054 (= gold-filter run), citation hit incl. XBRL 0.878, figure recall 0.573; 158 tests
-- [ ] **Phase 7: Full evaluation.** LLM judge done (agrees with hand labels 0.86; agent correctness 0.771 answered, trend 0.250); trend fixes lift judged correctness 0.730 → 0.777 (trend 0.250 → 0.542); routing trend/comparison to gpt-oss-120b lifts it to 0.865 (independent judge; trend 0.792, comparison 1.000); RAGAS agrees on faithfulness (Spearman 0.86), not on correctness (f1 0.29 vs 0.81); next: Langfuse tracing, latency/cost per stage, eval_v1 report
+- [ ] **Phase 7: Full evaluation.** LLM judge done (agrees with hand labels 0.86; agent correctness 0.771 answered, trend 0.250); trend fixes lift judged correctness 0.730 → 0.777 (trend 0.250 → 0.542); routing trend/comparison to gpt-oss-120b lifts it to 0.865 (independent judge; trend 0.792, comparison 1.000); RAGAS agrees on faithfulness (Spearman 0.86), not on correctness (f1 0.29 vs 0.81); per-turn tracing (JSONL + Langfuse) with per-node p50/p95; next: eval_v1 report
 - [ ] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit). Done: `/api/health`, `/api/meta`, `/api/search`, search UI with filters, citations, tables, latency. `/api/answer` with the answer panel (live-tested 2026-10-08). Left: streaming answers
 - [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
@@ -69,17 +72,76 @@ stage, and fix what that shows. Zero cost: free-tier judge, every call cached.
    Full 74-question rerun, if ever wanted (the 26 are cached; ~48 × ~5k tokens = ~240k, more than one
    day of qwen's quota, so it stops at the cap and resumes the next day):
    `python -m app.evaluation.run_ragas_eval --out reports/ragas_v1`
-5. **Tracing (next)**: Langfuse callback on the graph + LLM calls (per-node latency, tokens). **Needs the
-   user's keys** (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` in `.env`, from a free
-   Langfuse Cloud Hobby project); a no-op without them. Plan: add `langfuse` to requirements, a
-   `app/tracing.py` that returns the LangGraph callback handler when keys are set (else `None`), pass it
-   via `config={"callbacks": [...]}` in `FinRAGAgent.run`, and record LLM calls (provider, model,
-   tokens, cached, latency) as generations from `LLM.generate`. Test the no-key path offline; with keys,
-   trace a 5-question routed run and read per-node p50/p95 from Langfuse. If the user has no keys yet,
-   build the per-node latency table from the agent's own step timings (agent_v2 records) instead, so
-   step 6 isn't blocked.
-6. Report `reports/eval_v1.md`: ablation table (BM25 / dense / hybrid / +rerank / +analysis / +plan /
-   +XBRL) with retrieval and judged answer metrics, latency p50/p95 per node.
+5. ~~Tracing~~ **done 2026-10-30** (see "Tracing v0" below). To turn on Langfuse: create a free Langfuse
+   Cloud Hobby project, put `LANGFUSE_PUBLIC_KEY` / `LANGFUSE_SECRET_KEY` (and `LANGFUSE_HOST` if not
+   the EU cloud) in `.env`, run any traced command, check the trace appears (only tested against a mock).
+6. **Report `reports/eval_v1.md` (next, last Phase 7 step).** One page that a reviewer reads first,
+   built by a small script (`app/evaluation/build_eval_report.py`) from the committed JSON reports, no
+   new LLM calls:
+   - Retrieval ablation from `reports/retrieval_v0.json` (BM25 / dense / hybrid / hybrid+rerank, filters
+     on/off: recall@5/10, MRR, nDCG) and `plan_v0.json` (+ retrieval plan).
+   - Answer ablation: gold-filter v1 (`generation_v1_ollama.json`) → agent (`agent_v0`) → − XBRL
+     (`agent_v0` no-XBRL config) → trend fixes (`agent_v1`, `judge_v1`) → routing (`agent_v2`,
+     `judge_v2_qwen`): false abstention, citation hit incl. XBRL, figure recall, judged correctness
+     (all answerable / per category), judge faithfulness. Check each JSON's summary keys first; mark
+     cells a report doesn't have as "-", never re-derive them.
+   - Evaluation of the evaluators: judge vs hand labels (judge_v0/v2), judge vs judge
+     (`judge_agreement_v2.md`), RAGAS vs judge (`ragas_v0.json`).
+   - Latency/cost: per-node p50/p95 from `data/traces/agent_v2.jsonl` (regenerate it with the traced
+     command below if missing: all cached, ~3 min, 0 tokens), provider latency per model, tokens per
+     answer and free-tier capacity (~55 routed answers/day).
+   - Known limits (definition mismatches T11/T12/N16, literal RAGAS, labels by the same assistant).
+   Test the table builders on small fixture dicts. Then Phase 7 is done: tick it, and the next phase is
+   Phase 8's remaining item (streaming answers; wire `build_agent(route=True)` into `/api/answer`).
+
+## Tracing v0 (Phase 7 step 5, MacBook M4, 2026-10-30)
+
+`app/tracing.py`. One `Trace` per agent turn in a contextvar: `FinRAGAgent` wraps every node in a
+`span`, and `LLM.generate` calls `record_generation` (schema name, provider, model, tokens, cached,
+the provider call's latency, failed attempts), so nothing is passed down through the answerer,
+analyzer or judge, and judge/RAGAS calls are traced too when run inside a trace. LangGraph's parallel
+branches (retrieve ∥ xbrl) run in a thread pool that copies the context, so they land in the same trace
+(test). An open trace is reused by nested ones: `run_agent_eval` opens one per question tagged with id,
+config and category; the agent adds steps, intent, model, abstained.
+
+Sinks: `AgentTurn.trace` (always); `TRACE_FILE` JSONL (`python -m app.tracing <file>` prints per-node
+p50/p95 and calls/tokens per model); **Langfuse** via its public ingestion API (trace-create,
+span-create per node, generation-create per LLM call under its node's span; Basic auth; 207 errors
+raise) when both keys are set. No Langfuse SDK: the HTTP API is small and the v3 SDK brings OpenTelemetry.
+A failing sink logs a warning and never breaks an answer (test). `build_agent` reads sinks from
+settings; tests and eval runners build agents without sinks unless asked.
+
+Real run (`TRACE_FILE=data/traces/agent_v2.jsonl python -m app.evaluation.run_agent_eval --configs
+agent_routed --out <scratch>`): 84 traces, 0 uncached LLM calls, **84/84 answers identical to agent_v2**.
+
+| Node (cached LLM run) | n | p50 ms | p95 ms |
+|---|---|---|---|
+| retrieve | 79 | 1,522 | 8,559 |
+| xbrl | 79 | 0 | 27 |
+| analyze / generate / verify | 84 / 79 / 79 | ≤2 | ≤3 |
+
+| Retrieve by plan intent | n | p50 ms | max ms |
+|---|---|---|---|
+| lookup | 13 | 1,138 | 1,954 |
+| numeric | 41 | 1,429 | 2,615 |
+| comparison | 13 | 4,464 | 5,185 |
+| trend | 12 | 6,586 | 10,348 |
+
+| LLM (provider latency from the cache entries) | Calls | Prompt tok | Completion tok | p50 ms | p95 ms |
+|---|---|---|---|---|---|
+| GeneratedAnswer / granite4.1:3b | 53 | 171,893 | 3,144 | 15,625 | 19,780 |
+| GeneratedAnswer / gpt-oss-120b (routed) | 26 | 97,450 | 8,295 | 1,833 | 36,088 |
+| StandaloneQuestion / granite4.1:3b (rewrites) | 6 | 803 | 145 | 1,087 | 1,588 |
+
+Reading:
+- Uncached end-to-end ≈ retrieval + provider call: local answers ~17 s p50 (generation is 90% of it);
+  routed (trend/comparison) answers ~6-8 s p50, and there **retrieval is the larger part** (trend 6.6 s: one reranked
+  sub-query per company-year, 30 candidates each). Cheapest lever if latency matters: a smaller
+  rerank pool for sub-queries of multi-entity plans (Phase 4 measured 15 vs 30 at -0.03 context recall
+  on all queries; untested per sub-query).
+- gpt-oss p95 36 s is a few slow Groq calls (reasoning on long trend contexts), not rate-limit waits:
+  those are outside `latency_ms`, inside the node span.
+- Tokens per answer: ~3.3k local, ~4.1k routed; the routed number sets the free-tier capacity (~200k/day).
 
 ## RAGAS v0 (Phase 7 step 4, MacBook M4, 2026-10-29)
 
@@ -641,6 +703,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 
 - Gold evidence is quote-verified and page-level (not chunk ids); `data/eval/` and `reports/` are committed.
 - Reranker default `bge-reranker-base`, 30 candidates, max_length 512 (Phase 4 ablation).
+- Vector search is exact FAISS `IndexFlatIP` (no IVF/PQ/HNSW/ScaNN/DiskANN), benchmarked on our data
+  (`reports/index_benchmark.md`): 0.36 ms per query vs 1.5 s retrieval (reranker); recall 1.0 under
+  company/year filters, where HNSW ef 16 / IVF nprobe 1 drop to 0.87 / 0.59; HNSW in pgvector past ~1M vectors. Full reasoning and an interview answer: `docs/ARCHITECTURE.md`, "Vector index choice".
 
 - Source = SEC EDGAR HTML, not IR-site PDFs (stable URLs, structured tables, exact page breaks).
 - `fiscal_year` = year of the period end (matches company labels: NVDA FY2025 ended 2025-01-26).
@@ -651,6 +716,9 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - Trend/comparison prompts get intent rules and an XBRL series table with directions computed in
   code; prohibitive wording ("never compute...") was tested and rejected (more abstentions).
 - Live market data (current share price, market cap now) is out of scope at the analyzer.
+- Tracing is backend-neutral (`app/tracing.py`, contextvar trace, JSONL + Langfuse ingestion API), not
+  the Langfuse SDK or LangChain callbacks: it covers LLM calls outside LangGraph (judge, RAGAS) and works
+  with no account.
 - RAGAS is a second opinion, not the metric: its faithfulness agrees with the judge (Spearman 0.86),
   its factual correctness is too literal for 10-K answers (rounding, dates, extra detail) and was
   rejected as the correctness metric. RAGAS calls go through FinRAG's cached `LLM`, never an OpenAI client.
@@ -829,3 +897,14 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   request (too slow on the free tier, ~30 s/question); 26-question stratified sample instead.
   Faithfulness agrees with the judge (0.813 vs 0.808, Spearman 0.86); factual correctness rejects
   correct answers (f1 0.294 vs 0.808). Judge kept as the correctness metric.
+- **2026-10-30 (MacBook M4):** Phase 7 step 5: tracing. `app/tracing.py` (contextvar traces, node spans,
+  LLM generations recorded in `LLM.generate`, JSONL + Langfuse ingestion sinks, p50/p95 summary CLI),
+  graph nodes traced, `AgentTurn.trace`, `run_agent_eval` traces per question, Langfuse settings in
+  config/.env.example, `data/traces/` gitignored, 5 tests (183 passing). Traced routed run: 84/84
+  answers identical, retrieval p50 1.5 s but trend 6.6 s / comparison 4.5 s. No Langfuse keys yet:
+  export tested against a mock only.
+- **2026-10-30 (MacBook M4):** vector index comparison for interviews: `app/retrieval/index_benchmark.py`
+  (Flat, IVF-Flat, IVF-SQ8, IVF-PQ, PQ, HNSW, LSH on the real 17.6k vectors and 84 golden queries,
+  recall@10 unfiltered and under gold filters), `reports/index_benchmark.md`, and a "Vector index
+  choice" section in `docs/ARCHITECTURE.md` comparing every index family. Exact search 0.36 ms; ANN
+  filtered recall is the weak spot. 184 tests passing.
