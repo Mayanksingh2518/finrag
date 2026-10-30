@@ -4,24 +4,16 @@ Single source of truth for project state. Update this file at the end of every w
 
 ## Current status
 
-- **Last completed:** Phase 7 (full evaluation), finished with step 6, `reports/eval_v1.md`: the
-  one-page summary built from the committed reports (`python -m app.evaluation.build_eval_report`, no
-  model calls). Headline: judged correctness 0.730 → **0.865** (v0 → routed v2; 0.865 by both judges),
-  trend 0.250 → 0.792, comparison 0.667 → 0.958/1.000; retrieval plan recall@10 0.966, MRR 0.927;
-  abstention recall 1.000, false abstention 0.041; judge validated (hand labels 0.86-1.00, judge-vs-judge
-  0.94), RAGAS corroborates faithfulness only; per-node latency from traces; zero cost.
 - **Phase 8 done 2026-10-30:** `/api/answer` runs the routed agent; `/api/answer/stream` sends a
   Server-Sent Event per agent node, and the UI shows the stages live (reading → retrieving + XBRL →
   generating with <model> → verifying) with a fallback to the plain endpoint.
-- **In progress:** Phase 9 (production): steps 1-3 built. pgvector backend (identical to FAISS);
-  `docker compose up --build` (API + UI + Postgres); CI workflow (`.github/workflows/ci.yml`: tests
-  with a pgvector service, frontend lint + build, eval gate over committed reports) dry-run locally:
-  209 tests pass in a clean Linux container incl. the pgvector round trip; gate 10/10.
-- **Next up:** confirm the first CI run on GitHub is green (needs the user's push, see below), then
-  tick Phase 9 and start Phase 10. See "Next task in detail".
-- **Resume here (2026-10-30):** CI is on GitHub (run 41040951355, commit 18a1323): eval-gate and
-  frontend green, `test` failed on one tie-dependent test (fixed locally, uncommitted; see "CI v0").
-  Next: the user pushes the fix; the next "go" confirms a green run, ticks Phase 9, adds the badge.
+- **Last completed:** Phase 9 (production), 2026-10-30. Postgres + pgvector backend (identical to
+  FAISS, 740/740); `docker compose up --build` (API + UI + Postgres); GitHub Actions CI green
+  (run 41048182690: 209 tests incl. real Postgres, frontend lint + build, eval gate 10/10). CI badge in
+  the README.
+- **Next up:** Phase 10 (expansion): earnings releases (8-K Ex-99.1). See "Next task in detail".
+- **Resume here (2026-10-30):** Phase 9 done and pushed (a5632b6); nothing uncommitted except this
+  progress/README update.
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
   0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
@@ -31,7 +23,7 @@ Single source of truth for project state. Update this file at the end of every w
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-30 (Phase 9 step 3: CI + eval gate)
+- **Last updated:** 2026-10-30 (Phase 9 done: CI green)
 
 ## Phase checklist
 
@@ -43,26 +35,33 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 6: LangGraph agent.** Rule-based analyzer + LLM follow-up rewrite, retrieval plan (quotas, MD&A prior), XBRL company-facts tool, LangGraph graph with memory and a widen retry; agent with no gold filters: false abstention 0.054 (= gold-filter run), citation hit incl. XBRL 0.878, figure recall 0.573; 158 tests
 - [x] **Phase 7: Full evaluation.** LLM judge validated on hand labels (0.86-1.00) and by a second judge family (0.94); trend fixes + routing trend/comparison to gpt-oss-120b: judged correctness 0.730 → 0.865 (trend 0.792, comparison 1.000); RAGAS corroborates faithfulness (Spearman 0.86), rejected for correctness; tracing (JSONL + Langfuse) with per-node p50/p95; vector index benchmark; summary `reports/eval_v1.md`; 189 tests
 - [x] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit): search with filters, citations, tables, latency; answers from the routed LangGraph agent (UI filters as per-field overrides, XBRL facts as sources, per-thread memory, traces) streamed as per-node progress events (SSE) with a plain-endpoint fallback; read-as line, intent/model/steps pills; 195 tests
-- [ ] **Phase 9: Production.** Postgres + pgvector (Pinecone optional), Docker Compose, CI with eval regression gate
+- [x] **Phase 9: Production.** Postgres + pgvector backend (identical retrieval to FAISS, `VECTOR_BACKEND=pgvector`), Docker Compose (API + UI + Postgres; CPU torch, host Ollama), GitHub Actions CI (tests with a pgvector service, UI lint/build, eval regression gate over committed reports); retrieval eval refreshed with the reviewed gold (v1: recall@5 0.891, MRR 0.933); 209 tests
 - [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
 
-## Next task in detail: Phase 9 (production)
+## Next task in detail: Phase 10 (expansion: earnings releases)
 
-Goal: the same app on production-style infrastructure, reproducible with one command, and a CI gate
-that blocks a change that makes retrieval or grounding worse. Zero cost: Docker Desktop (installed on
-the MacBook), Postgres + pgvector in a container, GitHub Actions (free for public repos).
+Goal: answer questions about quarterly results ("What did NVIDIA report for Q3 FY2025 data center
+revenue?", "How did Apple's quarterly revenue trend in fiscal 2025?") from earnings press releases,
+with the same citations, verification and abstention. Zero cost: SEC EDGAR only (earnings releases are
+filed as 8-K Exhibit 99.1, Item 2.02; stable URLs, same User-Agent rule as Phase 1).
 
-1. ~~Postgres + pgvector store~~ **done 2026-10-30** (see "pgvector v0" below).
-2. ~~Docker Compose~~ **done 2026-10-30** (see "Docker v0" below).
-3. ~~CI (GitHub Actions)~~ **built 2026-10-30** (see "CI v0" below); first run on GitHub pending.
-   **Next "go":** if the user has pushed, check the run (`gh run list --limit 3`, `gh run view <id>
-   --log-failed` on failure), fix anything Linux/GitHub-specific, and once green tick Phase 9 in this
-   file and the README (add the CI badge:
-   `![CI](https://github.com/Mayanksingh2518/finrag/actions/workflows/ci.yml/badge.svg)`). Then plan
-   Phase 10 (earnings releases 8-K Ex-99.1: downloader, parser, chunk type, golden questions).
-   Live retrieval in CI was not added: it needs the filings (SEC download needs a contact User-Agent,
-   i.e. a repo secret) and ~5 min of CPU embedding per run; the gate covers committed results instead.
-4. Then Phase 10 (earnings releases, presentations).
+1. **Downloader (first "go").** Read `app/ingestion/sec_downloader.py`, `models.py` and `companies.py`
+   first. Extend (don't fork) the EDGAR client: select 8-Ks whose `items` include 2.02 for the 10
+   companies, FY2022-2025 (~16 per company, ~160 filings), fetch the filing index and pick Exhibit 99.1
+   (the press release; skip 99.2+ for now). Map each to company, fiscal year and fiscal quarter from the
+   period it reports (not the filing date; NVIDIA and Apple fiscal calendars differ; reuse the 10-K
+   manifest's fiscal-year-end logic). Store under `data/raw/sec/<ticker>/8-K/...` with a manifest like
+   the 10-K one. Tests with recorded fixtures (no network). Verify on real data: count per company and
+   quarter, spot-check 3 releases against the IR numbers in the text itself.
+2. **Parse + chunk**: reuse the HTML parser and table handling; new `doc_type` ("10-K" / "8-K Ex-99.1")
+   and `fiscal_quarter` metadata on `Chunk`; no page numbers in press releases, so citations become
+   `[NVDA Q3 FY2025 release]` (+ section/heading). Store, BM25, FAISS and pgvector schema gain the fields.
+3. **Retrieval + analyzer**: quarter detection ("Q3", "third quarter", "three months ended"), filters
+   on doc type and quarter, plan intent for quarterly trends; the 10-K stays the default for annual
+   questions.
+4. **Golden set extension** (~20 quarterly questions with quote-verified evidence, incl. unanswerable
+   ones such as guidance for a quarter not yet reported), then retrieval + agent + judge evals and a
+   gate update. Investor presentations (PDF) come after, if at all: most are not on EDGAR.
 
 ## CI v0 (Phase 9 step 3, MacBook M4, 2026-10-30)
 
@@ -1038,3 +1037,6 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   title from the output name, eval_v1 prose numbers computed instead of hard-coded. 208 passing + 1 skipped.
 - **2026-10-30 (MacBook M4):** first CI run on GitHub: gate + frontend green, 1 test failed on x86 only
   (tie broken by candidate order); fixture changed to remove the tie. 208 passing + 1 skipped locally.
+- **2026-10-30 (MacBook M4):** CI green on GitHub after the tie fix (run 41048182690: 209 passed incl. the
+  pgvector integration test, frontend, gate 10/10). Phase 9 done: README CI badge, Phase 10 planned
+  (earnings releases from 8-K Ex-99.1).
