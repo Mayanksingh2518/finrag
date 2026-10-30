@@ -8,7 +8,7 @@ evidence and are skipped here (they are scored on abstention in Phase 5).
 Usage:
     python -m app.evaluation.run_retrieval_eval                  # full run + ablations
     python -m app.evaluation.run_retrieval_eval --no-ablations   # modes only
-Writes reports/retrieval_v0.md and reports/retrieval_v0.json.
+Writes reports/retrieval_v1.md and .json (v0 predates the Phase 5 gold review: 10 alternative quotes).
 """
 
 import argparse
@@ -85,11 +85,12 @@ def _fmt(x: float) -> str:
     return f"{x:.3f}"
 
 
-def render_report(runs: Sequence[RunResult], ablations: Sequence[RunResult], questions: Sequence[GoldQuestion]) -> str:
+def render_report(runs: Sequence[RunResult], ablations: Sequence[RunResult], questions: Sequence[GoldQuestion],
+                  title: str = "retrieval_v1") -> str:
     answerable = [q for q in questions if q.answerable]
     categories = sorted({q.category for q in answerable})
     lines = [
-        "# Retrieval evaluation v0",
+        f"# Retrieval evaluation: {title}",
         "",
         f"Golden set: {len(questions)} questions ({len(answerable)} answerable, "
         f"{len(questions) - len(answerable)} unanswerable, skipped here), "
@@ -145,7 +146,7 @@ ABLATIONS = (
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--golden", type=Path, default=GOLDEN_PATH)
-    parser.add_argument("--out", type=Path, default=PROJECT_ROOT / "reports" / "retrieval_v0")
+    parser.add_argument("--out", type=Path, default=PROJECT_ROOT / "reports" / "retrieval_v1")
     parser.add_argument("--no-ablations", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(level=logging.WARNING)
@@ -182,7 +183,7 @@ def main() -> None:
             print(f"{cfg.name}: recall@5 {ablations[-1].mean('recall@5'):.3f} mrr {ablations[-1].mean('mrr'):.3f}", flush=True)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.with_suffix(".md").write_text(render_report(runs, ablations, questions), encoding="utf-8")
+    args.out.with_suffix(".md").write_text(render_report(runs, ablations, questions, args.out.stem), encoding="utf-8")
     args.out.with_suffix(".json").write_text(
         json.dumps({"runs": [asdict(r) for r in runs], "ablations": [asdict(r) for r in ablations]}, indent=1),
         encoding="utf-8")

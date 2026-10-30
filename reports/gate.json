@@ -1,0 +1,15 @@
+{
+  "_comment": "Eval regression gate (python -m app.evaluation.check_gate; CI runs it). Each check reads a committed report; thresholds sit a little below the eval_v1 values so report noise passes and a real regression fails. Raise them when a change improves a metric.",
+  "checks": [
+    {"label": "Retrieval recall@5 (hybrid_rerank, gold filters)", "metric": "retrieval:hybrid_rerank:gold:recall@5", "min": 0.87},
+    {"label": "Retrieval MRR (hybrid_rerank, gold filters)", "metric": "retrieval:hybrid_rerank:gold:mrr", "min": 0.90},
+    {"label": "Retrieval plan recall@10 (shipped config)", "metric": "plan:plan quotas, k=10, MD&A prior 0.05:recall@10", "min": 0.95},
+    {"label": "Retrieval plan MRR (shipped config)", "metric": "plan:plan quotas, k=10, MD&A prior 0.05:mrr", "min": 0.91},
+    {"label": "Agent false abstention (routed)", "metric": "summary:agent_v2:agent_routed.false_abstention_rate", "max": 0.06},
+    {"label": "Agent abstention recall (routed)", "metric": "summary:agent_v2:agent_routed.abstention_recall", "min": 0.95},
+    {"label": "Agent verifier claim support (routed)", "metric": "summary:agent_v2:agent_routed.claim_support", "min": 0.94},
+    {"label": "Agent citation hit incl. XBRL (routed)", "metric": "summary:agent_v2:agent_routed.citation_hit_xbrl", "min": 0.85},
+    {"label": "Judged correctness, gpt-oss judge (routed)", "metric": "summary:judge_v2:correctness_all_answerable", "min": 0.84},
+    {"label": "Judged correctness, independent qwen judge (routed)", "metric": "summary:judge_v2_qwen:correctness_all_answerable", "min": 0.84}
+  ]
+}

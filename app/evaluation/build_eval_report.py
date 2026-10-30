@@ -39,6 +39,12 @@ def _mean(values) -> float | None:
 # --- retrieval -----------------------------------------------------------------------------------
 
 
+def run_mean(retrieval: dict, name: str, filtered: bool, key: str) -> float | None:
+    """Mean of one metric over a retrieval run's questions (None if the run isn't in the report)."""
+    runs = [r for r in retrieval["runs"] if r["name"] == name and r["filtered"] == filtered]
+    return statistics.fmean(q["metrics"][key] for q in runs[0]["questions"]) if runs else None
+
+
 def retrieval_rows(retrieval: dict, plan: dict) -> list[str]:
     """Mode ablation from the per-question metrics (74 answerable), plus the shipped retrieval plan."""
     lines = ["| Retrieval | Filters | recall@5 | recall@10 | MRR | nDCG@10 | p50 ms |", "|---|---|---|---|---|---|---|"]
@@ -165,6 +171,7 @@ def latency_rows(traces: list[Trace]) -> list[str]:
 
 
 def build(reports: dict[str, dict], traces: list[Trace] | None) -> str:
+    r = reports["retrieval_v1"]
     v2 = reports.get("judge_v2_qwen", {}).get("summary", {})
     v0 = reports.get("judge_v0", {}).get("summary", {})
     lines = [
@@ -184,12 +191,14 @@ def build(reports: dict[str, dict], traces: list[Trace] | None) -> str:
         "- **Cost:** zero. Local embeddings, reranker and 3B model; Groq free tier for trend/comparison answers and "
         "for the judges; every LLM call cached.", "",
         "## 1. Retrieval ablation", "",
-        "74 answerable questions, page-level relevance (`retrieval_v0.md`, `plan_v0.md`). p50 is per question "
+        "74 answerable questions, page-level relevance (`retrieval_v1.md`, `plan_v0.md`). p50 is per question "
         "on the MacBook M4 (reranking on mps).", "",
-        *retrieval_rows(reports["retrieval_v0"], reports["plan_v0"]), "",
+        *retrieval_rows(reports["retrieval_v1"], reports["plan_v0"]), "",
         "Reading: BM25 alone misses paraphrases, dense alone misses exact terms; RRF fusion beats both, and the "
-        "cross-encoder adds the most (MRR 0.794 → 0.920) at ~2 s per query. Without filters plain retrieval collapses "
-        "(BM25 recall@5 0.464); with the reranker it barely moves, which is what makes the agent's own filters safe. "
+        f"cross-encoder adds the most (MRR {_f(run_mean(r, 'hybrid', True, 'mrr'))} → "
+        f"{_f(run_mean(r, 'hybrid_rerank', True, 'mrr'))}) at ~2 s per query. Without filters plain retrieval collapses "
+        f"(BM25 recall@5 {_f(run_mean(r, 'bm25', False, 'recall@5'))}); with the reranker it barely moves "
+        f"({_f(run_mean(r, 'hybrid_rerank', False, 'recall@5'))}), which is what makes the agent's own filters safe. "
         "The plan's per-entity quotas fix multi-company/multi-year questions where one entity crowded out the others.", "",
         "## 2. Answer ablation", "",
         "Each row adds one component; all 84 questions (`generation_v1_*`, `agent_v0..v2`, `judge_*`). Judged "
@@ -240,7 +249,7 @@ def build(reports: dict[str, dict], traces: list[Trace] | None) -> str:
     return "\n".join(lines) + "\n"
 
 
-REPORT_NAMES = ("retrieval_v0", "plan_v0", "generation_v1_ollama", "generation_v1_groq", "agent_v0", "agent_v1",
+REPORT_NAMES = ("retrieval_v1", "plan_v0", "generation_v1_ollama", "generation_v1_groq", "agent_v0", "agent_v1",
                 "agent_v2", "judge_v0", "judge_v1", "judge_v1_qwen", "judge_v2", "judge_v2_qwen", "ragas_v0")
 
 

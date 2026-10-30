@@ -28,7 +28,7 @@ def _judge(records, correctness, labels=(0.9, 1.0, 10)):
 
 
 REPORTS = {
-    "retrieval_v0": RETRIEVAL, "plan_v0": PLAN,
+    "retrieval_v1": RETRIEVAL, "plan_v0": PLAN,
     "generation_v1_ollama": {"summary": {"false_abstention_rate": 0.054, "abstention_recall": 1.0, "citation_hit": 0.863,
                                          "figure_recall": 0.583, "claim_support": 0.978}},
     "agent_v2": {"summary": {"agent_routed": {"false_abstention_rate": 0.041, "abstention_recall": 1.0, "citation_hit": 0.676,

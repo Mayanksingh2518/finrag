@@ -1,0 +1,74 @@
+# CI: tests (with a real Postgres + pgvector), the web UI build, and the eval regression gate.
+# Needs no secrets: tests use fixtures and fakes, the gate reads the committed reports.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: finrag
+          POSTGRES_PASSWORD: finrag
+          POSTGRES_DB: finrag_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U finrag -d finrag_test"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      PG_TEST_DSN: postgresql://finrag:finrag@localhost:5432/finrag_test  # runs the pgvector round-trip test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install (CPU torch first, then the project)
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+      - name: Tests
+        run: python -m pytest -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run build
+
+  eval-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Committed eval results vs reports/gate.json
+        run: python -m app.evaluation.check_gate  # standard library only

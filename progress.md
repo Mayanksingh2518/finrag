@@ -13,21 +13,25 @@ Single source of truth for project state. Update this file at the end of every w
 - **Phase 8 done 2026-10-30:** `/api/answer` runs the routed agent; `/api/answer/stream` sends a
   Server-Sent Event per agent node, and the UI shows the stages live (reading → retrieving + XBRL →
   generating with <model> → verifying) with a fallback to the plain endpoint.
-- **In progress:** Phase 9 (production): steps 1-2 done 2026-10-30. Postgres + pgvector backend
-  (identical retrieval to FAISS, 740/740); `docker compose up --build` runs API + UI + Postgres
-  (image 2.13 GB, CPU torch; first start 320 s incl. model download, warm restart 17 s; reranked search
-  ~5 s on CPU in the container vs ~1.5 s on MPS; host Ollama reachable).
-- **Next up:** Phase 9 step 3: CI (GitHub Actions) with an eval regression gate. See "Next task in detail".
-- **Resume here (2026-10-30):** Phase 9 steps 1-2 done, uncommitted. Docker Desktop must be running for
-  pgvector/compose. Found: `reports/retrieval_v0` predates the Phase 5 gold review (today's gold:
-  hybrid_rerank recall@5 0.891, MRR 0.933 vs reported 0.884 / 0.920); a full rerun (~20 min) would
-  refresh it and eval_v1; not done yet.
+- **In progress:** Phase 9 (production): steps 1-3 built. pgvector backend (identical to FAISS);
+  `docker compose up --build` (API + UI + Postgres); CI workflow (`.github/workflows/ci.yml`: tests
+  with a pgvector service, frontend lint + build, eval gate over committed reports) dry-run locally:
+  209 tests pass in a clean Linux container incl. the pgvector round trip; gate 10/10.
+- **Next up:** confirm the first CI run on GitHub is green (needs the user's push, see below), then
+  tick Phase 9 and start Phase 10. See "Next task in detail".
+- **Resume here (2026-10-30):** CI files and the retrieval_v1 refresh uncommitted. **Blocked on the
+  user:** the gh token lacks the `workflow` scope; `gh auth refresh -h github.com -s workflow`, then
+  commit + push, then the next "go" checks the first CI run.
+- **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
+  (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
+  0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
+  The gate and `eval_v1` now read retrieval_v1; eval_v1's prose numbers are computed from the report.
 - **Disk (MacBook, 2026-10-27):** 127 GB free again (was 2.2 GB on 2026-10-26).
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-30 (Phase 9 step 2: Docker Compose)
+- **Last updated:** 2026-10-30 (Phase 9 step 3: CI + eval gate)
 
 ## Phase checklist
 
@@ -50,25 +54,33 @@ the MacBook), Postgres + pgvector in a container, GitHub Actions (free for publi
 
 1. ~~Postgres + pgvector store~~ **done 2026-10-30** (see "pgvector v0" below).
 2. ~~Docker Compose~~ **done 2026-10-30** (see "Docker v0" below).
-3. **CI (GitHub Actions), next "go".** Repo is public (free minutes). `.github/workflows/ci.yml` on push
-   and pull request:
-   - `test` job: Python 3.11, CPU torch wheel, `pip install -r requirements.txt` (pip cache), `pytest`
-     (tests need no data, keys or models; the pgvector integration test can run against a
-     `pgvector/pgvector:pg17` service container with `PG_TEST_DSN` set: do it, it's cheap).
-   - `frontend` job: Node 24, `npm ci`, `npm run lint`, `npm run build`.
-   - `eval-gate` job: `python -m app.evaluation.check_gate` (new, small): reads the committed
-     `reports/*.json` and fails if a headline metric is below a threshold kept in a committed file
-     (`reports/gate.json`: e.g. hybrid_rerank recall@5 >= 0.88, MRR >= 0.90, false abstention <= 0.06,
-     abstention recall >= 0.95, judged correctness >= 0.85, claim support >= 0.94), and if any report the
-     summary depends on is missing. This gates committed results without LLM keys or data; a PR that
-     regenerates a report with worse numbers fails. Live retrieval in CI (download 40 filings + embed on
-     CPU) is optional: measure whether it fits (~2 min download needs a `SEC_USER_AGENT` repo secret; ask
-     the user before relying on it), otherwise skip and say so.
-   - Unit tests for the gate (fixture reports pass / fail / missing). Pushing a workflow file may need
-     `gh auth refresh -s workflow` (tell the user if the push is rejected). Verify on GitHub: the run
-     goes green (`gh run watch`), and a deliberately failing threshold in a scratch branch fails (then
-     delete the branch) only if the user agrees to a throwaway branch.
+3. ~~CI (GitHub Actions)~~ **built 2026-10-30** (see "CI v0" below); first run on GitHub pending.
+   **Next "go":** if the user has pushed, check the run (`gh run list --limit 3`, `gh run view <id>
+   --log-failed` on failure), fix anything Linux/GitHub-specific, and once green tick Phase 9 in this
+   file and the README (add the CI badge:
+   `![CI](https://github.com/Mayanksingh2518/finrag/actions/workflows/ci.yml/badge.svg)`). Then plan
+   Phase 10 (earnings releases 8-K Ex-99.1: downloader, parser, chunk type, golden questions).
+   Live retrieval in CI was not added: it needs the filings (SEC download needs a contact User-Agent,
+   i.e. a repo secret) and ~5 min of CPU embedding per run; the gate covers committed results instead.
 4. Then Phase 10 (earnings releases, presentations).
+
+## CI v0 (Phase 9 step 3, MacBook M4, 2026-10-30)
+
+- `.github/workflows/ci.yml` (push to main, pull requests; read-only token; no secrets):
+  `test` (Python 3.11, CPU torch, requirements, pytest; `pgvector/pgvector:pg17` service container with
+  `PG_TEST_DSN`, so the real-Postgres round trip runs instead of skipping), `frontend` (Node 24, npm ci,
+  lint, build), `eval-gate` (`python -m app.evaluation.check_gate`, standard library only).
+- `app/evaluation/check_gate.py` + `reports/gate.json`: 10 checks over committed reports (retrieval
+  recall@5 / MRR, plan recall@10 / MRR, agent false abstention / abstention recall / claim support /
+  citation hit incl. XBRL, judged correctness by both judges), thresholds a little below eval_v1. A
+  missing report, missing metric or NaN fails. Writes a markdown table to the run's step summary.
+  Today: 10/10 pass. 9 tests (incl. "committed reports pass the committed gate").
+- What the gate can't do: it checks committed results, not a fresh run (CI has no filings, models or
+  LLM quota). A change to retrieval code that isn't followed by a regenerated report isn't caught; the
+  discipline is "regenerate the affected report in the same PR", and the gate then enforces the floor.
+- Dry run: the files CI would check out (no `.env`, no data) in `python:3.11-slim` with a pgvector
+  container: 209 passed (5 min incl. installs). Frontend `npm ci` + build already ran on Linux in the
+  Docker image build; lint passes locally.
 
 ## Docker v0 (Phase 9 step 2, MacBook M4, 2026-10-30)
 
@@ -768,6 +780,8 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 
 - Gold evidence is quote-verified and page-level (not chunk ids); `data/eval/` and `reports/` are committed.
 - Reranker default `bge-reranker-base`, 30 candidates, max_length 512 (Phase 4 ablation).
+- CI gates committed eval results (`reports/gate.json`), not fresh runs: the eval needs filings, local
+  models and LLM quota that CI doesn't have. Regenerate an affected report in the same change.
 - Postgres + pgvector is an alternative backend with identical results (`VECTOR_BACKEND=pgvector`, exact
   search, filters in SQL); FAISS stays the default for zero-setup local runs and tests.
 - Vector search is exact FAISS `IndexFlatIP` (no IVF/PQ/HNSW/ScaNN/DiskANN), benchmarked on our data
@@ -1008,3 +1022,10 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   and model volumes). Verified health, search, a streamed uncached answer, cache writes, UI screenshot;
   image 2.13 GB, cold start 320 s / warm 17 s, CPU rerank ~5 s. Import-boundary test (199 passing + 1 skipped).
   README: Docker run instructions and the answer endpoints.
+- **2026-10-30 (MacBook M4):** Phase 9 step 3: GitHub Actions CI (tests with a pgvector service, frontend
+  lint/build, eval gate), `check_gate.py` + `reports/gate.json` (10 checks, 10/10 pass), 9 gate tests
+  (208 passing + 1 skipped locally; 209 in the clean-container dry run incl. pgvector). Not pushed: the gh
+  token needs the `workflow` scope.
+- **2026-10-30 (MacBook M4):** while blocked on the `workflow` scope: retrieval eval rerun with the reviewed
+  gold (`retrieval_v1`: recall@5 0.891, MRR 0.933), gate and eval_v1 switched to it (10/10 pass), report
+  title from the output name, eval_v1 prose numbers computed instead of hard-coded. 208 passing + 1 skipped.
