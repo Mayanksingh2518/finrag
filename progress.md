@@ -14,7 +14,8 @@ Single source of truth for project state. Update this file at the end of every w
 - **In progress:** Phase 10 (earnings releases): step 1 done 2026-10-30, 160 releases (10 companies ×
   16 quarters, FY2022-2025) downloaded from 8-K Exhibit 99.1 and mapped to fiscal quarters.
 - **Next up:** Phase 10 step 2: parse + chunk the releases. See "Next task in detail".
-- **Resume here (2026-10-30):** Phase 10 step 1 uncommitted (downloader, tests, CLAUDE.md setup line).
+- **Resume here (2026-10-30):** Phase 10 step 1 committed and pushed (a5396cb). The app was demoed and
+  stopped; nothing running. Next "go" starts Phase 10 step 2 (parse + chunk the releases).
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
   0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
@@ -1077,3 +1078,6 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   quarter from 10-Q/10-K period ends, content check among several 2.02 8-Ks). 160/160 releases; Tesla's
   deliveries reports and NVIDIA's preliminary revenue 8-K caught and excluded. 5 tests (213 passing).
   CLAUDE.md setup gains the download line.
+- **2026-10-30 (MacBook M4):** demo run for the user: native API on :8010 (health 17,602 chunks; streamed
+  NVIDIA FY2022-25 revenue trend answered by gpt-oss-120b, 4 XBRL facts, 5/5 verified; UI screenshot ok),
+  then stopped. Earnings releases are downloaded but not yet searchable (Phase 10 step 2-3).
