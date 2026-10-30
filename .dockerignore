@@ -1,0 +1,15 @@
+# Keep the build context small and secrets out of the image: data and models are mounted at runtime.
+.env
+.git
+.venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+data
+reports
+tests
+scripts
+docs
+frontend/node_modules
+frontend/dist
+**/.DS_Store

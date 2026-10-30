@@ -13,16 +13,21 @@ Single source of truth for project state. Update this file at the end of every w
 - **Phase 8 done 2026-10-30:** `/api/answer` runs the routed agent; `/api/answer/stream` sends a
   Server-Sent Event per agent node, and the UI shows the stages live (reading → retrieving + XBRL →
   generating with <model> → verifying) with a fallback to the plain endpoint.
-- **Next up:** Phase 9 (production): Postgres + pgvector behind the store interfaces, Docker Compose,
-  CI with an eval regression gate. See "Next task in detail".
-- **Resume here (2026-10-30):** Phase 8 done, uncommitted (also uncommitted: Phase 8 step 1 and the
-  Phase 7 eval_v1 report). Langfuse export still tested against a mock only.
+- **In progress:** Phase 9 (production): steps 1-2 done 2026-10-30. Postgres + pgvector backend
+  (identical retrieval to FAISS, 740/740); `docker compose up --build` runs API + UI + Postgres
+  (image 2.13 GB, CPU torch; first start 320 s incl. model download, warm restart 17 s; reranked search
+  ~5 s on CPU in the container vs ~1.5 s on MPS; host Ollama reachable).
+- **Next up:** Phase 9 step 3: CI (GitHub Actions) with an eval regression gate. See "Next task in detail".
+- **Resume here (2026-10-30):** Phase 9 steps 1-2 done, uncommitted. Docker Desktop must be running for
+  pgvector/compose. Found: `reports/retrieval_v0` predates the Phase 5 gold review (today's gold:
+  hybrid_rerank recall@5 0.891, MRR 0.933 vs reported 0.884 / 0.920); a full rerun (~20 min) would
+  refresh it and eval_v1; not done yet.
 - **Disk (MacBook, 2026-10-27):** 127 GB free again (was 2.2 GB on 2026-10-26).
 - **Disk/memory warning (MacBook, 16 GB RAM):** the disk once filled because swap grew to 10 GB
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-30 (Phase 8 done: streaming progress)
+- **Last updated:** 2026-10-30 (Phase 9 step 2: Docker Compose)
 
 ## Phase checklist
 
@@ -43,26 +48,72 @@ Goal: the same app on production-style infrastructure, reproducible with one com
 that blocks a change that makes retrieval or grounding worse. Zero cost: Docker Desktop (installed on
 the MacBook), Postgres + pgvector in a container, GitHub Actions (free for public repos).
 
-1. **Postgres + pgvector store (next "go").** Read `app/retrieval/store.py`, `dense.py` and `factory.py`
-   first. Add a `PgVectorDense` (same interface as `DenseIndex`: search with ID-selector-style
-   filters) and a Postgres chunk store; a `VECTOR_BACKEND=faiss|pgvector` setting, FAISS stays the
-   default. Schema: `chunks` (all metadata columns + text) and `embeddings` (chunk_id, vector(384)),
-   filters as SQL `WHERE` on indexed metadata columns, exact search first (`ORDER BY embedding <#> q`,
-   no index: matches FAISS exactly; see "Vector index choice"), an HNSW index as an option. A loader
-   (`python -m app.retrieval.pg_load`) from `chunks.jsonl` + the embedding cache. `psycopg[binary]` +
-   `pgvector` to requirements. Verify: the retrieval eval in pgvector mode equals the FAISS numbers
-   (recall@5 0.884, MRR 0.920 for hybrid_rerank with gold filters), latency compared. Tests: unit tests
-   with a fake connection; an integration test that runs only when `PG_TEST_DSN` is set.
-2. **Docker Compose:** `api` (uvicorn + built frontend; multi-stage build: node build → python slim,
-   CPU torch wheel inside Linux) and `db` (pgvector/pgvector image, volume); data volumes mounted, not
-   baked in; Ollama stays on the host (`OLLAMA_BASE_URL=http://host.docker.internal:11434`). Check image
-   size and the macOS torch-CPU + FAISS OpenMP note (Linux container: CPU torch, so verify no crash).
-3. **CI (GitHub Actions):** lint + pytest + frontend build on every push; an eval regression gate that
-   needs no LLM keys: `build_eval_report`'s inputs checked against thresholds (e.g. a small script that
-   fails if retrieval recall@5 / judged correctness in committed reports drop below the eval_v1
-   values), plus the offline retrieval eval if data download fits the runner (40 filings ~2 min,
-   embeddings ~4+ min on CPU; cache them as a workflow cache). Decide after measuring.
+1. ~~Postgres + pgvector store~~ **done 2026-10-30** (see "pgvector v0" below).
+2. ~~Docker Compose~~ **done 2026-10-30** (see "Docker v0" below).
+3. **CI (GitHub Actions), next "go".** Repo is public (free minutes). `.github/workflows/ci.yml` on push
+   and pull request:
+   - `test` job: Python 3.11, CPU torch wheel, `pip install -r requirements.txt` (pip cache), `pytest`
+     (tests need no data, keys or models; the pgvector integration test can run against a
+     `pgvector/pgvector:pg17` service container with `PG_TEST_DSN` set: do it, it's cheap).
+   - `frontend` job: Node 24, `npm ci`, `npm run lint`, `npm run build`.
+   - `eval-gate` job: `python -m app.evaluation.check_gate` (new, small): reads the committed
+     `reports/*.json` and fails if a headline metric is below a threshold kept in a committed file
+     (`reports/gate.json`: e.g. hybrid_rerank recall@5 >= 0.88, MRR >= 0.90, false abstention <= 0.06,
+     abstention recall >= 0.95, judged correctness >= 0.85, claim support >= 0.94), and if any report the
+     summary depends on is missing. This gates committed results without LLM keys or data; a PR that
+     regenerates a report with worse numbers fails. Live retrieval in CI (download 40 filings + embed on
+     CPU) is optional: measure whether it fits (~2 min download needs a `SEC_USER_AGENT` repo secret; ask
+     the user before relying on it), otherwise skip and say so.
+   - Unit tests for the gate (fixture reports pass / fail / missing). Pushing a workflow file may need
+     `gh auth refresh -s workflow` (tell the user if the push is rejected). Verify on GitHub: the run
+     goes green (`gh run watch`), and a deliberately failing threshold in a scratch branch fails (then
+     delete the branch) only if the user agrees to a throwaway branch.
 4. Then Phase 10 (earnings releases, presentations).
+
+## Docker v0 (Phase 9 step 2, MacBook M4, 2026-10-30)
+
+- `Dockerfile`: node 24 stage builds `frontend/dist`; python 3.11-slim with the CPU torch wheel and
+  `requirements.txt` minus ragas / langchain-community / pytest (eval/test only; a test checks the API
+  imports none of them); runs as uid 1000; healthcheck on `/api/health`. Image 2.13 GB; build 3 min.
+  `.dockerignore` keeps `.env`, data, reports, tests, node_modules out (verified: no `.env` or data in
+  the image).
+- `docker-compose.yml`: `api` (pgvector backend via `db:5432`, `DEVICE=cpu`, `.env` as optional
+  env_file, `OLLAMA_BASE_URL=http://host.docker.internal:11434`, `./data` mounted for XBRL / LLM cache /
+  traces, `hfcache` volume for models, 127.0.0.1:8010) + `db` (step 1).
+- Verified: first start 320 s (downloads bge-small + bge-reranker-base into the volume), warm restart
+  17 s; health 17,602 chunks; searches 4.9-6.1 s (reranker 4.8-6.0 s on 10 CPU threads; dense 18-22 ms in
+  pgvector); host Ollama reachable from the container; an uncached streamed answer (Tesla FY2022
+  revenue, XBRL fact $81,462 million, 1/1 verified) in 24.9 s (retrieve 6.4 s, generate 18.4 s); the LLM
+  cache write to the mounted `data/` worked as uid 1000; UI screenshot from the container rendered the
+  answer. Memory: api 1.1 GB, db 78 MB. `docker compose down` afterwards (volumes kept).
+- Linux CPU torch + faiss in one process: no crash (the OpenMP problem is macOS-only).
+- The CPU reranker is the cost of containers on a Mac (no MPS in Docker): ~3-4x slower retrieval.
+  Running the API natively stays the fast path for demos; compose is the reproducible path.
+
+## pgvector v0 (Phase 9 step 1, MacBook M4, 2026-10-30)
+
+- `app/retrieval/pg_store.py`: one table `chunks` (row = position in `chunks.jsonl`, every `Chunk`
+  field, `embedding vector(384)`), btree indexes on ticker / fiscal_year / section / chunk_type, a
+  `corpus_meta` table (embedding model, dims, count, index type). `python -m app.retrieval.pg_store`
+  loads chunks + cached embeddings with COPY in one transaction (17,602 rows, 54 MB, 20 s; idempotent;
+  `--hnsw` for an approximate index). `PgVectorIndex.search(query, k, mask, filters)` keeps
+  `DenseIndex`'s contract (rows + inner products); filters become `WHERE col = ANY(...)`.
+- `VECTOR_BACKEND=faiss|pgvector` (default faiss), `DATABASE_URL` (default localhost:5433). In pgvector
+  mode `build_retriever` loads chunks from Postgres (BM25 and the reranker still run in memory) and
+  refuses to start if the stored embedding model differs from the configured one. The retriever passes
+  `filters` next to the mask to the dense index (FAISS ignores them).
+- `docker-compose.yml`: `db` service (pgvector/pgvector:pg17, 656 MB image, volume, healthcheck,
+  bound to 127.0.0.1:5433; dev-only password).
+- Verification: chunks from Postgres == `chunks.jsonl` (all 17,602); dense top-10 identical in order
+  for 168 golden searches (84 × unfiltered/gold filters), max score diff 3e-7; retrieval eval
+  (`--no-ablations`) identical per question and mode, 740/740, FAISS vs pgvector. Dense latency in
+  the eval: FAISS 0.2 / 0.4 ms, pgvector 4.9 ms filtered / 45 ms unfiltered (p95 13.5 / 53 ms).
+- Tests: SQL building with a fake connection, schema/Chunk sync, and a real round trip vs FAISS when
+  `PG_TEST_DSN` points at a scratch database (`createdb -U finrag finrag_test` in the container;
+  never the main db: the load replaces the table). 198 passing + 1 skipped without it.
+- Side finding: the same eval with today's gold labels gives hybrid_rerank recall@5 0.891 / MRR 0.933
+  (gold filters) and 0.884 / 0.925 (none); `reports/retrieval_v0` (0.884 / 0.920) predates the Phase 5
+  gold review and was never rerun.
 
 ## Streaming v0 (Phase 8 step 2, MacBook M4, 2026-10-30)
 
@@ -717,6 +768,8 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 
 - Gold evidence is quote-verified and page-level (not chunk ids); `data/eval/` and `reports/` are committed.
 - Reranker default `bge-reranker-base`, 30 candidates, max_length 512 (Phase 4 ablation).
+- Postgres + pgvector is an alternative backend with identical results (`VECTOR_BACKEND=pgvector`, exact
+  search, filters in SQL); FAISS stays the default for zero-setup local runs and tests.
 - Vector search is exact FAISS `IndexFlatIP` (no IVF/PQ/HNSW/ScaNN/DiskANN), benchmarked on our data
   (`reports/index_benchmark.md`): 0.36 ms per query vs 1.5 s retrieval (reranker); recall 1.0 under
   company/year filters, where HNSW ef 16 / IVF nprobe 1 drop to 0.87 / 0.59; HNSW in pgvector past ~1M vectors. Full reasoning and an interview answer: `docs/ARCHITECTURE.md`, "Vector index choice".
@@ -790,6 +843,12 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   `gh auth setup-git` done, so `git push` works over HTTPS. `~/.ssh/id_ed25519` is not
   registered with GitHub (SSH push would fail).
 - Full retrieval eval takes ~20 min on the M4 (mostly reranking); `--no-ablations` ~8 min.
+- Docker (Phase 9): `docker compose up --build` = API + UI + Postgres (models on CPU inside: reranked
+  search ~5 s). First start ~5 min (model download into the `hfcache` volume), then ~20 s. Stop the
+  host API first (port 8010). `docker compose down` when done (RAM; volumes are kept).
+- Postgres (Phase 9): `docker compose up -d db` (Docker Desktop must be running), host port 5433,
+  data in the `pgdata` volume. Load or refresh with `python -m app.retrieval.pg_store`. Scratch db
+  for the integration test: `finrag_test`. Stop with `docker compose stop db` when not needed (RAM).
 - Web app: API on **port 8010** (port 8000 on the MacBook is taken by another local app).
   Node 24 / npm 11 on the MacBook. Startup loads the retriever and runs one warm-up search
   (~15-20 s); reranked searches take ~1.3-2.5 s, plain hybrid ~10 ms.
@@ -939,3 +998,13 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   built on it), `/api/answer/stream` SSE endpoint with per-node payloads, shared `answer_response`, UI
   streaming client with fallback and a live stage list; 2 streaming tests (195 passing). Live-checked with
   curl timestamps and screenshots (desktop, phone, refusal, completed answer).
+- **2026-10-30 (MacBook M4):** Phase 9 step 1: Postgres + pgvector backend (`pg_store.py`: schema, COPY
+  loader, chunk loading, `PgVectorIndex`; `VECTOR_BACKEND`/`DATABASE_URL` settings; `docker-compose.yml`
+  db service; filters passed to the dense index). Retrieval identical to FAISS (740/740 per question and
+  mode, 168/168 dense top-10). 4 tests incl. a real-Postgres round trip (198 passing + 1 skipped). Found
+  retrieval_v0 predates the gold review (current gold: recall@5 0.891, MRR 0.933).
+- **2026-10-30 (MacBook M4):** Phase 9 step 2: `Dockerfile` (node build + python slim, CPU torch, serving
+  deps only, non-root, healthcheck), `.dockerignore`, compose `api` service (pgvector, host Ollama, data
+  and model volumes). Verified health, search, a streamed uncached answer, cache writes, UI screenshot;
+  image 2.13 GB, cold start 320 s / warm 17 s, CPU rerank ~5 s. Import-boundary test (199 passing + 1 skipped).
+  README: Docker run instructions and the answer endpoints.

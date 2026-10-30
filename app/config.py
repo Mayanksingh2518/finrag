@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -20,6 +21,10 @@ class Settings(BaseSettings):
     # Local embedding model (free, CPU). Its 512-token limit drives chunk sizing.
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     embedding_max_tokens: int = 512
+    # Where chunks and dense vectors live: "faiss" (chunks.jsonl + in-memory FAISS, default) or "pgvector"
+    # (Postgres; load with `python -m app.retrieval.pg_store`, start it with `docker compose up -d db`).
+    vector_backend: Literal["faiss", "pgvector"] = "faiss"
+    database_url: str = "postgresql://finrag:finrag@localhost:5433/finrag"
     reranker_model: str = "BAAI/bge-reranker-base"
     # "auto" = mps on Apple Silicon, cuda if available, else cpu. Override with DEVICE=cpu.
     device: str = "auto"

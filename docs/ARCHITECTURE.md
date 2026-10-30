@@ -141,6 +141,16 @@ Managed vector databases (Pinecone, Qdrant, Weaviate, Milvus, pgvector) are host
 families, not different algorithms; most default to HNSW. The project keeps storage behind an interface
 so the Phase 9 move to pgvector changes no retrieval logic.
 
+### pgvector (Phase 9): same results, in the database
+
+`VECTOR_BACKEND=pgvector` (`app/retrieval/pg_store.py`) keeps chunks and vectors in one Postgres table
+and searches exactly (`ORDER BY embedding <#> q`, no vector index), with filters as SQL `WHERE` on
+indexed metadata columns. Verified against FAISS on the golden set: all 168 dense searches return the
+same top-10 in the same order (scores within 3e-7), and the full retrieval eval is identical for all
+740 question × mode results. Cost: 4.9 ms per filtered query (the `WHERE` narrows the scan), 45 ms
+unfiltered, vs 0.2-0.4 ms in FAISS; still ~3% of a reranked query. `--hnsw` adds an approximate index
+when the corpus grows.
+
 ### When to switch
 
 Past roughly a few hundred thousand to a million vectors (Phase 10 adding earnings releases and

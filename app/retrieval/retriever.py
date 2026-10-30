@@ -117,7 +117,7 @@ class Retriever:
             query_vector = self.embedder.embed_query(query)
             timings["embed_query"] = _ms(start)
             start = time.perf_counter()
-            hits = self.dense.search(query_vector, n, mask)
+            hits = self.dense.search(query_vector, n, mask, filters)
             timings["dense"] = _ms(start)
             dense_rows = [row for row, _ in hits]
             for rank, (row, score) in enumerate(hits, start=1):

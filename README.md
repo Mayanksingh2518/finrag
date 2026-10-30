@@ -50,7 +50,20 @@ uvicorn app.api.main:app --port 8010                   # API + built UI at http:
 cd frontend && npm run dev                             # http://localhost:5173
 ```
 
-API: `GET /api/health`, `GET /api/meta`, `POST /api/search` (schemas in `app/api/schemas.py`).
+API: `GET /api/health`, `GET /api/meta`, `POST /api/search`, `POST /api/answer` (the LangGraph agent),
+`POST /api/answer/stream` (the same as Server-Sent Events, one per agent step); schemas in `app/api/schemas.py`.
+
+### With Docker (API + UI + Postgres/pgvector)
+
+After the Quickstart's data steps (the container mounts `data/`; Ollama, if used, stays on the host):
+
+```bash
+docker compose up -d db && python -m app.retrieval.pg_store   # once: chunks + embeddings into Postgres
+docker compose up --build                                     # http://127.0.0.1:8010
+```
+
+The first start downloads the embedding and reranker models (~5 min); later starts take ~20 s. In
+the container the models run on CPU, so a reranked search takes ~5 s instead of ~1.5 s on Apple GPU.
 
 ## Status
 
@@ -62,4 +75,4 @@ API: `GET /api/health`, `GET /api/meta`, `POST /api/search` (schemas in `app/api
 - [x] Phase 6: LangGraph agent (query analysis, retrieval plan, conversational memory, XBRL facts tool): with no gold filters it matches the gold-filter run on false abstention (0.054) and reaches citation hit 0.878 counting XBRL facts ([report](reports/agent_v0.md); [analyzer](reports/analyzer_v0.md), [plan](reports/plan_v0.md), [XBRL](reports/xbrl_v0.md))
 - [x] Phase 7: Full evaluation: **[summary report](reports/eval_v1.md)**. LLM judge validated on hand labels and by a second, independent judge; XBRL series tables, intent rules and routing trend/comparison questions to gpt-oss-120b lift judged correctness 0.730 → 0.865 (trend 0.250 → 0.792, comparison 0.667 → 1.000); RAGAS corroborates faithfulness but is too literal for correctness ([report](reports/ragas_v0.md)); per-turn tracing (JSONL, Langfuse) and per-node latency; vector index benchmark ([report](reports/index_benchmark.md))
 - [x] Phase 8: Serving: FastAPI + glassmorphism React UI; answers come from the evaluated agent (routing, XBRL facts, conversation memory per thread, traces), stream live progress per agent step (SSE) and show how the question was read
-- [ ] Phase 9: Postgres/pgvector, Docker Compose, CI eval gate
+- [ ] Phase 9: Postgres/pgvector, Docker Compose, CI eval gate (done: pgvector backend with identical retrieval results to FAISS; `docker compose up` runs API + UI + Postgres; CI left)

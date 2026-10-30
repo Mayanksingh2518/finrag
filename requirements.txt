@@ -34,6 +34,10 @@ langgraph>=1.2
 ragas>=0.4.3,<0.5
 langchain-community<0.4
 
+# Phase 9 - Postgres + pgvector backend (VECTOR_BACKEND=pgvector; FAISS stays the default)
+psycopg[binary]>=3.2
+pgvector>=0.3
+
 # Phase 8 - serving (API for the web frontend in frontend/)
 fastapi>=0.115
 uvicorn[standard]>=0.30

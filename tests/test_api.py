@@ -260,3 +260,14 @@ def test_answer_stream_reports_errors_as_events_and_refusals_as_short_streams(tm
     with TestClient(_app_with_llm(None, tmp_path)) as c:  # no agent: a plain 503 before any streaming
         res = c.post("/api/answer/stream", json={"query": "revenue"})
     assert res.status_code == 503 and "No LLM providers" in res.json()["detail"]
+
+
+def test_api_imports_nothing_the_docker_image_leaves_out():
+    """The image installs requirements.txt minus ragas / langchain-community / pytest (Dockerfile)."""
+    import subprocess
+    import sys
+
+    code = ("import sys, app.api.main; "
+            "print(sorted({m.split('.')[0] for m in sys.modules} & {'ragas', 'langchain_community', 'pytest'}))")
+    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True).stdout
+    assert out.strip().splitlines()[-1] == "[]"

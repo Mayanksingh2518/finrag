@@ -8,6 +8,8 @@ They become worth it around the millions-of-vectors scale.
 import faiss
 import numpy as np
 
+from app.retrieval.types import SearchFilters
+
 
 class DenseIndex:
     def __init__(self, vectors: np.ndarray):
@@ -17,8 +19,13 @@ class DenseIndex:
     def __len__(self) -> int:
         return self.index.ntotal
 
-    def search(self, query: np.ndarray, k: int, mask: np.ndarray | None = None) -> list[tuple[int, float]]:
-        """Top-k (row, score); ``mask`` restricts the search to allowed rows (pre-filtering)."""
+    def search(self, query: np.ndarray, k: int, mask: np.ndarray | None = None,
+               filters: SearchFilters | None = None) -> list[tuple[int, float]]:
+        """Top-k (row, score); ``mask`` restricts the search to allowed rows (pre-filtering).
+
+        ``filters`` is the same restriction as metadata, for backends that filter in their own query
+        language (`PgVectorIndex`); FAISS uses the mask.
+        """
         params = None
         if mask is not None:
             allowed = np.flatnonzero(mask).astype(np.int64)
