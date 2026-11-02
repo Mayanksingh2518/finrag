@@ -17,7 +17,7 @@ def main() -> None:
     logging.getLogger("httpx").setLevel(logging.WARNING)
     settings = get_settings()
 
-    store = ChunkStore.from_jsonl(settings.processed_dir / "chunks.jsonl")
+    store = ChunkStore.from_processed(settings.processed_dir)
     embedder = SentenceTransformerEmbedder(settings.embedding_model, device=settings.device)
     start = time.perf_counter()
     vectors = embed_chunks(store.chunks, embedder, EmbeddingCache(settings.index_dir, settings.embedding_model))

@@ -31,6 +31,8 @@ export interface SearchRequest {
   fiscal_years: number[]
   sections: string[]
   chunk_types: ChunkType[]
+  fiscal_quarters: number[]
+  forms: string[]
   mode: SearchMode
   k: number
   decompose: boolean
@@ -106,6 +108,8 @@ export interface AnswerRequest {
   tickers: string[]
   fiscal_years: number[]
   sections: string[]
+  fiscal_quarters: number[]
+  forms: string[]
   decompose: boolean | null
   /** Same id across requests = one conversation, so follow-ups ("And in 2024?") are understood. */
   thread_id: string | null
@@ -130,7 +134,7 @@ export interface AnswerResponse {
   query: string
   /** The question as the agent read it (follow-ups rewritten to stand alone). */
   standalone_query: string
-  filters: { tickers: string[]; fiscal_years: number[]; sections: string[] }
+  filters: { tickers: string[]; fiscal_years: number[]; sections: string[]; fiscal_quarters: number[]; forms: string[] }
   intent: string | null
   steps: string[]
   /** XBRL facts given to the model, as citations: [XBRL NVDA Total revenue FY2025] */

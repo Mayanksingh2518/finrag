@@ -1,10 +1,14 @@
 """Request/response models for the HTTP API (the frontend's contract)."""
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field
 
 from app.retrieval.types import SearchMode
+
+
+Quarter = Annotated[int, Field(ge=1, le=4)]
+Form = Literal["10-K", "8-K EX-99.1"]
 
 
 class SearchRequest(BaseModel):
@@ -13,6 +17,8 @@ class SearchRequest(BaseModel):
     fiscal_years: list[int] = Field(default_factory=list)
     sections: list[str] = Field(default_factory=list)
     chunk_types: list[Literal["text", "table"]] = Field(default_factory=list)
+    fiscal_quarters: list[Quarter] = Field(default_factory=list)  # earnings releases only
+    forms: list[Form] = Field(default_factory=list)  # empty: 10-K, unless the query or quarters ask for releases
     mode: SearchMode = "hybrid_rerank"
     k: int = Field(default=8, ge=1, le=30)
     # One sub-search per (company, year), merged round-robin (helps comparisons and trends).
@@ -80,6 +86,8 @@ class AnswerRequest(BaseModel):
     tickers: list[str] = Field(default_factory=list)
     fiscal_years: list[int] = Field(default_factory=list)
     sections: list[str] = Field(default_factory=list)
+    fiscal_quarters: list[Quarter] = Field(default_factory=list)
+    forms: list[Form] = Field(default_factory=list)
     # Ignored since the agent answers: its retrieval plan decomposes multi-entity questions itself.
     decompose: bool | None = None
     # Same id across requests = one conversation (follow-ups like "And in 2024?"); None = standalone.
@@ -105,6 +113,8 @@ class AnswerFilters(BaseModel):
     tickers: list[str]
     fiscal_years: list[int]
     sections: list[str]
+    fiscal_quarters: list[int] = []
+    forms: list[str] = []
 
 
 class AnswerResponse(BaseModel):

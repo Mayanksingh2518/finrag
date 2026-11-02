@@ -28,6 +28,9 @@ from app.retrieval.types import ScoredChunk, SearchFilters, SearchMode, SearchRe
 Intent = Literal["lookup", "numeric", "trend", "comparison"]
 
 DEFAULT_SECTION_BONUS = 0.05  # on the reranker's sigmoid score; see "Retrieval plan v0" in progress.md
+# Quarters multiply sub-queries (4 per company-year): past this many, halve the rerank pool per sub-query.
+MANY_SUB_QUERIES = 8
+MANY_SUB_QUERIES_CANDIDATES = 15
 
 _COMPARE = re.compile(r"\bcompare|\bcompared?\b|\bversus\b|\bvs\.?\b|\bwhich\b.*\b(?:more|less|faster|slower|higher|lower)\b",
                       re.IGNORECASE)
@@ -66,7 +69,7 @@ class RetrievalPlan:
 def classify_intent(question: str, filters: SearchFilters) -> Intent:
     if len(filters.tickers or ()) > 1 or _COMPARE.search(question):
         return "comparison"
-    if len(filters.fiscal_years or ()) > 1 or _TREND.search(question):
+    if len(filters.fiscal_years or ()) > 1 or len(filters.fiscal_quarters or ()) > 1 or _TREND.search(question):
         return "trend"
     if _HOW_MUCH.search(question) or _METRIC.search(question):
         return "numeric"
@@ -87,6 +90,8 @@ def make_plan(query: str, filters: SearchFilters, k: int = 10, min_quota: int = 
     """
     parts = split_filters(filters)
     quota = k if len(parts) == 1 else max(min_quota, math.ceil(k / len(parts)))
+    if rerank_candidates is None and filters.fiscal_quarters and len(parts) > MANY_SUB_QUERIES:
+        rerank_candidates = MANY_SUB_QUERIES_CANDIDATES
     return RetrievalPlan(
         query=query,
         filters=filters,

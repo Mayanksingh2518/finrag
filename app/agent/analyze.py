@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 
 from app.agent.entities import CORPUS_YEARS, Entities, extract
 from app.generation.llm import LLM, LLMError, Message
-from app.retrieval.types import SearchFilters
+from app.retrieval.types import FORM_RELEASE, SearchFilters
 
 log = logging.getLogger(__name__)
 
@@ -99,7 +99,8 @@ class QueryAnalyzer:
                                  "today's stock price or market capitalization.")
         if history and not is_standalone(question, own):
             return self._follow_up(question, own, history)
-        return QueryAnalysis(question, question, _filters(own.tickers, own.fiscal_years, own.sections), "in_corpus")
+        filters = _filters(own.tickers, own.fiscal_years, own.sections, own.fiscal_quarters, own.release)
+        return QueryAnalysis(question, question, filters, "in_corpus")
 
     def _follow_up(self, question: str, own: Entities, history: Sequence[str]) -> QueryAnalysis:
         # The conversation's subject: the most recent user turn that names a company or year.
@@ -123,11 +124,19 @@ class QueryAnalyzer:
             else:
                 years = from_rewrite.fiscal_years
             carried.append("fiscal_years")
-        sections = own.sections or (from_rewrite.sections if from_rewrite else ())
+        quarters = own.fiscal_quarters or (from_rewrite.fiscal_quarters if from_rewrite else ())
+        if not quarters and not own.fiscal_years and not own.release:  # "And its net income?" stays on that quarter
+            quarters = context.fiscal_quarters
+            if quarters:
+                carried.append("fiscal_quarters")
+        release = bool(quarters) or own.release or bool(from_rewrite and from_rewrite.release)
+        sections = () if release else own.sections or (from_rewrite.sections if from_rewrite else ())
         standalone = rewrite or f"{user_turns[-1]} {question}"  # crude, but keeps the subject for retrieval
-        return QueryAnalysis(question, standalone, _filters(tickers, years, sections), "in_corpus",
+        return QueryAnalysis(question, standalone, _filters(tickers, years, sections, quarters, release), "in_corpus",
                              rewritten=bool(rewrite), carried_over=tuple(carried))
 
 
-def _filters(tickers: Sequence[str], years: Sequence[int], sections: Sequence[str]) -> SearchFilters:
-    return SearchFilters(tuple(tickers) or None, tuple(years) or None, tuple(sections) or None)
+def _filters(tickers: Sequence[str], years: Sequence[int], sections: Sequence[str], quarters: Sequence[int] = (),
+             release: bool = False) -> SearchFilters:
+    return SearchFilters(tuple(tickers) or None, tuple(years) or None, tuple(sections) or None,
+                         fiscal_quarters=tuple(quarters) or None, forms=(FORM_RELEASE,) if release else None)

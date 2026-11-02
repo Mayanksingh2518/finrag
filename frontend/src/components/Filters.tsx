@@ -39,7 +39,8 @@ interface FiltersProps {
 export function Filters({ meta, value, onChange }: FiltersProps) {
   const [open, setOpen] = useState(false) // only matters on narrow screens; always open on desktop
   const set = (patch: Partial<FilterState>) => onChange({ ...value, ...patch })
-  const active = value.tickers.length + value.fiscal_years.length + value.sections.length + value.chunk_types.length
+  const active = value.tickers.length + value.fiscal_years.length + value.sections.length + value.chunk_types.length +
+    value.fiscal_quarters.length + value.forms.length
   const multiEntity = value.tickers.length > 1 || value.fiscal_years.length > 1
   const mainSections = (meta?.sections ?? []).filter((s) => s.section in SECTION_SHORT)
 
@@ -84,6 +85,44 @@ export function Filters({ meta, value, onChange }: FiltersProps) {
           ))}
         </div>
         <p className="hint">Fiscal years follow each company's own label (NVIDIA FY2025 ended Jan 2025).</p>
+      </Group>
+
+      <Group label="Document">
+        <div className="segmented" role="group" aria-label="Document type">
+          {([['10-K', 'Annual 10-K'], ['8-K EX-99.1', 'Earnings release']] as const).map(([form, label]) => (
+            <button
+              key={form}
+              type="button"
+              aria-pressed={value.forms.includes(form)}
+              onClick={() => set(value.forms.includes(form)
+                ? { forms: [] }
+                : { forms: [form], ...(form === '10-K' ? { fiscal_quarters: [] } : { sections: [] }) })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <p className="hint">Searches 10-Ks unless the question names a quarter or you pick releases.</p>
+      </Group>
+
+      <Group label="Fiscal quarter" onClear={value.fiscal_quarters.length ? () => set({ fiscal_quarters: [] }) : undefined}>
+        <div className="chips">
+          {[1, 2, 3, 4].map((q) => (
+            <button
+              key={q}
+              type="button"
+              className="chip mono"
+              aria-pressed={value.fiscal_quarters.includes(q)}
+              onClick={() => set({
+                fiscal_quarters: toggle(value.fiscal_quarters, q),
+                forms: value.forms.includes('10-K') ? [] : value.forms,
+                sections: [],
+              })}
+            >
+              Q{q}
+            </button>
+          ))}
+        </div>
       </Group>
 
       <Group label="10-K section" onClear={value.sections.length ? () => set({ sections: [] }) : undefined}>

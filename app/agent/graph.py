@@ -41,7 +41,7 @@ from app.generation.answer import AnswerResult, Answerer, finalize, no_sources
 from app.generation.context import Source, build_sources
 from app.generation.llm import LLM, LLMResponse
 from app.generation.schemas import GeneratedAnswer
-from app.retrieval.types import ScoredChunk, SearchFilters, SearchMode
+from app.retrieval.types import FORM_10K, FORM_RELEASE, ScoredChunk, SearchFilters, SearchMode
 from app.tracing import Trace, TraceSink, build_sinks, span, start_trace
 
 log = logging.getLogger(__name__)
@@ -129,8 +129,13 @@ def merge_filters(analyzed: SearchFilters, user: SearchFilters) -> SearchFilters
     Scope refusals (unknown company, year outside the corpus) still come from the question: a filter
     can narrow an answerable question, not make an unanswerable one answerable.
     """
-    return replace(analyzed, **{f: getattr(user, f) for f in ("tickers", "fiscal_years", "sections", "chunk_types")
-                                if getattr(user, f)})
+    merged = replace(analyzed, **{f: getattr(user, f) for f in ("tickers", "fiscal_years", "sections", "chunk_types",
+                                                                "fiscal_quarters", "forms") if getattr(user, f)})
+    if user.forms and FORM_RELEASE not in user.forms and not user.fiscal_quarters:  # only releases have quarters
+        merged = replace(merged, fiscal_quarters=None)
+    if FORM_10K not in merged.effective_forms() and not user.sections:  # only 10-Ks have Items
+        merged = replace(merged, sections=None)
+    return merged
 
 
 def _ms(start: float) -> float:
@@ -186,8 +191,10 @@ class FinRAGAgent:
         metrics = detect_metrics(a.standalone_query)
         tickers, years = a.filters.tickers or (), a.filters.fiscal_years or ()
         # No year named -> no facts: four years of figures would swamp a yearless lookup.
+        # A quarterly question -> no facts: they are annual totals, a wrong answer next to the quarter's figure.
+        annual = FORM_10K in a.filters.effective_forms()
         facts = (self.xbrl.lookup_many(tickers, metrics, years)[:MAX_FACTS]
-                 if self.xbrl and metrics and tickers and years else [])
+                 if self.xbrl and metrics and tickers and years and annual else [])
         return {"facts": facts, "steps": ["xbrl"]}
 
     def _generate(self, state: AgentState) -> dict:

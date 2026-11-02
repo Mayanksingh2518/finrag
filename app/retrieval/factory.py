@@ -5,7 +5,7 @@ import time
 
 from app.config import Settings, get_settings
 from app.devices import check_torch_faiss_compatible, resolve_device
-from app.retrieval.bm25 import BM25Index
+from app.retrieval.bm25 import PartitionedBM25
 from app.retrieval.dense import DenseIndex
 from app.retrieval.embedder import EmbeddingCache, SentenceTransformerEmbedder, embed_chunks
 from app.retrieval.retriever import Retriever
@@ -35,10 +35,10 @@ def build_retriever(settings: Settings | None = None, with_reranker: bool = True
     if settings.vector_backend == "pgvector":
         store, dense = _pgvector(settings)
     else:
-        store = ChunkStore.from_jsonl(settings.processed_dir / "chunks.jsonl")
+        store = ChunkStore.from_processed(settings.processed_dir)
         vectors = embed_chunks(store.chunks, embedder, EmbeddingCache(settings.index_dir, settings.embedding_model))
         dense = DenseIndex(vectors)
-    bm25 = BM25Index([c.embed_text for c in store.chunks])
+    bm25 = PartitionedBM25([c.embed_text for c in store.chunks], [c.form for c in store.chunks])
 
     reranker = None
     if with_reranker:

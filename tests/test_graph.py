@@ -4,6 +4,7 @@ The retriever and LLM are scripted fakes; the XBRL store reads the real-data NVI
 """
 
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -12,7 +13,7 @@ from app.agent.analyze import StandaloneQuestion
 from app.agent.graph import ConversationMemory, FinRAGAgent
 from app.agent.xbrl import XbrlStore, load_filing_periods
 from app.generation.llm import LLMResponse
-from app.retrieval.types import ScoredChunk, SearchFilters, SearchResult
+from app.retrieval.types import FORM_RELEASE, ScoredChunk, SearchFilters, SearchResult
 from tests.test_retrieval import make_chunk
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -188,3 +189,11 @@ def test_trend_and_comparison_questions_are_routed_to_the_routed_llm(xbrl):
     assert trend.plan.intent == "trend" and len(big.prompts) == 1 and not trend.result.abstained
     assert lookup.plan.intent == "lookup" and len(local.prompts) == 1  # everything else stays local
     assert "one line per fiscal year" in big.prompts[0][0]["content"]  # same intent rules for the big model
+
+
+def test_quarterly_question_gets_no_annual_xbrl_facts(xbrl):
+    release = [replace(c, form=FORM_RELEASE, fiscal_quarter=3) for c in CHUNKS]
+    llm = ScriptedLLM(answers=[answer("Revenue was reported.", "S1")])
+    turn = make_agent(llm, xbrl, chunks=release).run("What was NVIDIA's total revenue in Q3 FY2025?")
+    assert turn.facts == [] and not any(s.is_xbrl for s in turn.result.sources)
+    assert turn.analysis.filters.fiscal_quarters == (3,) and turn.analysis.filters.forms == (FORM_RELEASE,)

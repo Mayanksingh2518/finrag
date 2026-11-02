@@ -13,10 +13,11 @@ from app.retrieval.types import ScoredChunk, SearchFilters, SearchMode, SearchRe
 
 
 def split_filters(filters: SearchFilters) -> list[SearchFilters]:
-    """One filter per (ticker, fiscal year) combination; [filters] if there is nothing to split."""
+    """One filter per (ticker, fiscal year, quarter) combination; [filters] if there is nothing to split."""
     tickers = filters.tickers or (None,)
     years = filters.fiscal_years or (None,)
-    if len(tickers) * len(years) <= 1:
+    quarters = filters.fiscal_quarters or (None,)
+    if len(tickers) * len(years) * len(quarters) <= 1:
         return [filters]
     return [
         SearchFilters(
@@ -24,8 +25,10 @@ def split_filters(filters: SearchFilters) -> list[SearchFilters]:
             fiscal_years=(y,) if y else None,
             sections=filters.sections,
             chunk_types=filters.chunk_types,
+            fiscal_quarters=(q,) if q else None,
+            forms=filters.forms,
         )
-        for t, y in itertools.product(tickers, years)
+        for t, y, q in itertools.product(tickers, years, quarters)
     ]
 
 

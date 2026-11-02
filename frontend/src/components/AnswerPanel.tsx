@@ -108,7 +108,9 @@ function stagesFrom(steps: AnswerStep[]): Stage[] {
 
 function readAs(a: AnswerResponse): string {
   const f = a.filters
-  const scope = [f.tickers.join(', '), f.fiscal_years.map((y) => `FY${y}`).join(', '), f.sections.join(', ')]
+  const release = f.forms?.includes('8-K EX-99.1') || f.fiscal_quarters?.length
+  const scope = [f.tickers.join(', '), f.fiscal_years.map((y) => `FY${y}`).join(', '), f.fiscal_quarters?.map((q) => `Q${q}`).join(', '),
+    f.sections.join(', '), release ? 'Earnings releases' : '']
   return scope.filter(Boolean).join(' · ')
 }
 

@@ -1,7 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from app.api.main import create_app
+from app.api.main import _search_filters, create_app
+from app.api.schemas import SearchRequest
 from app.retrieval.bm25 import BM25Index
 from app.retrieval.dense import DenseIndex
 from app.retrieval.retriever import Retriever
@@ -128,7 +129,8 @@ def test_answer_runs_the_agent_and_keeps_a_conversation_per_thread(tmp_path):
     with _agent_client(tmp_path, llm) as c:
         first = c.post("/api/answer", json={"query": "Why did Apple's services revenue increase in fiscal 2025?",
                                             "thread_id": "t-1"}).json()
-        assert not first["abstained"] and first["filters"] == {"tickers": ["AAPL"], "fiscal_years": [2025], "sections": []}
+        assert not first["abstained"] and first["filters"] == {
+            "tickers": ["AAPL"], "fiscal_years": [2025], "sections": [], "fiscal_quarters": [], "forms": []}
         assert first["steps"][0] == "analyze" and first["steps"][-1] == "respond" and first["thread_id"] == "t-1"
         assert first["standalone_query"] == first["query"] and first["intent"] and first["facts"] == []
         assert first["sources"][0]["hit"]["ticker"] == "AAPL" and {"analyze", "retrieval", "total"} <= set(first["timings_ms"])
@@ -272,3 +274,22 @@ def test_api_imports_nothing_the_docker_image_leaves_out():
             "print(sorted({m.split('.')[0] for m in sys.modules} & {'ragas', 'langchain_community', 'pytest'}))")
     out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True).stdout
     assert out.strip().splitlines()[-1] == "[]"
+
+
+def test_search_reads_the_quarter_from_the_query_or_the_filters(client):
+    # The fixture corpus is all 10-K, so asking for releases finds nothing; a plain query still searches it.
+    assert client.post("/api/search", json={"query": "cloud revenue", "mode": "hybrid"}).json()["hits"]
+    assert client.post("/api/search", json={"query": "cloud revenue in Q3 FY2025", "mode": "hybrid"}).json()["hits"] == []
+    assert client.post("/api/search", json={"query": "cloud revenue", "mode": "hybrid", "fiscal_quarters": [3]}).json()["hits"] == []
+    assert client.post("/api/search", json={"query": "Q3 revenue", "mode": "hybrid", "forms": ["10-K"]}).json()["hits"]
+    assert client.post("/api/search", json={"query": "x", "fiscal_quarters": [5]}).status_code == 422
+
+
+def test_search_takes_quarter_and_year_from_the_query_but_user_filters_win():
+    def filters(query, **kw):
+        return _search_filters(SearchRequest(query=query, **kw))
+    assert filters("data center revenue").forms is None
+    named = filters("data center revenue in Q3 FY2025", tickers=["NVDA"])
+    assert named.fiscal_quarters == (3,) and named.fiscal_years == (2025,) and named.forms == ("8-K EX-99.1",)
+    assert filters("revenue in Q3 FY2025", fiscal_years=[2024]).fiscal_years == (2024,)
+    assert filters("revenue in Q3 FY2025", forms=["10-K"]).fiscal_quarters is None

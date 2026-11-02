@@ -40,7 +40,7 @@ COLUMNS: dict[str, str] = {
     "text": "text NOT NULL", "token_count": "integer NOT NULL", "source_url": "text NOT NULL",
     "fiscal_quarter": "integer", "metadata": "jsonb NOT NULL",
 }
-FILTER_COLUMNS = ("ticker", "fiscal_year", "section", "chunk_type")
+FILTER_COLUMNS = ("ticker", "fiscal_year", "section", "chunk_type", "fiscal_quarter", "form")
 
 
 def schema_sql(dims: int) -> list[str]:
@@ -56,12 +56,12 @@ def schema_sql(dims: int) -> list[str]:
 
 def filter_sql(filters: SearchFilters | None) -> tuple[str, list]:
     """WHERE clause for the filters (same semantics as `ChunkStore.mask`); column names are constants."""
-    if filters is None or filters.is_empty():
+    if filters is None:
         return "", []
-    clauses, params = [], []
+    clauses, params = ["form = ANY(%s)"], [list(filters.effective_forms())]
     for column, values in (("ticker", filters.tickers and [t.upper() for t in filters.tickers]),
                            ("fiscal_year", filters.fiscal_years), ("section", filters.sections),
-                           ("chunk_type", filters.chunk_types)):
+                           ("chunk_type", filters.chunk_types), ("fiscal_quarter", filters.fiscal_quarters)):
         if values:
             clauses.append(f"{column} = ANY(%s)")
             params.append(list(values))
@@ -135,8 +135,8 @@ class PgVectorIndex:
     def search(self, query: np.ndarray, k: int, mask: np.ndarray | None = None,
                filters: SearchFilters | None = None) -> list[tuple[int, float]]:
         """`filters` become SQL; `mask` (the same filters as rows) is only used when no filters are given."""
-        where, params = filter_sql(filters)
-        if not where and mask is not None:
+        where, params = filter_sql(filters or (None if mask is not None else SearchFilters()))
+        if not where:
             where, params = "WHERE row = ANY(%s)", [np.flatnonzero(mask).tolist()]
         sql = (f"SELECT row, embedding <#> %s AS distance FROM chunks {where} "  # <#> = negative inner product
                "ORDER BY distance LIMIT %s")
@@ -156,7 +156,7 @@ def main() -> None:
 
     settings = get_settings()
     start = time.perf_counter()
-    chunks = ChunkStore.from_jsonl(settings.processed_dir / "chunks.jsonl").chunks
+    chunks = ChunkStore.from_processed(settings.processed_dir).chunks
     embedder = SentenceTransformerEmbedder(settings.embedding_model, device=settings.device)  # only for cache misses
     vectors = embed_chunks(chunks, embedder, EmbeddingCache(settings.index_dir, settings.embedding_model))
     with connect(settings.database_url) as conn:

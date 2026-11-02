@@ -81,18 +81,37 @@ INTENT_RULES = {
 }
 
 
+# Appended only when releases are among the sources, so 10-K prompts (and their cached answers) don't change.
+RELEASE_RULE = """
+10. Sources marked "earnings release" are quarterly press releases. Their tables show several periods side by
+   side: report the column for the quarter asked, not a comparative column, and say which quarter each figure
+   is for. Keep full-year figures in a Q4 release apart from the quarter's. A quarter's outlook or guidance is
+   stated in the release of the quarter before it: report it as expected, not as a result."""
+QUARTERLY_TREND_RULE = """
+9. This question is about change over several quarters. Answer with one line per quarter asked, oldest first:
+   the figure with its citation. Then one sentence on the overall direction. A figure smaller than the quarter
+   before is a decrease. If a quarter is missing from the sources, say so."""
+
+
 def build_messages(question: str, sources: Sequence[Source], intent: str | None = None) -> list[Message]:
-    system = SYSTEM_PROMPT + (XBRL_RULE if any(s.is_xbrl for s in sources) else "") + INTENT_RULES.get(intent or "", "")
+    release = any(s.chunk.fiscal_quarter for s in sources)
+    intent_rule = QUARTERLY_TREND_RULE if release and intent == "trend" else INTENT_RULES.get(intent or "", "")
+    system = (SYSTEM_PROMPT + (XBRL_RULE if any(s.is_xbrl for s in sources) else "") + intent_rule
+              + (RELEASE_RULE if release else ""))
     return [
         {"role": "system", "content": system},
         {"role": "user", "content": f"Sources:\n\n{render_sources(sources)}\n\nQuestion: {question}"},
     ]
 
 
+_REPEATED_RELEASE = re.compile(r"(\[[A-Z]{1,5} Q[1-4] FY\d{4} release\])(?:[\s.]*\1)+")
+
+
 def render_citations(text: str, sources: Sequence[Source]) -> str:
     """[S1] -> [AAPL FY2025 p.23]; unknown ids are left visible so they can be spotted."""
     by_id = {s.id: s.citation for s in sources}
-    return re.sub(r"\[(S\d+)\]", lambda m: by_id.get(m.group(1), m.group(0)), text)
+    rendered = re.sub(r"\[(S\d+)\]", lambda m: by_id.get(m.group(1), m.group(0)), text)
+    return _REPEATED_RELEASE.sub(r"\1", rendered)  # several chunks of one release share a citation
 
 
 _MARKER = re.compile(r"\[(S\d+)\]")

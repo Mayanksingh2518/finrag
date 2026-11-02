@@ -11,7 +11,9 @@ evaluation harness with ablations.
 decomposition, conversational follow-ups, grounded generation with citations and
 abstention, structured XBRL financial facts, offline evaluation, tracing, API, UI, Docker.
 
-**Later:** earnings releases (8-K Ex-99.1), investor presentations (PDF), Pinecone/pgvector.
+**Added in Phase 10:** quarterly earnings releases (8-K Ex-99.1), searched when a question names a quarter.
+
+**Later:** investor presentations (PDF), Pinecone.
 
 ## Pipeline
 
@@ -77,6 +79,8 @@ rewrite call.
 | Verify figures in code, repair citations, judge prose later | Small local models often answer correctly but cite nothing or the wrong source. A deterministic checker (figures matched by value across units) accepts a claim when its figures appear in the cited chunk, or re-attributes it when they appear in the same sentence/row as the claim's words in another provided chunk; invented figures are never rescued. It cannot tell *whose* figure it is (a segment's net income vs the firm's) or check figure-free claims: that needs an LLM faithfulness judge (Phase 7). |
 | Zero-cost, provider-agnostic models | Local bge embeddings and cross-encoder on CPU; Gemini free tier for generation with Groq and local Ollama as fallbacks, behind one LLM interface with caching and rate-limit backoff. No vendor lock-in, no spend. |
 | Storage behind interfaces | FAISS + local files first, Postgres (metadata/chunks) + pgvector or Pinecone later, with no changes to retrieval logic. |
+| Earnings releases beside the 10-Ks, off by default | Filters search 10-Ks unless a question names a quarter or asks for releases, so annual answers can't pick up a quarter's figure. One BM25 index per document type keeps 10-K scores exactly as they were (IDF is a corpus statistic). XBRL facts are skipped on quarterly questions: they are annual totals. |
+| A quarter's guidance comes from the previous release only | A release states the outlook for the *next* quarter, so searching the asked quarter's own release returned a real but wrong figure that the verifier can't catch. |
 | Exact FAISS (`IndexFlatIP`), no ANN index | Benchmarked on our data: exact search over 17.6k vectors takes 0.36 ms (retrieval is 1.5 s, the reranker), with recall 1.0 under metadata filters, where HNSW/IVF drop to 0.87/0.59 at cheap settings. IVF / PQ / ScaNN / DiskANN solve problems this corpus doesn't have; HNSW in pgvector past ~1M vectors. See "Vector index choice". |
 
 ## Vector index choice: why exact search, not IVF, ScaNN or DiskANN

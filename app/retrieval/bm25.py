@@ -6,6 +6,7 @@ Words are stemmed (revenues -> revenu) but numbers are left untouched.
 """
 
 import re
+from collections.abc import Sequence
 
 import bm25s
 import numpy as np
@@ -52,3 +53,29 @@ class BM25Index:
         top = np.argpartition(-scores, k - 1)[:k]
         top = top[np.argsort(-scores[top])]
         return [(int(r), float(scores[r])) for r in top if scores[r] > 0]
+
+
+class PartitionedBM25:
+    """One index per document type, same `search` contract over the shared row ids.
+
+    IDF and average length are corpus statistics: one index would let number-heavy earnings releases
+    change every 10-K score. Separate indexes keep 10-K rankings, and the cached answers built on them,
+    exactly as they were.
+    """
+
+    def __init__(self, texts: Sequence[str], partitions: Sequence[str]):
+        names = np.array(partitions)
+        self.parts = [(rows := np.flatnonzero(names == name), BM25Index([texts[r] for r in rows]))
+                      for name in dict.fromkeys(partitions)]
+        self.size = len(texts)
+
+    def __len__(self) -> int:
+        return self.size
+
+    def search(self, query: str, k: int, mask: np.ndarray | None = None) -> list[tuple[int, float]]:
+        hits: list[tuple[int, float]] = []
+        for rows, index in self.parts:
+            part_mask = None if mask is None else mask[rows]
+            if part_mask is None or part_mask.any():
+                hits += [(int(rows[r]), score) for r, score in index.search(query, k, part_mask)]
+        return sorted(hits, key=lambda h: -h[1])[:k]

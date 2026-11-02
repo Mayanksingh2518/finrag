@@ -39,10 +39,10 @@ def test_columns_cover_every_chunk_field_and_schema_has_filter_indexes():
 
 
 def test_filter_sql_matches_the_store_mask_semantics():
-    assert filter_sql(None) == ("", []) and filter_sql(SearchFilters()) == ("", [])
+    assert filter_sql(None) == ("", []) and filter_sql(SearchFilters()) == ("WHERE form = ANY(%s)", [["10-K"]])
     where, params = filter_sql(SearchFilters(tickers=("aapl", "MSFT"), fiscal_years=(2025,), chunk_types=("table",)))
-    assert where == "WHERE ticker = ANY(%s) AND fiscal_year = ANY(%s) AND chunk_type = ANY(%s)"
-    assert params == [["AAPL", "MSFT"], [2025], ["table"]]
+    assert where == "WHERE form = ANY(%s) AND ticker = ANY(%s) AND fiscal_year = ANY(%s) AND chunk_type = ANY(%s)"
+    assert params == [["10-K"], ["AAPL", "MSFT"], [2025], ["table"]]
 
 
 def test_pgvector_index_orders_by_inner_product_and_filters_in_sql():
@@ -51,8 +51,8 @@ def test_pgvector_index_orders_by_inner_product_and_filters_in_sql():
     hits = index.search(np.ones(4, dtype=np.float32), 2, mask=np.ones(8, bool), filters=SearchFilters(tickers=("AAPL",)))
     assert hits == [(3, 0.9), (0, 0.5)] and len(index) == 8
     sql, params = conn.calls[0]
-    assert "embedding <#> %s" in sql and "WHERE ticker = ANY(%s)" in sql and sql.endswith("ORDER BY distance LIMIT %s")
-    assert params[1:] == [["AAPL"], 2]
+    assert "embedding <#> %s" in sql and "WHERE form = ANY(%s) AND ticker = ANY(%s)" in sql and sql.endswith("ORDER BY distance LIMIT %s")
+    assert params[1:] == [["10-K"], ["AAPL"], 2]
     index.search(np.ones(4, dtype=np.float32), 2, mask=np.array([True, False, True] + [False] * 5))
     assert "WHERE row = ANY(%s)" in conn.calls[1][0] and conn.calls[1][1][1] == [0, 2]  # mask without filters
 

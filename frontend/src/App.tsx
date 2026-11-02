@@ -28,6 +28,7 @@ const EXAMPLES: Example[] = [
   { label: 'NVIDIA China exposure', query: 'Export controls on data center GPUs sold to China', filters: { tickers: ['NVDA'], fiscal_years: [2024, 2025] } },
   { label: 'Tesla deliveries trend', query: 'How many consumer vehicles did Tesla deliver?', filters: { tickers: ['TSLA'], fiscal_years: [2022, 2023, 2024, 2025], decompose: true } },
   { label: 'JPMorgan NII', query: 'What drove net interest income?', filters: { tickers: ['JPM'], fiscal_years: [2024] } },
+  { label: 'NVIDIA Q3 FY2025', query: 'What did NVIDIA report for Q3 FY2025 data center revenue?', filters: { tickers: ['NVDA'], fiscal_years: [2025], fiscal_quarters: [3] } },
   { label: 'Meta capex', query: 'Capital expenditures including finance leases', filters: { tickers: ['META'], fiscal_years: [2025], chunk_types: ['text'] } },
 ]
 
@@ -52,6 +53,8 @@ function readUrl(): { query: string; filters: FilterState } {
       fiscal_years: list('years').map(Number).filter(Number.isFinite),
       sections: list('sections'),
       chunk_types: list('types').filter((t): t is 'text' | 'table' => t === 'text' || t === 'table'),
+      fiscal_quarters: list('quarters').map(Number).filter((q) => q >= 1 && q <= 4),
+      forms: list('forms'),
       mode: mode && mode in MODE_LABELS ? (mode as FilterState['mode']) : DEFAULT_FILTERS.mode,
       k: Number(p.get('k')) || DEFAULT_FILTERS.k,
       decompose: p.get('decompose') === '1',
@@ -66,6 +69,8 @@ function writeUrl(query: string, f: FilterState) {
   if (f.fiscal_years.length) p.set('years', f.fiscal_years.join(','))
   if (f.sections.length) p.set('sections', f.sections.join(','))
   if (f.chunk_types.length) p.set('types', f.chunk_types.join(','))
+  if (f.fiscal_quarters.length) p.set('quarters', f.fiscal_quarters.join(','))
+  if (f.forms.length) p.set('forms', f.forms.join(','))
   if (f.mode !== DEFAULT_FILTERS.mode) p.set('mode', f.mode)
   if (f.k !== DEFAULT_FILTERS.k) p.set('k', String(f.k))
   if (f.decompose) p.set('decompose', '1')
@@ -144,18 +149,18 @@ export default function App() {
 
   // Grounded answer for the same query + filters (mode/k/content type don't apply to answers).
   const answerKey = submitted && answersOn
-    ? JSON.stringify([submitted, filters.tickers, filters.fiscal_years, filters.sections, filters.decompose])
+    ? JSON.stringify([submitted, filters.tickers, filters.fiscal_years, filters.sections, filters.fiscal_quarters, filters.forms, filters.decompose])
     : ''
   useEffect(() => {
     if (!answerKey) return
     // The key is the request: rebuilding it from the key keeps this effect's only input explicit.
-    const [query, tickers, fiscal_years, sections, decompose] = JSON.parse(answerKey)
+    const [query, tickers, fiscal_years, sections, fiscal_quarters, forms, decompose] = JSON.parse(answerKey)
     const controller = new AbortController()
     // The first step of a new answer starts a fresh list; steps of a superseded answer are shown nowhere.
     const onStep = (step: AnswerStep) =>
       setProgress((p) => ({ key: answerKey, steps: p.key === answerKey ? [...p.steps, step] : [step] }))
     answerApi
-      .stream({ query, tickers, fiscal_years, sections, decompose: decompose ? true : null, thread_id: threadRef.current },
+      .stream({ query, tickers, fiscal_years, sections, fiscal_quarters, forms, decompose: decompose ? true : null, thread_id: threadRef.current },
         onStep, controller.signal)
       .then(
         (data) => {
@@ -212,7 +217,7 @@ export default function App() {
           <a className="brand" href="/" aria-label="FinRAG home">
             <img className="brand__logo" src="/favicon.svg" alt="" />
             <span className="brand__name">FinRAG</span>
-            <span className="brand__tag">Evidence search over SEC 10-K filings</span>
+            <span className="brand__tag">Evidence search over SEC 10-K filings and earnings releases</span>
           </a>
           <div className="topbar__stats">
             <span className="pill" role="status">
@@ -230,8 +235,8 @@ export default function App() {
             <span className="grad">Get the page it came from.</span>
           </h1>
           <p>
-            Hybrid retrieval over 40 annual reports from Apple, Microsoft, NVIDIA, Amazon, Alphabet, Meta,
-            Tesla, JPMorgan, Visa and Mastercard, with every result pinned to a printed page.
+            Hybrid retrieval over 40 annual reports and 160 earnings releases from Apple, Microsoft, NVIDIA, Amazon,
+            Alphabet, Meta, Tesla, JPMorgan, Visa and Mastercard, with every result pinned to its page or release.
           </p>
 
           <form
@@ -328,7 +333,7 @@ export default function App() {
             {!result && !loading && !error && (
               <div className="empty glass">
                 <DocIcon size={28} />
-                <h2>Search 17,602 passages from 40 annual reports</h2>
+                <h2>Search {meta ? meta.chunks.toLocaleString() : ''} passages from annual reports and earnings releases</h2>
                 <p>Pick an example above, or ask your own question. Use the filters to focus on companies, years or 10-K sections.</p>
               </div>
             )}

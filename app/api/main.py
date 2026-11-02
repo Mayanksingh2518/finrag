@@ -26,12 +26,14 @@ import queue
 import threading
 from collections.abc import Iterator
 from contextlib import asynccontextmanager
+from dataclasses import replace
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
+from app.agent.entities import extract
 from app.agent.graph import AgentEvent, AgentTurn, FinRAGAgent
 from app.api.schemas import (
     AnswerClaim,
@@ -52,7 +54,7 @@ from app.generation.llm import LLM, LLMError, build_llm
 from app.ingestion.companies import COMPANIES
 from app.retrieval.decompose import search_decomposed
 from app.retrieval.retriever import Retriever
-from app.retrieval.types import SEARCH_MODES, ScoredChunk, SearchFilters
+from app.retrieval.types import FORM_RELEASE, SEARCH_MODES, ScoredChunk, SearchFilters
 
 logger = logging.getLogger(__name__)
 FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
@@ -107,9 +109,20 @@ def build_meta(retriever: Retriever) -> MetaResponse:
     )
 
 
-def _filters(tickers: list[str], years: list[int], sections: list[str], chunk_types: list[str] | None = None) -> SearchFilters:
+def _filters(tickers: list[str], years: list[int], sections: list[str], chunk_types: list[str] | None = None,
+             quarters: list[int] | None = None, forms: list[str] | None = None) -> SearchFilters:
     return SearchFilters(tickers=tuple(tickers) or None, fiscal_years=tuple(years) or None,
-                         sections=tuple(sections) or None, chunk_types=tuple(chunk_types or ()) or None)
+                         sections=tuple(sections) or None, chunk_types=tuple(chunk_types or ()) or None,
+                         fiscal_quarters=tuple(quarters or ()) or None, forms=tuple(forms or ()) or None)
+
+
+def _search_filters(req: SearchRequest) -> SearchFilters:
+    """Search has no analyzer, but "Q3 data center revenue" must search the same document type the answer reads."""
+    filters = _filters(req.tickers, req.fiscal_years, req.sections, list(req.chunk_types), req.fiscal_quarters, list(req.forms))
+    if filters.forms or filters.fiscal_quarters or not (own := extract(req.query)).release:
+        return filters
+    return replace(filters, fiscal_quarters=own.fiscal_quarters or None, forms=(FORM_RELEASE,),
+                   fiscal_years=filters.fiscal_years or own.fiscal_years or None)
 
 
 def _check_tickers(request: Request, tickers: list[str]) -> None:
@@ -169,7 +182,8 @@ def answer_response(query: str, thread_id: str | None, turn: AgentTurn) -> Answe
     return AnswerResponse(
         query=query, standalone_query=a.standalone_query,
         filters=AnswerFilters(tickers=list(f.tickers or ()), fiscal_years=list(f.fiscal_years or ()),
-                              sections=list(f.sections or ())),
+                              sections=list(f.sections or ()), fiscal_quarters=list(f.fiscal_quarters or ()),
+                              forms=list(f.forms or ())),
         intent=turn.plan.intent if turn.plan else None, steps=turn.steps,
         facts=[fact.citation for fact in turn.facts], thread_id=thread_id,
         answer=r.answer, abstained=r.abstained, abstain_reason=r.abstain_reason, confidence=r.confidence,
@@ -188,7 +202,8 @@ def step_payload(agent: FinRAGAgent, event: AgentEvent) -> dict:
         f = a.filters
         out |= {"standalone_query": a.standalone_query, "in_scope": a.answerable_scope,
                 "filters": {"tickers": list(f.tickers or ()), "fiscal_years": list(f.fiscal_years or ()),
-                            "sections": list(f.sections or ())}}
+                            "sections": list(f.sections or ()), "fiscal_quarters": list(f.fiscal_quarters or ()),
+                            "forms": list(f.forms or ())}}
     elif event.node == "retrieve":
         plan = u.get("plan")
         out |= {"hits": len(u.get("hits") or ()), "intent": plan.intent if plan else None,
@@ -270,7 +285,7 @@ def create_app(retriever: Retriever | None = None, frontend_dir: Path | None = F
     @app.post("/api/search", response_model=SearchResponse)
     def search(req: SearchRequest, request: Request) -> SearchResponse:
         _check_tickers(request, req.tickers)
-        filters = _filters(req.tickers, req.fiscal_years, req.sections, list(req.chunk_types))
+        filters = _search_filters(req)
         query = req.query.strip()
         with request.app.state.search_lock:
             if req.decompose:
@@ -290,7 +305,7 @@ def create_app(retriever: Retriever | None = None, frontend_dir: Path | None = F
             raise HTTPException(status_code=503, detail=f"Answers are disabled: {request.app.state.answer_error}")
         _check_tickers(request, req.tickers)
         query = req.query.strip()
-        user_filters = _filters(req.tickers, req.fiscal_years, req.sections)
+        user_filters = _filters(req.tickers, req.fiscal_years, req.sections, None, req.fiscal_quarters, list(req.forms))
         try:
             turn = (agent.ask(query, req.thread_id, user_filters) if req.thread_id
                     else agent.run(query, filters=user_filters))
@@ -305,7 +320,7 @@ def create_app(retriever: Retriever | None = None, frontend_dir: Path | None = F
             raise HTTPException(status_code=503, detail=f"Answers are disabled: {request.app.state.answer_error}")
         _check_tickers(request, req.tickers)
         query = req.query.strip()
-        user_filters = _filters(req.tickers, req.fiscal_years, req.sections)
+        user_filters = _filters(req.tickers, req.fiscal_years, req.sections, None, req.fiscal_quarters, list(req.forms))
         events = (agent.stream_ask(query, req.thread_id, user_filters) if req.thread_id
                   else agent.stream(query, filters=user_filters))
         return StreamingResponse(_sse(agent, events, query, req.thread_id), media_type="text/event-stream",

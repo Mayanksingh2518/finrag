@@ -113,6 +113,7 @@ def overlap(claim_text: str, source: Source) -> float:
 MIN_REPAIR_WORDS = 3  # too few words ("14%") to say which source a claim came from
 MIN_REPAIR_OVERLAP = 0.6
 MIN_SEGMENT_WORDS = 2  # a repaired figure's sentence or table row must share this many words with the claim
+STEM_CHARS = 5  # crude stem for release rows: "delivered" / "deliveries"
 
 
 def _segments(text: str) -> list[str]:
@@ -127,8 +128,24 @@ def _in_context(number: Number, words: set[str], source: Source) -> bool:
     likely, e.g. a "$115.80 billion" of operating cash flow for a capex claim, so a repair
     needs the figure next to the claim's own words.
     """
+    if source.chunk.fiscal_quarter:
+        return _in_release_context(number, words, source)
     return any(len(words & content_words(seg)) >= MIN_SEGMENT_WORDS
                and any(_matches(number, n) for n in extract_numbers(seg)) for seg in _segments(source.chunk.text))
+
+
+def _stems(words: set[str]) -> set[str]:
+    return {w[:STEM_CHARS] for w in words if w.isalpha()}
+
+
+def _in_release_context(number: Number, words: set[str], source: Source) -> bool:
+    """A release's rows don't repeat the company and period ("Net income | $19,309" sits under "Q3 FY25"),
+    and its tables use nouns where answers use verbs ("deliveries", "delivered"). So the test is the exact
+    figure in a row that names the claim's metric: words beyond the company, compared by stem.
+    """
+    metric = _stems(words - content_words(source.chunk.context))
+    return any(metric & _stems(content_words(seg)) and any(_matches(number, n) for n in extract_numbers(seg))
+               for seg in _segments(source.chunk.text))
 
 
 @dataclass
@@ -175,10 +192,12 @@ def _repair(text: str, cited: list[str], missing: list[Number], sources: Mapping
     Greedy set cover over sources sharing most of the claim's wording; returns the new
     source ids, or None when the claim can't be pinned on any source.
     """
-    if len(content_words(text)) < MIN_REPAIR_WORDS:
-        return None
+    enough_words = len(content_words(text)) >= MIN_REPAIR_WORDS
+    # A release's figure is judged by its row alone (`_in_release_context`): short claims are normal there.
     scored = {sid: overlap(text, s) for sid, s in sources.items() if sid not in cited}
-    candidates = sorted((sid for sid, o in scored.items() if o >= MIN_REPAIR_OVERLAP), key=lambda sid: -scored[sid])
+    candidates = sorted((sid for sid, o in scored.items()
+                         if (enough_words and o >= MIN_REPAIR_OVERLAP) or (missing and sources[sid].chunk.fiscal_quarter)),
+                        key=lambda sid: -scored[sid])
     if not missing:  # uncited claim without figures: the source that shares the most wording
         return [candidates[0]] if candidates and not cited else None
     words = content_words(text)

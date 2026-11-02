@@ -5,7 +5,8 @@
 Agentic retrieval-augmented generation over SEC 10-K filings for 10 large-cap companies
 (AAPL, MSFT, NVDA, AMZN, GOOGL, META, TSLA, JPM, V, MA) across fiscal years 2022–2025.
 It answers cross-company and multi-year questions with page-level citations and abstains
-when the evidence doesn't support an answer.
+when the evidence doesn't support an answer. Questions that name a quarter are answered from the
+160 quarterly earnings releases (8-K Exhibit 99.1) instead.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the design.
 
@@ -78,4 +79,4 @@ the container the models run on CPU, so a reranked search takes ~5 s instead of 
 - [x] Phase 7: Full evaluation: **[summary report](reports/eval_v1.md)**. LLM judge validated on hand labels and by a second, independent judge; XBRL series tables, intent rules and routing trend/comparison questions to gpt-oss-120b lift judged correctness 0.730 → 0.865 (trend 0.250 → 0.792, comparison 0.667 → 1.000); RAGAS corroborates faithfulness but is too literal for correctness ([report](reports/ragas_v0.md)); per-turn tracing (JSONL, Langfuse) and per-node latency; vector index benchmark ([report](reports/index_benchmark.md))
 - [x] Phase 8: Serving: FastAPI + glassmorphism React UI; answers come from the evaluated agent (routing, XBRL facts, conversation memory per thread, traces), stream live progress per agent step (SSE) and show how the question was read
 - [x] Phase 9: Production: Postgres + pgvector backend with identical retrieval results to FAISS (`VECTOR_BACKEND=pgvector`); `docker compose up --build` runs API + UI + Postgres; GitHub Actions CI runs 209 tests (incl. real Postgres), the UI lint/build and an eval regression gate over the committed reports ([gate](reports/gate.json))
-- [ ] Phase 10: Quarterly earnings releases (8-K Exhibit 99.1): in progress, 160 releases (10 companies × 16 quarters, FY2022-2025) downloaded and mapped to fiscal quarters, parsed into 5.6k chunks with `[NVDA Q3 FY2025 release]` citations; retrieval and evals next
+- [ ] Phase 10: Quarterly earnings releases (8-K Exhibit 99.1): in progress, 160 releases (10 companies × 16 quarters, FY2022-2025) downloaded and mapped to fiscal quarters, parsed into 5.6k chunks with `[NVDA Q3 FY2025 release]` citations and searchable by quarter, with 10-K results unchanged (retrieval 740/740, cached answers 84/84); quarterly golden set and evals next

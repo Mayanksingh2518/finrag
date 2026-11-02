@@ -6,6 +6,8 @@ export interface FilterState {
   fiscal_years: number[]
   sections: string[]
   chunk_types: ChunkType[]
+  fiscal_quarters: number[]
+  forms: string[]
   mode: SearchMode
   k: number
   decompose: boolean
@@ -16,6 +18,8 @@ export const DEFAULT_FILTERS: FilterState = {
   fiscal_years: [],
   sections: [],
   chunk_types: [],
+  fiscal_quarters: [],
+  forms: [],
   mode: 'hybrid_rerank',
   k: 8,
   decompose: false,

@@ -11,11 +11,11 @@ Single source of truth for project state. Update this file at the end of every w
   FAISS, 740/740); `docker compose up --build` (API + UI + Postgres); GitHub Actions CI green
   (run 41048182690: 209 tests incl. real Postgres, frontend lint + build, eval gate 10/10). CI badge in
   the README.
-- **In progress:** Phase 10 (earnings releases): step 1 (downloader) done 2026-10-30; step 2 (parse +
-  chunk) done 2026-11-02: 5,571 chunks from 160 releases in `chunks_earnings.jsonl`, not in the index yet.
-- **Next up:** Phase 10 step 3: merge releases into the index, quarter detection, filters. See "Next task in detail".
-- **Resume here (2026-11-02):** step 2 is uncommitted in the working tree. Nothing running (the compose `db`
-  was started for the Postgres tests and stopped). The main Postgres volume still has the old schema: with
+- **In progress:** Phase 10 (earnings releases): steps 1-3 done. Step 3 (2026-11-02): releases are searchable and
+  answerable (23,173 chunks in the index), the 10-K path is unchanged (retrieval 740/740, answers 84/84).
+- **Next up:** Phase 10 step 4: golden set extension + evals + gate. See "Next task in detail".
+- **Resume here (2026-11-02):** step 3 is uncommitted in the working tree (step 2 was committed by the user).
+  Nothing running. The main Postgres volume still holds the 17,602 10-K chunks in the old schema: with
   `VECTOR_BACKEND=pgvector`, run `python -m app.retrieval.pg_store` once (the API says so if you don't).
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
@@ -26,7 +26,7 @@ Single source of truth for project state. Update this file at the end of every w
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-11-02 (Phase 10 step 2: earnings release parsing and chunking)
+- **Last updated:** 2026-11-02 (Phase 10 step 3: earnings releases in retrieval and the agent)
 
 ## Phase checklist
 
@@ -50,21 +50,69 @@ filed as 8-K Exhibit 99.1, Item 2.02; stable URLs, same User-Agent rule as Phase
 
 1. ~~Downloader~~ **done 2026-10-30** (see "Earnings releases v0" below).
 2. ~~Parse + chunk~~ **done 2026-11-02** (see "Earnings release chunks v0" below).
-3. **Retrieval + analyzer (next "go").** Read `app/retrieval/store.py`, `types.py`, `factory.py`,
-   `build_index.py`, `app/agent/analyze.py`, `plan.py` first. Build the index over `chunks.jsonl` +
-   `chunks_earnings.jsonl` (embeddings cached by chunk id + text hash: only the 5,571 new chunks embed, the
-   17,602 10-K vectors stay valid), including the pgvector load. `SearchFilters` gains quarter and doc type
-   (`ChunkStore.mask` and `filter_sql` together; add a `fiscal_quarter` index to `FILTER_COLUMNS`). Analyzer:
-   quarter detection ("Q3", "third quarter", "three months ended"), and a plan intent for quarterly trends
-   (one sub-query per quarter). **The 10-K stays the default for annual questions: unfiltered and annual
-   questions must not start returning release chunks**, and the retrieval eval must stay at 0.891 / 0.933 on
-   the existing 84 questions (rerun it; `build_meta` and the UI filter lists also see the new section).
-   Check a release citation chip in the browser: so far only lint/build cover that UI code.
-4. **Golden set extension** (~20 quarterly questions with quote-verified evidence, incl. unanswerable
-   ones such as guidance for a quarter not yet reported), then retrieval + agent + judge evals and a
-   gate update. Evidence has no page numbers, so `metrics.py` matching needs a chunk or quarter form. Avoid
-   figures from Tesla FY2022 Q1-FY2023 Q1 tables and JPM annual revenue except as unanswerable cases (see
-   below). Investor presentations (PDF) come after, if at all: most are not on EDGAR.
+3. ~~Retrieval + analyzer~~ **done 2026-11-02** (see "Earnings release retrieval v0" below).
+4. **Golden set extension (next "go").** Read `app/evaluation/golden.py`, `metrics.py`, `build_golden.py`,
+   `find_evidence.py`, `run_agent_eval.py`, `run_judge_eval.py`, `check_gate.py` first. ~20 quarterly questions with
+   quote-verified evidence in a separate file (`golden_v0.jsonl` stays as it is so the old metrics stay comparable):
+   lookups across companies, quarterly trends, guidance (the release before the quarter asked), comparisons,
+   a follow-up, and unanswerable ones (Tesla FY2022 Q1-FY2023 Q1 statement figures, JPM annual revenue, Apple
+   guidance, Q2 FY2026). Evidence has no pages: `metrics.py` must match on (ticker, year, quarter) plus a quote.
+   Then retrieval + agent + judge evals and new gate checks. **The judge matters most here: the verifier can't
+   tell a comparative column from the quarter asked**, and the repair below accepts any row naming the metric.
+   Investor presentations (PDF) come after, if at all: most are not on EDGAR.
+
+## Earnings release retrieval v0 (Phase 10 step 3, MacBook M4, 2026-11-02)
+
+The corpus is `chunks.jsonl` + `chunks_earnings.jsonl` (`ChunkStore.from_processed`; 10-Ks first, so their rows
+don't move). `build_index` embedded only the 5,571 new chunks (58 s). 23,173 chunks.
+
+- **10-K is the default.** `SearchFilters` gains `fiscal_quarters` and `forms`; `effective_forms()`: explicit forms,
+  else releases if a quarter is set, else 10-K. `ChunkStore.mask` and `filter_sql` both apply it.
+- **One BM25 index per form** (`PartitionedBM25`): IDF and average length are corpus statistics, so one index
+  would let number-heavy releases change every 10-K score, and with it the cached answers and eval baselines.
+- **Analyzer rules** (`entities.py`): Q3, 3Q24, Q3'24, FY25, "third-quarter", "quarterly revenue" / "each quarter" (all
+  four; "quarterly dividend" stays 10-K), "earnings release", "three months ended <date>" (converted with the
+  company's fiscal calendar; a quarter ending in a month's first week counts for the month before). 10-K Item
+  sections are dropped on release questions. Follow-ups keep the quarter.
+- **Guidance:** a quarter's outlook is searched only in the **previous** quarter's release (Q1's in the prior year's
+  Q4). The first version searched both, and the live run answered NVIDIA's Q4 FY2025 outlook with **$43.0B, which is
+  the Q1 FY2026 outlook; the verifier passed it because the figure is in the source**. Now $37.5B. Q1 FY2026 guidance is
+  answerable (Q4 FY2025 release), Q2 FY2026 is refused.
+- **XBRL is skipped on release questions:** facts are annual totals. Plan: 4 sub-queries per company-year, intent
+  trend (routed to gpt-oss-120b), rerank pool 15 past 8 sub-queries when quarters are involved.
+- **Prompts:** `RELEASE_RULE` and `QUARTERLY_TREND_RULE` are appended only with release sources (test: a 10-K prompt
+  equals the old one).
+- **Verifier repair for releases** (`_in_release_context`): the live run falsely abstained on Tesla's Q2 2024
+  deliveries and NVIDIA's Q3 net income (right figures, wrong or no citation). Rows don't repeat company and period,
+  and "Net income was..." has too few content words for the normal repair. For release sources the test is the
+  exact figure in a row naming the claim's metric, by 5-character stem. Invented figures and rows about something
+  else are still rejected (tests). 10-K sources go through the old code.
+- **API/UI:** `fiscal_quarters` / `forms` on search and answer; `/api/search` reads a quarter and year from the query so
+  evidence matches the answer. UI: Document and Fiscal quarter filters, scope line, example. Repeated release citations
+  collapse (several chunks share one label); 10-K answer text is untouched.
+
+| Verified on real data | Result |
+|---|---|
+| Retrieval eval vs `reports/retrieval_v1` (per question: top hits + metrics) | **740/740 identical**; 0.891 / 0.933 |
+| Routed agent vs `reports/agent_v2`, LLM cache | **84/84 answers identical**, also after the verifier change |
+| pgvector vs FAISS on the merged corpus (scratch db) | 23,173 round trip; 35/35 filtered searches same order |
+| Hand-picked quarterly retrieval | 12/12: right release, expected figure in the top 10 (rank 1-6) |
+| 14 live answers, 2 models | correct figures, right abstentions (below) |
+| Browser (driven over CDP) | chip, scope line, Q3 pill, evidence card render |
+
+Live answers: NVDA Q3 FY2025 data center $30.8B; AAPL Q1 FY2025 $124.3B; JPM Q4 2024 $14.0B; TSLA Q2 2024 443,956; NVDA
+Q3 net income $19,309M; AAPL FY2025 by quarter 124.3 / 95.4 / 94.0 / 102.5; V FY2024 by quarter 8.6 / 8.8 / 8.9 / 9.6.
+Abstained correctly: TSLA Q3 2022 revenue (image-only), AAPL guidance (it gives none). Refused: Q2 FY2026. Annual NVDA FY2025
+still answers from XBRL ($130,497M).
+
+Limits, not measured yet (step 4 has no numbers behind these):
+- 12 + 14 hand-picked questions are a smoke test, not a metric. Figures were compared with source tables by eye.
+- NVDA vs MSFT "Q2 FY2025" compares different calendar quarters (July vs December 2024) without saying so, and its
+  derived difference is an unverified claim (2/3 verified). Rule 9 mentions fiscal years, not quarters.
+- A citation names the release, not a place in it; the link opens the whole exhibit.
+- Figures rank up to 6th for "total revenue" (statement tables score below narrative), inside k=10 but a risk for smaller budgets.
+- Multi-year quarterly questions (16+ sub-queries) exceed the 12-source cap, so some quarters drop. Not tested live.
+- Latency: single-quarter retrieval 1.3-1.7 s, four quarters 3.1-4.7 s, same as a yearly trend.
 
 ## Earnings release chunks v0 (Phase 10 step 2, MacBook M4, 2026-11-02)
 
@@ -1129,3 +1177,7 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   the token limit. Fixed the SGML wrapper (each release parsed as one block) and Tesla's flat slide text
   (period header repeated on every piece). 10-K chunks unchanged (17,602 equal). Found that 5 Tesla releases
   have statements only as images, correcting step 1's claim. 227 tests with real Postgres. Not committed.
+- **2026-11-02 (MacBook M4):** Phase 10 step 3: releases merged (23,173 chunks), quarter/form filters, one BM25 per form,
+  analyzer rules, no XBRL on quarterly questions, release prompt rules and citation repair, API + UI filters. 10-K path
+  unchanged: retrieval 740/740, answers 84/84. A live run caught a wrong guidance figure the verifier passed, fixed. 265 tests + 2 skipped
+  without Postgres; those 2 passed on a scratch db before the last API-only edit. pgvector parity on a scratch db; main db not reloaded. Not committed.
