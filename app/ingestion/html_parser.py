@@ -34,6 +34,7 @@ BOILERPLATE_MIN_PAGE_SHARE = 0.25
 _KEEP_REPEATED = re.compile(r"million|billion|thousand|%|except", re.I)
 
 _WS = re.compile(r"\s+")
+_SGML_TEXT = re.compile(rb"<TEXT>\s*(.*?)\s*(?:</TEXT>|\Z)", re.S | re.I)
 _FONT_WEIGHT = re.compile(r"font-weight:(\w+)")
 _LABEL = r"((?:[A-Z]-)?\d{1,3})"
 _PAGE_LABEL_PATTERNS = [
@@ -265,8 +266,15 @@ def _detect_page_labels(blocks: list[Block]) -> tuple[dict[int, str], set[int]]:
     return labels, footer_ids
 
 
+def strip_sgml_wrapper(content: bytes) -> bytes:
+    """EDGAR serves some exhibits inside <DOCUMENT>...<TEXT>; lxml would nest the whole page in that inline tag."""
+    if content.lstrip()[:10].upper() == b"<DOCUMENT>" and (match := _SGML_TEXT.search(content)):
+        return match.group(1)
+    return content
+
+
 def parse_filing(content: bytes) -> ParsedFiling:
-    root = lxml_html.fromstring(content)
+    root = lxml_html.fromstring(strip_sgml_wrapper(content))
     body = root.find("body")
     walker = _Walker()
     walker.walk(body if body is not None else root)

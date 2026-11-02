@@ -79,17 +79,24 @@ class _FilingChunker:
         self.chunks: list[Chunk] = []
 
     def context_header(self, block: Block) -> str:
-        header = (
-            f"{self.meta.company} ({self.meta.ticker}) Form {self.meta.form}, "
-            f"fiscal year {self.meta.fiscal_year} | {block.section}: {block.section_title}"
-        )
+        if self.meta.fiscal_quarter:
+            header = (
+                f"{self.meta.company} ({self.meta.ticker}) earnings release, Q{self.meta.fiscal_quarter} "
+                f"fiscal year {self.meta.fiscal_year}, quarter ended {self.meta.period_end}"
+            )
+        else:
+            header = (
+                f"{self.meta.company} ({self.meta.ticker}) Form {self.meta.form}, "
+                f"fiscal year {self.meta.fiscal_year} | {block.section}: {block.section_title}"
+            )
         if block.subsection:
             header += f" | {block.subsection[: self.cfg.max_subsection_chars]}"
         return header
 
     def emit(self, kind: str, text: str, pages: list[int], anchor: Block) -> None:
         context = self.context_header(anchor)
-        start, end = min(pages), max(pages)
+        # Releases have no printed pages; 0 (as for XBRL facts) can't match a 10-K page in the evals.
+        start, end = (0, 0) if self.meta.fiscal_quarter else (min(pages), max(pages))
         self.chunks.append(
             Chunk(
                 chunk_id=f"{self.meta.doc_id}-{len(self.chunks):04d}",
@@ -113,6 +120,7 @@ class _FilingChunker:
                 text=text,
                 token_count=self.count(f"{context}\n\n{text}"),
                 source_url=self.meta.source_url,
+                fiscal_quarter=self.meta.fiscal_quarter,
             )
         )
 

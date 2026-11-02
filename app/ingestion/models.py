@@ -51,9 +51,12 @@ class FilingMeta:
     filing_date: str
     period_end: str
     source_url: str
+    fiscal_quarter: int | None = None  # 1-4 for an earnings release, None for a 10-K
 
     @property
     def doc_id(self) -> str:
+        if self.fiscal_quarter:
+            return f"{self.ticker}-FY{self.fiscal_year}-Q{self.fiscal_quarter}-EX-99.1"
         return f"{self.ticker}-FY{self.fiscal_year}-{self.form}"
 
     @classmethod
@@ -66,6 +69,7 @@ class FilingMeta:
             filing_date=row["filing_date"],
             period_end=row["report_date"],
             source_url=row["source_url"],
+            fiscal_quarter=row.get("fiscal_quarter"),
         )
 
 
@@ -92,6 +96,7 @@ class Chunk:
     text: str
     token_count: int  # tokens of context + text, in the embedding model's tokenizer
     source_url: str
+    fiscal_quarter: int | None = None  # 1-4 for an earnings release, None for a 10-K
     metadata: dict = field(default_factory=dict)
 
     @property

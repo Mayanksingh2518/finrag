@@ -61,7 +61,7 @@ def test_pgvector_index_orders_by_inner_product_and_filters_in_sql():
 def test_round_trip_and_same_neighbours_as_faiss():
     from app.retrieval.pg_store import connect, corpus_meta, load, load_chunks
 
-    chunks = [replace(c, metadata={"note": "ünïcode"}) if i == 0 else c for i, c in enumerate(CHUNKS)]
+    chunks = [replace(c, metadata={"note": "ünïcode"}, fiscal_quarter=3) if i == 0 else c for i, c in enumerate(CHUNKS)]
     vectors = FakeEmbedder().embed_documents([c.embed_text for c in chunks])
     with connect(os.environ["PG_TEST_DSN"]) as conn:
         load(conn, chunks, vectors, "fake")
@@ -74,3 +74,17 @@ def test_round_trip_and_same_neighbours_as_faiss():
             got = pg_index.search(query, 5, mask, filters)
             assert [r for r, _ in got] == [r for r, _ in expected]
             assert np.allclose([s for _, s in got], [s for _, s in expected], atol=1e-6)
+
+
+@pytest.mark.skipif(not os.environ.get("PG_TEST_DSN"), reason="needs a scratch Postgres with pgvector (PG_TEST_DSN)")
+def test_table_from_before_the_quarter_column_asks_for_a_reload_and_upgrades():
+    from app.retrieval.pg_store import connect, load, load_chunks
+
+    vectors = FakeEmbedder().embed_documents([c.embed_text for c in CHUNKS])
+    with connect(os.environ["PG_TEST_DSN"]) as conn:
+        load(conn, CHUNKS, vectors, "fake")
+        conn.execute("ALTER TABLE chunks DROP COLUMN fiscal_quarter")
+        with pytest.raises(RuntimeError, match="reload"):
+            load_chunks(conn)
+        load(conn, CHUNKS, vectors, "fake")
+        assert load_chunks(conn) == CHUNKS

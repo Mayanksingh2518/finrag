@@ -40,6 +40,8 @@ CORE_ITEMS = ("1", "1A", "7", "7A", "8")
 
 COVER_SECTION = "Cover"
 COVER_TITLE = "Cover Page and Table of Contents"
+RELEASE_SECTION = "Earnings release"
+_RELEASE_NON_HEADING = re.compile(r"^(exhibit\s+99|for immediate release)", re.I)
 
 _ITEM_RE = re.compile(r"^(?:part\s+(?:iv|i{1,3})\W*)?items?\s+(\d{1,2}[a-c]?)\b", re.I)
 _PART_RE = re.compile(r"^part\s+(iv|i{1,3})\b", re.I)
@@ -173,6 +175,16 @@ def assign_sections(blocks: list[Block]) -> None:
         block.part = part
         block.section = f"Item {item}" if item else COVER_SECTION
         block.section_title = ITEM_TITLES[item] if item else COVER_TITLE
+        block.subsection = subsection
+
+
+def assign_release_sections(blocks: list[Block]) -> None:
+    """An earnings release has no Items: one section, with the nearest heading as subsection."""
+    subsection: str | None = None
+    for block in blocks:
+        if block.kind == "heading" and not block.furniture and not _RELEASE_NON_HEADING.match(block.text):
+            subsection = block.text
+        block.section = block.section_title = RELEASE_SECTION
         block.subsection = subsection
 
 

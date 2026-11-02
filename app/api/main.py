@@ -68,7 +68,7 @@ def _to_hit(rank: int, hit: ScoredChunk) -> Hit:
     c = hit.chunk
     return Hit(
         rank=rank, chunk_id=c.chunk_id, ticker=c.ticker, company=c.company, fiscal_year=c.fiscal_year,
-        section=c.section, section_title=c.section_title, subsection=c.subsection,
+        fiscal_quarter=c.fiscal_quarter, section=c.section, section_title=c.section_title, subsection=c.subsection,
         page_start=c.page_start, page_end=c.page_end, page_label=_page_label(c.page_label_start, c.page_label_end),
         chunk_type=c.chunk_type, text=c.text, source_url=c.source_url, score=hit.score,
         stages={k: float(v) for k, v in hit.stages.items()},

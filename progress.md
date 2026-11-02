@@ -11,11 +11,12 @@ Single source of truth for project state. Update this file at the end of every w
   FAISS, 740/740); `docker compose up --build` (API + UI + Postgres); GitHub Actions CI green
   (run 41048182690: 209 tests incl. real Postgres, frontend lint + build, eval gate 10/10). CI badge in
   the README.
-- **In progress:** Phase 10 (earnings releases): step 1 done 2026-10-30, 160 releases (10 companies ×
-  16 quarters, FY2022-2025) downloaded from 8-K Exhibit 99.1 and mapped to fiscal quarters.
-- **Next up:** Phase 10 step 2: parse + chunk the releases. See "Next task in detail".
-- **Resume here (2026-10-30):** Phase 10 step 1 committed and pushed (a5396cb). The app was demoed and
-  stopped; nothing running. Next "go" starts Phase 10 step 2 (parse + chunk the releases).
+- **In progress:** Phase 10 (earnings releases): step 1 (downloader) done 2026-10-30; step 2 (parse +
+  chunk) done 2026-11-02: 5,571 chunks from 160 releases in `chunks_earnings.jsonl`, not in the index yet.
+- **Next up:** Phase 10 step 3: merge releases into the index, quarter detection, filters. See "Next task in detail".
+- **Resume here (2026-11-02):** step 2 is uncommitted in the working tree. Nothing running (the compose `db`
+  was started for the Postgres tests and stopped). The main Postgres volume still has the old schema: with
+  `VECTOR_BACKEND=pgvector`, run `python -m app.retrieval.pg_store` once (the API says so if you don't).
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
   0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
@@ -25,7 +26,7 @@ Single source of truth for project state. Update this file at the end of every w
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-10-30 (Phase 10 step 1: earnings release downloader)
+- **Last updated:** 2026-11-02 (Phase 10 step 2: earnings release parsing and chunking)
 
 ## Phase checklist
 
@@ -48,25 +49,68 @@ with the same citations, verification and abstention. Zero cost: SEC EDGAR only 
 filed as 8-K Exhibit 99.1, Item 2.02; stable URLs, same User-Agent rule as Phase 1).
 
 1. ~~Downloader~~ **done 2026-10-30** (see "Earnings releases v0" below).
-2. **Parse + chunk (next "go").** Read `app/ingestion/pipeline.py`, `html_parser.py`, `tables.py`,
-   `chunker.py`, `models.py` first. Input: `data/raw/sec/manifest_earnings.json` (160 rows; `report_date`
-   = period end, `fiscal_quarter` 1-4, `form` "8-K EX-99.1"). Reuse the HTML parser and table
-   handling (releases are mostly tables: income statement, segments, non-GAAP reconciliations; sizes
-   22 KB-1.6 MB, JPM's narrative + Tesla's letter are the large ones). No 10-K items, so sections come
-   from headings (or one section "Earnings release"); no printed pages, so the page fields stay empty and
-   citations become `[NVDA Q3 FY2025 release]`. `Chunk` gains `fiscal_quarter: int | None` (and the form
-   value distinguishes doc types); check every consumer of `Chunk` (store, BM25 text, embedding cache
-   keys, pgvector `COLUMNS` + a test keeps them in sync, API `Hit`, citations in `context.py`, UI
-   chips) and keep 10-K chunks byte-identical so cached embeddings and LLM prompts stay valid. Write
-   releases to a separate `chunks_earnings.jsonl` first; merging into the index is step 3. Quality
-   report like Phase 2's (chunks per release, tables, token limit, empty sections). Tests with a small
-   fixture release.
-3. **Retrieval + analyzer**: quarter detection ("Q3", "third quarter", "three months ended"), filters
-   on doc type and quarter, plan intent for quarterly trends; the 10-K stays the default for annual
-   questions.
+2. ~~Parse + chunk~~ **done 2026-11-02** (see "Earnings release chunks v0" below).
+3. **Retrieval + analyzer (next "go").** Read `app/retrieval/store.py`, `types.py`, `factory.py`,
+   `build_index.py`, `app/agent/analyze.py`, `plan.py` first. Build the index over `chunks.jsonl` +
+   `chunks_earnings.jsonl` (embeddings cached by chunk id + text hash: only the 5,571 new chunks embed, the
+   17,602 10-K vectors stay valid), including the pgvector load. `SearchFilters` gains quarter and doc type
+   (`ChunkStore.mask` and `filter_sql` together; add a `fiscal_quarter` index to `FILTER_COLUMNS`). Analyzer:
+   quarter detection ("Q3", "third quarter", "three months ended"), and a plan intent for quarterly trends
+   (one sub-query per quarter). **The 10-K stays the default for annual questions: unfiltered and annual
+   questions must not start returning release chunks**, and the retrieval eval must stay at 0.891 / 0.933 on
+   the existing 84 questions (rerun it; `build_meta` and the UI filter lists also see the new section).
+   Check a release citation chip in the browser: so far only lint/build cover that UI code.
 4. **Golden set extension** (~20 quarterly questions with quote-verified evidence, incl. unanswerable
    ones such as guidance for a quarter not yet reported), then retrieval + agent + judge evals and a
-   gate update. Investor presentations (PDF) come after, if at all: most are not on EDGAR.
+   gate update. Evidence has no page numbers, so `metrics.py` matching needs a chunk or quarter form. Avoid
+   figures from Tesla FY2022 Q1-FY2023 Q1 tables and JPM annual revenue except as unanswerable cases (see
+   below). Investor presentations (PDF) come after, if at all: most are not on EDGAR.
+
+## Earnings release chunks v0 (Phase 10 step 2, MacBook M4, 2026-11-02)
+
+`app/ingestion/earnings_pipeline.py` (`python -m app.ingestion.earnings_pipeline`, ~7 s):
+`data/processed/chunks_earnings.jsonl` + `earnings_quality_report.{json,md}`.
+
+| 160 releases | Value |
+|---|---|
+| Chunks | 5,571 (2,722 text / 2,849 table), 33 per release (11-71) |
+| Over the 512-token limit | 0 (max 459) |
+| Chunks with no heading above them | 196 |
+| Releases with statements only as images | 5 (Tesla, below) |
+
+- **SGML wrapper:** every exhibit is stored as `<DOCUMENT><TYPE>...<TEXT><html>`. lxml nested the whole page
+  in the inline `<document>` tag, so each release parsed as **one text block with no tables**.
+  `strip_sgml_wrapper` runs in `parse_filing` only for content starting with `<DOCUMENT>`.
+- **Model:** `Chunk.fiscal_quarter` and `FilingMeta.fiscal_quarter` (None for a 10-K); doc id
+  `NVDA-FY2025-Q3-EX-99.1`; one section "Earnings release", nearest heading as subsection; pages 0 and no
+  labels, like XBRL facts, so a release chunk can't match a 10-K gold page in the evals. Citation
+  `[NVDA Q3 FY2025 release]` in `Source`, the API `Hit` and the UI (chip, card pill). pgvector gains the
+  column; `schema_sql` adds it to older tables on load, and `load_chunks` on an old table asks for a reload.
+- **Tesla is a slide deck:** one image per slide over a hidden white 1pt text layer, so no tables and one
+  flat block per slide. `normalize_slides` restores letter-spaced titles ("F I N A N C I A L ..."; prose
+  "Outlook" stays), splits statements into rows and packs them into table blocks that **each repeat the
+  period header** (`Q2-2023`, `3Q-2020`, `30-Jun-23`, `2021 2022 2023` in Q4 annual tables). Two of these
+  formats were missed at first; a search for figure-heavy text chunks caught them. Rows are positional:
+  columns are read by order, not by cell. 7 figure-heavy Tesla text chunks remain; the ones inspected are
+  capacity tables and chart text. A slide with no known title inherits the previous slide's subsection.
+- **Correction to step 1:** "all 160 exhibits contain an income statement" was a check on words, not figures.
+  **Tesla FY2022 Q1-Q4 and FY2023 Q1 have their tables only in the images** (0-4 comma-grouped numbers in
+  the text layer vs 569+ from FY2023 Q2): prose survives, the statements don't. Flagged as `figures_missing`.
+  Free fix if wanted: local OCR of `exhibit0NN.jpg`. Not done.
+- **Verified on real data:**
+  - 10-K path: all 40 filings re-chunked in memory: 17,602 chunks equal `chunks.jsonl` field by field, so
+    cached embeddings and LLM prompts stay valid. `chunks.jsonl` itself wasn't rewritten.
+  - Figures kept: of 36,151 comma-grouped figures in the raw exhibits, 15 aren't in the chunks, all JPM and
+    all a footnote digit glued to the next number by the raw-text comparison ("Auto1" + "15,627"; the digits
+    after the glue are in the chunks). No real loss.
+  - XBRL vs Q4 release, revenue + net income, 10 companies x 4 years: 75/80 in the chunks. The 5 misses are
+    absent from the raw exhibit too: Tesla FY2022 (2, images) and JPM revenue FY2022/2023/2025 (3: the
+    narrative release doesn't state annual revenue in that form; JPM's statements are in Exhibit 99.2, which
+    isn't downloaded).
+  - Not verified: quarterly figures against an independent source (XBRL here is annual), retrieval or answers
+    over these chunks (step 3), and the citation chip in a browser (lint/build only).
+- Tests: 12 new (`tests/test_earnings_pipeline.py`) + an old-schema upgrade test. 227 passing with
+  `PG_TEST_DSN` set; without it 225 + 2 skipped. UI lint and build pass.
 
 ## Earnings releases v0 (Phase 10 step 1, MacBook M4, 2026-10-30)
 
@@ -90,7 +134,7 @@ the 10-K `manifest.json`, which the pipeline reads; `EarningsReleaseRef` = `Fili
   choice (16 Tesla, NVIDIA Q2 FY2023, Alphabet Q1 FY2023); all now pick the real release. The first
   version (earliest filing) picked Tesla's deliveries reports, caught by their filing dates (~3 days
   after quarter end vs Tesla's ~20th-of-month earnings).
-- **Verified:** all 160 exhibits contain an income statement; spot checks against the text: NVIDIA Q4
+- **Verified:** all 160 exhibits contain income statement wording (figures: see the correction in "Earnings release chunks v0"); spot checks against the text: NVIDIA Q4
   FY2025 revenue $39.3 billion, Apple Q1 FY2025 revenue $124.3 billion, JPMorgan Q4 2024 net income
   $14.0 billion. Exhibit lookup reads the filing's `-index.htm` table (EX-99.1 row's document).
 - Tests (5): fiscal mapping on NVIDIA's and Apple's calendars, candidate ranking/lag/year filters, content
@@ -1081,3 +1125,7 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
 - **2026-10-30 (MacBook M4):** demo run for the user: native API on :8010 (health 17,602 chunks; streamed
   NVIDIA FY2022-25 revenue trend answered by gpt-oss-120b, 4 XBRL facts, 5/5 verified; UI screenshot ok),
   then stopped. Earnings releases are downloaded but not yet searchable (Phase 10 step 2-3).
+- **2026-11-02 (MacBook M4):** Phase 10 step 2: `earnings_pipeline.py`, 5,571 chunks from 160 releases, 0 over
+  the token limit. Fixed the SGML wrapper (each release parsed as one block) and Tesla's flat slide text
+  (period header repeated on every piece). 10-K chunks unchanged (17,602 equal). Found that 5 Tesla releases
+  have statements only as images, correcting step 1's claim. 227 tests with real Postgres. Not committed.

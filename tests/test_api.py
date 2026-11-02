@@ -35,6 +35,7 @@ def test_search_returns_cited_hits_and_respects_filters(client):
     assert body["hits"] and {h["ticker"] for h in body["hits"]} <= {"MSFT", "AMZN"}
     hit = body["hits"][0]
     assert hit["rank"] == 1 and hit["page_label"] == "1" and "rrf" in hit["stages"]
+    assert hit["fiscal_quarter"] is None
     assert body["timings_ms"]["total"] >= 0 and body["decomposed"] is False
 
 

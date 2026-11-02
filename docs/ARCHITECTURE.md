@@ -175,6 +175,10 @@ HNSW in pgvector, tuned against the exact index with filtered recall checked."
 `chunk_id, ticker, company, fiscal_year, form, filing_date, section (e.g. "Item 7"),
 section_title, page_start, page_end, chunk_type (text|table), source_url, text`
 
+Earnings release chunks (8-K Exhibit 99.1) also carry `fiscal_quarter` (None on 10-K chunks). They have one
+section ("Earnings release", nearest heading as subsection) and page 0 with no labels, because releases have
+no printed pages; they are cited as `[NVDA Q3 FY2025 release]`.
+
 ## Evaluation
 
 - Golden set (~80 questions) across categories: single lookup, multi-year trend,

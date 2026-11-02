@@ -59,6 +59,7 @@ python -m app.ingestion.pipeline                                     # chunks, ~
 python -m app.retrieval.build_index                                  # embeddings (cached)
 python -m app.agent.xbrl --download                                  # XBRL company facts, ~45 MB
 python -m app.ingestion.earnings_downloader --years 2022 2023 2024 2025  # 160 earnings releases, ~3 min
+python -m app.ingestion.earnings_pipeline                            # release chunks, ~10 s
 python -m pytest
 ```
 

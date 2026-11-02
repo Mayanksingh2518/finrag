@@ -10,8 +10,9 @@ const CONFIDENCE_LABEL: Record<Confidence, string> = {
   none: 'No answer',
 }
 
-// Page citations [AAPL FY2025 p.23] and XBRL fact citations [XBRL NVDA Total revenue FY2022-FY2025].
-const CITATION = /\[(?:([A-Z]{1,5}) FY(\d{4}) p\.([^\]]+)|XBRL ([A-Z]{1,5}) ([^\]]+))\]/g
+// Page citations [AAPL FY2025 p.23], XBRL fact citations [XBRL NVDA Total revenue FY2022-FY2025]
+// and earnings release citations [NVDA Q3 FY2025 release].
+const CITATION = /\[(?:([A-Z]{1,5}) FY(\d{4}) p\.([^\]]+)|XBRL ([A-Z]{1,5}) ([^\]]+)|([A-Z]{1,5}) (Q[1-4] FY\d{4}) release)\]/g
 
 const INTENT_LABEL: Record<string, string> = {
   lookup: 'Lookup',
@@ -27,12 +28,12 @@ function withCitationChips(text: string, urls: Map<string, string>): ReactNode[]
   for (const m of text.matchAll(CITATION)) {
     if (m.index > last) out.push(text.slice(last, m.index))
     const href = urls.get(m[0])
-    const ticker = m[1] ?? m[4]
+    const ticker = m[1] ?? m[4] ?? m[6]
     const chip = (
       <span className={m[4] ? 'cite cite--xbrl' : 'cite'} style={{ borderColor: tickerColor(ticker) }}
         title={m[4] ? 'Reported figure from the SEC XBRL company facts of this 10-K' : undefined}>
         <span className="ticker-dot" style={{ background: tickerColor(ticker) }} />
-        {m[4] ? `${ticker} ${m[5]} · XBRL` : `${ticker} FY${m[2]} p.${m[3]}`}
+        {m[4] ? `${ticker} ${m[5]} · XBRL` : m[6] ? `${ticker} ${m[7]} release` : `${ticker} FY${m[2]} p.${m[3]}`}
       </span>
     )
     out.push(

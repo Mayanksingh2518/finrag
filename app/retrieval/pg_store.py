@@ -38,7 +38,7 @@ COLUMNS: dict[str, str] = {
     "subsection": "text", "page_start": "integer NOT NULL", "page_end": "integer NOT NULL",
     "page_label_start": "text", "page_label_end": "text", "chunk_type": "text NOT NULL", "context": "text NOT NULL",
     "text": "text NOT NULL", "token_count": "integer NOT NULL", "source_url": "text NOT NULL",
-    "metadata": "jsonb NOT NULL",
+    "fiscal_quarter": "integer", "metadata": "jsonb NOT NULL",
 }
 FILTER_COLUMNS = ("ticker", "fiscal_year", "section", "chunk_type")
 
@@ -48,6 +48,7 @@ def schema_sql(dims: int) -> list[str]:
     return [
         "CREATE EXTENSION IF NOT EXISTS vector",
         f"CREATE TABLE IF NOT EXISTS chunks (\n  row integer NOT NULL UNIQUE,\n  {cols},\n  embedding vector({dims}) NOT NULL\n)",
+        "ALTER TABLE chunks ADD COLUMN IF NOT EXISTS fiscal_quarter integer",  # tables loaded before Phase 10
         *(f"CREATE INDEX IF NOT EXISTS chunks_{c}_idx ON chunks ({c})" for c in FILTER_COLUMNS),
         "CREATE TABLE IF NOT EXISTS corpus_meta (key text PRIMARY KEY, value text NOT NULL)",
     ]
@@ -112,7 +113,10 @@ def corpus_meta(conn: psycopg.Connection) -> dict[str, str]:
 
 def load_chunks(conn: psycopg.Connection) -> list[Chunk]:
     """All chunks in row order (rows must be 0..n-1: they are the ids BM25 and the retriever share)."""
-    rows = conn.execute(f"SELECT row, {', '.join(COLUMNS)} FROM chunks ORDER BY row").fetchall()
+    try:
+        rows = conn.execute(f"SELECT row, {', '.join(COLUMNS)} FROM chunks ORDER BY row").fetchall()
+    except psycopg.errors.UndefinedColumn as e:
+        raise RuntimeError("chunks table has an older schema: reload with `python -m app.retrieval.pg_store`") from e
     if [r[0] for r in rows] != list(range(len(rows))):
         raise RuntimeError("chunks.row is not 0..n-1: reload with `python -m app.retrieval.pg_store`")
     return [Chunk(**dict(zip(COLUMNS, r[1:]))) for r in rows]

@@ -39,14 +39,20 @@ class Source:
             if self.chunk.metadata.get("series"):  # title carries the years: "Total revenue FY2022-FY2025"
                 return f"[XBRL {self.chunk.ticker} {title}]"
             return f"[XBRL {self.chunk.ticker} FY{self.chunk.fiscal_year} {title}]"
+        if self.chunk.fiscal_quarter:
+            return f"[{self.chunk.ticker} Q{self.chunk.fiscal_quarter} FY{self.chunk.fiscal_year} release]"
         return f"[{self.chunk.ticker} FY{self.chunk.fiscal_year} p.{self.page}]"
 
     def render(self) -> str:
         c = self.chunk
         if self.is_xbrl:
             return f"[{self.id}] {c.context}\n{c.text}"
-        header = (f"[{self.id}] {c.company} ({c.ticker}) Form 10-K, fiscal year {c.fiscal_year}, "
-                  f"{c.section}: {c.section_title}, page {self.page}")
+        if c.fiscal_quarter:
+            header = (f"[{self.id}] {c.company} ({c.ticker}) earnings release, Q{c.fiscal_quarter} fiscal year "
+                      f"{c.fiscal_year}, quarter ended {c.period_end}")
+        else:
+            header = (f"[{self.id}] {c.company} ({c.ticker}) Form 10-K, fiscal year {c.fiscal_year}, "
+                      f"{c.section}: {c.section_title}, page {self.page}")
         if c.subsection:
             header += f" | {c.subsection}"
         return f"{header}\n{c.text}"

@@ -25,6 +25,7 @@ class Hit(BaseModel):
     ticker: str
     company: str
     fiscal_year: int
+    fiscal_quarter: int | None = None  # set on earnings release chunks, which have no pages
     section: str
     section_title: str
     subsection: str | None

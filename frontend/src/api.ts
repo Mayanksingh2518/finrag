@@ -42,6 +42,7 @@ export interface Hit {
   ticker: string
   company: string
   fiscal_year: number
+  fiscal_quarter?: number | null
   section: string
   section_title: string
   subsection: string | null
@@ -89,8 +90,9 @@ export const api = {
     request<SearchResponse>('/search', { method: 'POST', body: JSON.stringify(body), signal }),
 }
 
-/** Citation in the format answers will use: [AAPL FY2025 p.23] */
-export function citation(hit: Pick<Hit, 'ticker' | 'fiscal_year' | 'page_label' | 'page_start'>): string {
+/** Citation in the format answers will use: [AAPL FY2025 p.23] or [NVDA Q3 FY2025 release] */
+export function citation(hit: Pick<Hit, 'ticker' | 'fiscal_year' | 'fiscal_quarter' | 'page_label' | 'page_start'>): string {
+  if (hit.fiscal_quarter) return `[${hit.ticker} Q${hit.fiscal_quarter} FY${hit.fiscal_year} release]`
   return `[${hit.ticker} FY${hit.fiscal_year} p.${hit.page_label ?? `#${hit.page_start}`}]`
 }
 

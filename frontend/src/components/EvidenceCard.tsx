@@ -72,7 +72,7 @@ export function EvidenceCard({ hit, query, mode, maxRerank, onCopy, index }: Evi
           </div>
           <div className="card__meta">
             <span className="pill mono">FY{hit.fiscal_year}</span>
-            <span className="pill mono">p.{page}</span>
+            <span className="pill mono">{hit.fiscal_quarter ? `Q${hit.fiscal_quarter}` : `p.${page}`}</span>
             <span className="pill">
               {hit.section}
               {sectionName ? ` · ${sectionName}` : ''}
