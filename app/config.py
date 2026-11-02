@@ -45,6 +45,7 @@ class Settings(BaseSettings):
     context_token_budget: int = 3500
     # API answers: trend/comparison questions by Groq (falls back to the local model); see Phase 7 routing.
     answer_route: bool = True
+    answer_route_releases: bool = False  # also send earnings release questions to the larger model; see progress.md
 
     # Tracing (Phase 7): Langfuse Cloud Hobby tier (free). Without keys, traces stay local.
     langfuse_public_key: str | None = None

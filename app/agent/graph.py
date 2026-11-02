@@ -146,13 +146,16 @@ class FinRAGAgent:
     def __init__(self, retriever, llm: LLM, xbrl: XbrlStore | None = None, token_budget: int = 3500, k: int = 10,
                  mode: SearchMode = "hybrid_rerank", memory: ConversationMemory | None = None,
                  rewrite_follow_ups: bool = True, routed_llm: LLM | None = None,
-                 routed_intents: tuple[str, ...] = ROUTED_INTENTS, trace_sinks: Sequence[TraceSink] = ()):
+                 routed_intents: tuple[str, ...] = ROUTED_INTENTS, trace_sinks: Sequence[TraceSink] = (),
+                 route_releases: bool = False):
         self.retriever = retriever
         self.answerer = Answerer(retriever, llm, token_budget=token_budget, k=k, mode=mode)
         # Model routing: questions whose plan intent is in `routed_intents` are answered by `routed_llm`
         # (a larger free-tier model; its LLM falls back to the local one on rate limits).
         self.routed_answerer = Answerer(retriever, routed_llm, token_budget=token_budget, k=k, mode=mode) if routed_llm else None
         self.routed_intents = routed_intents
+        # Earnings releases are dense multi-period tables: the 3B model picks wrong columns on them (see progress.md).
+        self.route_releases = route_releases
         self.analyzer = QueryAnalyzer(llm if rewrite_follow_ups else None)
         self.xbrl = xbrl
         self.token_budget = token_budget
@@ -210,8 +213,7 @@ class FinRAGAgent:
         timings: dict[str, float] = {}
         if not sources:
             return {"sources": [], "result": no_sources(state["analysis"].question, timings), "steps": ["generate"]}
-        routed = self.routed_answerer is not None and intent in self.routed_intents
-        answerer = self.routed_answerer if routed else self.answerer
+        answerer = self._answerer_for(intent, state["analysis"].filters)
         generated, response = answerer.generate(state["analysis"].standalone_query, sources, timings, intent)
         return {"sources": sources, "generated": generated, "response": response, "result": None,
                 "steps": ["generate"], "timings_ms": timings}
@@ -268,9 +270,15 @@ class FinRAGAgent:
 
     # --- public API ----------------------------------------------------------------------------
 
-    def answer_model(self, intent: str | None) -> str | None:
+    def _answerer_for(self, intent: str | None, filters: SearchFilters | None) -> Answerer:
+        if self.routed_answerer is None:
+            return self.answerer
+        release = self.route_releases and filters is not None and FORM_RELEASE in filters.effective_forms()
+        return self.routed_answerer if intent in self.routed_intents or release else self.answerer
+
+    def answer_model(self, intent: str | None, filters: SearchFilters | None = None) -> str | None:
         """The model that will answer a question of this plan intent (first provider; it may fall back)."""
-        answerer = self.routed_answerer if self.routed_answerer is not None and intent in self.routed_intents else self.answerer
+        answerer = self._answerer_for(intent, filters)
         providers = getattr(answerer.llm, "providers", None)
         return providers[0].model if providers else None
 
@@ -326,7 +334,7 @@ def _last_turn(events: Iterator[AgentEvent | AgentTurn]) -> AgentTurn:
 
 
 def build_agent(rewrite_follow_ups: bool = True, route: bool = False,
-                routed_providers: str = "groq,ollama") -> FinRAGAgent:
+                routed_providers: str = "groq,ollama", route_releases: bool = False) -> FinRAGAgent:
     from app.config import get_settings
     from app.generation.llm import build_llm
     from app.retrieval.factory import build_retriever
@@ -335,7 +343,7 @@ def build_agent(rewrite_follow_ups: bool = True, route: bool = False,
     routed = build_llm(settings.model_copy(update={"llm_providers": routed_providers})) if route else None
     return FinRAGAgent(build_retriever(), build_llm(settings), xbrl=XbrlStore.from_settings(),
                        token_budget=settings.context_token_budget, rewrite_follow_ups=rewrite_follow_ups,
-                       routed_llm=routed, trace_sinks=build_sinks(settings))
+                       routed_llm=routed, trace_sinks=build_sinks(settings), route_releases=route_releases)
 
 
 def main() -> None:

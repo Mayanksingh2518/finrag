@@ -13,7 +13,7 @@ abstention, structured XBRL financial facts, offline evaluation, tracing, API, U
 
 **Added in Phase 10:** quarterly earnings releases (8-K Ex-99.1), searched when a question names a quarter.
 
-**Later:** investor presentations (PDF), Pinecone.
+**Later:** Pinecone. Investor presentations (PDF) were left out: most aren't on EDGAR.
 
 ## Pipeline
 
@@ -81,6 +81,7 @@ rewrite call.
 | Storage behind interfaces | FAISS + local files first, Postgres (metadata/chunks) + pgvector or Pinecone later, with no changes to retrieval logic. |
 | Earnings releases beside the 10-Ks, off by default | Filters search 10-Ks unless a question names a quarter or asks for releases, so annual answers can't pick up a quarter's figure. One BM25 index per document type keeps 10-K scores exactly as they were (IDF is a corpus statistic). XBRL facts are skipped on quarterly questions: they are annual totals. |
 | A quarter's guidance comes from the previous release only | A release states the outlook for the *next* quarter, so searching the asked quarter's own release returned a real but wrong figure that the verifier can't catch. |
+| Verifier reads table columns in releases | Releases show several periods side by side, so a real figure can be the wrong answer, and a figure check passes it. `app/generation/columns.py` reads column labels where it is sure; a column showing the wrong period outweighs a table it can't read. This turns wrong answers into refusals, not right ones: a 3B model misreads these tables, and a larger model got 14 of 14 in a small test (`ANSWER_ROUTE_RELEASES`). |
 | Exact FAISS (`IndexFlatIP`), no ANN index | Benchmarked on our data: exact search over 17.6k vectors takes 0.36 ms (retrieval is 1.5 s, the reranker), with recall 1.0 under metadata filters, where HNSW/IVF drop to 0.87/0.59 at cheap settings. IVF / PQ / ScaNN / DiskANN solve problems this corpus doesn't have; HNSW in pgvector past ~1M vectors. See "Vector index choice". |
 
 ## Vector index choice: why exact search, not IVF, ScaNN or DiskANN

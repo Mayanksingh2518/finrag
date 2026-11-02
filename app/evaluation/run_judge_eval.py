@@ -163,6 +163,7 @@ def main() -> None:
     parser.add_argument("--route", action="store_true",
                         help="answers from the routed agent (trend/comparison by Groq); judge those with a second "
                              "--judge-model too, since a model grading its own answers is biased")
+    parser.add_argument("--route-releases", action="store_true", help="with --route: earnings release questions by Groq too")
     args = parser.parse_args()
     args.out = args.out or PROJECT_ROOT / "reports" / ("judge_v0_smoke" if args.ids else "judge_v0")
     logging.basicConfig(level=logging.WARNING)
@@ -174,7 +175,8 @@ def main() -> None:
     settings = get_settings()
     routed_llm = build_llm(settings.model_copy(update={"llm_providers": "groq,ollama"})) if args.route else None
     agent = FinRAGAgent(build_retriever(settings), build_llm(settings), xbrl=XbrlStore.from_settings(),
-                        token_budget=settings.context_token_budget, routed_llm=routed_llm)
+                        token_budget=settings.context_token_budget, routed_llm=routed_llm,
+                        route_releases=args.route_releases)
     judge_settings = {"llm_providers": args.judge_providers} | ({"groq_model": args.judge_model} if args.judge_model else {})
     judge = Judge(build_llm(settings.model_copy(update=judge_settings)))
     labels = load_labels(args.labels)

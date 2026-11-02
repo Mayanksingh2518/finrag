@@ -11,6 +11,7 @@ from app.agent.graph import merge_filters
 from app.agent.plan import MANY_SUB_QUERIES_CANDIDATES, make_plan
 from app.config import PROJECT_ROOT
 from app.generation.answer import RELEASE_RULE, SYSTEM_PROMPT, build_messages, render_citations
+from app.generation.columns import known_periods, parse_label
 from app.generation.context import Source
 from app.generation.schemas import Claim
 from app.generation.verify import verify_claims
@@ -278,3 +279,150 @@ def test_a_fact_in_a_second_row_still_counts():
 def test_10k_sources_skip_the_release_checks():
     source = Source("S1", make_chunk(0, "AAPL", 2025, "Item 7", IPHONE_TABLE), 1.0)
     assert verified("Apple sold 69,138 million iPhone units in the year.", source, cited=("S1",)).supported  # unchanged behavior
+
+
+# --- the period a figure's column belongs to ---------------------------------------------------------
+
+FLAT_TSLA = ("OPERATIONAL SUMMARY\n\nQ1-2023 Q2-2023 Q3-2023 Q4-2023 Q1-2024 YoY\n"
+             "Total production 440,808 479,700 430,488 494,989 433,371 -2%\n"
+             "Model 3/Y deliveries 412,180 446,915 419,074 461,538 369,783 -10%")
+MD_NVDA = ("Summary\n\n|  |  |  | GAAP |\n| ($ in millions) | Q3 FY25 | Q2 FY25 | Q3 FY24 |\n|---|---|---|---|\n"
+           "| Revenue | $35,082 | $30,040 | $18,120 |")
+JPM = ("| Results |  |  | 4Q21 |\n|---|---|---|---|\n| ($ millions) | 1Q22 | 4Q21 | 1Q21 |\n| Net revenue | $30,717 | $29,257 | $32,266 |")
+YEARS = "|  |  | Quarter Ended September 30, |\n|  | 2023 | 2024 |\n|---|---|---|\n| Google Cloud | 8,411 | 11,353 |"
+MIXED = ("|  | Three Months Ended | Nine Months Ended |\n|  | 2023 | 2024 | 2023 | 2024 |\n|---|---|---|---|---|\n"
+         "| Revenue | $18,120 | $35,082 | $38,819 | $91,166 |")
+
+
+def table_source(text: str, ticker: str, year: int, quarter: int, period_end: str = "") -> Source:
+    c = release_chunk(9, ticker, year, quarter, text)
+    c.chunk_type, c.period_end = "table", period_end or f"{year}-12-31"
+    c.context = f"{ticker} earnings release"
+    return Source("S1", c, 1.0)
+
+
+def test_labels_parse():
+    assert [parse_label(x) for x in ("Q1-2024", "Q3 FY25", "Q1 2022", "1Q22", "3Q-2020", "30-Jun-24")] == [
+        (1, 2024), (3, 2025), (1, 2022), (1, 2022), (3, 2020), (2, 2024)]
+    assert parse_label("Q/Q") is None and parse_label("2024") is None and parse_label("YoY") is None
+
+
+@pytest.mark.parametrize("text, ticker, year, quarter, wrong, right", [
+    (FLAT_TSLA, "TSLA", 2024, 1, "Tesla produced 440,808 vehicles in Q1 2024.", "Tesla produced 433,371 vehicles in Q1 2024."),
+    (MD_NVDA, "NVDA", 2025, 3, "NVIDIA's revenue in Q3 FY2025 was $30,040 million.", "NVIDIA's revenue in Q3 FY2025 was $35,082 million."),
+    (JPM, "JPM", 2022, 1, "JPMorgan's net revenue in Q1 2022 was $29,257 million.", "JPMorgan's net revenue in Q1 2022 was $30,717 million."),
+    (YEARS, "GOOGL", 2024, 3, "Google Cloud revenue in Q3 2024 was $8,411 million.", "Google Cloud revenue in Q3 2024 was $11,353 million."),
+])
+def test_a_figure_must_sit_in_the_column_of_the_period_it_names(text, ticker, year, quarter, wrong, right):
+    source = table_source(text, ticker, year, quarter)
+    assert not verified(wrong, source, cited=("S1",)).supported
+    assert verified(right, source, cited=("S1",)).supported
+
+
+def test_a_rounded_figure_finds_its_column():
+    source = table_source(MD_NVDA, "NVDA", 2025, 3)
+    assert verified("Revenue in Q3 FY2025 was $35.1 billion.", source, cited=("S1",)).supported
+    assert not verified("Revenue in Q3 FY2025 was $30.0 billion.", source, cited=("S1",)).supported
+
+
+def test_a_claim_with_no_period_means_the_release_s_own_quarter():
+    source = table_source(FLAT_TSLA, "TSLA", 2024, 1)
+    assert not verified("Total production was 440,808 vehicles.", source, cited=("S1",)).supported
+    assert verified("Total production was 433,371 vehicles.", source, cited=("S1",)).supported
+
+
+@pytest.mark.parametrize("claim", [
+    "Production was 440,808 vehicles in Q1 2023.",  # the column it names
+    "Production fell to 433,371 from 440,808 a year ago.",  # says it is another period
+    "Production was 433,371 in Q1 2024, up from 440,808 in Q1 2023 compared with the prior year.",
+    "In 2023 production included a quarter of 440,808 vehicles.",  # names a year only
+])
+def test_claims_about_other_periods_stay_supported(claim):
+    assert verified(claim, table_source(FLAT_TSLA, "TSLA", 2024, 1), cited=("S1",)).supported
+
+
+@pytest.mark.parametrize("text, claim", [
+    ("Q1-2023 Q2-2023 Q1-2024\nProduction 1,000 (1) 2,000 3,000", "Production was 1,000 in Q1 2024."),  # a footnote shifts the row
+    ("Q1-2023 Q1-2024\nProduction 1,000 2,000 7", "Production was 1,000 in Q1 2024."),  # a trailing page number
+    ("|  | Q3 FY25 | Q3 FY24 |\n|---|---|---|\n| Revenue | $5 |", "Revenue in Q3 FY2025 was $5."),  # cells don't line up
+])
+def test_tables_it_cannot_read_get_no_verdict(text, claim):
+    assert verified(claim, table_source(text, "NVDA", 2024, 3), cited=("S1",)).supported
+
+
+def test_period_outside_the_table_gets_no_verdict():
+    assert verified("Production was 440,808 vehicles in Q3 2022.", table_source(FLAT_TSLA, "TSLA", 2024, 1), cited=("S1",)).supported
+
+
+def test_another_row_with_the_figure_in_the_right_column_is_enough():
+    text = "Q1-2023 Q1-2024\nProduction 1,000 2,000\nDeliveries 3,000 1,000"
+    assert verified("It was 1,000 in Q1 2024.", table_source(text, "TSLA", 2024, 1), cited=("S1",)).supported
+
+
+def test_fiscal_year_unlike_the_calendar_year_reads_no_year_columns():
+    text = "|  |  | Three Months Ended |\n|  | 2021 | 2020 |\n|---|---|---|\n| Revenue | $5,661 | $3,080 |"
+    nvda = table_source(text, "NVDA", 2022, 1, period_end="2021-05-02")  # Q1 FY2022 ended in calendar 2021
+    assert not known_periods(nvda.chunk)
+    assert verified("Revenue in Q1 FY2022 was $3,080 million.", nvda, cited=("S1",)).supported
+
+
+def test_count_on_a_money_table_row_without_its_own_dollar_sign():
+    table = "| ($ in millions) | Q2 FY25 | Q2 FY24 |\n|---|---|---|\n| iPhone | $46,841 | $45,963 |\n| Mac | 7,949 | 7,451 |\n| Employees | 12,000 | 11,000 |"
+    source = table_source(table, "AAPL", 2025, 2)
+    assert not verified("Apple sold 7,949 million Mac units in Q2 FY2025.", source, cited=("S1",)).supported
+    assert not verified("Apple sold 7,949 million Macs in Q2 FY2025.", source, cited=("S1",)).supported
+    assert verified("Apple had 12,000 employees in Q2 FY2025.", source, cited=("S1",)).supported  # the row says what is counted
+    assert verified("Mac net sales were 7,949 million in Q2 FY2025.", source, cited=("S1",)).supported
+
+
+def test_year_to_date_columns_can_be_read_by_their_year():
+    source = table_source(MIXED, "NVDA", 2024, 3)
+    assert not verified("Revenue in Q3 2024 was $18,120 million.", source, cited=("S1",)).supported  # the 2023 column
+    assert verified("Revenue in Q3 2024 was $35,082 million.", source, cited=("S1",)).supported
+
+
+DATED_TWO_ROWS = ("|  |  | Three Months Ended | Six Months Ended |\n|  | July 28, | July 30, | July 28, | July 30, |\n"
+                  "|  | 2024 | 2023 | 2024 | 2023 |\n|---|---|---|---|---|\n| Non-GAAP net income | $16,952 | $6,740 | $32,189 | $9,453 |")
+DATED_ONE_ROW = "|  |  | Three Months Ended |\n|  | December 28, 2024 | December 30, 2023 |\n|---|---|---|\n| Products | $97,960 | $96,458 |"
+
+
+def test_period_end_dates_use_the_company_s_fiscal_calendar():
+    nvda = table_source(DATED_TWO_ROWS, "NVDA", 2025, 2, period_end="2024-07-28")
+    assert known_periods(nvda.chunk) == {(2, 2025), (2, 2024)}
+    assert not verified("Non-GAAP net income was $9,453 million in Q2 FY2025.", nvda, cited=("S1",)).supported  # year-ago year-to-date
+    assert verified("Non-GAAP net income was $16,952 million in Q2 FY2025.", nvda, cited=("S1",)).supported
+    apple = table_source(DATED_ONE_ROW, "AAPL", 2025, 1, period_end="2024-12-28")
+    assert known_periods(apple.chunk) == {(1, 2025), (1, 2024)}
+    assert not verified("Products net sales were $96,458 million in Q1 FY2025.", apple, cited=("S1",)).supported
+
+
+def test_a_balance_sheet_s_dates_are_not_read_as_quarters():
+    table = "|  | October 27, 2024 | January 28, 2024 |\n|---|---|---|\n| Cash | $9,107 | $7,280 |"
+    assert not known_periods(table_source(table, "NVDA", 2025, 3, period_end="2024-10-27").chunk)
+
+
+def test_a_wrong_column_outweighs_a_table_it_cannot_read():
+    readable = table_source(FLAT_TSLA, "TSLA", 2024, 1)
+    unreadable = release_source("S2", "Totals\nProduction 440,808 in the period", "TSLA")
+    unreadable.chunk.chunk_type = "table"
+    v = verify_claims([Claim(text="Tesla produced 440,808 vehicles in Q1 2024.", source_ids=["S1", "S2"])], [readable, unreadable])[0]
+    assert not v.supported
+
+
+def test_citation_repair_cannot_add_a_wrong_column():
+    readable = table_source(FLAT_TSLA, "TSLA", 2024, 1)
+    prose = release_source("S2", "Tesla had a strong quarter for production.", "TSLA")
+    v = verify_claims([Claim(text="Total production was 440,808 vehicles in Q1 2024.", source_ids=["S2"])], [readable, prose])[0]
+    assert not v.supported
+
+
+def test_a_chart_axis_is_not_a_figure():
+    axis = release_source("S1", "0 1 2 3 4 (200) (150) (100) (50) 50 100 150 200 Energy Storage deployments (GWh)", "TSLA")
+    assert not verified("Tesla deployed 3.0 GWh of Energy Storage in Q3 2023.", axis, cited=("S1",)).supported
+    assert verified("Tesla deployed 3.0 GWh of Energy Storage.", release_source("S1", "Storage deployed was 3.0 GWh, up from 2.4 GWh.", "TSLA"), cited=("S1",)).supported
+
+
+def test_a_product_number_is_not_a_figure_for_the_column_check():
+    text = "Q2-2024 Q3-2024 YoY\nModel 3/Y deliveries 422,405 439,975 5%\nInventory days 3 18 2%"
+    source = table_source(text, "TSLA", 2024, 3)
+    assert verified("Tesla delivered 439,975 Model 3 and Model Y vehicles in Q3 2024.", source, cited=("S1",)).supported

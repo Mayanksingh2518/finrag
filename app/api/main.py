@@ -166,7 +166,7 @@ def _build_agent(retriever, llm: LLM | None, routed_llm: LLM | None, xbrl, produ
             routed_llm = build_llm(settings.model_copy(update={"llm_providers": "groq,ollama"}))
         sinks = build_sinks(settings)
     return FinRAGAgent(retriever, llm or build_llm(), xbrl=xbrl, token_budget=settings.context_token_budget,
-                       routed_llm=routed_llm, trace_sinks=sinks)
+                       routed_llm=routed_llm, trace_sinks=sinks, route_releases=settings.answer_route_releases)
 
 
 def answer_response(query: str, thread_id: str | None, turn: AgentTurn) -> AnswerResponse:
@@ -207,7 +207,7 @@ def step_payload(agent: FinRAGAgent, event: AgentEvent) -> dict:
     elif event.node == "retrieve":
         plan = u.get("plan")
         out |= {"hits": len(u.get("hits") or ()), "intent": plan.intent if plan else None,
-                "answer_model": agent.answer_model(plan.intent if plan else None)}
+                "answer_model": agent.answer_model(plan.intent if plan else None, plan.filters if plan else None)}
     elif event.node == "xbrl":
         out["facts"] = [f.citation for f in u.get("facts") or ()]
     elif event.node == "generate":

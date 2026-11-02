@@ -1,35 +1,35 @@
 {
  "summary": {
   "agent_routed": {
-   "questions": 47,
+   "questions": 60,
    "errors": 0,
    "abstention_recall": 1.0,
-   "abstention_precision": 1.0,
-   "false_abstention_rate": 0.0,
-   "citation_hit": 0.9393939393939394,
-   "evidence_recall": 0.9393939393939394,
-   "claim_support": 0.9797979797979799,
-   "figure_recall": 0.8131313131313131,
+   "abstention_precision": 0.8235294117647058,
+   "false_abstention_rate": 0.06521739130434782,
+   "citation_hit": 0.8478260869565217,
+   "evidence_recall": 0.8478260869565217,
+   "claim_support": 0.9844961240310078,
+   "figure_recall": 0.7681159420289856,
    "confidence": {
-    "high": 23,
-    "medium": 10,
-    "none": 14
+    "high": 30,
+    "medium": 13,
+    "none": 17
    },
    "providers": {
-    "ollama": 37,
+    "ollama": 50,
     "groq": 7,
     "": 3
    },
    "models": {
-    "granite4.1:3b": 37,
+    "granite4.1:3b": 50,
     "openai/gpt-oss-120b": 7
    },
    "llm_p50_ms": NaN,
    "llm_p95_ms": NaN,
-   "retrieval_p50_ms": 1868.9,
-   "total_tokens": 158693,
+   "retrieval_p50_ms": 1296.6,
+   "total_tokens": 204215,
    "filters_ok": 1.0,
-   "citation_hit_xbrl": 0.9393939393939394,
+   "citation_hit_xbrl": 0.8478260869565217,
    "refused_early_unanswerable": 3,
    "refused_early_answerable": 0,
    "rewrites": 2,
@@ -65,11 +65,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2270.5,
-     "generation": 2.7,
+     "retrieval": 1361.8,
+     "generation": 1.5,
      "llm": 0.0,
-     "verify": 0.6,
-     "total": 2277.6
+     "verify": 0.8,
+     "total": 1367.4
     },
     "tokens": {
      "prompt": 3059,
@@ -121,11 +121,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 865.5,
-     "generation": 0.8,
+     "retrieval": 528.5,
+     "generation": 1.2,
      "llm": 0.0,
-     "verify": 0.2,
-     "total": 867.9
+     "verify": 0.3,
+     "total": 531.5
     },
     "tokens": {
      "prompt": 3538,
@@ -177,11 +177,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1739.9,
-     "generation": 1.7,
+     "retrieval": 1035.3,
+     "generation": 1.9,
      "llm": 0.0,
-     "verify": 0.2,
-     "total": 1743.5
+     "verify": 0.3,
+     "total": 1039.1
     },
     "tokens": {
      "prompt": 3475,
@@ -233,11 +233,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2416.3,
-     "generation": 1.7,
+     "retrieval": 1378.3,
+     "generation": 0.8,
      "llm": 0.0,
-     "verify": 0.4,
-     "total": 2421.8
+     "verify": 0.2,
+     "total": 1380.9
     },
     "tokens": {
      "prompt": 3196,
@@ -289,12 +289,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 1884.2,
-     "generation": 1.7,
+     "analyze": 0.0,
+     "retrieval": 1180.8,
+     "generation": 1.8,
      "llm": 0.0,
-     "verify": 0.9,
-     "total": 1889.4
+     "verify": 2.4,
+     "total": 1187.3
     },
     "tokens": {
      "prompt": 2685,
@@ -347,11 +347,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1961.8,
-     "generation": 1.7,
+     "retrieval": 1296.6,
+     "generation": 1.8,
      "llm": 0.0,
-     "verify": 0.9,
-     "total": 1966.2
+     "verify": 1.2,
+     "total": 1301.9
     },
     "tokens": {
      "prompt": 3452,
@@ -402,12 +402,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.0,
-     "retrieval": 1799.2,
-     "generation": 2.2,
+     "analyze": 0.1,
+     "retrieval": 1123.5,
+     "generation": 0.7,
      "llm": 0.0,
-     "verify": 1.0,
-     "total": 1805.4
+     "verify": 0.4,
+     "total": 1126.1
     },
     "tokens": {
      "prompt": 3835,
@@ -458,12 +458,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 1849.4,
-     "generation": 3.2,
+     "analyze": 0.1,
+     "retrieval": 1147.1,
+     "generation": 1.4,
      "llm": 0.0,
-     "verify": 3.8,
-     "total": 1861.4
+     "verify": 1.8,
+     "total": 1151.9
     },
     "tokens": {
      "prompt": 3348,
@@ -515,12 +515,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 1958.3,
-     "generation": 1.2,
+     "analyze": 0.1,
+     "retrieval": 1373.1,
+     "generation": 2.0,
      "llm": 0.0,
-     "verify": 0.3,
-     "total": 1962.3
+     "verify": 0.4,
+     "total": 1377.0
     },
     "tokens": {
      "prompt": 3580,
@@ -571,12 +571,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 1978.2,
-     "generation": 1.5,
+     "analyze": 0.0,
+     "retrieval": 1312.2,
+     "generation": 2.3,
      "llm": 0.0,
-     "verify": 0.2,
-     "total": 1981.6
+     "verify": 0.4,
+     "total": 1317.5
     },
     "tokens": {
      "prompt": 3475,
@@ -627,12 +627,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 1324.0,
-     "generation": 1.4,
+     "analyze": 0.2,
+     "retrieval": 878.6,
+     "generation": 1.2,
      "llm": 0.0,
-     "verify": 0.3,
-     "total": 1327.2
+     "verify": 0.4,
+     "total": 882.5
     },
     "tokens": {
      "prompt": 3330,
@@ -684,11 +684,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 1838.8,
-     "generation": 1.6,
+     "retrieval": 1194.5,
+     "generation": 1.3,
      "llm": 0.0,
-     "verify": 0.2,
-     "total": 1842.1
+     "verify": 0.3,
+     "total": 1197.6
     },
     "tokens": {
      "prompt": 2924,
@@ -740,11 +740,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1860.4,
-     "generation": 0.9,
+     "retrieval": 1242.2,
+     "generation": 1.4,
      "llm": 0.0,
-     "verify": 0.4,
-     "total": 1863.3
+     "verify": 0.6,
+     "total": 1245.8
     },
     "tokens": {
      "prompt": 3697,
@@ -796,11 +796,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1854.8,
-     "generation": 1.8,
+     "retrieval": 1145.7,
+     "generation": 1.2,
      "llm": 0.0,
-     "verify": 0.8,
-     "total": 1859.8
+     "verify": 0.7,
+     "total": 1149.0
     },
     "tokens": {
      "prompt": 3494,
@@ -852,11 +852,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1190.4,
-     "generation": 1.9,
+     "retrieval": 743.7,
+     "generation": 1.8,
      "llm": 0.0,
      "verify": 0.4,
-     "total": 1194.8
+     "total": 747.5
     },
     "tokens": {
      "prompt": 3591,
@@ -908,11 +908,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1870.7,
-     "generation": 2.0,
+     "retrieval": 1253.6,
+     "generation": 1.8,
      "llm": 0.0,
-     "verify": 0.3,
-     "total": 1874.7
+     "verify": 0.5,
+     "total": 1257.5
     },
     "tokens": {
      "prompt": 3414,
@@ -966,11 +966,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2023.3,
-     "generation": 3.0,
+     "retrieval": 1337.9,
+     "generation": 1.1,
      "llm": 0.0,
-     "verify": 5.7,
-     "total": 2034.9
+     "verify": 6.3,
+     "total": 1347.2
     },
     "tokens": {
      "prompt": 3439,
@@ -1022,11 +1022,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1754.0,
-     "generation": 1.5,
+     "retrieval": 1187.5,
+     "generation": 1.2,
      "llm": 0.0,
-     "verify": 1.4,
-     "total": 1759.2
+     "verify": 1.9,
+     "total": 1192.3
     },
     "tokens": {
      "prompt": 3482,
@@ -1081,11 +1081,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 3775.4,
-     "generation": 0.7,
+     "retrieval": 2633.4,
+     "generation": 1.0,
      "llm": 0.0,
-     "verify": 1.1,
-     "total": 3778.7
+     "verify": 1.9,
+     "total": 2637.9
     },
     "tokens": {
      "prompt": 4020,
@@ -1140,11 +1140,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 7217.7,
-     "generation": 0.9,
+     "retrieval": 5017.6,
+     "generation": 1.4,
      "llm": 0.0,
-     "verify": 1.0,
-     "total": 7221.2
+     "verify": 1.6,
+     "total": 5022.1
     },
     "tokens": {
      "prompt": 3656,
@@ -1203,11 +1203,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 7528.2,
-     "generation": 1.7,
+     "retrieval": 5260.3,
+     "generation": 1.5,
      "llm": 0.0,
-     "verify": 0.8,
-     "total": 7532.2
+     "verify": 1.4,
+     "total": 5264.6
     },
     "tokens": {
      "prompt": 3975,
@@ -1262,11 +1262,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 6016.0,
-     "generation": 1.4,
+     "retrieval": 4147.4,
+     "generation": 1.3,
      "llm": 0.0,
-     "verify": 1.8,
-     "total": 6020.7
+     "verify": 2.6,
+     "total": 4152.8
     },
     "tokens": {
      "prompt": 3976,
@@ -1321,11 +1321,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 3510.2,
-     "generation": 1.5,
+     "retrieval": 2361.2,
+     "generation": 1.2,
      "llm": 0.0,
-     "verify": 0.6,
-     "total": 3513.9
+     "verify": 1.1,
+     "total": 2364.9
     },
     "tokens": {
      "prompt": 3842,
@@ -1378,12 +1378,12 @@
     "provider": "groq",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 3820.0,
-     "generation": 1.6,
+     "analyze": 0.0,
+     "retrieval": 2687.6,
+     "generation": 0.8,
      "llm": 0.0,
-     "verify": 1.2,
-     "total": 3824.3
+     "verify": 1.5,
+     "total": 2691.4
     },
     "tokens": {
      "prompt": 3454,
@@ -1437,11 +1437,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 4858.8,
-     "generation": 2.0,
+     "retrieval": 3382.6,
+     "generation": 0.9,
      "llm": 0.0,
-     "verify": 1.3,
-     "total": 4863.7
+     "verify": 1.7,
+     "total": 3386.6
     },
     "tokens": {
      "prompt": 3759,
@@ -1494,12 +1494,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.9,
-     "retrieval": 2026.1,
-     "generation": 1.8,
+     "analyze": 0.6,
+     "retrieval": 1365.3,
+     "generation": 1.4,
      "llm": 0.0,
-     "verify": 0.8,
-     "total": 2031.3
+     "verify": 1.0,
+     "total": 1369.7
     },
     "tokens": {
      "prompt": 3162,
@@ -1550,12 +1550,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.5,
-     "retrieval": 2231.1,
-     "generation": 1.3,
+     "analyze": 0.6,
+     "retrieval": 1439.5,
+     "generation": 1.7,
      "llm": 0.0,
-     "verify": 0.3,
-     "total": 2234.9
+     "verify": 0.4,
+     "total": 1443.5
     },
     "tokens": {
      "prompt": 3617,
@@ -1604,12 +1604,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 852.7,
-     "generation": 1.5,
+     "analyze": 0.0,
+     "retrieval": 618.2,
+     "generation": 1.2,
      "llm": 0.0,
      "verify": 0.0,
-     "total": 855.9
+     "total": 621.0
     },
     "tokens": {
      "prompt": 2753,
@@ -1659,11 +1659,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 956.5,
-     "generation": 0.8,
+     "retrieval": 632.7,
+     "generation": 1.4,
      "llm": 0.0,
      "verify": 0.9,
-     "total": 959.8
+     "total": 636.6
     },
     "tokens": {
      "prompt": 2779,
@@ -1713,11 +1713,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 887.6,
-     "generation": 1.7,
+     "retrieval": 597.5,
+     "generation": 1.8,
      "llm": 0.0,
      "verify": 0.0,
-     "total": 891.0
+     "total": 600.9
     },
     "tokens": {
      "prompt": 3697,
@@ -1806,7 +1806,7 @@
     "cached": false,
     "latency_ms": {
      "analyze": 0.0,
-     "total": 0.6
+     "total": 0.5
     },
     "tokens": {},
     "error": "",
@@ -1845,11 +1845,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 851.0,
-     "generation": 1.6,
+     "retrieval": 598.9,
+     "generation": 1.4,
      "llm": 0.0,
-     "verify": 1.1,
-     "total": 855.2
+     "verify": 0.9,
+     "total": 602.5
     },
     "tokens": {
      "prompt": 3698,
@@ -1899,11 +1899,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1868.9,
-     "generation": 1.4,
+     "retrieval": 1302.2,
+     "generation": 1.3,
      "llm": 0.0,
      "verify": 1.5,
-     "total": 1873.6
+     "total": 1306.5
     },
     "tokens": {
      "prompt": 3518,
@@ -1953,7 +1953,7 @@
     "cached": false,
     "latency_ms": {
      "analyze": 0.1,
-     "total": 0.8
+     "total": 0.7
     },
     "tokens": {},
     "error": "",
@@ -1994,11 +1994,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 1433.0,
-     "generation": 2.0,
+     "retrieval": 975.5,
+     "generation": 1.3,
      "llm": 0.0,
      "verify": 0.3,
-     "total": 1436.8
+     "total": 978.5
     },
     "tokens": {
      "prompt": 3696,
@@ -2033,28 +2033,26 @@
     "id": "E29",
     "category": "numeric",
     "answerable": true,
-    "abstained": false,
-    "answer": "Tesla produced 440,808 vehicles in Q1 2024. [TSLA Q1 FY2024 release]",
-    "abstain_reason": "",
-    "confidence": "high",
-    "citation_hit": 1.0,
-    "evidence_recall": 1.0,
-    "claim_support": 1.0,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 0.0,
     "figure_recall": 0.0,
     "claims": 1,
     "sources": 10,
-    "cited": [
-     "[TSLA Q1 FY2024 release]"
-    ],
+    "cited": [],
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 1850.7,
-     "generation": 1.4,
+     "analyze": 0.0,
+     "retrieval": 1279.5,
+     "generation": 1.2,
      "llm": 0.0,
-     "verify": 0.4,
-     "total": 1854.2
+     "verify": 5.2,
+     "total": 1288.5
     },
     "tokens": {
      "prompt": 3756,
@@ -2075,7 +2073,7 @@
     "rewritten": false,
     "facts": 0,
     "xbrl_cited": false,
-    "citation_hit_xbrl": 1.0,
+    "citation_hit_xbrl": 0.0,
     "steps": [
      "analyze",
      "retrieve",
@@ -2106,12 +2104,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 2026.5,
-     "generation": 1.5,
+     "analyze": 0.2,
+     "retrieval": 1409.2,
+     "generation": 0.7,
      "llm": 0.0,
-     "verify": 1.6,
-     "total": 2031.3
+     "verify": 2.5,
+     "total": 1415.2
     },
     "tokens": {
      "prompt": 3732,
@@ -2163,11 +2161,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 887.1,
-     "generation": 1.4,
+     "retrieval": 601.4,
+     "generation": 0.8,
      "llm": 0.0,
-     "verify": 0.3,
-     "total": 890.6
+     "verify": 0.4,
+     "total": 604.4
     },
     "tokens": {
      "prompt": 3698,
@@ -2219,11 +2217,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2094.2,
-     "generation": 1.4,
+     "retrieval": 1409.4,
+     "generation": 1.3,
      "llm": 0.0,
      "verify": 0.4,
-     "total": 2097.8
+     "total": 1412.7
     },
     "tokens": {
      "prompt": 3522,
@@ -2275,11 +2273,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1848.6,
-     "generation": 1.5,
+     "retrieval": 1289.6,
+     "generation": 1.4,
      "llm": 0.0,
-     "verify": 1.2,
-     "total": 1853.0
+     "verify": 1.4,
+     "total": 1294.0
     },
     "tokens": {
      "prompt": 3823,
@@ -2329,11 +2327,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 1142.1,
+     "retrieval": 752.5,
      "generation": 2.0,
      "llm": 0.0,
-     "verify": 0.7,
-     "total": 1146.4
+     "verify": 0.6,
+     "total": 756.6
     },
     "tokens": {
      "prompt": 3620,
@@ -2382,12 +2380,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 1073.9,
-     "generation": 1.9,
+     "analyze": 0.0,
+     "retrieval": 758.3,
+     "generation": 1.6,
      "llm": 0.0,
-     "verify": 0.7,
-     "total": 1078.2
+     "verify": 0.6,
+     "total": 761.9
     },
     "tokens": {
      "prompt": 3504,
@@ -2437,11 +2435,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1795.3,
-     "generation": 1.8,
+     "retrieval": 1223.3,
+     "generation": 1.6,
      "llm": 0.0,
-     "verify": 0.6,
-     "total": 1799.3
+     "verify": 0.5,
+     "total": 1227.0
     },
     "tokens": {
      "prompt": 3432,
@@ -2491,11 +2489,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 1851.6,
+     "retrieval": 1295.4,
      "generation": 1.6,
      "llm": 0.0,
      "verify": 0.0,
-     "total": 1854.6
+     "total": 1298.6
     },
     "tokens": {
      "prompt": 3494,
@@ -2544,12 +2542,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.0,
-     "retrieval": 2058.4,
-     "generation": 1.7,
+     "analyze": 0.1,
+     "retrieval": 1385.9,
+     "generation": 1.6,
      "llm": 0.0,
      "verify": 0.0,
-     "total": 2061.5
+     "total": 1389.1
     },
     "tokens": {
      "prompt": 3076,
@@ -2599,11 +2597,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2124.3,
-     "generation": 2.0,
+     "retrieval": 1419.4,
+     "generation": 1.8,
      "llm": 0.0,
      "verify": 0.0,
-     "total": 2127.8
+     "total": 1422.8
     },
     "tokens": {
      "prompt": 3607,
@@ -2625,6 +2623,731 @@
     "facts": 0,
     "xbrl_cited": false,
     "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E34",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Tesla's free cash flow in Q1 2024 was -$2,531 million [TSLA Q1 FY2024 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q1 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1263.4,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.4,
+     "total": 1266.8
+    },
+    "tokens": {
+     "prompt": 3487,
+     "completion": 51,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E35",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Tesla's gross profit in Q2 2023 was $4,533 million. [TSLA Q2 FY2023 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q2 FY2023 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1254.4,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 1.1,
+     "total": 1258.5
+    },
+    "tokens": {
+     "prompt": 3603,
+     "completion": 45,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E36",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Tesla deployed 3.0 GWh of Energy Storage in Q3 2023. [TSLA Q3 FY2023 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q3 FY2023 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1254.6,
+     "generation": 1.3,
+     "llm": 0.0,
+     "verify": 1.5,
+     "total": 1258.9
+    },
+    "tokens": {
+     "prompt": 3512,
+     "completion": 47,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E37",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 0.0,
+    "figure_recall": 0.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.0,
+     "retrieval": 1227.4,
+     "generation": 1.6,
+     "llm": 0.0,
+     "verify": 1.7,
+     "total": 1232.2
+    },
+    "tokens": {
+     "prompt": 3753,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E38",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 0.0,
+    "figure_recall": 0.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1495.2,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 2.1,
+     "total": 1500.4
+    },
+    "tokens": {
+     "prompt": 3718,
+     "completion": 48,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AMZN"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E39",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Amazon's operating income in Q1 2023 was $4,774 million [AMZN Q1 FY2023 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 8,
+    "cited": [
+     "[AMZN Q1 FY2023 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1561.8,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.4,
+     "total": 1565.4
+    },
+    "tokens": {
+     "prompt": 3526,
+     "completion": 49,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AMZN"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E40",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "JPMorgan's reported net revenue in Q1 2022 was $31.6 billion [JPM Q1 FY2022 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[JPM Q1 FY2022 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1546.3,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 1549.6
+    },
+    "tokens": {
+     "prompt": 3231,
+     "completion": 51,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "JPM"
+    ],
+    "years": [
+     2022
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E41",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "64.1% [NVDA Q1 FY2022 release]",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[NVDA Q1 FY2022 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1398.3,
+     "generation": 1.5,
+     "llm": 0.0,
+     "verify": 0.5,
+     "total": 1402.0
+    },
+    "tokens": {
+     "prompt": 3334,
+     "completion": 36,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2022
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E42",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Non-GAAP net income was $9,453 million in Q2 FY2025 [NVDA Q2 FY2025 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[NVDA Q2 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1578.8,
+     "generation": 0.8,
+     "llm": 0.0,
+     "verify": 0.2,
+     "total": 1581.5
+    },
+    "tokens": {
+     "prompt": 3679,
+     "completion": 51,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E43",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Google Search revenue in Q3 2024 was $49,385 million [GOOGL Q3 FY2024 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[GOOGL Q3 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1400.1,
+     "generation": 2.0,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 1404.0
+    },
+    "tokens": {
+     "prompt": 2745,
+     "completion": 47,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "GOOGL"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E44",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Total costs and expenses were $24.22 billion in Q2 2024 [META Q2 FY2024 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[META Q2 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1452.2,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.4,
+     "total": 1455.6
+    },
+    "tokens": {
+     "prompt": 3458,
+     "completion": 49,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "META"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E45",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Mastercard's operating expenses in Q1 2022 were $2,217 million [MA Q1 FY2022 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[MA Q1 FY2022 release]",
+     "[MA Q1 FY2022 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1687.5,
+     "generation": 1.7,
+     "llm": 0.0,
+     "verify": 1.3,
+     "total": 1692.2
+    },
+    "tokens": {
+     "prompt": 3699,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "MA"
+    ],
+    "years": [
+     2022
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E46",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Alphabet's operating income in Q2 2024 was $27,425 million [GOOGL Q2 FY2024 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[GOOGL Q2 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.0,
+     "retrieval": 1520.7,
+     "generation": 2.1,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 1524.7
+    },
+    "tokens": {
+     "prompt": 3153,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "GOOGL"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
     "steps": [
      "analyze",
      "retrieve",

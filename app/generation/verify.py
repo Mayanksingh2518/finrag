@@ -20,7 +20,8 @@ badly cited (common with small local models, see reports/generation_v0_ollama.md
 
 Figures alone can't catch a real number relabelled as another metric, so release sources get two more checks
 (`_row_fits`): a figure stated as a count can't rest on a dollar amount ("69,138 million iPhone units" on
-"| iPhone | $69,138 |"), and one product can't claim a combined row ("Model Y" on "Model 3/Y deliveries").
+"| iPhone | $69,138 |"), one product can't claim a combined row ("Model Y" on "Model 3/Y deliveries"), and a figure
+must sit in the column of the period the claim names ("440,808 in Q1 2024" on a row where Q1 2024 says 433,371).
 """
 
 import re
@@ -28,8 +29,11 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Literal
 
+from app.agent.entities import ALL_QUARTERS, find_quarters, find_years
+from app.generation.columns import Period, known_periods, periods_of_figure
 from app.generation.context import Source
 from app.generation.schemas import Claim
+from app.ingestion.models import Chunk
 
 ClaimStatus = Literal["supported", "unsupported_number", "invalid_citation"]
 
@@ -138,9 +142,15 @@ def _in_context(number: Number, words: set[str], source: Source, claim_text: str
                and any(_matches(number, n) for n in extract_numbers(seg)) for seg in _segments(source.chunk.text))
 
 
-# A figure followed within a few words by something counted: "443,956 vehicles", "69,138 million iPhone units".
+# A figure followed within a few words by something counted ("443,956 vehicles", "69,138 million iPhone units"), or after "sold".
 _COUNTED = r"(?:\s+[\w/&'-]+){0,3}?\s+(?:units?|vehicles?|cars?|devices?|phones?|shipments?|subscribers?|customers?|employees?|people|users?)\b"
+_SOLD = r"\b(?:sold|shipped)\s+(?:about\s+|approximately\s+)?"
+_COUNT_ROW = re.compile(r"\b(?:units?|vehicles?|cars?|deliver|produc|shipments?|subscribers?|customers?|accounts?|employees?|headcount|"
+                        r"people|users?|stations?|connectors?|locations?)", re.IGNORECASE)
+_MONEY_TABLE = re.compile(r"\$|\bUSD\b")
 _COMBINED = re.compile(r"\b([A-Z][a-z]+) (\w+)/(\w+)\b")  # "Model 3/Y": two products in one figure
+# The claim talks about another period on purpose ("up from 18,120 a year ago"): columns can't judge it.
+_COMPARES = re.compile(r"\b(?:ago|prior|previous|compared|versus|vs\.?|last year|earlier|from \$?\d)", re.IGNORECASE)
 
 
 def _names_one_of_a_combined_figure(claim_text: str, row: str) -> bool:
@@ -151,21 +161,78 @@ def _names_one_of_a_combined_figure(claim_text: str, row: str) -> bool:
     return False
 
 
-def _row_fits(number: Number, claim_text: str, row: str) -> bool:
-    """Is this release row's figure the metric the claim says it is? See the module docstring."""
-    if _names_one_of_a_combined_figure(claim_text, row):
+def _claimed_periods(claim_text: str, chunk: Chunk) -> set[Period] | None:
+    """The periods a claim is about: those it names, or else the release's own quarter. None when it can't be said."""
+    if _COMPARES.search(claim_text):
+        return None
+    quarters = find_quarters(claim_text)
+    quarters = () if quarters == ALL_QUARTERS else quarters
+    years = [*find_years(claim_text)[0], *find_years(claim_text)[1]]
+    if quarters:
+        return {(q, y) for q in quarters for y in (years or [chunk.fiscal_year])}
+    return None if years else {(chunk.fiscal_quarter, chunk.fiscal_year)}  # type: ignore[arg-type]
+
+
+def _is_bare_label_number(number: Number) -> bool:
+    """The "3" of "Model 3" or a footnote mark: a plain small integer isn't a reported figure a column could judge."""
+    return number.scale == 1 and number.decimals == 0 and number.value < 1000 and "$" not in number.raw
+
+
+def _column_verdict(number: Number, claim_text: str, row: str, chunk: Chunk) -> bool | None:
+    """True or False when the table's labels show the figure is or isn't in the claimed period's column; else None."""
+    if number.percent or _is_bare_label_number(number):
+        return None
+    if not (claimed := _claimed_periods(claim_text, chunk)) or not claimed & known_periods(chunk):
+        return None
+    found = periods_of_figure(row, chunk, lambda cell: any(_matches(number, n) for n in extract_numbers(cell)))
+    return None if found is None else bool(found & claimed)
+
+
+def _on_chart_axis(number: Number, row: str) -> bool:
+    """A slide's chart text ("0 1 2 3 4 (200) (150)"): evenly spaced tick labels aren't reported figures."""
+    values = [n.value for n in extract_numbers(row)]
+    for i, value in enumerate(values):
+        if value == number.value * number.scale or value == number.value:
+            for start in range(max(0, i - 3), i + 1):
+                run = values[start : start + 4]
+                if len(run) == 4 and len({round(b - a, 6) for a, b in zip(run, run[1:])}) == 1 and run[1] != run[0]:
+                    return True
+    return False
+
+
+def _is_count_on_money(number: Number, claim_text: str, row: str, chunk: Chunk) -> bool:
+    """A figure stated as a count, resting on dollars: on its own row, or in a money table's row naming nothing counted."""
+    if "$" in number.raw:
         return False
-    counted = "$" not in number.raw and re.search(re.escape(number.raw) + _COUNTED, claim_text, re.IGNORECASE)
-    return not (counted and all("$" in n.raw for n in extract_numbers(row) if _matches(number, n)))
+    raw = re.escape(number.raw)
+    if not (re.search(raw + _COUNTED, claim_text, re.IGNORECASE) or re.search(_SOLD + raw, claim_text, re.IGNORECASE)):
+        return False
+    if all("$" in n.raw for n in extract_numbers(row) if _matches(number, n)):
+        return True
+    return bool(_MONEY_TABLE.search(chunk.text)) and not _COUNT_ROW.search(row)
+
+
+def _row_names_it(number: Number, claim_text: str, row: str, chunk: Chunk) -> bool:
+    """Is this release row's figure the metric the claim says it is? See the module docstring."""
+    return (not _names_one_of_a_combined_figure(claim_text, row) and not _is_count_on_money(number, claim_text, row, chunk)
+            and not _on_chart_axis(number, row))
 
 
 def _relabelled(numbers: Sequence[Number], claim_text: str, sources: Sequence[Source]) -> list[Number]:
-    """Figures found in the cited release sources, but only in rows that don't fit the claim."""
+    """Figures in the cited release sources only as another metric or another period's column.
+
+    A column that shows the wrong period outweighs a table that can't be read: an unreadable table is no evidence.
+    """
     if not sources or not all(s.chunk.fiscal_quarter for s in sources):
         return []
-    rows = [seg for s in sources for seg in _segments(s.chunk.text)]
-    return [n for n in numbers
-            if not any(_row_fits(n, claim_text, r) and any(_matches(n, x) for x in extract_numbers(r)) for r in rows)]
+    rows = [(seg, s.chunk) for s in sources for seg in _segments(s.chunk.text)]
+    rejected = []
+    for n in numbers:
+        fitting = [(r, c) for r, c in rows if any(_matches(n, x) for x in extract_numbers(r)) and _row_names_it(n, claim_text, r, c)]
+        verdicts = {_column_verdict(n, claim_text, r, c) for r, c in fitting}
+        if not fitting or (False in verdicts and True not in verdicts):
+            rejected.append(n)
+    return rejected
 
 
 def _stems(words: set[str]) -> set[str]:
@@ -178,7 +245,7 @@ def _in_release_context(number: Number, words: set[str], source: Source, claim_t
     figure in a row that names the claim's metric: words beyond the company, compared by stem.
     """
     metric = _stems(words - content_words(source.chunk.context))
-    return any(metric & _stems(content_words(seg)) and _row_fits(number, claim_text, seg)
+    return any(metric & _stems(content_words(seg)) and _row_names_it(number, claim_text, seg, source.chunk)
                and any(_matches(number, n) for n in extract_numbers(seg)) for seg in _segments(source.chunk.text))
 
 
@@ -216,7 +283,9 @@ def verify_claim(claim: Claim, sources: Mapping[str, Source], repair: bool = Tru
     if valid_ids and not missing:
         return VerifiedClaim(claim.text, valid_ids, "supported")
     if repair and (fixed := _repair(claim.text, valid_ids, missing, sources)):
-        return VerifiedClaim(claim.text, fixed, "supported", repaired=True)
+        # The new sources together must not show the figure in another period's column.
+        if not _relabelled(found + [n for n in numbers if n not in found], claim.text, [sources[sid] for sid in fixed]):
+            return VerifiedClaim(claim.text, fixed, "supported", repaired=True)
     if not valid_ids:
         return VerifiedClaim(claim.text, list(claim.source_ids), "invalid_citation")
     return VerifiedClaim(claim.text, valid_ids, "unsupported_number", [n.raw for n in missing])

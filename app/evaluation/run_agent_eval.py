@@ -39,7 +39,8 @@ from app.generation.llm import LLMError
 from app.generation.verify import _matches, extract_numbers
 from app.tracing import build_sinks, start_trace
 
-CONFIGS = ("agent", "agent_no_xbrl", "agent_routed")  # routed: trend/comparison answered by Groq gpt-oss-120b
+# routed: trend/comparison answered by Groq gpt-oss-120b; routed_releases: earnings release questions too
+CONFIGS = ("agent", "agent_no_xbrl", "agent_routed", "agent_routed_releases")
 BASELINE = PROJECT_ROOT / "reports" / "generation_v1_ollama.json"  # gold filters, same model
 # Questions whose figure the company defines differently from the GAAP line item (reports/xbrl_v0.md).
 DEFINITION_MISMATCH = ("N09", "N16", "T11", "T12", "F06")
@@ -219,11 +220,12 @@ def main() -> None:
     questions = load_golden(args.golden)[: args.limit]
     results: dict[str, list[AgentRecord]] = {}
     routed_llm = (build_llm(settings.model_copy(update={"llm_providers": "groq,ollama"}))
-                  if "agent_routed" in args.configs else None)
+                  if {"agent_routed", "agent_routed_releases"} & set(args.configs) else None)
     for config in args.configs:
         agent = FinRAGAgent(retriever, llm, xbrl=None if config == "agent_no_xbrl" else xbrl,
                             token_budget=settings.context_token_budget,
-                            routed_llm=routed_llm if config == "agent_routed" else None)
+                            routed_llm=routed_llm if config.startswith("agent_routed") else None,
+                            route_releases=config == "agent_routed_releases")
         records = results[config] = []
         for i, q in enumerate(questions, 1):
             start = time.perf_counter()

@@ -11,11 +11,11 @@ Single source of truth for project state. Update this file at the end of every w
   FAISS, 740/740); `docker compose up --build` (API + UI + Postgres); GitHub Actions CI green
   (run 41048182690: 209 tests incl. real Postgres, frontend lint + build, eval gate 10/10). CI badge in
   the README.
-- **In progress:** Phase 10: earnings releases are built and evaluated (`reports/eval_earnings_v0.md`, 47 questions: correctness 0.970, abstention
-  recall 1.000). Known gap: an answer can take the wrong period column (E29). Investor presentations not started, so the phase stays unticked.
-- **Next up:** a column check in the verifier. See "Next task in detail".
-- **Resume here (2026-11-02):** step 5 is uncommitted in the working tree, along with parts of step 4; the user commits. The dashboard may still be running
-  on :8020 (`pkill -f app.dashboard`). Main Postgres volume: still needs `python -m app.retrieval.pg_store` with `VECTOR_BACKEND=pgvector`.
+- **All planned phases are done (Phase 10 closed 2026-11-02).** Earnings releases are built and evaluated (`reports/eval_earnings_v0.md`, 60 questions: correctness 0.870,
+  abstention recall 1.000). The user decided to leave out investor presentations.
+- **Next up:** optional: full eval of earnings questions on the larger model, once Groq quota has cleared. See "Next task in detail".
+- **Resume here (2026-11-02):** the column check is uncommitted; the user commits. gpt-oss-120b had used ~215k tokens in the 24 h before 16:26. The dashboard may still be running on :8020 (`pkill -f app.dashboard`).
+  Main Postgres volume: still needs `python -m app.retrieval.pg_store` with `VECTOR_BACKEND=pgvector`.
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
   0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
@@ -25,7 +25,7 @@ Single source of truth for project state. Update this file at the end of every w
   while the API server, an eval, tests and Ollama all held models at once. Run one model-loading
   process at a time and stop the API server during evals.
 - **Active machine:** MacBook M4 (setup done 2026-10-07: venv, data, embedding cache)
-- **Last updated:** 2026-11-02 (Phase 10 step 5: relabelled-figure checks; golden set extended to 47)
+- **Last updated:** 2026-11-02 (Phase 10 closed: column check, golden set 60, routing switch)
 
 ## Phase checklist
 
@@ -38,72 +38,36 @@ Single source of truth for project state. Update this file at the end of every w
 - [x] **Phase 7: Full evaluation.** LLM judge validated on hand labels (0.86-1.00) and by a second judge family (0.94); trend fixes + routing trend/comparison to gpt-oss-120b: judged correctness 0.730 → 0.865 (trend 0.792, comparison 1.000); RAGAS corroborates faithfulness (Spearman 0.86), rejected for correctness; tracing (JSONL + Langfuse) with per-node p50/p95; vector index benchmark; summary `reports/eval_v1.md`; 189 tests
 - [x] **Phase 8: Serving.** FastAPI + React/Vite glassmorphism UI (user's choice over Streamlit): search with filters, citations, tables, latency; answers from the routed LangGraph agent (UI filters as per-field overrides, XBRL facts as sources, per-thread memory, traces) streamed as per-node progress events (SSE) with a plain-endpoint fallback; read-as line, intent/model/steps pills; 195 tests
 - [x] **Phase 9: Production.** Postgres + pgvector backend (identical retrieval to FAISS, `VECTOR_BACKEND=pgvector`), Docker Compose (API + UI + Postgres; CPU torch, host Ollama), GitHub Actions CI (tests with a pgvector service, UI lint/build, eval regression gate over committed reports); retrieval eval refreshed with the reviewed gold (v1: recall@5 0.891, MRR 0.933); 209 tests
-- [ ] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1), investor presentations (PDF parser)
+- [x] **Phase 10: Expansion.** Earnings releases (8-K Ex-99.1): 160 releases, 5,571 chunks, quarter filters, one BM25 per form, column check in the verifier; 60-question golden set: judged correctness 0.870, abstention recall 1.000, 10-K answers 84/84 unchanged. Investor presentations left out by the user's decision (most aren't on EDGAR); 322 tests
 
-## Next task in detail: Phase 10 (expansion: earnings releases)
+## Next task in detail: earnings questions on the larger model (optional)
 
-Goal: answer questions about quarterly results ("What did NVIDIA report for Q3 FY2025 data center
-revenue?", "How did Apple's quarterly revenue trend in fiscal 2025?") from earnings press releases,
-with the same citations, verification and abstention. Zero cost: SEC EDGAR only (earnings releases are
-filed as 8-K Exhibit 99.1, Item 2.02; stable URLs, same User-Agent rule as Phase 1).
+Every planned phase is done. The evidence points to one improvement: in a 14-question test gpt-oss-120b read release tables right 14 of 14 times, the local 3B model 8 of 14 (3 wrong, 3 refused). `ANSWER_ROUTE_RELEASES`
+switches it on (`FinRAGAgent(route_releases=True)`; only release questions; annual ones stay local) and is **off**, because the full set hasn't run on it.
 
-1. ~~Downloader~~ **done 2026-10-30** (see "Earnings releases v0" below).
-2. ~~Parse + chunk~~ **done 2026-11-02** (see "Earnings release chunks v0" below).
-3. ~~Retrieval + analyzer~~ **done 2026-11-02** (see "Earnings release retrieval v0" below).
-4. ~~Golden set extension~~ **done 2026-11-02** (see "Earnings evaluation v0" below).
-5. ~~Metric-relabelling answers~~ **done 2026-11-02** (see "Relabelled figures v0" below).
-6. **Column check in `verify.py` (next "go").** E29: "Tesla produced 440,808 vehicles in Q1 2024" takes the year-ago column of a five-quarter row; the verifier passes it because the
-   figure is in the source. For release sources, read the period header of a table or flat row, find the column of the quarter the claim names, and reject a figure that
-   matches only another column. Flat Tesla rows repeat a header on every piece (`Q1-2023 ... Q1-2024 YoY`), so start there, then Markdown tables (`Q3 FY25 | Q2 FY25 | Q3 FY24`). Beware
-   claims that name the other period on purpose ("up from 18,120 a year ago"), rows with a footnote, tables with quarter and year-to-date columns, and answers that
-   name no period (use the chunk's quarter only if the plan asked for one quarter). Keep it only if E29 improves with no false abstentions on the golden set (cached, no LLM calls) and 84/84 on the 10-K set.
-   Also tighten the count check: `| Mac | 7,949 |` has no `$` on its row, and "sold N iPads" isn't a listed noun. Test with fresh questions, not only the golden set; that's what found E29.
-7. **Then ask the user** about investor presentations (PDF parser; most aren't on EDGAR), or closing Phase 10 without them. Also open: a free
-   context-budget test (the user asked how to reduce tokens): `run_plan_eval`'s ctx recall at 2,000-3,000 tokens needs no LLM; only run real
-   answers at the best budget, since it would cost ~300k tokens across both golden sets.
+1. **Check quota first** on the dashboard: this needs ~90k gpt-oss-120b tokens for about 25 new answers (the 14 table questions and 7 routed ones are cached), plus judge calls for changed answers. If the quota runs out, routed calls silently fall back to Ollama and the
+   report is mixed: the report's "Answers by" line shows it. Spread it over two days if needed; everything is cached.
+2. `python -m app.evaluation.run_agent_eval --golden data/eval/golden_earnings_v0.jsonl --configs agent_routed_releases --out reports/agent_earnings_v1`, then `run_judge_eval --golden ... --route --route-releases --out reports/judge_earnings_v1` and again with `--judge-providers groq --judge-model qwen/qwen3.8-27b --out reports/judge_earnings_v1_qwen`.
+3. Test on questions outside the golden set too, and check figures by hand: that is what found every failure so far. A judge graded by gpt-oss on gpt-oss answers favours itself, so read qwen's result.
+4. If it holds, set `answer_route_releases` to true, point the gate at v1 and raise its floors. Capacity on the free tier is ~55 routed questions a day, then the local model with the verifier guarding it.
 
-## Relabelled figures v0 (Phase 10 step 5, MacBook M4, 2026-11-02)
+Other open items, none needed: a harder golden set with "why" questions and a reviewer other than the author; the free context-budget test (`run_plan_eval`'s ctx recall at 2,000-3,000 tokens needs no LLM; real answers on both sets would cost ~300k tokens); reading more table formats (52% get no column verdict; a continuation chunk can lose its date headers, as in E42); OCR for Tesla's image-only quarters; JPMorgan's Exhibit 99.2.
 
-`verify.py`, release sources only (`_row_fits`, `_relabelled`; also applied in citation repair): a figure stated as a count ("69,138 million iPhone units") can't rest on a row where it has
-a `$`, and one product can't claim a combined row ("Model Y" on `Model 3/Y deliveries`). A prompt rule had failed first (step 4). EU6 and EU7 now abstain, no false abstentions, 10-K answers 84/84 identical.
+## Column check v0 (Phase 10, MacBook M4, 2026-11-02)
 
-**Fresh questions found a new failure.** 12 questions written after the fix (6 answerable, 6 not, now in the golden set, tag `added-after-verifier-fix`): 6 of 6 refused and 5 of 6 answered correctly, but
-**E29 "Tesla produced 440,808 vehicles in Q1 2024" (high confidence) is the year-ago column; the answer is 433,371**. Both judges graded it incorrect. The set had scored 1.000 only because its traps
-happened to pass. Limits of the new checks: Mac and iPad were refused for other reasons (wrong source; no citation), since `| Mac | 7,949 |` has no `$` on its row and "iPads" isn't a listed noun.
+`app/generation/columns.py` reads each release table's column labels (`Q1-2024`, `Q3 FY25`, `1Q22`, `30-Jun-24`; year columns when the calendar year is the fiscal year; period-end dates by the company's fiscal calendar, on one row or two), under "Three Months Ended" for years and dates. `verify.py`:
+a figure must sit in the column of the period the claim names, or the release's own quarter if it names none; no verdict on percentages, small plain integers ("Model 3"), or claims about another period on purpose ("a year ago"). **A wrong column beats an unreadable table**, and citation repair must pass the same check. Chart axes aren't evidence. Count check tightened: `| Mac | 7,949 |` in a money table, "sold N iPads". Release sources only: 10-K answers 84/84.
 
-Now, 47 questions: correctness 0.970 / 0.969 (qwen 32 graded, E33 JSON 400), abstention recall 14/14, false abstention 0/33, citation hit 0.939, retrieval 0.932 / 0.823, plan recall@10 1.000. Abstention floor in the gate raised to 0.90. The "Earnings evaluation v0" numbers below are from the 35-question stage.
-
-## Earnings evaluation v0 (Phase 10 step 4, MacBook M4, 2026-11-02)
-
-Summary for readers: `reports/eval_earnings_v0.md`. `data/eval/golden_earnings_v0.jsonl`: 35 questions (27 answerable, 8 not), written from
-grep over release text, never from the retriever. Release evidence has no pages: `GoldEvidence.fiscal_quarter`, and a chunk covers an item when it is
-from that release and contains a quote (`metrics._covers`, `validate_release_quotes`). `filters_ok` now also checks quarter and document type. 10-K
-matching is unchanged. `check_gate`: `retrieval@<report>:` and `plan@<report>:` read other reports; 10 new checks, 20/20 pass.
-
-| Metric | Result |
+| Check on real data | Result |
 |---|---|
-| False abstention | 0 / 27 |
-| Abstention recall | **0.75** (EU6, EU7 answered) |
-| Judged correctness | 1.000 gpt-oss (27); 1.000 qwen (25, E14 and E17 failed with Groq JSON 400) |
-| Filters correct | 27 / 27 |
-| Citation hit / evidence recall | 0.926 / 0.926 (0.741 / 0.704 before widening quotes) |
-| Retrieval recall@5 / MRR (gold filters) | 0.917 / 0.826 |
-| Plan recall@10 / ctx recall | 1.000 / 1.000 |
-| Uncached p50 / p95 | 20.9 s / 46.1 s (first run; the final report came from cache, so it shows none) |
+| Tables with readable columns | 1,365 of 2,849 (48%), all 10 companies |
+| Claims naming the figure's own column accepted | 21,785 / 21,785 |
+| Claims naming another column rejected | 64,493 / 64,528 (misses: the same figure repeated in another column) |
+| Same row and period read from different releases agree (independent of the audit above, which trusts the parser) | 2,279 / 2,298 = 99.2%; the differences seen are restatements and stock splits |
 
-Reading:
-- **1.000 is not better than the 10-K set's 0.865.** These are mostly stated figures with no "why" questions, by one author. Traps passed on these
-  questions (JPM reported vs adjusted, comparative columns in flat Tesla tables), but it is a small set.
-- **Judge sensitivity** (`run_judge_sensitivity.py`): an all-correct score shows nothing unless the judge can say no. 6 answers made wrong with
-  figures really in the source (other period's column, annual total, adjusted figure, next quarter's outlook): gpt-oss 6/6 incorrect, qwen 4/4 graded.
-- **EU6, EU7:** real failures the verifier passes. Rejected experiment: a release-only prompt rule ("report a figure only as the metric its source
-  names... abstain") left both wrong, changed 9 other answers slightly and lost E25's note that both quarters ended in December. Reverted; answers
-  35/35 back to the first run from cache.
-- **Labels were changed after seeing results:** other locations of the same fact added to quotes (each read in the text), E15's reference corrected (19.2%
-  is in the release). This raises citation and retrieval metrics; not a blind review. E15 and E27 still miss citation hit, not diagnosed. Hand labels
-  weren't written: with every answer correct, agreement would say nothing, so sensitivity replaced them.
-- qwen's Groq JSON mode fails on some inputs (HTTP 400); the first run fell back to Gemini on 2 questions, so the final run is Groq-only.
-- Tesla Q3 2022 and Q1 2023 figures are "unanswerable" under a quarter filter, but the FY2023 Q2 release shows them as comparatives.
+**Fresh questions keep finding failures.** First version of the check (labelled columns only, any readable row enough): 14 new table questions, 5 wrong. Causes: an unreadable table's "no verdict" rescued a wrong column (fixed), mixed three- and six-month tables unread (fixed), a chart axis (fixed), legal boilerplate matching "3.0" (not fixed), split tables losing date headers (not fixed), managed vs reported (a model error). A bug found in the second version: the "3" of "Model 3" failed the column check and E30 abstained (fixed).
+
+Stopped patching: this was turning into whack-a-mole on a model problem. **gpt-oss-120b got all 14 right** (each figure checked by hand), so the local 3B model is the main cause. Golden set now 60 (46 + 14): correctness 0.870 / 0.867, answered 0.930, false abstention 3/46 (E29, E37, E38: wrong answers rejected), abstention recall 14/14, citation hit 0.848, retrieval 0.886 / MRR 0.699, plan recall@10 1.000. Still wrong: E36, E40, E42. **Gate floors lowered** because the set got harder, not because answers got worse: the earlier questions' answers are the same or now refused when wrong.
 
 ## Dashboard v0 (user request, MacBook M4, 2026-11-02)
 
@@ -1246,3 +1210,4 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   abstentions, correctness 1.000 on easy questions, abstention recall 0.75 (2 confident wrong answers); a prompt fix was tried and reverted. Local dashboard
   added at the user's request (`python -m app.dashboard`). 281 tests pass + 2 skipped without Postgres; those 2 pass on a scratch db. Gate 20/20. Not committed.
 - **2026-11-02 (MacBook M4):** Phase 10 step 5: verifier checks for relabelled figures fixed EU6 and EU7. 12 fresh questions found a new wrong answer (E29, wrong period column), now in the golden set: correctness 0.970, abstention recall 1.000 on 47 questions. 10-K answers 84/84. Gate 20/20. Not committed.
+- **2026-11-02 (MacBook M4):** Phase 10 closed; the user left out investor presentations. Column check in the verifier, audited on real data. Golden set extended to 60: correctness 0.870. gpt-oss-120b got 14 of 14 table questions right vs 8 of 14 locally; routing switch built, off until a full eval (Groq quota used up today). 10-K answers 84/84. Gate floors reset to the harder set.

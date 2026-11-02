@@ -21,8 +21,8 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "total": 0.6
+      "bm25": 0.4,
+      "total": 1.1
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -48,8 +48,8 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "total": 0.4
+      "bm25": 0.2,
+      "total": 0.5
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -130,7 +130,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "GOOGL FY2024 p.0 Earnings release table",
@@ -157,7 +157,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -184,7 +184,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -211,7 +211,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -265,7 +265,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "MA FY2024 p.0 Earnings release text",
@@ -346,7 +346,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -373,7 +373,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "MSFT FY2022 p.0 Earnings release text",
@@ -426,7 +426,7 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.0,
+      "bm25": 0.1,
       "total": 0.2
      },
      "top": [
@@ -562,7 +562,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -831,7 +831,7 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.0,
+      "bm25": 0.1,
       "total": 0.2
      },
      "top": [
@@ -895,6 +895,357 @@
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text"
      ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.2,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.38685280723454163
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.16666666666666666,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3562071871080222
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "AMZN FY2023 p.0 Earnings release text",
+      "AMZN FY2023 p.0 Earnings release text",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.2,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.38685280723454163
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release text",
+      "NVDA FY2022 p.0 Earnings release text",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.14285714285714285,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3333333333333333
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.2,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.38685280723454163
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table"
+     ]
     }
    ]
   },
@@ -919,9 +1270,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 11.1,
+      "embed_query": 12.1,
       "dense": 0.1,
-      "total": 11.3
+      "total": 12.4
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -947,9 +1298,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.5,
+      "embed_query": 7.6,
       "dense": 0.1,
-      "total": 7.7
+      "total": 7.8
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -975,9 +1326,9 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "embed_query": 7.3,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.5
+      "total": 7.7
      },
      "top": [
       "MSFT FY2025 p.0 Earnings release table",
@@ -1003,9 +1354,9 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "embed_query": 7.3,
+      "embed_query": 7.7,
       "dense": 0.1,
-      "total": 7.5
+      "total": 7.9
      },
      "top": [
       "JPM FY2023 p.0 Earnings release table",
@@ -1031,9 +1382,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.3,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.5
+      "total": 7.8
      },
      "top": [
       "GOOGL FY2024 p.0 Earnings release text",
@@ -1059,9 +1410,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.3,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.6
+      "total": 7.8
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -1087,9 +1438,9 @@
       "ndcg@10": 0.3010299956639812
      },
      "timings_ms": {
-      "embed_query": 7.4,
+      "embed_query": 7.2,
       "dense": 0.1,
-      "total": 7.7
+      "total": 7.4
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -1115,9 +1466,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.3,
+      "embed_query": 7.4,
       "dense": 0.1,
-      "total": 7.5
+      "total": 7.6
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -1143,9 +1494,9 @@
       "ndcg@10": 0.43067655807339306
      },
      "timings_ms": {
-      "embed_query": 7.1,
+      "embed_query": 7.3,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.5
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -1171,9 +1522,9 @@
       "ndcg@10": 0.5
      },
      "timings_ms": {
-      "embed_query": 7.1,
+      "embed_query": 7.4,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.6
      },
      "top": [
       "MA FY2024 p.0 Earnings release text",
@@ -1199,9 +1550,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.2,
+      "embed_query": 7.4,
       "dense": 0.1,
-      "total": 7.4
+      "total": 7.6
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -1227,9 +1578,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.2,
+      "embed_query": 7.3,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.5
      },
      "top": [
       "NVDA FY2023 p.0 Earnings release text",
@@ -1255,9 +1606,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.1,
-      "dense": 0.0,
-      "total": 7.3
+      "embed_query": 7.5,
+      "dense": 0.1,
+      "total": 7.7
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -1283,9 +1634,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.2,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.8
      },
      "top": [
       "MSFT FY2022 p.0 Earnings release text",
@@ -1311,9 +1662,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.0,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.2
+      "total": 7.7
      },
      "top": [
       "TSLA FY2022 p.0 Earnings release text",
@@ -1339,9 +1690,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.2,
-      "dense": 0.0,
-      "total": 7.4
+      "embed_query": 7.3,
+      "dense": 0.1,
+      "total": 7.5
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -1369,7 +1720,7 @@
      "timings_ms": {
       "embed_query": 7.2,
       "dense": 0.1,
-      "total": 7.4
+      "total": 7.5
      },
      "top": [
       "AMZN FY2024 p.0 Earnings release text",
@@ -1395,9 +1746,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.2,
+      "embed_query": 7.7,
       "dense": 0.1,
-      "total": 7.4
+      "total": 8.2
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -1423,9 +1774,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.0,
+      "embed_query": 7.2,
       "dense": 0.1,
-      "total": 7.2
+      "total": 7.5
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -1451,9 +1802,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.2,
+      "embed_query": 7.9,
       "dense": 0.1,
-      "total": 7.5
+      "total": 8.2
      },
      "top": [
       "NVDA FY2024 p.0 Earnings release text",
@@ -1479,9 +1830,9 @@
       "ndcg@10": 0.19519002499605084
      },
      "timings_ms": {
-      "embed_query": 7.1,
+      "embed_query": 7.7,
       "dense": 0.1,
-      "total": 7.4
+      "total": 8.0
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -1507,9 +1858,9 @@
       "ndcg@10": 0.664550862590272
      },
      "timings_ms": {
-      "embed_query": 6.9,
+      "embed_query": 7.4,
       "dense": 0.1,
-      "total": 7.1
+      "total": 7.6
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -1535,9 +1886,9 @@
       "ndcg@10": 0.3065735963827292
      },
      "timings_ms": {
-      "embed_query": 7.1,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.8
      },
      "top": [
       "GOOGL FY2024 p.0 Earnings release table",
@@ -1563,9 +1914,9 @@
       "ndcg@10": 0.6509209298071326
      },
      "timings_ms": {
-      "embed_query": 7.1,
+      "embed_query": 7.4,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.6
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -1591,9 +1942,9 @@
       "ndcg@10": 0.38685280723454163
      },
      "timings_ms": {
-      "embed_query": 14.6,
+      "embed_query": 9.9,
       "dense": 0.1,
-      "total": 14.8
+      "total": 10.1
      },
      "top": [
       "MSFT FY2025 p.0 Earnings release table",
@@ -1619,9 +1970,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 7.0,
-      "dense": 0.0,
-      "total": 7.2
+      "embed_query": 7.4,
+      "dense": 0.1,
+      "total": 7.6
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -1647,9 +1998,9 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "embed_query": 7.8,
+      "embed_query": 7.0,
       "dense": 0.1,
-      "total": 8.0
+      "total": 7.3
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -1675,9 +2026,9 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "embed_query": 7.1,
+      "embed_query": 7.3,
       "dense": 0.0,
-      "total": 7.3
+      "total": 7.5
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -1703,9 +2054,9 @@
       "ndcg@10": 0.5
      },
      "timings_ms": {
-      "embed_query": 6.6,
-      "dense": 0.0,
-      "total": 6.8
+      "embed_query": 7.2,
+      "dense": 0.1,
+      "total": 7.3
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -1731,9 +2082,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 6.6,
+      "embed_query": 7.1,
       "dense": 0.0,
-      "total": 6.8
+      "total": 7.3
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -1759,9 +2110,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 6.9,
+      "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.1
+      "total": 7.3
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release table",
@@ -1787,9 +2138,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 6.9,
+      "embed_query": 8.0,
       "dense": 0.1,
-      "total": 7.1
+      "total": 8.1
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -1815,9 +2166,9 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "embed_query": 6.8,
-      "dense": 0.0,
-      "total": 7.0
+      "embed_query": 7.2,
+      "dense": 0.1,
+      "total": 7.4
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -1825,6 +2176,370 @@
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release table",
       "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.1111111111111111,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3010299956639812
+     },
+     "timings_ms": {
+      "embed_query": 7.3,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "embed_query": 7.5,
+      "dense": 0.0,
+      "total": 7.7
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "embed_query": 7.0,
+      "dense": 0.0,
+      "total": 7.2
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.4
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "embed_query": 7.2,
+      "dense": 0.1,
+      "total": 7.4
+     },
+     "top": [
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.2,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.38685280723454163
+     },
+     "timings_ms": {
+      "embed_query": 7.4,
+      "dense": 0.1,
+      "total": 7.6
+     },
+     "top": [
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "embed_query": 7.2,
+      "dense": 0.1,
+      "total": 7.4
+     },
+     "top": [
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "embed_query": 7.4,
+      "dense": 0.0,
+      "total": 7.6
+     },
+     "top": [
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release text",
+      "NVDA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "embed_query": 7.0,
+      "dense": 0.0,
+      "total": 7.2
+     },
+     "top": [
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "embed_query": 7.2,
+      "dense": 0.1,
+      "total": 7.4
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.3
+     },
+     "top": [
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "embed_query": 7.4,
+      "dense": 0.1,
+      "total": 7.6
+     },
+     "top": [
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.3,
+      "dense": 0.1,
+      "total": 7.5
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table"
      ]
     }
    ]
@@ -1851,9 +2566,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 7.3,
       "dense": 0.0,
-      "total": 7.4
+      "total": 7.5
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -1880,9 +2595,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.8,
+      "embed_query": 7.0,
       "dense": 0.0,
-      "total": 7.0
+      "total": 7.3
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -1909,9 +2624,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
+      "embed_query": 7.0,
       "dense": 0.0,
-      "total": 7.4
+      "total": 7.3
      },
      "top": [
       "MSFT FY2025 p.0 Earnings release table",
@@ -1938,9 +2653,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 7.3,
       "dense": 0.0,
-      "total": 7.2
+      "total": 7.5
      },
      "top": [
       "JPM FY2023 p.0 Earnings release text",
@@ -1967,9 +2682,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.9,
+      "embed_query": 7.0,
       "dense": 0.0,
-      "total": 7.2
+      "total": 7.3
      },
      "top": [
       "GOOGL FY2024 p.0 Earnings release text",
@@ -2025,9 +2740,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
-      "dense": 0.1,
-      "total": 7.4
+      "embed_query": 7.0,
+      "dense": 0.0,
+      "total": 7.2
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -2083,9 +2798,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 7.0,
       "dense": 0.0,
-      "total": 7.4
+      "total": 7.3
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -2112,9 +2827,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.5,
+      "embed_query": 7.1,
       "dense": 0.0,
-      "total": 6.8
+      "total": 7.3
      },
      "top": [
       "MA FY2024 p.0 Earnings release text",
@@ -2141,9 +2856,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.9,
+      "embed_query": 7.4,
       "dense": 0.0,
-      "total": 7.2
+      "total": 7.7
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -2170,9 +2885,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.9,
+      "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.1
+      "total": 7.3
      },
      "top": [
       "NVDA FY2023 p.0 Earnings release table",
@@ -2201,7 +2916,7 @@
       "bm25": 0.1,
       "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.4
+      "total": 7.3
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -2228,9 +2943,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.4,
+      "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.7
+      "total": 7.3
      },
      "top": [
       "MSFT FY2022 p.0 Earnings release table",
@@ -2259,7 +2974,7 @@
       "bm25": 0.1,
       "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.3
+      "total": 7.4
      },
      "top": [
       "TSLA FY2022 p.0 Earnings release text",
@@ -2286,9 +3001,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 7.3,
       "dense": 0.0,
-      "total": 7.2
+      "total": 7.6
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -2315,9 +3030,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.9,
+      "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.1
+      "total": 7.3
      },
      "top": [
       "AMZN FY2024 p.0 Earnings release text",
@@ -2373,9 +3088,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 7.3,
       "dense": 0.0,
-      "total": 7.3
+      "total": 7.6
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -2402,9 +3117,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 7.1,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.4
      },
      "top": [
       "NVDA FY2024 p.0 Earnings release text",
@@ -2431,9 +3146,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 7.1,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.5
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -2460,9 +3175,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 7.0,
       "dense": 0.1,
-      "total": 7.4
+      "total": 7.3
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -2489,9 +3204,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
-      "dense": 0.1,
-      "total": 7.4
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.5
      },
      "top": [
       "META FY2024 p.0 Earnings release table",
@@ -2518,9 +3233,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 7.0,
       "dense": 0.0,
-      "total": 7.4
+      "total": 7.3
      },
      "top": [
       "GOOGL FY2023 p.0 Earnings release table",
@@ -2549,7 +3264,7 @@
       "bm25": 0.1,
       "embed_query": 7.5,
       "dense": 0.0,
-      "total": 7.8
+      "total": 7.7
      },
      "top": [
       "MSFT FY2025 p.0 Earnings release text",
@@ -2576,9 +3291,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 7.4,
       "dense": 0.0,
-      "total": 7.3
+      "total": 7.6
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -2607,7 +3322,7 @@
       "bm25": 0.1,
       "embed_query": 7.0,
       "dense": 0.0,
-      "total": 7.2
+      "total": 7.3
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -2634,9 +3349,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 8.1,
       "dense": 0.0,
-      "total": 7.2
+      "total": 8.3
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -2692,7 +3407,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 7.0,
       "dense": 0.0,
       "total": 7.3
      },
@@ -2752,7 +3467,7 @@
       "bm25": 0.1,
       "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.4
+      "total": 7.3
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -2789,6 +3504,383 @@
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.1,
+      "dense": 0.0,
+      "total": 7.3
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.4,
+      "dense": 0.0,
+      "total": 7.7
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.0,
+      "dense": 0.0,
+      "total": 7.3
+     },
+     "top": [
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.4
+     },
+     "top": [
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.1,
+      "dense": 0.0,
+      "total": 7.4
+     },
+     "top": [
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release text",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.14285714285714285,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3333333333333333
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.4
+     },
+     "top": [
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.0,
+      "dense": 0.0,
+      "total": 7.3
+     },
+     "top": [
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.2,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.38685280723454163
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 6.9,
+      "dense": 0.0,
+      "total": 7.1
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table"
      ]
     }
    ]
@@ -2817,8 +3909,8 @@
       "bm25": 0.1,
       "embed_query": 7.1,
       "dense": 0.0,
-      "total": 1222.3,
-      "rerank": 1215.0
+      "total": 1233.4,
+      "rerank": 1226.0
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -2844,11 +3936,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 8.1,
+      "bm25": 0.2,
+      "embed_query": 11.6,
       "dense": 0.1,
-      "total": 533.6,
-      "rerank": 525.2
+      "total": 539.1,
+      "rerank": 526.9
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -2874,11 +3966,11 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 16.3,
+      "bm25": 0.1,
+      "embed_query": 8.0,
       "dense": 0.1,
-      "total": 1062.7,
-      "rerank": 1045.2
+      "total": 1046.0,
+      "rerank": 1037.6
      },
      "top": [
       "MSFT FY2025 p.0 Earnings release text",
@@ -2904,11 +3996,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 17.0,
-      "dense": 0.2,
-      "total": 1403.7,
-      "rerank": 1385.5
+      "bm25": 0.2,
+      "embed_query": 10.6,
+      "dense": 0.1,
+      "total": 1386.9,
+      "rerank": 1375.7
      },
      "top": [
       "JPM FY2023 p.0 Earnings release text",
@@ -2934,11 +4026,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "embed_query": 16.1,
-      "dense": 0.2,
-      "total": 1198.0,
-      "rerank": 1180.9
+      "bm25": 0.2,
+      "embed_query": 12.0,
+      "dense": 0.1,
+      "total": 1185.8,
+      "rerank": 1173.0
      },
      "top": [
       "GOOGL FY2024 p.0 Earnings release text",
@@ -2965,10 +4057,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.1,
+      "embed_query": 7.9,
       "dense": 0.1,
-      "total": 1292.1,
-      "rerank": 1283.6
+      "total": 1288.9,
+      "rerank": 1280.5
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -2995,10 +4087,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.9,
+      "embed_query": 8.1,
       "dense": 0.1,
-      "total": 1126.9,
-      "rerank": 1118.6
+      "total": 1127.2,
+      "rerank": 1118.7
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -3025,10 +4117,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.2,
+      "embed_query": 8.1,
       "dense": 0.1,
-      "total": 1150.3,
-      "rerank": 1141.6
+      "total": 1141.8,
+      "rerank": 1133.3
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -3055,10 +4147,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.8,
+      "embed_query": 8.1,
       "dense": 0.1,
-      "total": 1387.7,
-      "rerank": 1379.5
+      "total": 1371.7,
+      "rerank": 1363.2
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -3085,10 +4177,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.0,
+      "embed_query": 8.3,
       "dense": 0.1,
-      "total": 1348.0,
-      "rerank": 1339.5
+      "total": 1319.7,
+      "rerank": 1311.0
      },
      "top": [
       "MA FY2024 p.0 Earnings release text",
@@ -3115,10 +4207,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.8,
+      "embed_query": 8.4,
       "dense": 0.1,
-      "total": 893.6,
-      "rerank": 885.3
+      "total": 878.8,
+      "rerank": 869.9
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -3145,10 +4237,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.6,
+      "embed_query": 8.5,
       "dense": 0.1,
-      "total": 1254.4,
-      "rerank": 1246.4
+      "total": 1221.7,
+      "rerank": 1212.7
      },
      "top": [
       "NVDA FY2023 p.0 Earnings release text",
@@ -3175,10 +4267,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.4,
+      "embed_query": 8.3,
       "dense": 0.1,
-      "total": 1295.6,
-      "rerank": 1286.7
+      "total": 1267.4,
+      "rerank": 1258.6
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -3205,10 +4297,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.1,
+      "embed_query": 8.2,
       "dense": 0.1,
-      "total": 1198.2,
-      "rerank": 1189.7
+      "total": 1175.2,
+      "rerank": 1166.6
      },
      "top": [
       "MSFT FY2022 p.0 Earnings release text",
@@ -3234,11 +4326,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 7.6,
-      "dense": 0.1,
-      "total": 785.1,
-      "rerank": 777.1
+      "bm25": 0.2,
+      "embed_query": 11.8,
+      "dense": 0.2,
+      "total": 773.3,
+      "rerank": 760.8
      },
      "top": [
       "TSLA FY2022 p.0 Earnings release text",
@@ -3265,10 +4357,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.1,
+      "embed_query": 8.3,
       "dense": 0.1,
-      "total": 1313.0,
-      "rerank": 1304.5
+      "total": 1287.6,
+      "rerank": 1278.9
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -3295,10 +4387,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.0,
+      "embed_query": 8.5,
       "dense": 0.1,
-      "total": 1404.5,
-      "rerank": 1396.1
+      "total": 1378.6,
+      "rerank": 1369.7
      },
      "top": [
       "AMZN FY2024 p.0 Earnings release text",
@@ -3327,8 +4419,8 @@
       "bm25": 0.1,
       "embed_query": 8.3,
       "dense": 0.1,
-      "total": 1238.9,
-      "rerank": 1230.2
+      "total": 1211.8,
+      "rerank": 1203.0
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -3355,10 +4447,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.7,
+      "embed_query": 8.3,
       "dense": 0.1,
-      "total": 1523.2,
-      "rerank": 1515.0
+      "total": 1486.6,
+      "rerank": 1477.9
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -3384,11 +4476,11 @@
       "ndcg@10": 0.8048099750039491
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 8.2,
+      "bm25": 0.2,
+      "embed_query": 9.6,
       "dense": 0.1,
-      "total": 1316.3,
-      "rerank": 1307.6
+      "total": 1246.6,
+      "rerank": 1236.3
      },
      "top": [
       "NVDA FY2024 p.0 Earnings release text",
@@ -3414,11 +4506,11 @@
       "ndcg@10": 0.7327711443782634
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 8.4,
+      "bm25": 0.1,
+      "embed_query": 8.2,
       "dense": 0.1,
-      "total": 1595.2,
-      "rerank": 1586.2
+      "total": 1523.3,
+      "rerank": 1514.6
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -3444,11 +4536,11 @@
       "ndcg@10": 0.9178287402913377
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 10.9,
-      "dense": 0.2,
-      "total": 1333.3,
-      "rerank": 1321.6
+      "bm25": 0.1,
+      "embed_query": 8.0,
+      "dense": 0.1,
+      "total": 1241.4,
+      "rerank": 1232.9
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -3475,10 +4567,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.0,
+      "embed_query": 7.9,
       "dense": 0.1,
-      "total": 1582.4,
-      "rerank": 1573.8
+      "total": 1454.4,
+      "rerank": 1446.0
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -3504,11 +4596,11 @@
       "ndcg@10": 0.5802792108518124
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 8.4,
-      "dense": 0.3,
-      "total": 1563.4,
-      "rerank": 1554.2
+      "bm25": 0.1,
+      "embed_query": 7.8,
+      "dense": 0.1,
+      "total": 1442.2,
+      "rerank": 1433.9
      },
      "top": [
       "GOOGL FY2023 p.0 Earnings release text",
@@ -3534,11 +4626,11 @@
       "ndcg@10": 0.6509209298071326
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 8.9,
+      "bm25": 0.1,
+      "embed_query": 8.4,
       "dense": 0.1,
-      "total": 1553.9,
-      "rerank": 1544.4
+      "total": 1427.4,
+      "rerank": 1418.5
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -3564,11 +4656,11 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "embed_query": 11.0,
-      "dense": 0.2,
-      "total": 1520.0,
-      "rerank": 1508.0
+      "bm25": 0.1,
+      "embed_query": 8.5,
+      "dense": 0.1,
+      "total": 1353.4,
+      "rerank": 1344.5
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -3594,11 +4686,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 7.9,
+      "bm25": 0.1,
+      "embed_query": 7.4,
       "dense": 0.1,
-      "total": 1536.5,
-      "rerank": 1528.0
+      "total": 1435.2,
+      "rerank": 1427.3
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -3624,11 +4716,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 10.4,
+      "bm25": 0.1,
+      "embed_query": 7.9,
       "dense": 0.1,
-      "total": 1035.7,
-      "rerank": 1024.3
+      "total": 960.2,
+      "rerank": 951.9
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -3654,11 +4746,11 @@
       "ndcg@10": 0.5
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 7.4,
+      "bm25": 0.1,
+      "embed_query": 7.8,
       "dense": 0.1,
-      "total": 1321.6,
-      "rerank": 1313.7
+      "total": 1253.0,
+      "rerank": 1244.7
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -3684,11 +4776,11 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 8.4,
+      "bm25": 0.1,
+      "embed_query": 8.0,
       "dense": 0.1,
-      "total": 1458.9,
-      "rerank": 1449.9
+      "total": 1375.7,
+      "rerank": 1367.3
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -3715,10 +4807,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.1,
+      "embed_query": 8.5,
       "dense": 0.1,
-      "total": 602.5,
-      "rerank": 593.9
+      "total": 599.8,
+      "rerank": 590.9
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release table",
@@ -3744,11 +4836,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 8.5,
+      "bm25": 0.1,
+      "embed_query": 8.7,
       "dense": 0.1,
-      "total": 1394.7,
-      "rerank": 1385.7
+      "total": 1378.7,
+      "rerank": 1369.6
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -3775,10 +4867,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 10.5,
+      "embed_query": 8.0,
       "dense": 0.1,
-      "total": 1278.9,
-      "rerank": 1267.9
+      "total": 1262.3,
+      "rerank": 1253.8
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -3786,6 +4878,396 @@
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.16666666666666666,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3562071871080222
+     },
+     "timings_ms": {
+      "bm25": 0.3,
+      "embed_query": 12.8,
+      "dense": 0.2,
+      "total": 1282.0,
+      "rerank": 1268.2
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.1,
+      "dense": 0.1,
+      "total": 1268.9,
+      "rerank": 1260.4
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.9,
+      "dense": 0.1,
+      "total": 1264.8,
+      "rerank": 1256.4
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.3,
+      "dense": 0.1,
+      "total": 1223.0,
+      "rerank": 1214.2
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.9,
+      "dense": 0.1,
+      "total": 1485.3,
+      "rerank": 1475.9
+     },
+     "top": [
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.4,
+      "dense": 0.1,
+      "total": 1492.6,
+      "rerank": 1483.7
+     },
+     "top": [
+      "AMZN FY2023 p.0 Earnings release text",
+      "AMZN FY2023 p.0 Earnings release text",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.14285714285714285,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3333333333333333
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.3,
+      "dense": 0.1,
+      "total": 1474.5,
+      "rerank": 1465.7
+     },
+     "top": [
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.8,
+      "dense": 0.1,
+      "total": 1298.2,
+      "rerank": 1288.9
+     },
+     "top": [
+      "NVDA FY2022 p.0 Earnings release text",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.2,
+      "dense": 0.1,
+      "total": 1438.1,
+      "rerank": 1429.5
+     },
+     "top": [
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.1,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.2890648263178879
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 9.0,
+      "dense": 0.1,
+      "total": 1299.1,
+      "rerank": 1289.6
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.2,
+      "dense": 0.1,
+      "total": 1298.0,
+      "rerank": 1289.3
+     },
+     "top": [
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.1,
+      "dense": 0.1,
+      "total": 1582.9,
+      "rerank": 1574.3
+     },
+     "top": [
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 8.2,
+      "dense": 0.1,
+      "total": 1553.7,
+      "rerank": 1545.0
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table"
      ]
     }
    ]
@@ -3812,9 +5294,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 8.3,
+      "embed_query": 13.6,
       "dense": 0.1,
-      "total": 8.8
+      "total": 14.4
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -3841,9 +5323,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.5,
+      "embed_query": 10.7,
       "dense": 0.1,
-      "total": 7.7
+      "total": 11.2
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -3870,9 +5352,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.3,
+      "embed_query": 9.9,
       "dense": 0.1,
-      "total": 7.6
+      "total": 10.3
      },
      "top": [
       "MSFT FY2025 p.0 Earnings release table",
@@ -3899,9 +5381,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 9.3,
       "dense": 0.1,
-      "total": 7.4
+      "total": 9.7
      },
      "top": [
       "JPM FY2023 p.0 Earnings release text",
@@ -3928,9 +5410,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.7,
+      "embed_query": 8.5,
       "dense": 0.1,
-      "total": 8.0
+      "total": 8.8
      },
      "top": [
       "GOOGL FY2024 p.0 Earnings release text",
@@ -3957,9 +5439,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
+      "embed_query": 7.9,
       "dense": 0.1,
-      "total": 7.5
+      "total": 8.3
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -3986,9 +5468,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.5,
+      "embed_query": 7.8,
       "dense": 0.1,
-      "total": 7.8
+      "total": 8.1
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -4015,9 +5497,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.6,
+      "embed_query": 7.8,
       "dense": 0.1,
-      "total": 7.9
+      "total": 8.1
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -4044,9 +5526,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.3,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.6
+      "total": 7.8
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -4073,9 +5555,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.8,
+      "embed_query": 7.2,
       "dense": 0.1,
-      "total": 7.2
+      "total": 7.5
      },
      "top": [
       "MA FY2024 p.0 Earnings release text",
@@ -4102,9 +5584,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 6.8,
-      "dense": 0.1,
-      "total": 7.0
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.4
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -4131,8 +5613,8 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
-      "dense": 0.1,
+      "embed_query": 7.3,
+      "dense": 0.0,
       "total": 7.5
      },
      "top": [
@@ -4160,9 +5642,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
-      "dense": 0.1,
-      "total": 7.4
+      "embed_query": 7.7,
+      "dense": 0.0,
+      "total": 8.0
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -4189,9 +5671,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
-      "dense": 0.1,
-      "total": 7.3
+      "embed_query": 7.6,
+      "dense": 0.0,
+      "total": 7.9
      },
      "top": [
       "MSFT FY2022 p.0 Earnings release table",
@@ -4218,8 +5700,8 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.5,
-      "dense": 0.1,
+      "embed_query": 7.6,
+      "dense": 0.0,
       "total": 7.8
      },
      "top": [
@@ -4276,9 +5758,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 7.5,
       "dense": 0.1,
-      "total": 7.3
+      "total": 7.8
      },
      "top": [
       "AMZN FY2024 p.0 Earnings release text",
@@ -4305,9 +5787,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
-      "dense": 0.1,
-      "total": 7.6
+      "embed_query": 7.4,
+      "dense": 0.0,
+      "total": 7.7
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -4334,9 +5816,9 @@
      },
      "timings_ms": {
       "bm25": 0.4,
-      "embed_query": 27.4,
-      "dense": 0.30000000000000004,
-      "total": 28.3
+      "embed_query": 28.1,
+      "dense": 0.1,
+      "total": 28.999999999999996
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -4363,9 +5845,9 @@
      },
      "timings_ms": {
       "bm25": 0.4,
-      "embed_query": 27.700000000000003,
-      "dense": 0.4,
-      "total": 29.0
+      "embed_query": 28.699999999999996,
+      "dense": 0.2,
+      "total": 29.7
      },
      "top": [
       "NVDA FY2024 p.0 Earnings release text",
@@ -4392,9 +5874,9 @@
      },
      "timings_ms": {
       "bm25": 0.4,
-      "embed_query": 27.3,
-      "dense": 0.30000000000000004,
-      "total": 28.5
+      "embed_query": 29.3,
+      "dense": 0.2,
+      "total": 30.400000000000002
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -4421,9 +5903,9 @@
      },
      "timings_ms": {
       "bm25": 0.4,
-      "embed_query": 27.299999999999997,
+      "embed_query": 28.199999999999996,
       "dense": 0.30000000000000004,
-      "total": 28.4
+      "total": 29.2
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -4450,9 +5932,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 14.1,
+      "embed_query": 13.9,
       "dense": 0.1,
-      "total": 14.600000000000001
+      "total": 14.4
      },
      "top": [
       "META FY2024 p.0 Earnings release table",
@@ -4479,9 +5961,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 14.0,
-      "dense": 0.2,
-      "total": 14.6
+      "embed_query": 13.8,
+      "dense": 0.1,
+      "total": 14.399999999999999
      },
      "top": [
       "GOOGL FY2023 p.0 Earnings release table",
@@ -4508,9 +5990,9 @@
      },
      "timings_ms": {
       "bm25": 0.4,
-      "embed_query": 28.5,
+      "embed_query": 29.5,
       "dense": 0.0,
-      "total": 29.599999999999998
+      "total": 30.4
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -4537,9 +6019,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.3,
+      "embed_query": 7.1,
       "dense": 0.0,
-      "total": 7.6
+      "total": 7.3
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release table",
@@ -4566,9 +6048,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.1,
+      "embed_query": 7.4,
       "dense": 0.1,
-      "total": 7.4
+      "total": 7.7
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -4595,9 +6077,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
+      "embed_query": 7.4,
       "dense": 0.0,
-      "total": 7.3
+      "total": 7.7
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -4624,9 +6106,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
-      "dense": 0.0,
-      "total": 7.3
+      "embed_query": 7.3,
+      "dense": 0.1,
+      "total": 7.6
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -4682,9 +6164,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
+      "embed_query": 7.3,
       "dense": 0.0,
-      "total": 7.4
+      "total": 7.5
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release table",
@@ -4712,7 +6194,7 @@
      "timings_ms": {
       "bm25": 0.1,
       "embed_query": 7.2,
-      "dense": 0.1,
+      "dense": 0.0,
       "total": 7.5
      },
      "top": [
@@ -4740,9 +6222,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.0,
-      "dense": 0.1,
-      "total": 7.3
+      "embed_query": 7.3,
+      "dense": 0.0,
+      "total": 7.6
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -4750,6 +6232,383 @@
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.0,
+      "dense": 0.0,
+      "total": 7.3
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.3,
+      "dense": 0.0,
+      "total": 7.6
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.3,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.1,
+      "dense": 0.1,
+      "total": 7.4
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.1,
+      "dense": 0.0,
+      "total": 7.4
+     },
+     "top": [
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.1,
+      "total": 7.5
+     },
+     "top": [
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.3,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.1,
+      "dense": 0.0,
+      "total": 7.3
+     },
+     "top": [
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release text",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.1,
+      "total": 7.5
+     },
+     "top": [
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.3,
+      "dense": 0.1,
+      "total": 7.6
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.14285714285714285,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3333333333333333
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.2,
+      "dense": 0.0,
+      "total": 7.5
+     },
+     "top": [
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.3,
+      "dense": 0.1,
+      "total": 7.6
+     },
+     "top": [
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.2,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.38685280723454163
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.1,
+      "dense": 0.0,
+      "total": 7.3
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table"
      ]
     }
    ]
@@ -4776,10 +6635,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
+      "embed_query": 7.1,
       "dense": 0.1,
-      "total": 1354.7,
-      "rerank": 1347.3
+      "total": 1369.5,
+      "rerank": 1362.1
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -4806,10 +6665,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.7,
+      "embed_query": 8.4,
       "dense": 0.1,
-      "total": 598.0,
-      "rerank": 589.9
+      "total": 614.3,
+      "rerank": 605.5
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -4836,10 +6695,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.6,
+      "embed_query": 9.1,
       "dense": 0.1,
-      "total": 1166.9,
-      "rerank": 1157.9
+      "total": 1284.6,
+      "rerank": 1275.0
      },
      "top": [
       "MSFT FY2025 p.0 Earnings release text",
@@ -4866,10 +6725,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.4,
+      "embed_query": 7.9,
       "dense": 0.1,
-      "total": 1590.5,
-      "rerank": 1581.7
+      "total": 1770.8,
+      "rerank": 1762.4
      },
      "top": [
       "JPM FY2023 p.0 Earnings release text",
@@ -4896,10 +6755,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.6,
+      "embed_query": 8.7,
       "dense": 0.1,
-      "total": 1437.7,
-      "rerank": 1428.6
+      "total": 1480.1,
+      "rerank": 1471.0
      },
      "top": [
       "GOOGL FY2024 p.0 Earnings release text",
@@ -4926,10 +6785,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.9,
+      "embed_query": 8.5,
       "dense": 0.1,
-      "total": 1553.8,
-      "rerank": 1544.4
+      "total": 1645.4,
+      "rerank": 1636.5
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -4956,10 +6815,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 9.0,
+      "embed_query": 9.1,
       "dense": 0.1,
-      "total": 1360.4,
-      "rerank": 1350.9
+      "total": 1503.9,
+      "rerank": 1494.4
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -4986,10 +6845,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.5,
+      "embed_query": 8.6,
       "dense": 0.1,
-      "total": 1405.1,
-      "rerank": 1396.1
+      "total": 1500.9,
+      "rerank": 1491.8
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -5015,11 +6874,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 17.4,
-      "dense": 0.2,
-      "total": 1729.5,
-      "rerank": 1710.9
+      "bm25": 0.1,
+      "embed_query": 9.3,
+      "dense": 0.1,
+      "total": 1851.8,
+      "rerank": 1842.0
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -5046,10 +6905,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.9,
+      "embed_query": 8.6,
       "dense": 0.1,
-      "total": 1666.8,
-      "rerank": 1657.5
+      "total": 1893.1,
+      "rerank": 1884.0
      },
      "top": [
       "MA FY2024 p.0 Earnings release text",
@@ -5076,10 +6935,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.9,
+      "embed_query": 9.4,
       "dense": 0.1,
-      "total": 1097.2,
-      "rerank": 1087.8
+      "total": 1237.4,
+      "rerank": 1227.4
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -5106,10 +6965,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.6,
+      "embed_query": 8.9,
       "dense": 0.1,
-      "total": 1544.0,
-      "rerank": 1535.0
+      "total": 1690.9,
+      "rerank": 1681.6
      },
      "top": [
       "NVDA FY2023 p.0 Earnings release text",
@@ -5135,11 +6994,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 10.0,
+      "bm25": 0.1,
+      "embed_query": 9.1,
       "dense": 0.1,
-      "total": 1547.4,
-      "rerank": 1536.8
+      "total": 1754.5,
+      "rerank": 1744.9
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -5166,10 +7025,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.6,
+      "embed_query": 8.9,
       "dense": 0.1,
-      "total": 1528.0,
-      "rerank": 1519.0
+      "total": 1644.8,
+      "rerank": 1635.3
      },
      "top": [
       "MSFT FY2022 p.0 Earnings release text",
@@ -5195,11 +7054,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 18.0,
-      "dense": 0.2,
-      "total": 985.7,
-      "rerank": 966.5
+      "bm25": 0.1,
+      "embed_query": 9.2,
+      "dense": 0.1,
+      "total": 1069.6,
+      "rerank": 1060.0
      },
      "top": [
       "TSLA FY2022 p.0 Earnings release text",
@@ -5225,11 +7084,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "embed_query": 18.7,
-      "dense": 0.2,
-      "total": 1568.0,
-      "rerank": 1547.9
+      "bm25": 0.1,
+      "embed_query": 8.4,
+      "dense": 0.1,
+      "total": 1877.0,
+      "rerank": 1868.1
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -5256,10 +7115,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 9.0,
+      "embed_query": 9.6,
       "dense": 0.1,
-      "total": 1679.0,
-      "rerank": 1669.6
+      "total": 1946.2,
+      "rerank": 1936.1
      },
      "top": [
       "AMZN FY2024 p.0 Earnings release text",
@@ -5286,10 +7145,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 8.9,
+      "embed_query": 8.6,
       "dense": 0.1,
-      "total": 1538.0,
-      "rerank": 1528.7
+      "total": 1768.7,
+      "rerank": 1759.6
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -5315,11 +7174,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.7,
-      "embed_query": 48.8,
-      "dense": 0.5,
-      "total": 3368.2,
-      "rerank": 3316.5
+      "bm25": 0.4,
+      "embed_query": 32.2,
+      "dense": 0.4,
+      "total": 4015.9,
+      "rerank": 3982.2999999999997
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -5346,10 +7205,10 @@
      },
      "timings_ms": {
       "bm25": 0.5,
-      "embed_query": 31.8,
+      "embed_query": 33.0,
       "dense": 0.4,
-      "total": 6142.499999999999,
-      "rerank": 6109.1
+      "total": 7770.7,
+      "rerank": 7736.2
      },
      "top": [
       "NVDA FY2024 p.0 Earnings release text",
@@ -5375,11 +7234,11 @@
       "ndcg@10": 0.7606395682357036
      },
      "timings_ms": {
-      "bm25": 1.2,
-      "embed_query": 53.599999999999994,
-      "dense": 0.5,
-      "total": 6566.799999999999,
-      "rerank": 6509.7
+      "bm25": 0.5,
+      "embed_query": 33.300000000000004,
+      "dense": 0.4,
+      "total": 8943.2,
+      "rerank": 8908.2
      },
      "top": [
       "V FY2024 p.0 Earnings release text",
@@ -5406,10 +7265,10 @@
      },
      "timings_ms": {
       "bm25": 0.4,
-      "embed_query": 31.6,
+      "embed_query": 33.1,
       "dense": 0.4,
-      "total": 5279.4,
-      "rerank": 5246.4
+      "total": 7477.499999999999,
+      "rerank": 7442.8
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -5436,10 +7295,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 16.6,
+      "embed_query": 18.299999999999997,
       "dense": 0.2,
-      "total": 2899.1000000000004,
-      "rerank": 2881.8
+      "total": 4402.9,
+      "rerank": 4383.799999999999
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -5465,11 +7324,11 @@
       "ndcg@10": 0.5714285040141098
      },
      "timings_ms": {
-      "bm25": 0.7,
-      "embed_query": 32.0,
-      "dense": 0.30000000000000004,
-      "total": 3388.0,
-      "rerank": 3353.8
+      "bm25": 0.2,
+      "embed_query": 19.5,
+      "dense": 0.2,
+      "total": 5144.4,
+      "rerank": 5124.2
      },
      "top": [
       "GOOGL FY2023 p.0 Earnings release text",
@@ -5495,11 +7354,11 @@
       "ndcg@10": 0.6052602440527057
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 34.699999999999996,
-      "dense": 0.4,
-      "total": 4257.5,
-      "rerank": 4221.5
+      "bm25": 0.7,
+      "embed_query": 60.9,
+      "dense": 0.5,
+      "total": 6567.6,
+      "rerank": 6503.6
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release text",
@@ -5525,11 +7384,11 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 8.8,
+      "bm25": 0.2,
+      "embed_query": 10.3,
       "dense": 0.1,
-      "total": 1728.1,
-      "rerank": 1718.8
+      "total": 2692.2,
+      "rerank": 2681.1
      },
      "top": [
       "NVDA FY2025 p.0 Earnings release text",
@@ -5555,11 +7414,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.6,
-      "embed_query": 19.9,
-      "dense": 0.2,
-      "total": 1782.6,
-      "rerank": 1760.9
+      "bm25": 0.2,
+      "embed_query": 10.8,
+      "dense": 0.1,
+      "total": 2871.5,
+      "rerank": 2860.2
      },
      "top": [
       "AMZN FY2023 p.0 Earnings release text",
@@ -5586,10 +7445,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 8.9,
+      "embed_query": 10.9,
       "dense": 0.1,
-      "total": 1224.7,
-      "rerank": 1215.3
+      "total": 1923.8,
+      "rerank": 1912.3
      },
      "top": [
       "META FY2025 p.0 Earnings release text",
@@ -5615,11 +7474,11 @@
       "ndcg@10": 0.5
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 9.0,
+      "bm25": 0.2,
+      "embed_query": 10.3,
       "dense": 0.1,
-      "total": 1578.8,
-      "rerank": 1569.3
+      "total": 2443.1,
+      "rerank": 2432.2
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -5645,11 +7504,11 @@
       "ndcg@10": 0.6309297535714575
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 9.0,
+      "bm25": 0.2,
+      "embed_query": 10.4,
       "dense": 0.1,
-      "total": 1750.0,
-      "rerank": 1740.5
+      "total": 2698.6,
+      "rerank": 2687.5
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release text",
@@ -5676,10 +7535,10 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 9.2,
+      "embed_query": 9.6,
       "dense": 0.1,
-      "total": 808.5,
-      "rerank": 798.9
+      "total": 1143.0,
+      "rerank": 1132.9
      },
      "top": [
       "AAPL FY2025 p.0 Earnings release table",
@@ -5705,11 +7564,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 9.5,
+      "bm25": 0.2,
+      "embed_query": 10.3,
       "dense": 0.1,
-      "total": 1707.3,
-      "rerank": 1697.3
+      "total": 2721.9,
+      "rerank": 2711.0
      },
      "top": [
       "META FY2024 p.0 Earnings release text",
@@ -5735,11 +7594,11 @@
       "ndcg@10": 1.0
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 9.4,
+      "bm25": 0.2,
+      "embed_query": 10.4,
       "dense": 0.1,
-      "total": 1542.9,
-      "rerank": 1533.0
+      "total": 2464.6,
+      "rerank": 2453.6
      },
      "top": [
       "TSLA FY2024 p.0 Earnings release table",
@@ -5747,6 +7606,396 @@
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text",
       "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.16666666666666666,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3562071871080222
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 10.0,
+      "dense": 0.1,
+      "total": 2446.4,
+      "rerank": 2435.9
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text",
+      "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 10.3,
+      "dense": 0.1,
+      "total": 2371.7,
+      "rerank": 2360.9
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 9.9,
+      "dense": 0.1,
+      "total": 2353.4,
+      "rerank": 2342.9
+     },
+     "top": [
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release text",
+      "TSLA FY2023 p.0 Earnings release table",
+      "TSLA FY2023 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.3,
+      "embed_query": 16.5,
+      "dense": 0.2,
+      "total": 2293.5,
+      "rerank": 2275.7
+     },
+     "top": [
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release table",
+      "TSLA FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 1.0,
+      "recall@1": 1.0,
+      "hit@1": 1.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 1.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 10.1,
+      "dense": 0.1,
+      "total": 2849.9,
+      "rerank": 2839.3
+     },
+     "top": [
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release table",
+      "AMZN FY2024 p.0 Earnings release text",
+      "AMZN FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 12.5,
+      "dense": 0.1,
+      "total": 2747.9,
+      "rerank": 2734.6
+     },
+     "top": [
+      "AMZN FY2023 p.0 Earnings release text",
+      "AMZN FY2023 p.0 Earnings release text",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table",
+      "AMZN FY2023 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.14285714285714285,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.3333333333333333
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 9.3,
+      "dense": 0.1,
+      "total": 2778.5,
+      "rerank": 2768.5
+     },
+     "top": [
+      "JPM FY2022 p.0 Earnings release table",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text",
+      "JPM FY2022 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 11.0,
+      "dense": 0.1,
+      "total": 2376.1,
+      "rerank": 2364.6
+     },
+     "top": [
+      "NVDA FY2022 p.0 Earnings release text",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table",
+      "NVDA FY2022 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 10.0,
+      "dense": 0.1,
+      "total": 2605.9,
+      "rerank": 2595.4
+     },
+     "top": [
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release text",
+      "NVDA FY2025 p.0 Earnings release table",
+      "NVDA FY2025 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.1,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.2890648263178879
+     },
+     "timings_ms": {
+      "bm25": 0.4,
+      "embed_query": 19.9,
+      "dense": 0.2,
+      "total": 2290.8,
+      "rerank": 2269.4
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.3333333333333333,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.5
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 9.9,
+      "dense": 0.1,
+      "total": 2358.2,
+      "rerank": 2347.6
+     },
+     "top": [
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release text",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release table",
+      "META FY2024 p.0 Earnings release table"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.5,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 1.0,
+      "hit@3": 1.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.6309297535714575
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 9.7,
+      "dense": 0.1,
+      "total": 2632.8,
+      "rerank": 2622.6
+     },
+     "top": [
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release table",
+      "MA FY2022 p.0 Earnings release text",
+      "MA FY2022 p.0 Earnings release text"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.25,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "ndcg@10": 0.43067655807339306
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 10.6,
+      "dense": 0.1,
+      "total": 2402.1,
+      "rerank": 2391.0
+     },
+     "top": [
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release text",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table",
+      "GOOGL FY2024 p.0 Earnings release table"
      ]
     }
    ]
@@ -5772,8 +8021,8 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.5,
-      "total": 0.7
+      "bm25": 0.4,
+      "total": 0.6
      },
      "top": [
       "NVDA FY2023 p.9 Item 1 text",
@@ -5799,8 +8048,8 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "total": 0.2
+      "bm25": 0.2,
+      "total": 0.3
      },
      "top": [
       "AAPL FY2023 p.19 Item 3 text",
@@ -5826,7 +8075,7 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.4,
+      "bm25": 0.3,
       "total": 0.5
      },
      "top": [
@@ -5853,8 +8102,8 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "total": 0.4
+      "bm25": 0.2,
+      "total": 0.3
      },
      "top": [
       "MSFT FY2024 p.43 Item 7 text",
@@ -5880,8 +8129,8 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "total": 0.4
+      "bm25": 0.2,
+      "total": 0.3
      },
      "top": [
       "GOOGL FY2024 p.38 Item 7 text",
@@ -5934,8 +8183,8 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "total": 0.4
+      "bm25": 0.2,
+      "total": 0.3
      },
      "top": [
       "AMZN FY2024 p.28 Item 7 text",
@@ -6151,7 +8400,7 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "total": 0.2
+      "total": 0.3
      },
      "top": [
       "TSLA FY2022 p.57 Item 8 text",
@@ -6637,7 +8886,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "total": 0.3
+      "total": 0.2
      },
      "top": [
       "TSLA FY2024 p.8 Item 1 text",
@@ -6645,6 +8894,357 @@
       "TSLA FY2025 p.8 Item 1 text",
       "TSLA FY2022 p.6 Item 1 text",
       "TSLA FY2024 p.18 Item 1A text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "AMZN FY2024 p.28 Item 7 text",
+      "AMZN FY2025 p.28 Item 7 text",
+      "AMZN FY2024 p.28 Item 7 text",
+      "AMZN FY2024 p.29 Item 7 text",
+      "AMZN FY2024 p.29 Item 7 text"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "TSLA FY2023 p.40 Item 7 table",
+      "TSLA FY2024 p.41 Item 7 table",
+      "MSFT FY2024 p.43 Item 7 text",
+      "TSLA FY2025 p.41 Item 7 table",
+      "TSLA FY2024 p.93 Item 8 text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "TSLA FY2022 p.33 Item 7 text",
+      "TSLA FY2023 p.36 Item 7 text",
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2022 p.38 Item 7 text",
+      "TSLA FY2024 p.37 Item 7 text"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "AMZN FY2024 p.22 Item 7 text",
+      "AMZN FY2024 p.23 Item 7 text",
+      "TSLA FY2024 p.16 Item 1 text",
+      "AMZN FY2024 p.41 Item 8 text",
+      "TSLA FY2025 p.14 Item 1 text"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "AMZN FY2024 p.24 Item 7 table",
+      "AMZN FY2025 p.24 Item 7 table",
+      "AMZN FY2024 p.61 Item 8 text",
+      "AMZN FY2023 p.24 Item 7 text",
+      "AMZN FY2023 p.24 Item 7 table"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "AMZN FY2025 p.49 Item 8 text",
+      "AMZN FY2024 p.59 Item 8 text",
+      "AMZN FY2022 p.59 Item 8 text",
+      "AMZN FY2023 p.61 Item 8 text",
+      "AMZN FY2025 p.49 Item 8 text"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "AMZN FY2025 p.49 Item 8 text",
+      "AMZN FY2024 p.24 Item 7 text",
+      "AMZN FY2023 p.24 Item 7 text",
+      "AMZN FY2022 p.23 Item 7 text",
+      "AMZN FY2022 p.51 Item 8 text"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "AAPL FY2023 p.25 Item 7 table",
+      "AAPL FY2022 p.25 Item 7 table",
+      "AAPL FY2025 p.26 Item 7 table",
+      "AAPL FY2024 p.26 Item 7 table",
+      "AAPL FY2023 p.25 Item 7 table"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "MSFT FY2023 p.44 Item 7 text",
+      "MSFT FY2024 p.43 Item 7 text",
+      "MSFT FY2024 p.47 Item 7 text",
+      "MSFT FY2023 p.49 Item 7 text",
+      "MSFT FY2024 p.43 Item 7 text"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "total": 0.2
+     },
+     "top": [
+      "GOOGL FY2024 p.37 Item 7 text",
+      "GOOGL FY2025 p.34 Item 7 text",
+      "GOOGL FY2024 p.39 Item 7 text",
+      "GOOGL FY2024 p.33 Item 7 text",
+      "GOOGL FY2024 p.37 Item 7 table"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "AMZN FY2024 p.61 Item 8 text",
+      "AMZN FY2023 p.63 Item 8 text",
+      "MSFT FY2023 p.41 Item 7 text",
+      "AMZN FY2025 p.62 Item 8 text",
+      "MSFT FY2024 p.43 Item 7 text"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "AMZN FY2025 p.49 Item 8 text",
+      "AMZN FY2025 p.49 Item 8 text",
+      "MA FY2022 p.74 Item 8 text",
+      "MA FY2022 p.113 Item 9A text",
+      "MA FY2025 p.76 Item 8 text"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "total": 0.3
+     },
+     "top": [
+      "MSFT FY2024 p.43 Item 7 text",
+      "MSFT FY2024 p.43 Item 7 text",
+      "MSFT FY2024 p.46 Item 7 text",
+      "GOOGL FY2024 p.31 Item 7 text",
+      "MSFT FY2024 p.47 Item 7 text"
      ]
     }
    ]
@@ -6670,9 +9270,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 8.9,
-      "dense": 4.4,
-      "total": 13.4
+      "embed_query": 9.3,
+      "dense": 2.5,
+      "total": 11.9
      },
      "top": [
       "NVDA FY2023 p.38 Item 7 text",
@@ -6698,9 +9298,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 8.4,
+      "embed_query": 9.1,
       "dense": 0.9,
-      "total": 9.4
+      "total": 10.2
      },
      "top": [
       "AAPL FY2023 p.37 Item 8 text",
@@ -6726,9 +9326,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 8.2,
+      "embed_query": 8.3,
       "dense": 0.9,
-      "total": 9.2
+      "total": 9.3
      },
      "top": [
       "MSFT FY2022 p.44 Item 7 table",
@@ -6754,9 +9354,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.9,
+      "embed_query": 8.9,
       "dense": 0.9,
-      "total": 8.9
+      "total": 9.9
      },
      "top": [
       "JPM FY2023 p.71 Item 8 text",
@@ -6782,9 +9382,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 8.1,
-      "dense": 0.9,
-      "total": 9.1
+      "embed_query": 8.0,
+      "dense": 2.0,
+      "total": 10.2
      },
      "top": [
       "GOOGL FY2023 p.37 Item 7 text",
@@ -6810,9 +9410,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.9,
-      "dense": 0.9,
-      "total": 8.9
+      "embed_query": 9.2,
+      "dense": 1.0,
+      "total": 10.3
      },
      "top": [
       "AMZN FY2023 p.24 Item 7 text",
@@ -6838,9 +9438,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 8.0,
+      "embed_query": 9.5,
       "dense": 0.9,
-      "total": 9.0
+      "total": 10.6
      },
      "top": [
       "TSLA FY2023 p.34 Item 7 text",
@@ -6866,9 +9466,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.6,
+      "embed_query": 8.3,
       "dense": 0.9,
-      "total": 8.6
+      "total": 9.3
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -6894,9 +9494,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 8.1,
+      "embed_query": 8.2,
       "dense": 0.9,
-      "total": 9.1
+      "total": 9.2
      },
      "top": [
       "V FY2024 p.6 Item 1 table",
@@ -6922,9 +9522,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.7,
+      "embed_query": 8.2,
       "dense": 0.9,
-      "total": 8.7
+      "total": 9.2
      },
      "top": [
       "MA FY2024 p.53 Item 7 text",
@@ -6978,9 +9578,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.8,
-      "dense": 0.9,
-      "total": 8.8
+      "embed_query": 8.4,
+      "dense": 0.8,
+      "total": 9.3
      },
      "top": [
       "NVDA FY2023 p.38 Item 7 text",
@@ -7006,9 +9606,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.7,
+      "embed_query": 8.4,
       "dense": 0.9,
-      "total": 8.7
+      "total": 9.4
      },
      "top": [
       "NVDA FY2024 p.36 Item 7 text",
@@ -7034,9 +9634,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.6,
+      "embed_query": 8.8,
       "dense": 0.9,
-      "total": 8.5
+      "total": 9.9
      },
      "top": [
       "MSFT FY2022 p.43 Item 7 table",
@@ -7062,9 +9662,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.6,
+      "embed_query": 7.9,
       "dense": 0.9,
-      "total": 8.6
+      "total": 8.9
      },
      "top": [
       "TSLA FY2023 p.41 Item 7 text",
@@ -7090,9 +9690,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.6,
+      "embed_query": 8.2,
       "dense": 0.9,
-      "total": 8.6
+      "total": 9.3
      },
      "top": [
       "NVDA FY2024 p.36 Item 7 text",
@@ -7146,9 +9746,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.4,
+      "embed_query": 7.6,
       "dense": 0.9,
-      "total": 8.4
+      "total": 8.6
      },
      "top": [
       "META FY2023 p.59 Item 7 text",
@@ -7174,7 +9774,7 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.5,
+      "embed_query": 7.6,
       "dense": 0.9,
       "total": 8.6
      },
@@ -7202,9 +9802,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 8.0,
+      "embed_query": 7.7,
       "dense": 0.9,
-      "total": 9.0
+      "total": 8.8
      },
      "top": [
       "NVDA FY2024 p.39 Item 7 table",
@@ -7230,9 +9830,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.5,
+      "embed_query": 8.6,
       "dense": 0.9,
-      "total": 8.5
+      "total": 9.6
      },
      "top": [
       "V FY2024 p.44 Item 7 text",
@@ -7258,9 +9858,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.6,
+      "embed_query": 7.9,
       "dense": 0.9,
-      "total": 8.6
+      "total": 8.9
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -7286,9 +9886,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.4,
-      "dense": 0.9,
-      "total": 8.4
+      "embed_query": 8.1,
+      "dense": 1.0,
+      "total": 9.1
      },
      "top": [
       "META FY2023 p.59 Item 7 text",
@@ -7314,9 +9914,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.5,
+      "embed_query": 7.9,
       "dense": 0.9,
-      "total": 8.5
+      "total": 9.0
      },
      "top": [
       "GOOGL FY2023 p.37 Item 7 text",
@@ -7342,9 +9942,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.7,
+      "embed_query": 8.6,
       "dense": 0.9,
-      "total": 8.6
+      "total": 9.6
      },
      "top": [
       "MSFT FY2022 p.43 Item 7 table",
@@ -7370,8 +9970,8 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.7,
-      "dense": 0.9,
+      "embed_query": 7.6,
+      "dense": 1.0,
       "total": 8.7
      },
      "top": [
@@ -7426,9 +10026,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.5,
+      "embed_query": 7.6,
       "dense": 0.9,
-      "total": 8.5
+      "total": 8.6
      },
      "top": [
       "META FY2025 p.9 Item 1 text",
@@ -7455,8 +10055,8 @@
      },
      "timings_ms": {
       "embed_query": 7.3,
-      "dense": 0.9,
-      "total": 8.3
+      "dense": 1.0,
+      "total": 8.4
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -7482,9 +10082,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.3,
-      "dense": 0.9,
-      "total": 8.3
+      "embed_query": 7.5,
+      "dense": 1.0,
+      "total": 8.6
      },
      "top": [
       "TSLA FY2024 p.5 Item 1 text",
@@ -7512,7 +10112,7 @@
      "timings_ms": {
       "embed_query": 7.4,
       "dense": 0.9,
-      "total": 8.4
+      "total": 8.5
      },
      "top": [
       "AAPL FY2022 p.39 Item 8 text",
@@ -7538,9 +10138,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.4,
+      "embed_query": 7.9,
       "dense": 0.9,
-      "total": 8.4
+      "total": 9.0
      },
      "top": [
       "META FY2022 p.56 Item 7 text",
@@ -7566,9 +10166,9 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "embed_query": 7.4,
-      "dense": 0.9,
-      "total": 8.4
+      "embed_query": 7.9,
+      "dense": 1.0,
+      "total": 9.0
      },
      "top": [
       "TSLA FY2022 p.6 Item 1 text",
@@ -7576,6 +10176,370 @@
       "TSLA FY2024 p.8 Item 1 text",
       "TSLA FY2023 p.8 Item 1 text",
       "TSLA FY2025 p.8 Item 1 text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 8.1,
+      "dense": 0.9,
+      "total": 9.1
+     },
+     "top": [
+      "TSLA FY2024 p.35 Item 7 text",
+      "TSLA FY2024 p.45 Item 7 table",
+      "TSLA FY2025 p.45 Item 7 table",
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2023 p.45 Item 7 table"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.8,
+      "dense": 0.9,
+      "total": 8.8
+     },
+     "top": [
+      "TSLA FY2023 p.40 Item 7 table",
+      "TSLA FY2022 p.38 Item 7 table",
+      "TSLA FY2023 p.40 Item 7 table",
+      "TSLA FY2023 p.39 Item 7 table",
+      "TSLA FY2023 p.39 Item 7 text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.7,
+      "dense": 0.9,
+      "total": 8.7
+     },
+     "top": [
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2024 p.35 Item 7 text",
+      "TSLA FY2024 p.37 Item 7 text",
+      "TSLA FY2023 p.40 Item 7 text"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.4,
+      "dense": 1.0,
+      "total": 8.4
+     },
+     "top": [
+      "TSLA FY2024 p.35 Item 7 text",
+      "TSLA FY2024 p.35 Item 7 text",
+      "TSLA FY2023 p.36 Item 7 text",
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2024 p.40 Item 7 text"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.9,
+      "dense": 0.9,
+      "total": 8.9
+     },
+     "top": [
+      "AMZN FY2024 p.24 Item 7 text",
+      "AMZN FY2022 p.23 Item 7 text",
+      "AMZN FY2023 p.24 Item 7 table",
+      "AMZN FY2022 p.23 Item 7 table",
+      "AMZN FY2024 p.24 Item 7 table"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.9,
+      "dense": 0.9,
+      "total": 8.9
+     },
+     "top": [
+      "AMZN FY2023 p.25 Item 7 text",
+      "AMZN FY2025 p.27 Item 7 text",
+      "AMZN FY2024 p.27 Item 7 text",
+      "AMZN FY2025 p.27 Item 7 text",
+      "AMZN FY2022 p.24 Item 7 text"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.7,
+      "dense": 0.9,
+      "total": 8.7
+     },
+     "top": [
+      "JPM FY2023 p.86 Item 8 text",
+      "JPM FY2022 p.78 Item 7 table",
+      "JPM FY2023 p.71 Item 8 text",
+      "JPM FY2022 p.81 Item 7 text",
+      "JPM FY2022 p.74 Item 7 table"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.7,
+      "dense": 0.9,
+      "total": 8.7
+     },
+     "top": [
+      "NVDA FY2022 p.36 Item 7 text",
+      "NVDA FY2025 p.42 Item 7 text",
+      "NVDA FY2022 p.36 Item 7 text",
+      "NVDA FY2024 p.40 Item 7 text",
+      "NVDA FY2023 p.42 Item 7 text"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 8.0,
+      "dense": 1.0,
+      "total": 9.1
+     },
+     "top": [
+      "NVDA FY2022 p.32 Item 7 text",
+      "NVDA FY2022 p.31 Item 7 table",
+      "NVDA FY2022 p.47 Item 8 table",
+      "NVDA FY2025 p.75 Item 8 text",
+      "NVDA FY2025 p.41 Item 7 table"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.5,
+      "dense": 1.0,
+      "total": 8.6
+     },
+     "top": [
+      "GOOGL FY2024 p.37 Item 7 text",
+      "GOOGL FY2023 p.36 Item 7 text",
+      "GOOGL FY2025 p.34 Item 7 text",
+      "GOOGL FY2023 p.36 Item 7 table",
+      "GOOGL FY2024 p.37 Item 7 table"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.5,
+      "dense": 0.9,
+      "total": 8.5
+     },
+     "top": [
+      "META FY2022 p.54 Item 7 text",
+      "META FY2024 p.59 Item 7 text",
+      "META FY2024 p.106 Item 8 text",
+      "META FY2022 p.71 Item 7 text",
+      "META FY2024 p.6 Item 1 text"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 7.5,
+      "dense": 1.0,
+      "total": 8.6
+     },
+     "top": [
+      "MA FY2022 p.54 Item 7 text",
+      "MA FY2022 p.54 Item 7 table",
+      "MA FY2025 p.57 Item 7 text",
+      "MA FY2024 p.54 Item 7 text",
+      "MA FY2023 p.56 Item 7 table"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "embed_query": 8.0,
+      "dense": 0.9,
+      "total": 9.0
+     },
+     "top": [
+      "GOOGL FY2024 p.54 Item 8 table",
+      "GOOGL FY2022 p.49 Item 8 table",
+      "GOOGL FY2024 p.40 Item 7 table",
+      "GOOGL FY2023 p.40 Item 7 table",
+      "GOOGL FY2024 p.40 Item 7 text"
      ]
     }
    ]
@@ -7602,9 +10566,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.3,
-      "dense": 0.9,
-      "total": 8.5
+      "embed_query": 7.8,
+      "dense": 1.0,
+      "total": 9.1
      },
      "top": [
       "NVDA FY2023 p.38 Item 7 text",
@@ -7631,9 +10595,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.3,
+      "embed_query": 8.0,
       "dense": 0.9,
-      "total": 8.5
+      "total": 9.2
      },
      "top": [
       "AAPL FY2022 p.39 Item 8 text",
@@ -7660,9 +10624,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.6,
-      "dense": 0.9,
-      "total": 8.8
+      "embed_query": 7.7,
+      "dense": 1.0,
+      "total": 9.1
      },
      "top": [
       "MSFT FY2022 p.41 Item 7 text",
@@ -7689,9 +10653,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.3,
-      "dense": 0.9,
-      "total": 8.4
+      "embed_query": 7.5,
+      "dense": 1.0,
+      "total": 8.8
      },
      "top": [
       "JPM FY2023 p.65 Item 8 table",
@@ -7718,9 +10682,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.4,
+      "embed_query": 8.0,
       "dense": 0.9,
-      "total": 8.6
+      "total": 9.3
      },
      "top": [
       "GOOGL FY2024 p.38 Item 7 text",
@@ -7747,9 +10711,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.5,
-      "dense": 0.9,
-      "total": 8.8
+      "embed_query": 7.9,
+      "dense": 1.0,
+      "total": 9.2
      },
      "top": [
       "AMZN FY2023 p.68 Item 8 text",
@@ -7776,9 +10740,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.2,
-      "dense": 0.9,
-      "total": 8.4
+      "embed_query": 8.1,
+      "dense": 1.0,
+      "total": 9.4
      },
      "top": [
       "AMZN FY2024 p.28 Item 7 text",
@@ -7805,9 +10769,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.4,
-      "dense": 0.9,
-      "total": 8.6
+      "embed_query": 7.5,
+      "dense": 1.0,
+      "total": 8.7
      },
      "top": [
       "TSLA FY2024 p.36 Item 7 text",
@@ -7833,10 +10797,10 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 7.2,
+      "bm25": 0.3,
+      "embed_query": 7.3,
       "dense": 0.9,
-      "total": 8.5
+      "total": 8.6
      },
      "top": [
       "V FY2025 p.6 Item 1 table",
@@ -7863,9 +10827,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.6,
-      "dense": 0.9,
-      "total": 8.8
+      "embed_query": 7.7,
+      "dense": 1.0,
+      "total": 9.1
      },
      "top": [
       "MA FY2024 p.53 Item 7 table",
@@ -7892,9 +10856,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.3,
+      "embed_query": 7.8,
       "dense": 0.9,
-      "total": 8.5
+      "total": 9.0
      },
      "top": [
       "META FY2025 p.65 Item 7 text",
@@ -7921,9 +10885,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.6,
-      "dense": 0.9,
-      "total": 8.7
+      "embed_query": 7.8,
+      "dense": 1.0,
+      "total": 9.1
      },
      "top": [
       "NVDA FY2024 p.36 Item 7 text",
@@ -7950,9 +10914,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.5,
+      "embed_query": 7.3,
       "dense": 0.9,
-      "total": 8.7
+      "total": 8.5
      },
      "top": [
       "AAPL FY2025 p.21 Item 5 text",
@@ -7979,9 +10943,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.6,
+      "embed_query": 7.2,
       "dense": 0.9,
-      "total": 8.8
+      "total": 8.4
      },
      "top": [
       "MSFT FY2022 p.50 Item 7 table",
@@ -8008,9 +10972,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
+      "embed_query": 7.3,
       "dense": 0.9,
-      "total": 8.3
+      "total": 8.4
      },
      "top": [
       "TSLA FY2022 p.38 Item 7 table",
@@ -8037,7 +11001,7 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.4,
+      "embed_query": 7.3,
       "dense": 0.9,
       "total": 8.5
      },
@@ -8097,7 +11061,7 @@
       "bm25": 0.2,
       "embed_query": 7.3,
       "dense": 0.9,
-      "total": 8.5
+      "total": 8.6
      },
      "top": [
       "META FY2024 p.72 Item 7 text",
@@ -8124,9 +11088,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.4,
+      "embed_query": 7.1,
       "dense": 0.9,
-      "total": 8.6
+      "total": 8.3
      },
      "top": [
       "AAPL FY2025 p.26 Item 7 text",
@@ -8153,9 +11117,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.5,
+      "embed_query": 7.2,
       "dense": 0.9,
-      "total": 8.7
+      "total": 8.5
      },
      "top": [
       "NVDA FY2024 p.39 Item 7 table",
@@ -8182,9 +11146,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.2,
+      "embed_query": 7.6,
       "dense": 0.9,
-      "total": 8.4
+      "total": 8.8
      },
      "top": [
       "V FY2024 p.44 Item 7 text",
@@ -8211,9 +11175,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.1,
-      "dense": 0.9,
-      "total": 8.3
+      "embed_query": 7.7,
+      "dense": 1.0,
+      "total": 9.0
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -8240,9 +11204,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.3,
+      "embed_query": 7.0,
       "dense": 0.9,
-      "total": 8.6
+      "total": 8.2
      },
      "top": [
       "META FY2024 p.72 Item 7 text",
@@ -8268,10 +11232,10 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.1,
+      "bm25": 0.2,
       "embed_query": 7.3,
       "dense": 0.9,
-      "total": 8.4
+      "total": 8.5
      },
      "top": [
       "GOOGL FY2023 p.37 Item 7 text",
@@ -8298,9 +11262,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.6,
+      "embed_query": 7.4,
       "dense": 0.9,
-      "total": 8.8
+      "total": 8.6
      },
      "top": [
       "MSFT FY2023 p.44 Item 7 text",
@@ -8327,9 +11291,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.3,
+      "embed_query": 6.9,
       "dense": 0.9,
-      "total": 8.5
+      "total": 8.2
      },
      "top": [
       "NVDA FY2023 p.55 Item 8 table",
@@ -8356,9 +11320,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.4,
+      "embed_query": 7.1,
       "dense": 0.9,
-      "total": 8.6
+      "total": 8.3
      },
      "top": [
       "AMZN FY2022 p.66 Item 8 text",
@@ -8385,9 +11349,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.2,
+      "embed_query": 6.8,
       "dense": 0.9,
-      "total": 8.4
+      "total": 8.0
      },
      "top": [
       "META FY2025 p.9 Item 1 text",
@@ -8413,10 +11377,10 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.1,
-      "embed_query": 7.2,
+      "bm25": 0.2,
+      "embed_query": 7.0,
       "dense": 0.9,
-      "total": 8.3
+      "total": 8.2
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -8443,9 +11407,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.4,
+      "embed_query": 6.8,
       "dense": 0.9,
-      "total": 8.6
+      "total": 8.1
      },
      "top": [
       "TSLA FY2025 p.5 Item 1 text",
@@ -8472,9 +11436,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.2,
+      "embed_query": 6.9,
       "dense": 0.9,
-      "total": 8.4
+      "total": 8.2
      },
      "top": [
       "AAPL FY2023 p.22 Item 7 text",
@@ -8501,9 +11465,9 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 7.2,
+      "embed_query": 6.9,
       "dense": 0.9,
-      "total": 8.4
+      "total": 8.1
      },
      "top": [
       "META FY2024 p.64 Item 7 text",
@@ -8530,9 +11494,9 @@
      },
      "timings_ms": {
       "bm25": 0.1,
-      "embed_query": 7.2,
-      "dense": 0.9,
-      "total": 8.4
+      "embed_query": 6.5,
+      "dense": 1.0,
+      "total": 7.8
      },
      "top": [
       "TSLA FY2024 p.8 Item 1 text",
@@ -8540,6 +11504,383 @@
       "TSLA FY2023 p.8 Item 1 text",
       "TSLA FY2025 p.8 Item 1 text",
       "TSLA FY2022 p.16 Item 1A text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 7.7,
+      "dense": 0.9,
+      "total": 8.9
+     },
+     "top": [
+      "AMZN FY2024 p.28 Item 7 text",
+      "TSLA FY2024 p.35 Item 7 text",
+      "AMZN FY2025 p.28 Item 7 text",
+      "TSLA FY2024 p.45 Item 7 table",
+      "AMZN FY2024 p.28 Item 7 text"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.1,
+      "dense": 0.9,
+      "total": 8.3
+     },
+     "top": [
+      "TSLA FY2023 p.40 Item 7 table",
+      "TSLA FY2024 p.41 Item 7 table",
+      "TSLA FY2022 p.38 Item 7 table",
+      "TSLA FY2025 p.41 Item 7 table",
+      "TSLA FY2024 p.93 Item 8 text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 6.9,
+      "dense": 0.9,
+      "total": 8.1
+     },
+     "top": [
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2024 p.37 Item 7 text",
+      "TSLA FY2024 p.41 Item 7 text",
+      "TSLA FY2022 p.38 Item 7 text",
+      "TSLA FY2023 p.40 Item 7 text"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 6.8,
+      "dense": 0.9,
+      "total": 8.0
+     },
+     "top": [
+      "TSLA FY2023 p.36 Item 7 text",
+      "TSLA FY2024 p.37 Item 7 text",
+      "TSLA FY2022 p.34 Item 7 text",
+      "TSLA FY2024 p.35 Item 7 text",
+      "TSLA FY2025 p.36 Item 7 text"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 7.4,
+      "dense": 0.9,
+      "total": 8.6
+     },
+     "top": [
+      "AMZN FY2024 p.24 Item 7 table",
+      "AMZN FY2023 p.24 Item 7 table",
+      "AMZN FY2022 p.23 Item 7 table",
+      "AMZN FY2025 p.24 Item 7 table",
+      "AMZN FY2024 p.24 Item 7 text"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 6.9,
+      "dense": 0.9,
+      "total": 8.2
+     },
+     "top": [
+      "AMZN FY2023 p.25 Item 7 text",
+      "AMZN FY2023 p.28 Item 7 text",
+      "AMZN FY2025 p.49 Item 8 text",
+      "AMZN FY2024 p.59 Item 8 text",
+      "AMZN FY2025 p.27 Item 7 text"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 7.1,
+      "dense": 0.9,
+      "total": 8.3
+     },
+     "top": [
+      "JPM FY2022 p.49 Item 7 text",
+      "JPM FY2022 p.61 Item 7 table",
+      "JPM FY2022 p.61 Item 7 table",
+      "AMZN FY2025 p.49 Item 8 text",
+      "JPM FY2023 p.86 Item 8 text"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.1,
+      "embed_query": 7.0,
+      "dense": 0.9,
+      "total": 8.2
+     },
+     "top": [
+      "NVDA FY2022 p.36 Item 7 text",
+      "NVDA FY2025 p.42 Item 7 text",
+      "NVDA FY2024 p.40 Item 7 text",
+      "NVDA FY2023 p.42 Item 7 text",
+      "NVDA FY2022 p.36 Item 7 text"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 7.1,
+      "dense": 0.9,
+      "total": 8.3
+     },
+     "top": [
+      "MSFT FY2023 p.44 Item 7 text",
+      "NVDA FY2022 p.32 Item 7 text",
+      "MSFT FY2024 p.43 Item 7 text",
+      "NVDA FY2022 p.31 Item 7 table",
+      "MSFT FY2024 p.47 Item 7 text"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 6.9,
+      "dense": 0.9,
+      "total": 8.1
+     },
+     "top": [
+      "GOOGL FY2024 p.37 Item 7 text",
+      "GOOGL FY2025 p.34 Item 7 text",
+      "GOOGL FY2024 p.39 Item 7 text",
+      "GOOGL FY2023 p.36 Item 7 text",
+      "GOOGL FY2024 p.37 Item 7 table"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 7.1,
+      "dense": 0.9,
+      "total": 8.3
+     },
+     "top": [
+      "META FY2024 p.59 Item 7 text",
+      "META FY2024 p.71 Item 7 table",
+      "META FY2024 p.71 Item 7 table",
+      "AMZN FY2024 p.61 Item 8 text",
+      "META FY2022 p.54 Item 7 text"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 6.9,
+      "dense": 0.9,
+      "total": 8.1
+     },
+     "top": [
+      "MA FY2022 p.57 Item 7 text",
+      "AMZN FY2025 p.49 Item 8 text",
+      "MA FY2022 p.54 Item 7 text",
+      "AMZN FY2025 p.49 Item 8 text",
+      "MA FY2022 p.54 Item 7 table"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.2,
+      "embed_query": 6.9,
+      "dense": 0.9,
+      "total": 8.2
+     },
+     "top": [
+      "GOOGL FY2024 p.54 Item 8 table",
+      "MSFT FY2024 p.43 Item 7 text",
+      "GOOGL FY2022 p.49 Item 8 table",
+      "MSFT FY2024 p.43 Item 7 text",
+      "GOOGL FY2024 p.40 Item 7 table"
      ]
     }
    ]
@@ -8565,11 +11906,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 7.3,
+      "bm25": 0.1,
+      "embed_query": 7.1,
       "dense": 0.9,
-      "total": 1237.7,
-      "rerank": 1229.2
+      "total": 1994.6,
+      "rerank": 1986.3
      },
      "top": [
       "NVDA FY2025 p.38 Item 7 text",
@@ -8596,10 +11937,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 9.3,
-      "dense": 1.0,
-      "total": 2050.5,
-      "rerank": 2039.9
+      "embed_query": 10.4,
+      "dense": 1.3,
+      "total": 2962.5,
+      "rerank": 2950.4
      },
      "top": [
       "AAPL FY2025 p.37 Item 8 text",
@@ -8626,10 +11967,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 8.9,
-      "dense": 1.0,
-      "total": 1931.1,
-      "rerank": 1920.8
+      "embed_query": 10.0,
+      "dense": 0.9,
+      "total": 2603.0,
+      "rerank": 2591.5
      },
      "top": [
       "MSFT FY2025 p.39 Item 7 table",
@@ -8656,10 +11997,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 9.3,
-      "dense": 1.0,
-      "total": 1888.1,
-      "rerank": 1877.4
+      "embed_query": 9.9,
+      "dense": 0.9,
+      "total": 2453.3,
+      "rerank": 2442.0
      },
      "top": [
       "JPM FY2023 p.75 Item 8 text",
@@ -8686,10 +12027,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.5,
-      "dense": 1.0,
-      "total": 1417.1,
-      "rerank": 1406.2
+      "embed_query": 11.8,
+      "dense": 1.3,
+      "total": 1933.9,
+      "rerank": 1920.2
      },
      "top": [
       "GOOGL FY2024 p.38 Item 7 text",
@@ -8716,10 +12057,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.3,
+      "embed_query": 10.0,
       "dense": 1.0,
-      "total": 1743.9,
-      "rerank": 1733.2
+      "total": 2302.8,
+      "rerank": 2291.3
      },
      "top": [
       "AMZN FY2023 p.24 Item 7 text",
@@ -8745,11 +12086,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "embed_query": 9.0,
-      "dense": 1.0,
-      "total": 1581.1,
-      "rerank": 1570.7
+      "bm25": 0.2,
+      "embed_query": 10.0,
+      "dense": 0.9,
+      "total": 2115.6,
+      "rerank": 2104.2
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -8776,10 +12117,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 8.4,
+      "embed_query": 10.6,
       "dense": 0.9,
-      "total": 1891.2,
-      "rerank": 1881.4
+      "total": 2496.5,
+      "rerank": 2484.5
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -8805,11 +12146,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "embed_query": 9.3,
-      "dense": 1.0,
-      "total": 1579.8,
-      "rerank": 1569.1
+      "bm25": 0.6,
+      "embed_query": 16.4,
+      "dense": 2.7,
+      "total": 2086.9,
+      "rerank": 2066.8
      },
      "top": [
       "V FY2025 p.72 Item 8 text",
@@ -8836,10 +12177,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.5,
-      "dense": 1.0,
-      "total": 1735.8,
-      "rerank": 1724.8
+      "embed_query": 10.5,
+      "dense": 0.9,
+      "total": 2163.7,
+      "rerank": 2151.7
      },
      "top": [
       "MA FY2025 p.82 Item 8 text",
@@ -8866,10 +12207,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 9.0,
+      "embed_query": 10.4,
       "dense": 0.9,
-      "total": 1770.2,
-      "rerank": 1759.8
+      "total": 2347.0,
+      "rerank": 2335.2
      },
      "top": [
       "META FY2025 p.61 Item 7 text",
@@ -8896,10 +12237,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 9.4,
-      "dense": 1.0,
-      "total": 1504.1,
-      "rerank": 1493.3
+      "embed_query": 9.7,
+      "dense": 0.9,
+      "total": 1950.8,
+      "rerank": 1939.8
      },
      "top": [
       "NVDA FY2023 p.37 Item 7 text",
@@ -8926,10 +12267,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.6,
-      "dense": 1.0,
-      "total": 1669.4,
-      "rerank": 1658.3
+      "embed_query": 10.2,
+      "dense": 0.9,
+      "total": 2009.8,
+      "rerank": 1998.1
      },
      "top": [
       "NVDA FY2024 p.36 Item 7 text",
@@ -8955,11 +12296,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "embed_query": 10.0,
+      "bm25": 0.2,
+      "embed_query": 9.0,
       "dense": 1.0,
-      "total": 1491.5,
-      "rerank": 1480.1
+      "total": 1904.8,
+      "rerank": 1894.4
      },
      "top": [
       "MSFT FY2022 p.50 Item 7 table",
@@ -8986,10 +12327,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 8.8,
-      "dense": 1.0,
-      "total": 1903.3,
-      "rerank": 1893.1
+      "embed_query": 9.6,
+      "dense": 0.9,
+      "total": 2386.8,
+      "rerank": 2375.8
      },
      "top": [
       "TSLA FY2022 p.39 Item 7 text",
@@ -9017,9 +12358,9 @@
      "timings_ms": {
       "bm25": 0.2,
       "embed_query": 8.7,
-      "dense": 1.0,
-      "total": 1751.8,
-      "rerank": 1741.7
+      "dense": 1.1,
+      "total": 2216.5,
+      "rerank": 2206.3
      },
      "top": [
       "NVDA FY2025 p.38 Item 7 text",
@@ -9046,10 +12387,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.5,
+      "embed_query": 9.0,
       "dense": 0.9,
-      "total": 1692.1,
-      "rerank": 1681.2
+      "total": 2178.3,
+      "rerank": 2167.8
      },
      "top": [
       "AMZN FY2025 p.30 Item 7 text",
@@ -9076,10 +12417,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.0,
-      "dense": 1.0,
-      "total": 1759.6,
-      "rerank": 1749.1
+      "embed_query": 9.4,
+      "dense": 0.9,
+      "total": 2217.8,
+      "rerank": 2207.0
      },
      "top": [
       "META FY2024 p.59 Item 7 text",
@@ -9106,10 +12447,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.2,
-      "dense": 0.9,
-      "total": 1683.1,
-      "rerank": 1672.4
+      "embed_query": 10.0,
+      "dense": 1.0,
+      "total": 2055.6,
+      "rerank": 2044.2
      },
      "top": [
       "AAPL FY2025 p.26 Item 7 text",
@@ -9136,10 +12477,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.1,
+      "embed_query": 10.1,
       "dense": 1.0,
-      "total": 1466.3,
-      "rerank": 1455.7
+      "total": 1848.3,
+      "rerank": 1836.7
      },
      "top": [
       "NVDA FY2024 p.36 Item 7 text",
@@ -9166,10 +12507,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.9,
-      "dense": 1.0,
-      "total": 1752.5,
-      "rerank": 1741.1
+      "embed_query": 9.5,
+      "dense": 0.9,
+      "total": 2171.1,
+      "rerank": 2160.2
      },
      "top": [
       "V FY2024 p.44 Item 7 text",
@@ -9196,10 +12537,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.4,
-      "dense": 1.0,
-      "total": 1872.2,
-      "rerank": 1861.3
+      "embed_query": 10.2,
+      "dense": 0.9,
+      "total": 2237.7,
+      "rerank": 2226.1
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -9226,10 +12567,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 8.7,
+      "embed_query": 10.3,
       "dense": 1.0,
-      "total": 1971.0,
-      "rerank": 1960.9
+      "total": 2080.0,
+      "rerank": 2068.2
      },
      "top": [
       "META FY2025 p.60 Item 7 text",
@@ -9255,11 +12596,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.2,
-      "embed_query": 8.4,
-      "dense": 1.0,
-      "total": 2266.7,
-      "rerank": 2256.9
+      "bm25": 0.3,
+      "embed_query": 8.5,
+      "dense": 0.9,
+      "total": 2060.4,
+      "rerank": 2050.5
      },
      "top": [
       "AMZN FY2023 p.25 Item 7 text",
@@ -9286,10 +12627,10 @@
      },
      "timings_ms": {
       "bm25": 0.2,
-      "embed_query": 9.9,
-      "dense": 1.0,
-      "total": 2888.6,
-      "rerank": 2877.3
+      "embed_query": 11.0,
+      "dense": 0.9,
+      "total": 2364.9,
+      "rerank": 2352.6
      },
      "top": [
       "MSFT FY2025 p.38 Item 7 table",
@@ -9315,11 +12656,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 10.4,
-      "dense": 2.5,
-      "total": 2710.5,
-      "rerank": 2696.9
+      "bm25": 0.3,
+      "embed_query": 9.8,
+      "dense": 0.9,
+      "total": 2267.2,
+      "rerank": 2256.0
      },
      "top": [
       "NVDA FY2025 p.53 Item 8 table",
@@ -9346,10 +12687,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.1,
-      "dense": 1.0,
-      "total": 3313.7,
-      "rerank": 3303.1
+      "embed_query": 9.7,
+      "dense": 0.9,
+      "total": 2140.2,
+      "rerank": 2129.1
      },
      "top": [
       "AMZN FY2023 p.24 Item 7 text",
@@ -9375,11 +12716,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 2.5,
-      "embed_query": 23.3,
-      "dense": 3.9,
-      "total": 1875.5,
-      "rerank": 1843.8
+      "bm25": 0.2,
+      "embed_query": 9.5,
+      "dense": 0.9,
+      "total": 1809.1,
+      "rerank": 1798.2
      },
      "top": [
       "META FY2025 p.9 Item 1 text",
@@ -9405,11 +12746,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 10.3,
-      "dense": 1.1,
-      "total": 2107.4,
-      "rerank": 2095.4
+      "bm25": 0.2,
+      "embed_query": 9.5,
+      "dense": 0.9,
+      "total": 2516.7,
+      "rerank": 2505.8
      },
      "top": [
       "TSLA FY2024 p.35 Item 7 text",
@@ -9435,11 +12776,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.4,
-      "embed_query": 9.7,
-      "dense": 2.7,
-      "total": 1602.6,
-      "rerank": 1589.6
+      "bm25": 0.8,
+      "embed_query": 15.0,
+      "dense": 2.2,
+      "total": 1857.5,
+      "rerank": 1839.1
      },
      "top": [
       "TSLA FY2024 p.40 Item 7 text",
@@ -9466,10 +12807,10 @@
      },
      "timings_ms": {
       "bm25": 0.3,
-      "embed_query": 9.2,
-      "dense": 1.0,
-      "total": 1670.4,
-      "rerank": 1659.6
+      "embed_query": 9.5,
+      "dense": 0.9,
+      "total": 1947.0,
+      "rerank": 1936.1
      },
      "top": [
       "AAPL FY2025 p.25 Item 7 text",
@@ -9495,11 +12836,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 1.0,
-      "embed_query": 20.2,
-      "dense": 2.5,
-      "total": 1945.7,
-      "rerank": 1921.6
+      "bm25": 0.3,
+      "embed_query": 9.5,
+      "dense": 1.0,
+      "total": 2339.0,
+      "rerank": 2328.1
      },
      "top": [
       "META FY2023 p.61 Item 7 text",
@@ -9525,11 +12866,11 @@
       "ndcg@10": 0.0
      },
      "timings_ms": {
-      "bm25": 0.3,
-      "embed_query": 8.9,
-      "dense": 1.0,
-      "total": 1577.8,
-      "rerank": 1567.4
+      "bm25": 0.8,
+      "embed_query": 22.0,
+      "dense": 5.8,
+      "total": 2214.3,
+      "rerank": 2185.0
      },
      "top": [
       "TSLA FY2023 p.8 Item 1 text",
@@ -9537,6 +12878,396 @@
       "TSLA FY2024 p.5 Item 1 text",
       "TSLA FY2023 p.36 Item 7 text",
       "TSLA FY2024 p.35 Item 7 text"
+     ]
+    },
+    {
+     "id": "E34",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.4,
+      "embed_query": 12.5,
+      "dense": 1.4,
+      "total": 3073.5,
+      "rerank": 3059.0
+     },
+     "top": [
+      "TSLA FY2025 p.34 Item 7 text",
+      "TSLA FY2024 p.35 Item 7 text",
+      "AMZN FY2025 p.28 Item 7 text",
+      "TSLA FY2024 p.45 Item 7 text",
+      "AMZN FY2024 p.28 Item 7 text"
+     ]
+    },
+    {
+     "id": "E35",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.3,
+      "embed_query": 11.7,
+      "dense": 1.3,
+      "total": 3310.7,
+      "rerank": 3297.1
+     },
+     "top": [
+      "TSLA FY2023 p.40 Item 7 table",
+      "TSLA FY2025 p.96 Item 8 text",
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2024 p.93 Item 8 text"
+     ]
+    },
+    {
+     "id": "E36",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.5,
+      "embed_query": 12.8,
+      "dense": 1.4,
+      "total": 2436.2,
+      "rerank": 2421.3
+     },
+     "top": [
+      "TSLA FY2023 p.34 Item 7 text",
+      "TSLA FY2024 p.35 Item 7 text",
+      "TSLA FY2025 p.34 Item 7 text",
+      "TSLA FY2023 p.40 Item 7 text",
+      "TSLA FY2023 p.34 Item 7 text"
+     ]
+    },
+    {
+     "id": "E37",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.3,
+      "embed_query": 11.6,
+      "dense": 1.0,
+      "total": 3196.0,
+      "rerank": 3182.9
+     },
+     "top": [
+      "TSLA FY2023 p.36 Item 7 text",
+      "TSLA FY2024 p.35 Item 7 text",
+      "TSLA FY2025 p.34 Item 7 text",
+      "AMZN FY2024 p.22 Item 7 text",
+      "TSLA FY2024 p.46 Item 7 text"
+     ]
+    },
+    {
+     "id": "E38",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.3,
+      "embed_query": 12.0,
+      "dense": 1.0,
+      "total": 3259.9,
+      "rerank": 3246.4
+     },
+     "top": [
+      "AMZN FY2024 p.24 Item 7 text",
+      "AMZN FY2023 p.24 Item 7 text",
+      "AMZN FY2024 p.25 Item 7 text",
+      "AMZN FY2024 p.25 Item 7 text",
+      "AMZN FY2024 p.26 Item 7 text"
+     ]
+    },
+    {
+     "id": "E39",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.4,
+      "embed_query": 10.8,
+      "dense": 1.0,
+      "total": 3690.8,
+      "rerank": 3678.3
+     },
+     "top": [
+      "AMZN FY2023 p.31 Item 7 text",
+      "AMZN FY2023 p.25 Item 7 text",
+      "AMZN FY2025 p.49 Item 8 text",
+      "AMZN FY2023 p.25 Item 7 table",
+      "AMZN FY2024 p.48 Item 8 text"
+     ]
+    },
+    {
+     "id": "E40",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.4,
+      "embed_query": 12.9,
+      "dense": 1.0,
+      "total": 3304.5,
+      "rerank": 3290.0
+     },
+     "top": [
+      "JPM FY2022 p.49 Item 7 text",
+      "JPM FY2022 p.70 Item 7 text",
+      "JPM FY2022 p.61 Item 7 table",
+      "JPM FY2022 p.76 Item 7 table",
+      "JPM FY2022 p.78 Item 7 table"
+     ]
+    },
+    {
+     "id": "E41",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.7,
+      "embed_query": 23.4,
+      "dense": 3.9,
+      "total": 2882.3,
+      "rerank": 2853.8
+     },
+     "top": [
+      "NVDA FY2022 p.31 Item 7 table",
+      "NVDA FY2022 p.36 Item 7 text",
+      "NVDA FY2022 p.36 Item 7 text",
+      "NVDA FY2022 p.32 Item 7 text",
+      "NVDA FY2023 p.42 Item 7 text"
+     ]
+    },
+    {
+     "id": "E42",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.3,
+      "embed_query": 11.7,
+      "dense": 0.9,
+      "total": 2769.7,
+      "rerank": 2756.5
+     },
+     "top": [
+      "NVDA FY2025 p.38 Item 7 table",
+      "NVDA FY2025 p.68 Item 8 text",
+      "NVDA FY2025 p.41 Item 7 table",
+      "NVDA FY2025 p.68 Item 8 text",
+      "MSFT FY2024 p.43 Item 7 text"
+     ]
+    },
+    {
+     "id": "E43",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.4,
+      "embed_query": 13.8,
+      "dense": 1.7,
+      "total": 1922.8,
+      "rerank": 1906.6
+     },
+     "top": [
+      "GOOGL FY2025 p.34 Item 7 text",
+      "GOOGL FY2024 p.37 Item 7 text",
+      "GOOGL FY2025 p.36 Item 7 text",
+      "GOOGL FY2024 p.39 Item 7 text",
+      "GOOGL FY2025 p.35 Item 7 text"
+     ]
+    },
+    {
+     "id": "E44",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.4,
+      "embed_query": 9.9,
+      "dense": 0.9,
+      "total": 1797.3,
+      "rerank": 1785.9
+     },
+     "top": [
+      "META FY2024 p.59 Item 7 text",
+      "META FY2024 p.6 Item 1 text",
+      "META FY2024 p.71 Item 7 table",
+      "META FY2024 p.74 Item 7 text",
+      "META FY2024 p.106 Item 8 text"
+     ]
+    },
+    {
+     "id": "E45",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.5,
+      "embed_query": 12.4,
+      "dense": 1.4,
+      "total": 2168.0,
+      "rerank": 2153.4
+     },
+     "top": [
+      "MA FY2022 p.54 Item 7 table",
+      "MA FY2023 p.56 Item 7 table",
+      "MA FY2024 p.54 Item 7 table",
+      "MA FY2022 p.55 Item 7 table",
+      "MA FY2022 p.54 Item 7 text"
+     ]
+    },
+    {
+     "id": "E46",
+     "category": "numeric",
+     "metrics": {
+      "mrr": 0.0,
+      "recall@1": 0.0,
+      "hit@1": 0.0,
+      "recall@3": 0.0,
+      "hit@3": 0.0,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "ndcg@10": 0.0
+     },
+     "timings_ms": {
+      "bm25": 0.4,
+      "embed_query": 10.6,
+      "dense": 1.0,
+      "total": 1909.2,
+      "rerank": 1897.0
+     },
+     "top": [
+      "GOOGL FY2024 p.40 Item 7 text",
+      "GOOGL FY2025 p.37 Item 7 table",
+      "GOOGL FY2024 p.40 Item 7 table",
+      "MSFT FY2024 p.43 Item 7 text",
+      "GOOGL FY2025 p.50 Item 8 table"
      ]
     }
    ]

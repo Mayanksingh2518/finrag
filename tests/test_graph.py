@@ -197,3 +197,17 @@ def test_quarterly_question_gets_no_annual_xbrl_facts(xbrl):
     turn = make_agent(llm, xbrl, chunks=release).run("What was NVIDIA's total revenue in Q3 FY2025?")
     assert turn.facts == [] and not any(s.is_xbrl for s in turn.result.sources)
     assert turn.analysis.filters.fiscal_quarters == (3,) and turn.analysis.filters.forms == (FORM_RELEASE,)
+
+
+def test_release_questions_go_to_the_routed_llm_only_when_switched_on():
+    release = [replace(c, form=FORM_RELEASE, fiscal_quarter=3) for c in CHUNKS]
+    question = "What was NVIDIA's total revenue in Q3 FY2025?"
+    annual = "What was NVIDIA's total revenue in fiscal 2025?"
+    for route_releases, expect_big in ((False, False), (True, True)):
+        local, big = (ScriptedLLM(answers=[answer("Revenue was reported.", "S1")]) for _ in range(2))
+        agent = FinRAGAgent(FakeRetriever(release), local, mode="hybrid", routed_llm=big, route_releases=route_releases)
+        agent.run(question)
+        assert bool(big.prompts) == expect_big and bool(local.prompts) != expect_big
+    local, big = (ScriptedLLM(answers=[answer("Revenue was reported.", "S1")]) for _ in range(2))
+    FinRAGAgent(FakeRetriever(CHUNKS), local, mode="hybrid", routed_llm=big, route_releases=True).run(annual)
+    assert local.prompts and not big.prompts  # annual questions stay local

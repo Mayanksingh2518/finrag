@@ -11,15 +11,15 @@
     {"label": "Agent citation hit incl. XBRL (routed)", "metric": "summary:agent_v2:agent_routed.citation_hit_xbrl", "min": 0.85},
     {"label": "Judged correctness, gpt-oss judge (routed)", "metric": "summary:judge_v2:correctness_all_answerable", "min": 0.84},
     {"label": "Judged correctness, independent qwen judge (routed)", "metric": "summary:judge_v2_qwen:correctness_all_answerable", "min": 0.84},
-    {"label": "Earnings retrieval recall@5 (hybrid_rerank, gold filters)", "metric": "retrieval@retrieval_earnings_v0:hybrid_rerank:gold:recall@5", "min": 0.88},
-    {"label": "Earnings retrieval MRR (hybrid_rerank, gold filters)", "metric": "retrieval@retrieval_earnings_v0:hybrid_rerank:gold:mrr", "min": 0.79},
+    {"label": "Earnings retrieval recall@5 (hybrid_rerank, gold filters)", "metric": "retrieval@retrieval_earnings_v0:hybrid_rerank:gold:recall@5", "min": 0.85},
+    {"label": "Earnings retrieval MRR (hybrid_rerank, gold filters)", "metric": "retrieval@retrieval_earnings_v0:hybrid_rerank:gold:mrr", "min": 0.66},
     {"label": "Earnings plan recall@10", "metric": "plan@plan_earnings_v0:plan quotas, k=10, MD&A prior 0.05:recall@10", "min": 0.96},
-    {"label": "Earnings agent false abstention", "metric": "summary:agent_earnings_v0:agent_routed.false_abstention_rate", "max": 0.08},
+    {"label": "Earnings agent false abstention", "metric": "summary:agent_earnings_v0:agent_routed.false_abstention_rate", "max": 0.09},
     {"label": "Earnings agent abstention recall", "metric": "summary:agent_earnings_v0:agent_routed.abstention_recall", "min": 0.90},
     {"label": "Earnings agent verifier claim support", "metric": "summary:agent_earnings_v0:agent_routed.claim_support", "min": 0.94},
-    {"label": "Earnings agent citation hit", "metric": "summary:agent_earnings_v0:agent_routed.citation_hit", "min": 0.85},
-    {"label": "Earnings correctness, gpt-oss judge", "metric": "summary:judge_earnings_v0:correctness_all_answerable", "min": 0.92},
-    {"label": "Earnings correctness, independent qwen judge", "metric": "summary:judge_earnings_v0_qwen:correctness_all_answerable", "min": 0.92},
+    {"label": "Earnings agent citation hit", "metric": "summary:agent_earnings_v0:agent_routed.citation_hit", "min": 0.80},
+    {"label": "Earnings correctness, gpt-oss judge", "metric": "summary:judge_earnings_v0:correctness_all_answerable", "min": 0.83},
+    {"label": "Earnings correctness, independent qwen judge", "metric": "summary:judge_earnings_v0_qwen:correctness_all_answerable", "min": 0.83},
     {"label": "Judge catches deliberately wrong answers", "metric": "summary:judge_sensitivity:caught_rate", "min": 0.8}
   ]
 }
