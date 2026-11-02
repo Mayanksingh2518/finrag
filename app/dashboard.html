@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinRAG dashboard</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b1020;
+    --surface-1: #121829;
+    --line: #2a3145;
+    --grid: #232a3d;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #9a9a92;
+    --accent: #3987e5;
+    /* Categorical slots, validated against --surface-1 (dark). A model keeps its slot by first use. */
+    --s0: #3987e5; --s1: #d95926; --s2: #199e70; --s3: #c98500;
+    --s4: #d55181; --s5: #008300; --s6: #9085e9; --s7: #e66767;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text-primary);
+         font: 14px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  main { max-width: 1240px; margin: 0 auto; padding: 20px 24px 48px; display: grid; gap: 16px; }
+  header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+  h1 { font-size: 18px; margin: 0; font-weight: 650; }
+  h2 { font-size: 14px; margin: 0; font-weight: 600; }
+  .sub { color: var(--text-muted); font-size: 12px; }
+  .spacer { flex: 1; }
+  .card { background: var(--surface-1); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+  .card > .head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 12px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 12px; }
+  .tile .label { color: var(--text-secondary); font-size: 12px; }
+  .tile .value { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; margin: 2px 0; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 16px; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-weight: 500; color: var(--text-muted); font-size: 12px; }
+  th, td { padding: 6px 10px 6px 0; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  td.n, th.n { text-align: right; }
+  tr:last-child td { border-bottom: 0; }
+  .scroll { overflow-x: auto; }
+  .tall { max-height: 380px; overflow: auto; }
+  .key { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+  button, select, input { font: inherit; color: var(--text-primary); background: #1a2136; border: 1px solid var(--line);
+                          border-radius: 6px; padding: 4px 10px; }
+  button { cursor: pointer; }
+  button[aria-pressed="true"] { border-color: var(--accent); background: #1c2c4a; }
+  button:focus-visible, select:focus-visible, input:focus-visible, rect:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  main > * { min-width: 0; }
+  svg { display: block; width: 100%; height: auto; }
+  svg text { fill: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .bar-hit { fill: transparent; cursor: default; }
+  .bar-hit:hover, .bar-hit:focus { fill: rgba(255,255,255,.05); }
+  #tip { position: fixed; display: none; pointer-events: none; background: #0b1020; border: 1px solid var(--line);
+         border-radius: 8px; padding: 8px 10px; font-size: 12px; z-index: 5; min-width: 170px; }
+  #tip .row { display: flex; justify-content: space-between; gap: 16px; }
+  #tip b { font-variant-numeric: tabular-nums; }
+  #tip .line { display: inline-block; width: 12px; height: 2px; margin-right: 6px; vertical-align: middle; }
+  .meter { height: 6px; background: var(--grid); border-radius: 3px; overflow: hidden; margin-top: 4px; min-width: 90px; }
+  .meter > div { height: 100%; border-radius: 3px; }
+  pre { margin: 0; font: 12px/1.5 var(--mono); color: var(--text-secondary); white-space: pre-wrap; word-break: break-word;
+        max-height: 420px; overflow: auto; }
+  .nodes { color: var(--text-muted); font-size: 12px; }
+  .q { max-width: 460px; }
+  .pill { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-size: 12px; color: var(--text-secondary); }
+  .empty { color: var(--text-muted); padding: 12px 0; }
+  .error { color: var(--text-primary); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>FinRAG dashboard</h1>
+    <span class="sub" id="updated"></span>
+    <span class="spacer"></span>
+    <span id="running" class="sub"></span>
+    <label class="sub"><input type="checkbox" id="auto" checked> Refresh every 5 s</label>
+  </header>
+  <div id="error" class="error" hidden></div>
+
+  <section class="tiles" aria-label="Totals" id="tiles"></section>
+
+  <section class="card">
+    <div class="head">
+      <h2>Tokens per day, by model</h2>
+      <span class="spacer"></span>
+      <span role="group" aria-label="Date range" id="ranges"></span>
+      <button type="button" id="tableToggle" aria-pressed="false">Table</button>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div id="chart"></div>
+    <div id="chartTable" class="scroll tall" hidden></div>
+    <p class="sub" style="margin:10px 0 0">Successful provider calls only, dated by when each was made. Failed calls and cache hits aren't counted.</p>
+  </section>
+
+  <div class="two">
+    <section class="card">
+      <div class="head"><h2>By model</h2></div>
+      <div class="scroll" id="models"></div>
+      <p class="sub" style="margin:10px 0 0">Daily limits are approximate, from this project's runs, not read from Groq. The console has the real quota.</p>
+    </section>
+    <section class="card">
+      <div class="head"><h2>By call type</h2></div>
+      <div class="scroll" id="kinds"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="head">
+      <h2>Logs</h2>
+      <select id="logSelect" aria-label="Log file"></select>
+      <input id="logFilter" type="search" placeholder="Filter lines" aria-label="Filter log lines">
+      <span class="sub" id="logInfo"></span>
+    </div>
+    <pre id="log" tabindex="0"></pre>
+  </section>
+
+  <section class="card">
+    <div class="head"><h2>Recent LLM calls</h2></div>
+    <div class="scroll tall" id="recent"></div>
+  </section>
+
+  <section class="card">
+    <div class="head"><h2>Recent agent turns</h2><span class="sub">From data/traces (set TRACE_FILE to record them)</span></div>
+    <div class="scroll tall" id="turns"></div>
+  </section>
+</main>
+<div id="tip" role="status"></div>
+
+<script>
+// All text from files goes in through textContent (el, below): logs, questions and answers are data, not markup.
+const SVG = 'http://www.w3.org/2000/svg';
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => (n == null ? '-' : Math.round(n).toLocaleString());
+const compact = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(n >= 1e4 ? 0 : 1)}k` : String(n));
+const secs = (ms) => (ms == null ? '-' : ms < 1000 ? `${Math.round(ms)} ms` : `${(ms / 1000).toFixed(1)} s`);
+const when = (ts) => new Date(ts * 1000).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') node.className = v; else if (k === 'style') node.style.cssText = v; else node.setAttribute(k, v);
+  }
+  for (const c of children) node.append(c);
+  return node;
+}
+function svg(tag, attrs = {}) {
+  const node = document.createElementNS(SVG, tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+  return node;
+}
+function table(columns, rows) {
+  const head = el('tr', {}, ...columns.map((c) => el('th', c.n ? { class: 'n' } : {}, c.label)));
+  const body = rows.map((r) => el('tr', {}, ...columns.map((c) => {
+    const v = c.value(r);
+    return el('td', { class: [c.n ? 'n' : '', c.cls || ''].join(' ').trim() }, v == null ? '-' : v);
+  })));
+  return el('table', {}, el('thead', {}, head), el('tbody', {}, ...body));
+}
+const color = (series, name) => `var(--s${series.indexOf(name)})`;
+const replace = (id, ...nodes) => $(id).replaceChildren(...nodes);
+
+let state = { days: 30, table: false, log: null, data: null, stick: true };
+
+function renderTiles(u) {
+  const tile = (label, value, note) => el('div', { class: 'card tile' },
+    el('div', { class: 'label' }, label), el('div', { class: 'value' }, value), el('div', { class: 'sub' }, note));
+  replace('tiles',
+    tile('Hosted tokens, last 24 h', fmt(u.hosted.tokens_24h), `${fmt(u.hosted.calls_24h)} calls on free-tier quota`),
+    tile('Local tokens, last 24 h', fmt(u.local.tokens_24h), `${fmt(u.local.calls_24h)} calls on your machine`),
+    tile('Hosted tokens, all time', fmt(u.hosted.tokens), `${fmt(u.hosted.calls)} calls`),
+    tile('Local tokens, all time', fmt(u.local.tokens), `${fmt(u.local.calls)} calls`));
+}
+
+function niceMax(v) {
+  if (v <= 0) return 1;
+  const pow = 10 ** Math.floor(Math.log10(v));
+  return [1, 2, 2.5, 5, 10].map((m) => m * pow).find((m) => m >= v);
+}
+
+function showTip(event, title, rows) {
+  const tip = $('tip');
+  tip.replaceChildren(el('div', { class: 'sub', style: 'margin-bottom:4px' }, title), ...rows.map(([name, value, c]) =>
+    el('div', { class: 'row' }, el('span', {}, el('span', { class: 'line', style: `background:${c}` }), name), el('b', {}, fmt(value)))));
+  tip.style.display = 'block';
+  const box = event.currentTarget.getBoundingClientRect();
+  const x = event.clientX || box.left + box.width / 2;
+  const y = event.clientY || box.top;
+  tip.style.left = `${Math.min(x + 14, innerWidth - tip.offsetWidth - 8)}px`;
+  tip.style.top = `${Math.max(y - tip.offsetHeight - 10, 8)}px`;
+}
+const hideTip = () => { $('tip').style.display = 'none'; };
+
+function renderChart(u) {
+  replace('legend', ...u.series.map((s) => el('span', {}, el('span', { class: 'key', style: `background:${color(u.series, s)}` }), s)));
+  const W = 1160, H = 240, L = 48, R = 8, T = 20, B = 24;
+  const days = u.days;
+  const totals = days.map((d) => Object.values(d.tokens).reduce((a, b) => a + b, 0));
+  const top = niceMax(Math.max(0, ...totals));
+  const y = (v) => T + (H - T - B) * (1 - v / top);
+  const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Tokens per day, stacked by model. A table view is available.' });
+  for (const f of [0, 0.25, 0.5, 0.75, 1]) {
+    root.append(svg('line', { x1: L, x2: W - R, y1: y(top * f), y2: y(top * f), stroke: 'var(--grid)', 'stroke-width': 1 }));
+    const t = svg('text', { x: L - 8, y: y(top * f) + 4, 'text-anchor': 'end' }); t.textContent = compact(top * f); root.append(t);
+  }
+  const step = (W - L - R) / Math.max(days.length, 1);
+  const barW = Math.max(3, Math.min(step - 2, 44));
+  const labelEvery = Math.ceil(days.length / 10);
+  const peak = totals.indexOf(Math.max(...totals));
+  days.forEach((d, i) => {
+    const x = L + i * step + (step - barW) / 2;
+    let used = 0;
+    const present = u.series.filter((s) => d.tokens[s]);
+    present.forEach((s, j) => {
+      const h = Math.max(1, y(used) - y(used + d.tokens[s]));
+      const isTop = j === present.length - 1;
+      const gap = j > 0 ? 2 : 0;  // a surface gap between stacked segments
+      const yy = y(used + d.tokens[s]);
+      const height = Math.max(1, h - gap);
+      const r = isTop ? Math.min(4, barW / 2, height) : 0;
+      const path = `M${x},${yy + height} V${yy + r} Q${x},${yy} ${x + r},${yy} H${x + barW - r} Q${x + barW},${yy} ${x + barW},${yy + r} V${yy + height} Z`;
+      root.append(svg('path', { d: path, fill: color(u.series, s) }));
+      used += d.tokens[s];
+    });
+    if (i === peak && totals[i] > 0) {
+      const t = svg('text', { x: x + barW / 2, y: y(totals[i]) - 6, 'text-anchor': 'middle' });
+      t.textContent = compact(totals[i]); t.style.fill = 'var(--text-secondary)'; root.append(t);
+    }
+    if (i % labelEvery === 0) {
+      const t = svg('text', { x: x + barW / 2, y: H - 6, 'text-anchor': 'middle' }); t.textContent = d.day.slice(5); root.append(t);
+    }
+    // The hit target is the whole column, wider than its bar, and works from the keyboard too.
+    const hit = svg('rect', { class: 'bar-hit', x: L + i * step, y: T, width: step, height: H - T - B, tabindex: totals[i] ? 0 : -1,
+                              'aria-label': `${d.day}: ${fmt(totals[i])} tokens` });
+    const show = (e) => showTip(e, d.day, [...u.series.filter((s) => d.tokens[s]).map((s) => [s, d.tokens[s], color(u.series, s)]),
+                                            ['Total', totals[i], 'transparent']]);
+    hit.addEventListener('pointermove', show); hit.addEventListener('focus', show);
+    hit.addEventListener('pointerleave', hideTip); hit.addEventListener('blur', hideTip);
+    root.append(hit);
+  });
+  replace('chart', root);
+  $('chart').hidden = state.table;
+  $('chartTable').hidden = !state.table;
+  replace('chartTable', table(
+    [{ label: 'Day', value: (d) => d.day }, ...u.series.map((s) => ({ label: s, n: true, value: (d) => fmt(d.tokens[s]) }))],
+    [...days].reverse()));
+}
+
+function renderModels(u) {
+  replace('models', table([
+    { label: 'Model', value: (m) => el('span', {}, el('span', { class: 'key', style: `background:${u.series.includes(m.model) ? color(u.series, m.model) : 'var(--text-muted)'}` }), m.model) },
+    { label: 'Calls', n: true, value: (m) => fmt(m.calls) },
+    { label: 'Input', n: true, value: (m) => fmt(m.prompt_tokens) },
+    { label: 'Output', n: true, value: (m) => fmt(m.completion_tokens) },
+    { label: 'Last 24 h', n: true, value: (m) => {
+      if (!m.limit) return `${fmt(m.tokens_24h)}${m.provider === 'ollama' ? ' (local)' : ''}`;
+      const pct = (100 * m.tokens_24h) / m.limit;
+      const near = pct >= 80 ? '⚠ ' : '';
+      return el('div', {}, `${near}${fmt(m.tokens_24h)} / ~${compact(m.limit)}`,
+        el('div', { class: 'meter', role: 'img', 'aria-label': `${Math.round(pct)}% of the approximate daily limit` },
+          el('div', { style: `width:${Math.min(pct, 100)}%;background:${u.series.includes(m.model) ? color(u.series, m.model) : 'var(--text-muted)'}` })));
+    } },
+    { label: 'p50 / p95', n: true, value: (m) => `${secs(m.latency_p50_ms)} / ${secs(m.latency_p95_ms)}` },
+  ], u.models));
+  replace('kinds', table([
+    { label: 'Type', value: (k) => k.kind },
+    { label: 'Calls', n: true, value: (k) => fmt(k.calls) },
+    { label: 'Tokens', n: true, value: (k) => fmt(k.tokens) },
+    { label: 'Tokens / call', n: true, value: (k) => fmt(k.tokens / k.calls) },
+    { label: 'Last 24 h', n: true, value: (k) => fmt(k.tokens_24h) },
+  ], u.kinds));
+  replace('recent', u.recent.length ? table([
+    { label: 'When', value: (c) => when(c.ts) },
+    { label: 'Type', value: (c) => c.kind },
+    { label: 'Model', value: (c) => c.model },
+    { label: 'Input', n: true, value: (c) => fmt(c.prompt_tokens) },
+    { label: 'Output', n: true, value: (c) => fmt(c.completion_tokens) },
+    { label: 'Latency', n: true, value: (c) => secs(c.latency_ms) },
+  ], u.recent) : el('div', { class: 'empty' }, 'No LLM calls yet.'));
+}
+
+function renderTurns(turns) {
+  replace('turns', turns.length ? table([
+    { label: 'When', value: (t) => when(t.ts) },
+    { label: 'Question', cls: 'q', value: (t) => el('div', {}, t.question, el('div', { class: 'nodes' }, t.nodes.map((n) => `${n.name} ${secs(n.ms)}`).join(' · '))) },
+    { label: 'Model', value: (t) => t.model },
+    { label: 'Result', value: (t) => (t.abstained ? 'Abstained' : 'Answered') },
+    { label: 'Tokens', n: true, value: (t) => `${fmt(t.tokens)}${t.cached ? ' (cached)' : ''}` },
+    { label: 'Total', n: true, value: (t) => secs(t.ms) },
+  ], turns) : el('div', { class: 'empty' }, 'No traces yet. Set TRACE_FILE in .env and restart the API or an eval to record agent turns.'));
+}
+
+function renderRunning(running) {
+  replace('running', ...(running.length
+    ? running.map((p) => el('span', { class: 'pill', style: 'margin-left:6px' }, `● ${p.name.replace('app.evaluation.', '')} · ${p.elapsed}`))
+    : [el('span', {}, 'No eval or API running')]));
+}
+
+function renderLogs(names) {
+  const select = $('logSelect');
+  if (select.options.length !== names.length || [...select.options].some((o, i) => o.value !== names[i])) {
+    select.replaceChildren(...names.map((n) => el('option', { value: n }, n)));
+    if (state.log && names.includes(state.log)) select.value = state.log;
+  }
+  state.log = select.value || null;
+  select.hidden = !names.length;
+  $('logFilter').hidden = !names.length;
+}
+
+let logLines = [];
+function paintLog() {
+  const pre = $('log');
+  const needle = $('logFilter').value.toLowerCase();
+  const stick = pre.scrollTop + pre.clientHeight >= pre.scrollHeight - 24;  // don't pull away someone reading above
+  const lines = needle ? logLines.filter((l) => l.toLowerCase().includes(needle)) : logLines;
+  pre.textContent = lines.join('\n') || (state.log ? 'No matching lines.' : 'No log files. Start with --log <file>, or put .log files in data/logs/.');
+  if (stick) pre.scrollTop = pre.scrollHeight;
+}
+async function refreshLog() {
+  if (!state.log) { logLines = []; paintLog(); return; }
+  const res = await fetch(`/api/log?name=${encodeURIComponent(state.log)}`);
+  if (!res.ok) return;
+  const d = await res.json();
+  logLines = d.lines;
+  $('logInfo').textContent = `last ${d.lines.length} lines · updated ${when(d.modified)}`;
+  paintLog();
+}
+
+function renderRanges() {
+  replace('ranges', ...[[7, '7 days'], [30, '30 days'], [0, 'All']].map(([d, label]) => {
+    const b = el('button', { type: 'button', 'aria-pressed': String(state.days === d), style: 'margin-left:4px' }, label);
+    b.addEventListener('click', () => { state.days = d; renderRanges(); refresh(); });
+    return b;
+  }));
+}
+
+async function refresh() {
+  try {
+    const res = await fetch(`/api/data?days=${state.days}`);
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    const d = await res.json();
+    state.data = d;
+    $('error').hidden = true;
+    renderTiles(d.usage); renderChart(d.usage); renderModels(d.usage); renderTurns(d.turns);
+    renderRunning(d.running); renderLogs(d.logs);
+    await refreshLog();
+    $('updated').textContent = `Updated ${new Date(d.now * 1000).toLocaleTimeString()}`;
+  } catch (e) {
+    $('error').hidden = false;
+    $('error').textContent = `Can't reach the dashboard server: ${e.message}. Showing the last data received.`;
+  }
+}
+
+$('tableToggle').addEventListener('click', () => {
+  state.table = !state.table;
+  $('tableToggle').setAttribute('aria-pressed', String(state.table));
+  if (state.data) renderChart(state.data.usage);
+});
+$('logSelect').addEventListener('change', (e) => { state.log = e.target.value; $('log').scrollTop = 0; refreshLog(); });
+$('logFilter').addEventListener('input', paintLog);
+renderRanges();
+refresh();
+setInterval(() => { if ($('auto').checked && !document.hidden) refresh(); }, 5000);
+</script>
+</body>
+</html>

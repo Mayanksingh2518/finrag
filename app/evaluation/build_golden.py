@@ -16,7 +16,8 @@ import sys
 from pathlib import Path
 
 from app.config import PROJECT_ROOT, get_settings
-from app.evaluation.golden import load_golden, load_pages, resolve_pages, validate
+from app.evaluation.golden import load_golden, load_pages, resolve_pages, validate, validate_release_quotes
+from app.retrieval.store import ChunkStore
 
 DEFAULT_PATH = PROJECT_ROOT / "data" / "eval" / "golden_v0.jsonl"
 MAX_PAGES = 6  # more matches than this suggests the quote is not distinctive
@@ -33,7 +34,7 @@ def main() -> None:
     errors: list[str] = []
     for row in rows:
         for e in row.get("evidence", []):
-            if e.get("pages") and not args.refresh:
+            if e.get("fiscal_quarter") or (e.get("pages") and not args.refresh):
                 continue
             found = resolve_pages(e["ticker"], int(e["fiscal_year"]), e["quotes"], pages)
             if not found:
@@ -45,6 +46,8 @@ def main() -> None:
     args.path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
     questions = load_golden(args.path)
     errors += validate(questions, pages)
+    if any(e.fiscal_quarter for q in questions for e in q.evidence):
+        errors += validate_release_quotes(questions, ChunkStore.from_processed(get_settings().processed_dir).chunks)
     counts = collections.Counter(q.category for q in questions)
     print(f"{len(questions)} questions: " + ", ".join(f"{c} {n}" for c, n in sorted(counts.items())))
     print(f"{sum(len(q.evidence) for q in questions)} evidence items, "

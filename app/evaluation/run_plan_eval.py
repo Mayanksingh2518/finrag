@@ -52,7 +52,7 @@ class PlanRecord:
 
 
 def _page(c) -> RetrievedPage:
-    return RetrievedPage(c.ticker, c.fiscal_year, c.page_start, c.page_end)
+    return RetrievedPage.of(c)
 
 
 def score(q: GoldQuestion, result: SearchResult, token_budget: int) -> PlanRecord:

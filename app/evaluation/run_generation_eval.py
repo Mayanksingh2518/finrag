@@ -69,8 +69,7 @@ def figure_recall(reference: str, answer: str) -> float | None:
 
 def score(q: GoldQuestion, r: AnswerResult) -> GenerationRecord:
     by_id = {s.id: s for s in r.sources}
-    cited_pages = [RetrievedPage(by_id[s].chunk.ticker, by_id[s].chunk.fiscal_year, by_id[s].chunk.page_start,
-                                 by_id[s].chunk.page_end) for s in r.cited_source_ids if s in by_id]
+    cited_pages = [RetrievedPage.of(by_id[s].chunk) for s in r.cited_source_ids if s in by_id]
     covered = set().union(*(covered_items(p, q.evidence) for p in cited_pages)) if cited_pages and q.answerable else set()
     return GenerationRecord(
         id=q.id, category=q.category, answerable=q.answerable, abstained=r.abstained,

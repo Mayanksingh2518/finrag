@@ -6,6 +6,9 @@ filled in by `resolve_pages` (every page of the filing containing a quote, so a 
 repeated in MD&A and the financial statements accepts either), and validation checks
 each listed page really contains a quote. Labels are therefore machine-checked and
 survive re-chunking: relevance is judged by page, not by chunk id.
+
+Earnings releases have no pages: their evidence names the quarter, and a chunk of that release counts when
+it contains a quote (`validate_release_quotes` checks every quote is in one chunk).
 """
 
 import json
@@ -34,6 +37,7 @@ class GoldEvidence:
     fiscal_year: int
     pages: tuple[int, ...]  # physical page indexes; any of them satisfies this item
     quotes: tuple[str, ...]  # verbatim text; every listed page contains at least one
+    fiscal_quarter: int | None = None  # set for an earnings release, which has no pages
 
 
 @dataclass(frozen=True)
@@ -69,7 +73,8 @@ def _parse(row: dict) -> GoldQuestion:
         reference_answer=row["reference_answer"],
         evidence=tuple(
             GoldEvidence(
-                e["ticker"], int(e["fiscal_year"]), tuple(int(p) for p in e.get("pages", [])), tuple(e["quotes"])
+                e["ticker"], int(e["fiscal_year"]), tuple(int(p) for p in e.get("pages", [])), tuple(e["quotes"]),
+                e.get("fiscal_quarter"),
             )
             for e in row.get("evidence", [])
         ),
@@ -77,6 +82,8 @@ def _parse(row: dict) -> GoldQuestion:
             tickers=tuple(f["tickers"]) if f.get("tickers") else None,
             fiscal_years=tuple(int(y) for y in f["fiscal_years"]) if f.get("fiscal_years") else None,
             sections=tuple(f["sections"]) if f.get("sections") else None,
+            fiscal_quarters=tuple(int(x) for x in f["fiscal_quarters"]) if f.get("fiscal_quarters") else None,
+            forms=tuple(f["forms"]) if f.get("forms") else None,
         ),
         history=tuple(row.get("history", [])),
         standalone_query=row.get("standalone_query"),
@@ -129,7 +136,10 @@ def validate(questions: Iterable[GoldQuestion], pages: dict[PageKey, PageText]) 
                 problems.append(f"{where} evidence ticker {e.ticker} outside filters {q.filters.tickers}")
             if q.filters.fiscal_years and e.fiscal_year not in q.filters.fiscal_years:
                 problems.append(f"{where} evidence FY{e.fiscal_year} outside filters {q.filters.fiscal_years}")
-            if not e.pages:
+            if e.fiscal_quarter:
+                if q.filters.fiscal_quarters and e.fiscal_quarter not in q.filters.fiscal_quarters:
+                    problems.append(f"{where} evidence Q{e.fiscal_quarter} outside filters {q.filters.fiscal_quarters}")
+            elif not e.pages:
                 problems.append(f"{where} evidence without pages")
             if not e.quotes:
                 problems.append(f"{where} evidence without quotes")
@@ -144,6 +154,17 @@ def validate(questions: Iterable[GoldQuestion], pages: dict[PageKey, PageText]) 
                 if not any(qt in normalized[key] for qt in quotes):
                     problems.append(f"{where} none of {e.quotes[0][:50]!r}... found on {key}")
     return problems
+
+
+def validate_release_quotes(questions: Iterable[GoldQuestion], chunks: Iterable) -> list[str]:
+    """Every quote of release evidence must be inside one chunk of that release, or the metric can't credit it."""
+    texts: dict[tuple[str, int, int], list[str]] = {}
+    for c in chunks:
+        if c.fiscal_quarter:
+            texts.setdefault((c.ticker, c.fiscal_year, c.fiscal_quarter), []).append(normalize(c.text).lower())
+    return [f"{q.id}: {qt[:50]!r} not in one chunk of {e.ticker} FY{e.fiscal_year} Q{e.fiscal_quarter}"
+            for q in questions for e in q.evidence if e.fiscal_quarter for qt in e.quotes
+            if not any(normalize(qt).lower() in t for t in texts.get((e.ticker, e.fiscal_year, e.fiscal_quarter), []))]
 
 
 def resolve_pages(ticker: str, fiscal_year: int, quotes: Iterable[str], pages: dict[PageKey, PageText]) -> tuple[int, ...]:

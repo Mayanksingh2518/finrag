@@ -82,7 +82,7 @@ def retrieve_metrics(retriever, query: str, filters: SearchFilters, q: GoldQuest
         result = search_decomposed(retriever, query, filters, k=k, mode="hybrid_rerank")
     else:
         result = retriever.search(query, filters, k=k, mode="hybrid_rerank")
-    ranking = [RetrievedPage(h.chunk.ticker, h.chunk.fiscal_year, h.chunk.page_start, h.chunk.page_end) for h in result.hits]
+    ranking = [RetrievedPage.of(h.chunk) for h in result.hits]
     return {**score_ranking(ranking, q.evidence, KS), "latency_ms": result.timings_ms.get("total", 0.0)}
 
 

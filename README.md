@@ -63,6 +63,7 @@ After the Quickstart's data steps (the container mounts `data/`; Ollama, if used
 ```bash
 docker compose up -d db && python -m app.retrieval.pg_store   # once: chunks + embeddings into Postgres
 docker compose up --build                                     # http://127.0.0.1:8010
+python -m app.dashboard --log <file>   # token usage, logs and traces at http://127.0.0.1:8020 (loads no models)
 ```
 
 The first start downloads the embedding and reranker models (~5 min); later starts take ~20 s. In

@@ -31,6 +31,7 @@ without asking for clarification:
 - Production-style code: typed, small modules, tests with fixtures, no notebooks-only logic.
 - Add dependencies to `requirements.txt` only when a phase needs them.
 - Commit only when the user asks; never push without a remote the user provided.
+- Long runs: `python -m app.dashboard --log <file>` shows token usage, logs and traces (loads no models).
 - If blocked on something only the user can provide (e.g. an API key), do all the work that
   doesn't need it, then say exactly what's missing.
 

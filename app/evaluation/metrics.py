@@ -10,13 +10,15 @@ A retrieved chunk *covers* a gold evidence item when it is from the same filing
 - ndcg@k: a chunk gains 1 only if it covers an item not covered by a higher-ranked
   chunk, so ten chunks from the same gold page don't count ten times; the ideal
   ranking covers min(#items, k) items in the first positions.
+
+Earnings release evidence has no pages: a chunk of the same release covers it when it contains a quote.
 """
 
 import math
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-from app.evaluation.golden import GoldEvidence
+from app.evaluation.golden import GoldEvidence, normalize
 
 
 @dataclass(frozen=True)
@@ -27,16 +29,25 @@ class RetrievedPage:
     fiscal_year: int
     page_start: int
     page_end: int
+    fiscal_quarter: int | None = None
+    text: str = ""  # only read for release evidence
+
+    @classmethod
+    def of(cls, chunk) -> "RetrievedPage":
+        return cls(chunk.ticker, chunk.fiscal_year, chunk.page_start, chunk.page_end, chunk.fiscal_quarter, chunk.text)
+
+
+def _covers(hit: RetrievedPage, e: GoldEvidence) -> bool:
+    if e.ticker != hit.ticker or e.fiscal_year != hit.fiscal_year:
+        return False
+    if e.fiscal_quarter:
+        text = normalize(hit.text).lower()
+        return e.fiscal_quarter == hit.fiscal_quarter and any(normalize(q).lower() in text for q in e.quotes)
+    return any(hit.page_start <= p <= hit.page_end for p in e.pages)
 
 
 def covered_items(hit: RetrievedPage, evidence: Sequence[GoldEvidence]) -> set[int]:
-    return {
-        i
-        for i, e in enumerate(evidence)
-        if e.ticker == hit.ticker
-        and e.fiscal_year == hit.fiscal_year
-        and any(hit.page_start <= p <= hit.page_end for p in e.pages)
-    }
+    return {i for i, e in enumerate(evidence) if _covers(hit, e)}
 
 
 def score_ranking(ranking: Sequence[RetrievedPage], evidence: Sequence[GoldEvidence], ks: Sequence[int]) -> dict[str, float]:

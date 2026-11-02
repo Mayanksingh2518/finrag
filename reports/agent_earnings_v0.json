@@ -1,0 +1,1982 @@
+{
+ "summary": {
+  "agent_routed": {
+   "questions": 35,
+   "errors": 0,
+   "abstention_recall": 0.75,
+   "abstention_precision": 1.0,
+   "false_abstention_rate": 0.0,
+   "citation_hit": 0.7407407407407407,
+   "evidence_recall": 0.7037037037037037,
+   "claim_support": 0.9753086419753086,
+   "figure_recall": 0.8333333333333334,
+   "confidence": {
+    "high": 19,
+    "medium": 10,
+    "none": 6
+   },
+   "providers": {
+    "ollama": 25,
+    "groq": 7,
+    "": 3
+   },
+   "models": {
+    "granite4.1:3b": 25,
+    "openai/gpt-oss-120b": 7
+   },
+   "llm_p50_ms": 16482.5,
+   "llm_p95_ms": 25194.1,
+   "retrieval_p50_ms": 2531.7,
+   "total_tokens": 115113,
+   "filters_ok": 1.0,
+   "citation_hit_xbrl": 0.7407407407407407,
+   "refused_early_unanswerable": 3,
+   "refused_early_answerable": 0,
+   "rewrites": 2,
+   "questions_with_facts": 0,
+   "xbrl_cited": 0,
+   "figure_recall_with_facts": NaN,
+   "total_p50_ms": 20935.4,
+   "total_p95_ms": 46104.8,
+   "analyze_p50_ms": 0.2
+  }
+ },
+ "baseline": null,
+ "records": {
+  "agent_routed": [
+   {
+    "id": "E01",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "NVIDIA reported a record quarterly Data Center revenue of $30.8 billion for Q3 FY2025, up 17% from Q2 and up 112% from a year ago. [NVDA Q3 FY2025 release]",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[NVDA Q3 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 2531.7,
+     "generation": 3.2,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 2540.8
+    },
+    "tokens": {
+     "prompt": 3059,
+     "completion": 71,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E02",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Apple's revenue in Q1 FY2025 was $124.3 billion [AAPL Q1 FY2025 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[AAPL Q1 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.0,
+     "retrieval": 1047.2,
+     "generation": 0.7,
+     "llm": 0.0,
+     "verify": 0.1,
+     "total": 1049.3
+    },
+    "tokens": {
+     "prompt": 3538,
+     "completion": 49,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AAPL"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E03",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Revenue in the second quarter of fiscal 2025 was $69.6 billion [MSFT Q2 FY2025 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[MSFT Q2 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 2113.5,
+     "generation": 22013.3,
+     "llm": 22008.2,
+     "verify": 0.6,
+     "total": 24132.7
+    },
+    "tokens": {
+     "prompt": 3475,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "MSFT"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E04",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Net income was $14.5 billion [JPM Q2 FY2023 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.6666666666666666,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[JPM Q2 FY2023 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 3842.8,
+     "generation": 18448.7,
+     "llm": 18443.4,
+     "verify": 0.5,
+     "total": 22299.5
+    },
+    "tokens": {
+     "prompt": 3196,
+     "completion": 41,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "JPM"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E05",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Google Cloud revenue in Q3 2024 was $11.4 billion [GOOGL Q3 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.6666666666666666,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[GOOGL Q3 FY2024 release]",
+     "[GOOGL Q3 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 2952.1,
+     "generation": 13725.8,
+     "llm": 13722.7,
+     "verify": 2.6,
+     "total": 16685.5
+    },
+    "tokens": {
+     "prompt": 2685,
+     "completion": 47,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "GOOGL"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E06",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "AWS segment sales were $23.1 billion in the third quarter of 2023. [AMZN Q3 FY2023 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[AMZN Q3 FY2023 release]",
+     "[AMZN Q3 FY2023 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 2764.8,
+     "generation": 20084.5,
+     "llm": 20082.4,
+     "verify": 1.7,
+     "total": 22854.9
+    },
+    "tokens": {
+     "prompt": 3452,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AMZN"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E07",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Tesla's free cash flow in Q3 2024 was $2.7 billion [TSLA Q3 FY2024 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q3 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 3232.3,
+     "generation": 21272.4,
+     "llm": 21269.3,
+     "verify": 1.1,
+     "total": 24513.4
+    },
+    "tokens": {
+     "prompt": 3835,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E08",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Tesla delivered 443,956 vehicles in Q2 2024. [TSLA Q2 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q2 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.5,
+     "retrieval": 3040.0,
+     "generation": 6.2,
+     "llm": 0.0,
+     "verify": 7.6,
+     "total": 3062.2
+    },
+    "tokens": {
+     "prompt": 3348,
+     "completion": 42,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E09",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Visa's net revenue in fiscal Q3 2024 was $8.9 billion [V Q3 FY2024 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[V Q3 FY2024 release]",
+     "[V Q3 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.3,
+     "retrieval": 3335.7,
+     "generation": 25845.7,
+     "llm": 25835.6,
+     "verify": 2.0,
+     "total": 29199.5
+    },
+    "tokens": {
+     "prompt": 3580,
+     "completion": 55,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "V"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E10",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Mastercard's net revenue in Q4 2024 was $7.5 billion [MA Q4 FY2024 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[MA Q4 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.3,
+     "retrieval": 3466.1,
+     "generation": 20282.3,
+     "llm": 20272.5,
+     "verify": 0.8,
+     "total": 23758.5
+    },
+    "tokens": {
+     "prompt": 3475,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "MA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E11",
+    "category": "lookup",
+    "answerable": true,
+    "abstained": false,
+    "answer": "3.43 billion daily active people [META Q1 FY2025 release]",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[META Q1 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.3,
+     "retrieval": 2497.3,
+     "generation": 16460.8,
+     "llm": 16456.7,
+     "verify": 0.2,
+     "total": 18963.4
+    },
+    "tokens": {
+     "prompt": 3330,
+     "completion": 39,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "META"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E12",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "NVIDIA's revenue in Q1 FY2023 was $8,288 million [NVDA Q1 FY2023 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[NVDA Q1 FY2023 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 2334.3,
+     "generation": 16485.8,
+     "llm": 16482.5,
+     "verify": 0.6,
+     "total": 18824.7
+    },
+    "tokens": {
+     "prompt": 2924,
+     "completion": 87,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E13",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "NVIDIA's revenue for the three months ended October 27, 2024 was $35.1 billion [NVDA Q3 FY2025 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[NVDA Q3 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.3,
+     "retrieval": 2374.7,
+     "generation": 17655.4,
+     "llm": 17652.5,
+     "verify": 0.4,
+     "total": 20035.3
+    },
+    "tokens": {
+     "prompt": 3697,
+     "completion": 56,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E14",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Revenue for the quarter ended March 31, 2022 was $49.4 billion [MSFT Q3 FY2022 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.6666666666666666,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[MSFT Q3 FY2022 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 2328.6,
+     "generation": 25197.7,
+     "llm": 25194.1,
+     "verify": 0.9,
+     "total": 27534.1
+    },
+    "tokens": {
+     "prompt": 3494,
+     "completion": 52,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "MSFT"
+    ],
+    "years": [
+     2022
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E15",
+    "category": "lookup",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Tesla described an operating margin of 19.2% for Q1 2022. [TSLA Q1 FY2022 release]",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q1 FY2022 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.4,
+     "retrieval": 2273.7,
+     "generation": 20886.9,
+     "llm": 20883.6,
+     "verify": 0.4,
+     "total": 23166.6
+    },
+    "tokens": {
+     "prompt": 3591,
+     "completion": 50,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2022
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E16",
+    "category": "lookup",
+    "answerable": true,
+    "abstained": false,
+    "answer": "NVIDIA's revenue outlook for Q4 FY2025 was $37.5 billion, plus or minus 2% [NVDA Q3 FY2025 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[NVDA Q3 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 3085.1,
+     "generation": 3.2,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 3093.1
+    },
+    "tokens": {
+     "prompt": 3414,
+     "completion": 58,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E17",
+    "category": "lookup",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Amazon.com, Inc. (AMZN) earnings release, Q4 fiscal year 2024, quarter ended 2024-12-31 | Financial Guidance: Net sales are expected to be between $151.0 billion and $155.5 billion, or to grow between 5% and 9% compared with first quarter 2024. [AMZN Q4 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 8,
+    "cited": [
+     "[AMZN Q4 FY2024 release]",
+     "[AMZN Q4 FY2024 release]",
+     "[AMZN Q4 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 2291.9,
+     "generation": 21365.0,
+     "llm": 21361.3,
+     "verify": 4.4,
+     "total": 23666.9
+    },
+    "tokens": {
+     "prompt": 3439,
+     "completion": 103,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AMZN"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E18",
+    "category": "lookup",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Meta forecasted total revenue for Q3 2024 to be in the range of $38.5-41 billion. [META Q2 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[META Q2 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 2255.3,
+     "generation": 18671.7,
+     "llm": 18668.3,
+     "verify": 3.5,
+     "total": 20935.4
+    },
+    "tokens": {
+     "prompt": 3482,
+     "completion": 53,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "META"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E19",
+    "category": "trend",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Q1 FY2025 (quarter ended Dec 28 2024): $124.3 billion [AAPL Q1 FY2025 release]. Q2 FY2025 (quarter ended Mar 29 2025): $95.4 billion [AAPL Q2 FY2025 release]. Q3 FY2025 (quarter ended Jun 28 2025): $94.0 billion [AAPL Q3 FY2025 release]. Q4 FY2025 (quarter ended Sep 27 2025): $102.5 billion [AAPL Q4 FY2025 release]. Overall, revenue fell after Q1, reaching a low in Q3, then rose again in Q4.",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 5,
+    "sources": 9,
+    "cited": [
+     "[AAPL Q1 FY2025 release]",
+     "[AAPL Q2 FY2025 release]",
+     "[AAPL Q3 FY2025 release]",
+     "[AAPL Q4 FY2025 release]"
+    ],
+    "provider": "groq",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 4875.9,
+     "generation": 5.2,
+     "llm": 0.0,
+     "verify": 1.2,
+     "total": 4886.7
+    },
+    "tokens": {
+     "prompt": 4020,
+     "completion": 460,
+     "reasoning": 71
+    },
+    "error": "",
+    "model": "openai/gpt-oss-120b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AAPL"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E20",
+    "category": "trend",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Q1 FY2024 (ended Apr 30 2023): revenue $7.19 billion [NVDA Q1 FY2024 release].\nQ2 FY2024 (ended Jul 30 2023): revenue $13.51 billion [NVDA Q2 FY2024 release].\nQ3 FY2024 (ended Oct 29 2023): revenue $18.12 billion [NVDA Q3 FY2024 release].\nQ4 FY2024 (ended Jan 28 2024): revenue $22.1 billion [NVDA Q4 FY2024 release].\nRevenue increased each successive quarter of fiscal 2024.",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 5,
+    "sources": 11,
+    "cited": [
+     "[NVDA Q1 FY2024 release]",
+     "[NVDA Q2 FY2024 release]",
+     "[NVDA Q3 FY2024 release]",
+     "[NVDA Q4 FY2024 release]"
+    ],
+    "provider": "groq",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 8477.9,
+     "generation": 1985.2,
+     "llm": 1980.5,
+     "verify": 1.5,
+     "total": 10474.3
+    },
+    "tokens": {
+     "prompt": 3656,
+     "completion": 447,
+     "reasoning": 72
+    },
+    "error": "",
+    "model": "openai/gpt-oss-120b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E21",
+    "category": "trend",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Q1 FY2024 (quarter ended 2023‑12‑31): net revenue $8.6 billion [V Q1 FY2024 release].\nQ2 FY2024 (quarter ended 2024‑03‑31): net revenue $8.8 billion [V Q2 FY2024 release].\nQ3 FY2024 (quarter ended 2024‑06‑30): net revenue $8.9 billion [V Q3 FY2024 release].\nQ4 FY2024 (quarter ended 2024‑09‑30): net revenue $9.6 billion [V Q4 FY2024 release].\nOverall, net revenue increased each successive quarter in fiscal 2024.",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 5,
+    "sources": 10,
+    "cited": [
+     "[V Q1 FY2024 release]",
+     "[V Q1 FY2024 release]",
+     "[V Q2 FY2024 release]",
+     "[V Q2 FY2024 release]",
+     "[V Q3 FY2024 release]",
+     "[V Q3 FY2024 release]",
+     "[V Q4 FY2024 release]",
+     "[V Q4 FY2024 release]"
+    ],
+    "provider": "groq",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.3,
+     "retrieval": 8615.1,
+     "generation": 1.9,
+     "llm": 0.0,
+     "verify": 0.8,
+     "total": 8643.6
+    },
+    "tokens": {
+     "prompt": 3975,
+     "completion": 492,
+     "reasoning": 106
+    },
+    "error": "",
+    "model": "openai/gpt-oss-120b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "V"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E22",
+    "category": "trend",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Q1 2024: 386,810 deliveries [TSLA Q1 FY2024 release]. Q2 2024: 443,956 deliveries [TSLA Q2 FY2024 release]. Q3 2024: 462,890 deliveries [TSLA Q3 FY2024 release]. Q4 2024: 495,570 deliveries [TSLA Q4 FY2024 release]. Deliveries increased each quarter, showing a rising trend throughout 2024.",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 5,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q1 FY2024 release]",
+     "[TSLA Q2 FY2024 release]",
+     "[TSLA Q3 FY2024 release]",
+     "[TSLA Q4 FY2024 release]"
+    ],
+    "provider": "groq",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 8585.6,
+     "generation": 2614.7,
+     "llm": 2611.0,
+     "verify": 2.4,
+     "total": 11209.9
+    },
+    "tokens": {
+     "prompt": 3976,
+     "completion": 369,
+     "reasoning": 85
+    },
+    "error": "",
+    "model": "openai/gpt-oss-120b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E23",
+    "category": "comparison",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Meta reported Q3 2024 revenue of $40.59 billion [META Q3 FY2024 release], while Alphabet reported Q3 2024 revenue of $88.3 billion [GOOGL Q3 FY2024 release]. Alphabet’s Q3 revenue was therefore more than double Meta’s.",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 0.5,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 3,
+    "sources": 10,
+    "cited": [
+     "[META Q3 FY2024 release]",
+     "[META Q3 FY2024 release]",
+     "[GOOGL Q3 FY2024 release]",
+     "[GOOGL Q3 FY2024 release]"
+    ],
+    "provider": "groq",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 2814.0,
+     "generation": 43284.5,
+     "llm": 1369.5,
+     "verify": 1.3,
+     "total": 46104.8
+    },
+    "tokens": {
+     "prompt": 3842,
+     "completion": 273,
+     "reasoning": 58
+    },
+    "error": "",
+    "model": "openai/gpt-oss-120b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "META",
+     "GOOGL"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E24",
+    "category": "comparison",
+    "answerable": true,
+    "abstained": false,
+    "answer": "In Q3 2023, Amazon’s AWS generated $23.1 billion in revenue, while Alphabet’s Google Cloud generated $8.411 billion in revenue. AWS revenue was therefore about $14.7 billion higher than Google Cloud’s revenue. [AMZN Q3 FY2023 release][GOOGL Q3 FY2023 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 0.6666666666666666,
+    "figure_recall": 1.0,
+    "claims": 3,
+    "sources": 10,
+    "cited": [
+     "[AMZN Q3 FY2023 release]",
+     "[GOOGL Q3 FY2023 release]"
+    ],
+    "provider": "groq",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 3271.6,
+     "generation": 1352.2,
+     "llm": 1349.5,
+     "verify": 2.9,
+     "total": 4631.0
+    },
+    "tokens": {
+     "prompt": 3454,
+     "completion": 295,
+     "reasoning": 77
+    },
+    "error": "",
+    "model": "openai/gpt-oss-120b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AMZN",
+     "GOOGL"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E25",
+    "category": "comparison",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Apple reported $124.3 billion revenue in its fiscal 2025 first quarter (ended December 28, 2024) [AAPL Q1 FY2025 release]. Microsoft reported $69.6 billion total revenue in its fiscal 2025 second quarter (ended December 31, 2024) [MSFT Q2 FY2025 release]. Apple’s Q1 FY2025 revenue was therefore about $54.7 billion higher than Microsoft’s Q2 FY2025 revenue.",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 0.5,
+    "claim_support": 0.6666666666666666,
+    "figure_recall": 1.0,
+    "claims": 3,
+    "sources": 10,
+    "cited": [
+     "[AAPL Q1 FY2025 release]",
+     "[MSFT Q2 FY2025 release]"
+    ],
+    "provider": "groq",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 3528.4,
+     "generation": 52572.6,
+     "llm": 1786.9,
+     "verify": 1.8,
+     "total": 56107.8
+    },
+    "tokens": {
+     "prompt": 3759,
+     "completion": 383,
+     "reasoning": 101
+    },
+    "error": "",
+    "model": "openai/gpt-oss-120b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AAPL",
+     "MSFT"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E26",
+    "category": "follow_up",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Net income in Q3 FY2025 was $19,309 million [NVDA Q3 FY2025 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[NVDA Q3 FY2025 release]",
+     "[NVDA Q3 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 922.3,
+     "retrieval": 1612.3,
+     "generation": 2.4,
+     "llm": 0.0,
+     "verify": 2.3,
+     "total": 2543.4
+    },
+    "tokens": {
+     "prompt": 3162,
+     "completion": 48,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": true,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E27",
+    "category": "follow_up",
+    "answerable": true,
+    "abstained": false,
+    "answer": "AWS segment sales were $24.2 billion in Q4 of 2023 [AMZN Q4 FY2023 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 0.0,
+    "evidence_recall": 0.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.5,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[AMZN Q4 FY2023 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 798.3,
+     "retrieval": 1352.0,
+     "generation": 13145.4,
+     "llm": 13140.7,
+     "verify": 0.4,
+     "total": 15300.2
+    },
+    "tokens": {
+     "prompt": 3617,
+     "completion": 49,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AMZN"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": true,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 0.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU1",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The sources do not contain a direct statement of Tesla's total revenue for Q3 2022. They provide other financial metrics like vehicle deliveries, operating cash flow, free cash flow, net income, and adjusted EBITDA, but lack the specific revenue figure requested.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 10,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 947.5,
+     "generation": 4.9,
+     "llm": 0.0,
+     "verify": 0.0,
+     "total": 956.4
+    },
+    "tokens": {
+     "prompt": 2753,
+     "completion": 154,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2022
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU2",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": 0.0,
+    "figure_recall": null,
+    "claims": 1,
+    "sources": 10,
+    "cited": [],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 608.7,
+     "generation": 9382.5,
+     "llm": 9379.6,
+     "verify": 2.8,
+     "total": 9998.8
+    },
+    "tokens": {
+     "prompt": 2779,
+     "completion": 49,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU3",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The provided sources (Apple Inc. earnings release for Q1 FY2025) do not contain any revenue guidance for Q2 FY2025. No forward-looking statements or guidance for the second quarter are included in the released materials.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 10,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 633.9,
+     "generation": 0.7,
+     "llm": 0.0,
+     "verify": 0.0,
+     "total": 637.1
+    },
+    "tokens": {
+     "prompt": 3697,
+     "completion": 80,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "AAPL"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU4",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The filings cover fiscal 2022-2025; the question asks about 2026.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 0,
+    "cited": [],
+    "provider": "",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.1,
+     "total": 1.8
+    },
+    "tokens": {},
+    "error": "",
+    "model": "",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [],
+    "years": [],
+    "refused_early": true,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "refuse",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU5",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The filings cover fiscal 2022-2025; the question asks about 2026.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 0,
+    "cited": [],
+    "provider": "",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.0,
+     "total": 0.5
+    },
+    "tokens": {},
+    "error": "",
+    "model": "",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [],
+    "years": [],
+    "refused_early": true,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "refuse",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU6",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": false,
+    "answer": "Apple sold 69,138 million iPhone units in Q1 FY2025. [AAPL Q1 FY2025 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": 1.0,
+    "figure_recall": null,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[AAPL Q1 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.0,
+     "retrieval": 593.8,
+     "generation": 13498.1,
+     "llm": 13494.3,
+     "verify": 1.9,
+     "total": 14096.3
+    },
+    "tokens": {
+     "prompt": 3698,
+     "completion": 48,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "AAPL"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU7",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": false,
+    "answer": "422,405 Model Y vehicles were delivered in Q2 2024. [TSLA Q2 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": 1.0,
+    "figure_recall": null,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[TSLA Q2 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "retrieval": 1623.7,
+     "generation": 13351.7,
+     "llm": 13345.8,
+     "verify": 2.9,
+     "total": 14982.3
+    },
+    "tokens": {
+     "prompt": 3518,
+     "completion": 43,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU8",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The filings cover fiscal 2022-2025; the question asks about 2026.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 0,
+    "cited": [],
+    "provider": "",
+    "cached": false,
+    "latency_ms": {
+     "analyze": 0.2,
+     "total": 1.8
+    },
+    "tokens": {},
+    "error": "",
+    "model": "",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [],
+    "years": [],
+    "refused_early": true,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "refuse",
+     "respond"
+    ]
+   }
+  ]
+ }
+}

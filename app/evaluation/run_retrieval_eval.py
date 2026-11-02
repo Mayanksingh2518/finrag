@@ -74,7 +74,7 @@ def evaluate(searcher: Searcher, questions: Sequence[GoldQuestion], mode: Search
             result = search_decomposed(searcher, q.retrieval_query, filters, k=k, mode=mode)
         else:
             result = searcher.search(q.retrieval_query, filters, k=k, mode=mode)
-        ranking = [RetrievedPage(h.chunk.ticker, h.chunk.fiscal_year, h.chunk.page_start, h.chunk.page_end) for h in result.hits]
+        ranking = [RetrievedPage.of(h.chunk) for h in result.hits]
         top = [f"{h.chunk.ticker} FY{h.chunk.fiscal_year} p.{h.chunk.page_start} {h.chunk.section} {h.chunk.chunk_type}"
                for h in result.hits[:5]]
         run.questions.append(QuestionResult(q.id, q.category, score_ranking(ranking, q.evidence, KS), result.timings_ms, top))

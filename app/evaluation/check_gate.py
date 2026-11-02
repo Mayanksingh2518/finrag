@@ -7,7 +7,9 @@ job installs nothing.
 
 Metric references in gate.json:
     retrieval:<run name>:<gold|none>:<metric>   mean over the run's questions in retrieval_v1.json
+    retrieval@<report>:<run>:<gold|none>:<metric>  the same in another report
     plan:<config>:<key>                         a config summary in plan_v0.json
+    plan@<report>:<config>:<key>                the same in another report
     summary:<report>:<dotted.path>              a value in <report>.json's "summary"
 
 Usage:
@@ -49,9 +51,10 @@ def _report(directory: Path, name: str) -> dict:
 
 def resolve(metric: str, directory: Path = REPORTS) -> float:
     kind, _, rest = metric.partition(":")
+    kind, _, report = kind.partition("@")
     if kind == "retrieval":
         run_name, filters, key = rest.split(":")
-        runs = [r for r in _report(directory, RETRIEVAL_REPORT)["runs"]
+        runs = [r for r in _report(directory, report or RETRIEVAL_REPORT)["runs"]
                 if r["name"] == run_name and r["filtered"] == (filters == "gold")]
         if not runs or not runs[0]["questions"]:
             raise MetricError(f"no retrieval run {run_name!r} with filters={filters}")
@@ -62,7 +65,7 @@ def resolve(metric: str, directory: Path = REPORTS) -> float:
     if kind == "plan":
         config, _, key = rest.rpartition(":")
         try:
-            return float(_report(directory, "plan_v0")[config]["summary"][key])
+            return float(_report(directory, report or "plan_v0")[config]["summary"][key])
         except KeyError:
             raise MetricError(f"plan config {config!r} or key {key!r} not found") from None
     if kind == "summary":

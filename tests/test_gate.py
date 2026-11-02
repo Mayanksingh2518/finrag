@@ -60,3 +60,12 @@ def test_check_passes_fails_and_reports_errors(reports):
 def test_committed_reports_pass_the_committed_gate():
     results = check(json.loads((REPORTS / "gate.json").read_text()))
     assert results and all(r.passed for r in results), render(results)
+
+
+def test_metric_can_name_another_report(tmp_path):
+    _write(tmp_path, "retrieval_x", {"runs": [{"name": "r", "filtered": True, "questions": [{"metrics": {"mrr": 0.5}}]}]})
+    _write(tmp_path, "plan_x", {"cfg": {"summary": {"mrr": 0.7}}})
+    assert resolve("retrieval@retrieval_x:r:gold:mrr", tmp_path) == 0.5
+    assert resolve("plan@plan_x:cfg:mrr", tmp_path) == 0.7
+    with pytest.raises(MetricError):
+        resolve("plan@missing:cfg:mrr", tmp_path)

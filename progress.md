@@ -61,6 +61,23 @@ filed as 8-K Exhibit 99.1, Item 2.02; stable URLs, same User-Agent rule as Phase
    tell a comparative column from the quarter asked**, and the repair below accepts any row naming the metric.
    Investor presentations (PDF) come after, if at all: most are not on EDGAR.
 
+## Dashboard v0 (user request, MacBook M4, 2026-11-02)
+
+`python -m app.dashboard --log <file>`, http://127.0.0.1:8020 (`app/dashboard.py`, `app/dashboard.html`). The user chose a
+local page over Langfuse Cloud. A separate process that loads no models (test), so it can stay open during an eval.
+Refreshes every 5 s. Localhost only: logs and traces hold questions and answers, and there is no login.
+
+- **Tokens come from the LLM cache, not from tracing:** each cache file is one successful provider call, and its modified
+  time is when the call happened, so all history is covered with no new instrumentation, judge and RAGAS runs included.
+  Not counted: failed calls (429s, timeouts) and cache hits. Copying the cache to another machine resets the dates.
+- **Limits shown are approximate:** ~200k tokens/day per Groq model, from this project's runs, over a rolling 24 h. Groq's real
+  window and remaining quota are only in its console.
+- **Logs:** `--log` files and `data/logs/*.log`, requested by name from that list only (test: paths and `..` give 404).
+- **Traces:** latest turns from `data/traces/*.jsonl`. `TRACE_FILE=data/traces/app.jsonl` added to `.env`. Judge runs aren't
+  traced, so they appear under tokens and logs, not under turns.
+- Checked in a browser at desktop and phone widths; the phone view first overflowed sideways (fixed). 8 chart colors pass the
+  palette validator on the page's surface. First reading: 1.19M hosted tokens (589 calls), 1.13M local (348 calls).
+
 ## Earnings release retrieval v0 (Phase 10 step 3, MacBook M4, 2026-11-02)
 
 The corpus is `chunks.jsonl` + `chunks_earnings.jsonl` (`ChunkStore.from_processed`; 10-Ks first, so their rows

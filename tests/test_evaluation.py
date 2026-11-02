@@ -3,8 +3,10 @@ import math
 
 import pytest
 
+from app.agent.analyze import QueryAnalyzer
+from app.config import PROJECT_ROOT
 from app.evaluation.golden import GoldEvidence, PageText, load_golden, normalize, resolve_pages, validate
-from app.evaluation.metrics import RetrievedPage, score_ranking
+from app.evaluation.metrics import RetrievedPage, covered_items, score_ranking
 
 KS = (1, 3, 5, 10)
 E2024 = GoldEvidence("AAPL", 2024, (20, 41), ("Services net sales increased",))
@@ -122,7 +124,7 @@ class _StubSearcher:
 
         self.filters_seen.append(filters)
         hits = [ScoredChunk(SimpleNamespace(ticker=t, fiscal_year=y, page_start=p, page_end=p, section="Item 7",
-                                            chunk_type="text"), 1.0) for t, y, p in self.pages_by_query[query][:k]]
+                                            chunk_type="text", fiscal_quarter=None, text=""), 1.0) for t, y, p in self.pages_by_query[query][:k]]
         return SearchResult(query, mode, filters, hits, {"total": 5.0, "rerank": 4.0})
 
 
@@ -146,3 +148,34 @@ def test_evaluate_skips_unanswerable_and_applies_filters(tmp_path):
     assert stub.filters_seen[-1].is_empty()
     report = render_report([filtered, unfiltered], [filtered], questions)
     assert "| hybrid | gold | " in report and "| hybrid | none | " in report and "Reranker ablations" in report
+
+
+def test_release_evidence_is_matched_by_quarter_and_quote_not_pages():
+    evidence = [GoldEvidence("NVDA", 2025, (), ("Revenue is expected to be $37.5 billion",), 3)]
+    good = RetrievedPage("NVDA", 2025, 0, 0, 3, "Outlook\nRevenue is  expected to be $37.5 billion, plus or minus 2%.")
+    assert covered_items(good, evidence) == {0}
+    assert not covered_items(RetrievedPage("NVDA", 2025, 0, 0, 4, good.text), evidence)  # another quarter's release
+    assert not covered_items(RetrievedPage("NVDA", 2025, 0, 0, 3, "Revenue was $35.1 billion."), evidence)  # no quote
+    # A 10-K page 0 or a release chunk never matches a page-labelled item.
+    assert not covered_items(RetrievedPage("NVDA", 2025, 0, 0, 3, "x"), [GoldEvidence("NVDA", 2025, (5,), ("x",))])
+
+
+def test_committed_earnings_golden_set_is_consistent():
+    questions = load_golden(PROJECT_ROOT / "data" / "eval" / "golden_earnings_v0.jsonl")
+    assert not validate(questions, {})  # release evidence needs no pages
+    answerable = [q for q in questions if q.answerable]
+    assert all(e.fiscal_quarter for q in answerable for e in q.evidence)
+    assert all(q.filters.effective_forms() == ("8-K EX-99.1",) for q in answerable)
+    assert len(answerable) >= 20 and len(questions) - len(answerable) >= 5
+
+
+def test_analyzer_reads_every_earnings_question_as_gold():
+    """Rule-based part only: follow-ups need the LLM rewrite or their history, which `analyze` gets here."""
+    for q in load_golden(PROJECT_ROOT / "data" / "eval" / "golden_earnings_v0.jsonl"):
+        if not q.answerable:
+            continue
+        got = QueryAnalyzer().analyze(q.question, q.history).filters
+        assert got.effective_forms() == q.filters.effective_forms(), q.id
+        assert set(got.tickers or ()) == set(q.filters.tickers or ()), q.id
+        assert set(got.fiscal_years or ()) == set(q.filters.fiscal_years or ()), q.id
+        assert set(got.fiscal_quarters or ()) == set(q.filters.fiscal_quarters or ()), q.id
