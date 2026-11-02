@@ -76,4 +76,4 @@ These turn wrong answers into refusals. They can't produce the right answer: the
 ## Reports
 
 [agent](agent_earnings_v0.md), [judge](judge_earnings_v0.md), [second judge](judge_earnings_v0_qwen.md), [judge sensitivity](judge_sensitivity.md), [second judge sensitivity](judge_sensitivity_qwen.md),
-[retrieval](retrieval_earnings_v0.md), [plan](plan_earnings_v0.md). Golden set: `data/eval/golden_earnings_v0.jsonl`. Ten gate checks in `gate.json` hold these results.
+[retrieval](retrieval_earnings_v0.md), [plan](plan_earnings_v0.md). Golden set: `data/eval/golden_earnings_v0.jsonl`. Ten gate checks in `gate.json` hold these results. The column audits and the 14-question model comparison: `scripts/audits/`, with answers in [table_questions_larger_model.json](table_questions_larger_model.json).

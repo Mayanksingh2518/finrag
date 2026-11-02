@@ -14,8 +14,9 @@ Single source of truth for project state. Update this file at the end of every w
 - **All planned phases are done (Phase 10 closed 2026-11-02).** Earnings releases are built and evaluated (`reports/eval_earnings_v0.md`, 60 questions: correctness 0.870,
   abstention recall 1.000). The user decided to leave out investor presentations.
 - **Next up:** optional: full eval of earnings questions on the larger model, once Groq quota has cleared. See "Next task in detail".
-- **Resume here (2026-11-02):** the column check is uncommitted; the user commits. gpt-oss-120b had used ~215k tokens in the 24 h before 16:26. The dashboard may still be running on :8020 (`pkill -f app.dashboard`).
-  Main Postgres volume: still needs `python -m app.retrieval.pg_store` with `VECTOR_BACKEND=pgvector`.
+- **Resume here (2026-11-02):** read `handoff.md` first. All phases are committed and pushed; CI green on d5858d0. `handoff.md`, `scripts/audits/` and
+  `reports/table_questions_larger_model.json` are new and uncommitted. Nothing running. gpt-oss-120b had used ~215k tokens in the 24 h before 16:26. Main Postgres
+  volume: still needs `python -m app.retrieval.pg_store` with `VECTOR_BACKEND=pgvector`.
 - **Retrieval v1 (2026-10-30):** full retrieval eval rerun with the reviewed gold labels
   (`reports/retrieval_v1`, ~20 min): hybrid_rerank recall@5 0.891, MRR 0.933 (gold filters), 0.884 /
   0.925 (none); reranker ablations unchanged in ranking (bge-reranker-base 30 cand / 512 still best).
@@ -1211,3 +1212,4 @@ an on-disk response cache, and provider fallback (Gemini → Groq → Ollama).
   added at the user's request (`python -m app.dashboard`). 281 tests pass + 2 skipped without Postgres; those 2 pass on a scratch db. Gate 20/20. Not committed.
 - **2026-11-02 (MacBook M4):** Phase 10 step 5: verifier checks for relabelled figures fixed EU6 and EU7. 12 fresh questions found a new wrong answer (E29, wrong period column), now in the golden set: correctness 0.970, abstention recall 1.000 on 47 questions. 10-K answers 84/84. Gate 20/20. Not committed.
 - **2026-11-02 (MacBook M4):** Phase 10 closed; the user left out investor presentations. Column check in the verifier, audited on real data. Golden set extended to 60: correctness 0.870. gpt-oss-120b got 14 of 14 table questions right vs 8 of 14 locally; routing switch built, off until a full eval (Groq quota used up today). 10-K answers 84/84. Gate floors reset to the harder set.
+- **2026-11-02 (MacBook M4):** README rewritten for visitors (results, how it works, working Quickstart). Added `handoff.md`; moved the column audits and the 14-question model comparison into `scripts/audits/` and `reports/`, since they had lived only in a scratchpad. Not committed.

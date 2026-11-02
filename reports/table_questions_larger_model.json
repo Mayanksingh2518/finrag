@@ -1,0 +1,212 @@
+[
+ {
+  "id": "E29",
+  "q": "How many vehicles did Tesla produce in Q1 2024?",
+  "ref": "Tesla produced 433,371 vehicles in Q1 2024.",
+  "answer": "Tesla produced 433,371 vehicles in Q1 2024. [TSLA Q1 FY2024 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 4023,
+   "completion": 117,
+   "reasoning": 28
+  }
+ },
+ {
+  "id": "E34",
+  "q": "What was Tesla's free cash flow in Q1 2024?",
+  "ref": "Tesla's free cash flow was -$2,531 million in Q1 2024.",
+  "answer": "Tesla's free cash flow in Q1 2024 was a negative $2.5\u202fbillion. [TSLA Q1 FY2024 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3741,
+   "completion": 175,
+   "reasoning": 66
+  }
+ },
+ {
+  "id": "E35",
+  "q": "What was Tesla's gross profit in Q2 2023?",
+  "ref": "Tesla's gross profit was $4,533 million in Q2 2023.",
+  "answer": "Tesla's gross profit in Q2 2023 was $4.533\u202fbillion. [TSLA Q2 FY2023 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3858,
+   "completion": 145,
+   "reasoning": 46
+  }
+ },
+ {
+  "id": "E36",
+  "q": "How much energy storage did Tesla deploy in Q3 2023?",
+  "ref": "Tesla deployed 3,980 MWh of energy storage in Q3 2023.",
+  "answer": "Tesla deployed 3,980\u202fMWh of energy storage in Q3\u202f2023 [TSLA Q3 FY2023 release].",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3771,
+   "completion": 155,
+   "reasoning": 52
+  }
+ },
+ {
+  "id": "E37",
+  "q": "What was Tesla's capital expenditure in Q4 2024?",
+  "ref": "Tesla's capital expenditures were $2,783 million in Q4 2024.",
+  "answer": "Tesla's capital expenditures in Q4 2024 were $2,783\u202fmillion [TSLA Q4 FY2024 release].",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 4000,
+   "completion": 140,
+   "reasoning": 39
+  }
+ },
+ {
+  "id": "E38",
+  "q": "What were AWS net sales in Q2 2024?",
+  "ref": "AWS net sales were $26,281 million ($26.3 billion) in Q2 2024.",
+  "answer": "AWS net sales were $26.281\u202fbillion in Q2\u202f2024. [AMZN Q2 FY2024 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3985,
+   "completion": 155,
+   "reasoning": 54
+  }
+ },
+ {
+  "id": "E39",
+  "q": "What was Amazon's operating income in Q1 2023?",
+  "ref": "Amazon's operating income was $4,774 million ($4.8 billion) in Q1 2023.",
+  "answer": "Amazon's operating income in Q1 2023 was $4.8\u202fbillion. [AMZN Q1 FY2023 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3792,
+   "completion": 175,
+   "reasoning": 31
+  }
+ },
+ {
+  "id": "E40",
+  "q": "What was JPMorgan's reported net revenue in Q1 2022?",
+  "ref": "JPMorgan's reported net revenue was $30,717 million in Q1 2022; managed net revenue was $31,590 million.",
+  "answer": "JPMorgan reported net revenue of $30.7\u202fbillion in Q1\u202f2022. [JPM Q1 FY2022 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3477,
+   "completion": 156,
+   "reasoning": 49
+  }
+ },
+ {
+  "id": "E41",
+  "q": "What was NVIDIA's GAAP gross margin in Q1 FY2022?",
+  "ref": "NVIDIA's GAAP gross margin was 64.1% in Q1 fiscal 2022.",
+  "answer": "NVIDIA's GAAP gross margin in Q1 FY2022 was 64.1% [NVDA Q1 FY2022 release].",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3617,
+   "completion": 148,
+   "reasoning": 43
+  }
+ },
+ {
+  "id": "E42",
+  "q": "What was NVIDIA's non-GAAP net income in Q2 FY2025?",
+  "ref": "NVIDIA's non-GAAP net income was $16,952 million in Q2 fiscal 2025.",
+  "answer": "NVIDIA reported non\u2011GAAP net income of $16,952\u202fmillion for the second quarter of fiscal 2025 (Q2 FY25) [NVDA Q2 FY2025 release].",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3965,
+   "completion": 162,
+   "reasoning": 33
+  }
+ },
+ {
+  "id": "E43",
+  "q": "What was Google Search revenue in Q3 2024?",
+  "ref": "Google Search & other revenue was $49,385 million in Q3 2024.",
+  "answer": "Google Search revenue was $49,385\u202fmillion in Q3 2024. [GOOGL Q3 FY2024 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3025,
+   "completion": 131,
+   "reasoning": 37
+  }
+ },
+ {
+  "id": "E44",
+  "q": "What was Meta's total costs and expenses in Q2 2024?",
+  "ref": "Meta's total costs and expenses were $24,224 million in Q2 2024.",
+  "answer": "Meta's total costs and expenses in Q2 2024 were $24.22\u202fbillion (or $24,224\u202fmillion) [META Q2 FY2024 release].",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3741,
+   "completion": 182,
+   "reasoning": 43
+  }
+ },
+ {
+  "id": "E45",
+  "q": "What was Mastercard's operating expenses in Q1 2022?",
+  "ref": "Mastercard's operating expenses were $2.2 billion in Q1 2022.",
+  "answer": "Mastercard reported operating expenses of $2,217\u202fmillion for Q1\u202f2022 [MA Q1 FY2022 release].",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3951,
+   "completion": 166,
+   "reasoning": 63
+  }
+ },
+ {
+  "id": "E46",
+  "q": "What was Alphabet's operating income in Q2 2024?",
+  "ref": "Alphabet's operating income was $27,425 million in Q2 2024.",
+  "answer": "Alphabet reported operating income of $27,425\u202fmillion for Q2\u202f2024. [GOOGL Q2 FY2024 release]",
+  "abstained": false,
+  "reason": "",
+  "model": "openai/gpt-oss-120b",
+  "confidence": "high",
+  "tokens": {
+   "prompt": 3429,
+   "completion": 127,
+   "reasoning": 30
+  }
+ }
+]
