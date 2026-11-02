@@ -219,3 +219,62 @@ def test_repeated_release_citation_is_collapsed():
     assert render_citations("Up [S1]. [S2]", sources) == "Up [NVDA Q3 FY2025 release]"
     pages = [Source("S1", TEN_K[0], 1.0), Source("S2", TEN_K[0], 1.0)]
     assert render_citations("Up [S1][S2].", pages) == "Up [NVDA FY2025 p.1][NVDA FY2025 p.1]."  # 10-K text unchanged
+
+
+IPHONE_TABLE = "| ($ in millions) | Q1 FY25 | Q1 FY24 |\n|---|---|---|\n| iPhone | $69,138 | $69,702 |\n| Mac | $8,987 | $7,780 |"
+TSLA_MODELS = "Q1-2024 Q2-2024 YoY\nModel 3/Y deliveries 369,783 422,405 -5%\nOther models deliveries 17,027 21,551 12%\nTotal deliveries 386,810 443,956 -5%"
+
+
+@pytest.mark.parametrize("claim", [
+    "Apple sold 69,138 million iPhone units in Q1 FY2025.",
+    "Apple sold 69,138 iPhones units in the quarter.",
+    "Apple shipped 8,987 million Mac devices.",
+])
+def test_a_count_cannot_rest_on_a_dollar_amount(claim):
+    v = verified(claim, release_source("S1", IPHONE_TABLE, "AAPL"), cited=("S1",))
+    assert not v.supported and v.unsupported_numbers
+
+
+@pytest.mark.parametrize("claim", [
+    "iPhone net sales were $69,138 million.",
+    "iPhone net sales were 69,138 million dollars.",  # not a counted noun
+    "iPhone revenue was $69.1 billion, and Mac revenue was $9.0 billion.",
+])
+def test_dollar_figures_stay_supported(claim):
+    assert verified(claim, release_source("S1", IPHONE_TABLE, "AAPL"), cited=("S1",)).supported
+
+
+@pytest.mark.parametrize("claim", [
+    "422,405 Model Y vehicles were delivered in Q2 2024.",
+    "Tesla delivered 422,405 Model 3 vehicles in Q2 2024.",
+])
+def test_one_product_cannot_claim_a_combined_row(claim):
+    assert not verified(claim, release_source("S1", TSLA_MODELS, "TSLA"), cited=("S1",)).supported
+
+
+@pytest.mark.parametrize("claim", [
+    "Model 3/Y deliveries were 422,405 in Q2 2024.",
+    "Tesla delivered 422,405 Model 3 and Model Y vehicles in Q2 2024.",
+    "Tesla delivered 443,956 vehicles in Q2 2024.",
+    "Tesla delivered 21,551 other models in Q2 2024.",
+])
+def test_combined_and_total_figures_stay_supported(claim):
+    assert verified(claim, release_source("S1", TSLA_MODELS, "TSLA"), cited=("S1",)).supported
+
+
+def test_a_relabelled_figure_is_not_rescued_by_citation_repair():
+    other = release_source("S1", "Apple had a strong quarter.", "AAPL")
+    table = release_source("S2", IPHONE_TABLE, "AAPL")
+    assert not verified("Apple sold 69,138 million iPhone units.", other, table).supported  # no citation
+    assert not verified("Apple sold 69,138 million iPhone units.", other, table, cited=("S1",)).supported
+
+
+def test_a_fact_in_a_second_row_still_counts():
+    """The figure also stated as a count elsewhere in the chunk: one fitting row is enough."""
+    both = release_source("S1", "| iPhone revenue | $5,000 |\nTotal iPhone units 5,000", "AAPL")
+    assert verified("Apple sold 5,000 iPhone units.", both, cited=("S1",)).supported
+
+
+def test_10k_sources_skip_the_release_checks():
+    source = Source("S1", make_chunk(0, "AAPL", 2025, "Item 7", IPHONE_TABLE), 1.0)
+    assert verified("Apple sold 69,138 million iPhone units in the year.", source, cited=("S1",)).supported  # unchanged behavior

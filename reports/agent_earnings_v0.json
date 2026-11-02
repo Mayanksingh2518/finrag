@@ -1,44 +1,44 @@
 {
  "summary": {
   "agent_routed": {
-   "questions": 35,
+   "questions": 47,
    "errors": 0,
-   "abstention_recall": 0.75,
+   "abstention_recall": 1.0,
    "abstention_precision": 1.0,
    "false_abstention_rate": 0.0,
-   "citation_hit": 0.7407407407407407,
-   "evidence_recall": 0.7037037037037037,
-   "claim_support": 0.9753086419753086,
-   "figure_recall": 0.8333333333333334,
+   "citation_hit": 0.9393939393939394,
+   "evidence_recall": 0.9393939393939394,
+   "claim_support": 0.9797979797979799,
+   "figure_recall": 0.8131313131313131,
    "confidence": {
-    "high": 19,
+    "high": 23,
     "medium": 10,
-    "none": 6
+    "none": 14
    },
    "providers": {
-    "ollama": 25,
+    "ollama": 37,
     "groq": 7,
     "": 3
    },
    "models": {
-    "granite4.1:3b": 25,
+    "granite4.1:3b": 37,
     "openai/gpt-oss-120b": 7
    },
-   "llm_p50_ms": 16482.5,
-   "llm_p95_ms": 25194.1,
-   "retrieval_p50_ms": 2531.7,
-   "total_tokens": 115113,
+   "llm_p50_ms": NaN,
+   "llm_p95_ms": NaN,
+   "retrieval_p50_ms": 1868.9,
+   "total_tokens": 158693,
    "filters_ok": 1.0,
-   "citation_hit_xbrl": 0.7407407407407407,
+   "citation_hit_xbrl": 0.9393939393939394,
    "refused_early_unanswerable": 3,
    "refused_early_answerable": 0,
    "rewrites": 2,
    "questions_with_facts": 0,
    "xbrl_cited": 0,
    "figure_recall_with_facts": NaN,
-   "total_p50_ms": 20935.4,
-   "total_p95_ms": 46104.8,
-   "analyze_p50_ms": 0.2
+   "total_p50_ms": NaN,
+   "total_p95_ms": NaN,
+   "analyze_p50_ms": 0.1
   }
  },
  "baseline": null,
@@ -52,8 +52,8 @@
     "answer": "NVIDIA reported a record quarterly Data Center revenue of $30.8 billion for Q3 FY2025, up 17% from Q2 and up 112% from a year ago. [NVDA Q3 FY2025 release]",
     "abstain_reason": "",
     "confidence": "high",
-    "citation_hit": 0.0,
-    "evidence_recall": 0.0,
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
     "claim_support": 1.0,
     "figure_recall": 1.0,
     "claims": 1,
@@ -65,11 +65,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2531.7,
-     "generation": 3.2,
+     "retrieval": 2270.5,
+     "generation": 2.7,
      "llm": 0.0,
-     "verify": 0.3,
-     "total": 2540.8
+     "verify": 0.6,
+     "total": 2277.6
     },
     "tokens": {
      "prompt": 3059,
@@ -90,7 +90,7 @@
     "rewritten": false,
     "facts": 0,
     "xbrl_cited": false,
-    "citation_hit_xbrl": 0.0,
+    "citation_hit_xbrl": 1.0,
     "steps": [
      "analyze",
      "retrieve",
@@ -121,11 +121,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 1047.2,
-     "generation": 0.7,
+     "retrieval": 865.5,
+     "generation": 0.8,
      "llm": 0.0,
-     "verify": 0.1,
-     "total": 1049.3
+     "verify": 0.2,
+     "total": 867.9
     },
     "tokens": {
      "prompt": 3538,
@@ -174,14 +174,14 @@
      "[MSFT Q2 FY2025 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2113.5,
-     "generation": 22013.3,
-     "llm": 22008.2,
-     "verify": 0.6,
-     "total": 24132.7
+     "retrieval": 1739.9,
+     "generation": 1.7,
+     "llm": 0.0,
+     "verify": 0.2,
+     "total": 1743.5
     },
     "tokens": {
      "prompt": 3475,
@@ -220,8 +220,8 @@
     "answer": "Net income was $14.5 billion [JPM Q2 FY2023 release].",
     "abstain_reason": "",
     "confidence": "high",
-    "citation_hit": 0.0,
-    "evidence_recall": 0.0,
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
     "claim_support": 1.0,
     "figure_recall": 0.6666666666666666,
     "claims": 1,
@@ -230,14 +230,14 @@
      "[JPM Q2 FY2023 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 3842.8,
-     "generation": 18448.7,
-     "llm": 18443.4,
-     "verify": 0.5,
-     "total": 22299.5
+     "analyze": 0.1,
+     "retrieval": 2416.3,
+     "generation": 1.7,
+     "llm": 0.0,
+     "verify": 0.4,
+     "total": 2421.8
     },
     "tokens": {
      "prompt": 3196,
@@ -258,7 +258,7 @@
     "rewritten": false,
     "facts": 0,
     "xbrl_cited": false,
-    "citation_hit_xbrl": 0.0,
+    "citation_hit_xbrl": 1.0,
     "steps": [
      "analyze",
      "retrieve",
@@ -287,14 +287,14 @@
      "[GOOGL Q3 FY2024 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 2952.1,
-     "generation": 13725.8,
-     "llm": 13722.7,
-     "verify": 2.6,
-     "total": 16685.5
+     "analyze": 0.1,
+     "retrieval": 1884.2,
+     "generation": 1.7,
+     "llm": 0.0,
+     "verify": 0.9,
+     "total": 1889.4
     },
     "tokens": {
      "prompt": 2685,
@@ -344,14 +344,14 @@
      "[AMZN Q3 FY2023 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 2764.8,
-     "generation": 20084.5,
-     "llm": 20082.4,
-     "verify": 1.7,
-     "total": 22854.9
+     "analyze": 0.1,
+     "retrieval": 1961.8,
+     "generation": 1.7,
+     "llm": 0.0,
+     "verify": 0.9,
+     "total": 1966.2
     },
     "tokens": {
      "prompt": 3452,
@@ -400,14 +400,14 @@
      "[TSLA Q3 FY2024 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 3232.3,
-     "generation": 21272.4,
-     "llm": 21269.3,
-     "verify": 1.1,
-     "total": 24513.4
+     "analyze": 0.0,
+     "retrieval": 1799.2,
+     "generation": 2.2,
+     "llm": 0.0,
+     "verify": 1.0,
+     "total": 1805.4
     },
     "tokens": {
      "prompt": 3835,
@@ -458,12 +458,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.5,
-     "retrieval": 3040.0,
-     "generation": 6.2,
+     "analyze": 0.2,
+     "retrieval": 1849.4,
+     "generation": 3.2,
      "llm": 0.0,
-     "verify": 7.6,
-     "total": 3062.2
+     "verify": 3.8,
+     "total": 1861.4
     },
     "tokens": {
      "prompt": 3348,
@@ -513,14 +513,14 @@
      "[V Q3 FY2024 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.3,
-     "retrieval": 3335.7,
-     "generation": 25845.7,
-     "llm": 25835.6,
-     "verify": 2.0,
-     "total": 29199.5
+     "analyze": 0.2,
+     "retrieval": 1958.3,
+     "generation": 1.2,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 1962.3
     },
     "tokens": {
      "prompt": 3580,
@@ -559,8 +559,8 @@
     "answer": "Mastercard's net revenue in Q4 2024 was $7.5 billion [MA Q4 FY2024 release].",
     "abstain_reason": "",
     "confidence": "high",
-    "citation_hit": 0.0,
-    "evidence_recall": 0.0,
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
     "claim_support": 1.0,
     "figure_recall": 0.5,
     "claims": 1,
@@ -569,14 +569,14 @@
      "[MA Q4 FY2024 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.3,
-     "retrieval": 3466.1,
-     "generation": 20282.3,
-     "llm": 20272.5,
-     "verify": 0.8,
-     "total": 23758.5
+     "analyze": 0.1,
+     "retrieval": 1978.2,
+     "generation": 1.5,
+     "llm": 0.0,
+     "verify": 0.2,
+     "total": 1981.6
     },
     "tokens": {
      "prompt": 3475,
@@ -597,7 +597,7 @@
     "rewritten": false,
     "facts": 0,
     "xbrl_cited": false,
-    "citation_hit_xbrl": 0.0,
+    "citation_hit_xbrl": 1.0,
     "steps": [
      "analyze",
      "retrieve",
@@ -625,14 +625,14 @@
      "[META Q1 FY2025 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.3,
-     "retrieval": 2497.3,
-     "generation": 16460.8,
-     "llm": 16456.7,
-     "verify": 0.2,
-     "total": 18963.4
+     "analyze": 0.1,
+     "retrieval": 1324.0,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 1327.2
     },
     "tokens": {
      "prompt": 3330,
@@ -681,14 +681,14 @@
      "[NVDA Q1 FY2023 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 2334.3,
-     "generation": 16485.8,
-     "llm": 16482.5,
-     "verify": 0.6,
-     "total": 18824.7
+     "analyze": 0.0,
+     "retrieval": 1838.8,
+     "generation": 1.6,
+     "llm": 0.0,
+     "verify": 0.2,
+     "total": 1842.1
     },
     "tokens": {
      "prompt": 2924,
@@ -727,8 +727,8 @@
     "answer": "NVIDIA's revenue for the three months ended October 27, 2024 was $35.1 billion [NVDA Q3 FY2025 release].",
     "abstain_reason": "",
     "confidence": "high",
-    "citation_hit": 0.0,
-    "evidence_recall": 0.0,
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
     "claim_support": 1.0,
     "figure_recall": 1.0,
     "claims": 1,
@@ -737,14 +737,14 @@
      "[NVDA Q3 FY2025 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.3,
-     "retrieval": 2374.7,
-     "generation": 17655.4,
-     "llm": 17652.5,
+     "analyze": 0.1,
+     "retrieval": 1860.4,
+     "generation": 0.9,
+     "llm": 0.0,
      "verify": 0.4,
-     "total": 20035.3
+     "total": 1863.3
     },
     "tokens": {
      "prompt": 3697,
@@ -765,7 +765,7 @@
     "rewritten": false,
     "facts": 0,
     "xbrl_cited": false,
-    "citation_hit_xbrl": 0.0,
+    "citation_hit_xbrl": 1.0,
     "steps": [
      "analyze",
      "retrieve",
@@ -783,8 +783,8 @@
     "answer": "Revenue for the quarter ended March 31, 2022 was $49.4 billion [MSFT Q3 FY2022 release].",
     "abstain_reason": "",
     "confidence": "high",
-    "citation_hit": 0.0,
-    "evidence_recall": 0.0,
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
     "claim_support": 1.0,
     "figure_recall": 0.6666666666666666,
     "claims": 1,
@@ -793,14 +793,14 @@
      "[MSFT Q3 FY2022 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 2328.6,
-     "generation": 25197.7,
-     "llm": 25194.1,
-     "verify": 0.9,
-     "total": 27534.1
+     "analyze": 0.1,
+     "retrieval": 1854.8,
+     "generation": 1.8,
+     "llm": 0.0,
+     "verify": 0.8,
+     "total": 1859.8
     },
     "tokens": {
      "prompt": 3494,
@@ -821,7 +821,7 @@
     "rewritten": false,
     "facts": 0,
     "xbrl_cited": false,
-    "citation_hit_xbrl": 0.0,
+    "citation_hit_xbrl": 1.0,
     "steps": [
      "analyze",
      "retrieve",
@@ -849,14 +849,14 @@
      "[TSLA Q1 FY2022 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.4,
-     "retrieval": 2273.7,
-     "generation": 20886.9,
-     "llm": 20883.6,
+     "analyze": 0.1,
+     "retrieval": 1190.4,
+     "generation": 1.9,
+     "llm": 0.0,
      "verify": 0.4,
-     "total": 23166.6
+     "total": 1194.8
     },
     "tokens": {
      "prompt": 3591,
@@ -907,12 +907,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 3085.1,
-     "generation": 3.2,
+     "analyze": 0.1,
+     "retrieval": 1870.7,
+     "generation": 2.0,
      "llm": 0.0,
      "verify": 0.3,
-     "total": 3093.1
+     "total": 1874.7
     },
     "tokens": {
      "prompt": 3414,
@@ -963,14 +963,14 @@
      "[AMZN Q4 FY2024 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 2291.9,
-     "generation": 21365.0,
-     "llm": 21361.3,
-     "verify": 4.4,
-     "total": 23666.9
+     "analyze": 0.1,
+     "retrieval": 2023.3,
+     "generation": 3.0,
+     "llm": 0.0,
+     "verify": 5.7,
+     "total": 2034.9
     },
     "tokens": {
      "prompt": 3439,
@@ -1019,14 +1019,14 @@
      "[META Q2 FY2024 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 2255.3,
-     "generation": 18671.7,
-     "llm": 18668.3,
-     "verify": 3.5,
-     "total": 20935.4
+     "retrieval": 1754.0,
+     "generation": 1.5,
+     "llm": 0.0,
+     "verify": 1.4,
+     "total": 1759.2
     },
     "tokens": {
      "prompt": 3482,
@@ -1080,12 +1080,12 @@
     "provider": "groq",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 4875.9,
-     "generation": 5.2,
+     "analyze": 0.1,
+     "retrieval": 3775.4,
+     "generation": 0.7,
      "llm": 0.0,
-     "verify": 1.2,
-     "total": 4886.7
+     "verify": 1.1,
+     "total": 3778.7
     },
     "tokens": {
      "prompt": 4020,
@@ -1137,14 +1137,14 @@
      "[NVDA Q4 FY2024 release]"
     ],
     "provider": "groq",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 8477.9,
-     "generation": 1985.2,
-     "llm": 1980.5,
-     "verify": 1.5,
-     "total": 10474.3
+     "analyze": 0.1,
+     "retrieval": 7217.7,
+     "generation": 0.9,
+     "llm": 0.0,
+     "verify": 1.0,
+     "total": 7221.2
     },
     "tokens": {
      "prompt": 3656,
@@ -1202,12 +1202,12 @@
     "provider": "groq",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.3,
-     "retrieval": 8615.1,
-     "generation": 1.9,
+     "analyze": 0.1,
+     "retrieval": 7528.2,
+     "generation": 1.7,
      "llm": 0.0,
      "verify": 0.8,
-     "total": 8643.6
+     "total": 7532.2
     },
     "tokens": {
      "prompt": 3975,
@@ -1259,14 +1259,14 @@
      "[TSLA Q4 FY2024 release]"
     ],
     "provider": "groq",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.1,
-     "retrieval": 8585.6,
-     "generation": 2614.7,
-     "llm": 2611.0,
-     "verify": 2.4,
-     "total": 11209.9
+     "analyze": 0.0,
+     "retrieval": 6016.0,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 1.8,
+     "total": 6020.7
     },
     "tokens": {
      "prompt": 3976,
@@ -1306,7 +1306,7 @@
     "abstain_reason": "",
     "confidence": "high",
     "citation_hit": 1.0,
-    "evidence_recall": 0.5,
+    "evidence_recall": 1.0,
     "claim_support": 1.0,
     "figure_recall": 1.0,
     "claims": 3,
@@ -1318,14 +1318,14 @@
      "[GOOGL Q3 FY2024 release]"
     ],
     "provider": "groq",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 2814.0,
-     "generation": 43284.5,
-     "llm": 1369.5,
-     "verify": 1.3,
-     "total": 46104.8
+     "analyze": 0.0,
+     "retrieval": 3510.2,
+     "generation": 1.5,
+     "llm": 0.0,
+     "verify": 0.6,
+     "total": 3513.9
     },
     "tokens": {
      "prompt": 3842,
@@ -1376,14 +1376,14 @@
      "[GOOGL Q3 FY2023 release]"
     ],
     "provider": "groq",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 3271.6,
-     "generation": 1352.2,
-     "llm": 1349.5,
-     "verify": 2.9,
-     "total": 4631.0
+     "analyze": 0.1,
+     "retrieval": 3820.0,
+     "generation": 1.6,
+     "llm": 0.0,
+     "verify": 1.2,
+     "total": 3824.3
     },
     "tokens": {
      "prompt": 3454,
@@ -1424,7 +1424,7 @@
     "abstain_reason": "",
     "confidence": "medium",
     "citation_hit": 1.0,
-    "evidence_recall": 0.5,
+    "evidence_recall": 1.0,
     "claim_support": 0.6666666666666666,
     "figure_recall": 1.0,
     "claims": 3,
@@ -1434,14 +1434,14 @@
      "[MSFT Q2 FY2025 release]"
     ],
     "provider": "groq",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 3528.4,
-     "generation": 52572.6,
-     "llm": 1786.9,
-     "verify": 1.8,
-     "total": 56107.8
+     "analyze": 0.1,
+     "retrieval": 4858.8,
+     "generation": 2.0,
+     "llm": 0.0,
+     "verify": 1.3,
+     "total": 4863.7
     },
     "tokens": {
      "prompt": 3759,
@@ -1494,12 +1494,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 922.3,
-     "retrieval": 1612.3,
-     "generation": 2.4,
+     "analyze": 0.9,
+     "retrieval": 2026.1,
+     "generation": 1.8,
      "llm": 0.0,
-     "verify": 2.3,
-     "total": 2543.4
+     "verify": 0.8,
+     "total": 2031.3
     },
     "tokens": {
      "prompt": 3162,
@@ -1548,14 +1548,14 @@
      "[AMZN Q4 FY2023 release]"
     ],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 798.3,
-     "retrieval": 1352.0,
-     "generation": 13145.4,
-     "llm": 13140.7,
-     "verify": 0.4,
-     "total": 15300.2
+     "analyze": 0.5,
+     "retrieval": 2231.1,
+     "generation": 1.3,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 2234.9
     },
     "tokens": {
      "prompt": 3617,
@@ -1605,11 +1605,11 @@
     "cached": true,
     "latency_ms": {
      "analyze": 0.1,
-     "retrieval": 947.5,
-     "generation": 4.9,
+     "retrieval": 852.7,
+     "generation": 1.5,
      "llm": 0.0,
      "verify": 0.0,
-     "total": 956.4
+     "total": 855.9
     },
     "tokens": {
      "prompt": 2753,
@@ -1656,14 +1656,14 @@
     "sources": 10,
     "cited": [],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 608.7,
-     "generation": 9382.5,
-     "llm": 9379.6,
-     "verify": 2.8,
-     "total": 9998.8
+     "analyze": 0.1,
+     "retrieval": 956.5,
+     "generation": 0.8,
+     "llm": 0.0,
+     "verify": 0.9,
+     "total": 959.8
     },
     "tokens": {
      "prompt": 2779,
@@ -1712,12 +1712,12 @@
     "provider": "ollama",
     "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 633.9,
-     "generation": 0.7,
+     "analyze": 0.1,
+     "retrieval": 887.6,
+     "generation": 1.7,
      "llm": 0.0,
      "verify": 0.0,
-     "total": 637.1
+     "total": 891.0
     },
     "tokens": {
      "prompt": 3697,
@@ -1767,7 +1767,7 @@
     "cached": false,
     "latency_ms": {
      "analyze": 0.1,
-     "total": 1.8
+     "total": 0.8
     },
     "tokens": {},
     "error": "",
@@ -1806,7 +1806,7 @@
     "cached": false,
     "latency_ms": {
      "analyze": 0.0,
-     "total": 0.5
+     "total": 0.6
     },
     "tokens": {},
     "error": "",
@@ -1830,28 +1830,26 @@
     "id": "EU6",
     "category": "unanswerable",
     "answerable": false,
-    "abstained": false,
-    "answer": "Apple sold 69,138 million iPhone units in Q1 FY2025. [AAPL Q1 FY2025 release]",
-    "abstain_reason": "",
-    "confidence": "medium",
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
     "citation_hit": null,
     "evidence_recall": null,
-    "claim_support": 1.0,
+    "claim_support": 0.0,
     "figure_recall": null,
     "claims": 1,
     "sources": 10,
-    "cited": [
-     "[AAPL Q1 FY2025 release]"
-    ],
+    "cited": [],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
      "analyze": 0.0,
-     "retrieval": 593.8,
-     "generation": 13498.1,
-     "llm": 13494.3,
-     "verify": 1.9,
-     "total": 14096.3
+     "retrieval": 851.0,
+     "generation": 1.6,
+     "llm": 0.0,
+     "verify": 1.1,
+     "total": 855.2
     },
     "tokens": {
      "prompt": 3698,
@@ -1886,28 +1884,26 @@
     "id": "EU7",
     "category": "unanswerable",
     "answerable": false,
-    "abstained": false,
-    "answer": "422,405 Model Y vehicles were delivered in Q2 2024. [TSLA Q2 FY2024 release]",
-    "abstain_reason": "",
-    "confidence": "medium",
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
     "citation_hit": null,
     "evidence_recall": null,
-    "claim_support": 1.0,
+    "claim_support": 0.0,
     "figure_recall": null,
     "claims": 1,
     "sources": 9,
-    "cited": [
-     "[TSLA Q2 FY2024 release]"
-    ],
+    "cited": [],
     "provider": "ollama",
-    "cached": false,
+    "cached": true,
     "latency_ms": {
-     "analyze": 0.2,
-     "retrieval": 1623.7,
-     "generation": 13351.7,
-     "llm": 13345.8,
-     "verify": 2.9,
-     "total": 14982.3
+     "analyze": 0.1,
+     "retrieval": 1868.9,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 1.5,
+     "total": 1873.6
     },
     "tokens": {
      "prompt": 3518,
@@ -1956,8 +1952,8 @@
     "provider": "",
     "cached": false,
     "latency_ms": {
-     "analyze": 0.2,
-     "total": 1.8
+     "analyze": 0.1,
+     "total": 0.8
     },
     "tokens": {},
     "error": "",
@@ -1974,6 +1970,667 @@
     "steps": [
      "analyze",
      "refuse",
+     "respond"
+    ]
+   },
+   {
+    "id": "E28",
+    "category": "lookup",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Meta had 76,834 employees at the end of Q1 2025. [META Q1 FY2025 release]",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.3333333333333333,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[META Q1 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.0,
+     "retrieval": 1433.0,
+     "generation": 2.0,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 1436.8
+    },
+    "tokens": {
+     "prompt": 3696,
+     "completion": 49,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "META"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E29",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "Tesla produced 440,808 vehicles in Q1 2024. [TSLA Q1 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 0.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[TSLA Q1 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1850.7,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.4,
+     "total": 1854.2
+    },
+    "tokens": {
+     "prompt": 3756,
+     "completion": 73,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E30",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "The Tesla delivered 439,975 Model 3 and Model Y vehicles in Q3 2024 [TSLA Q3 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[TSLA Q3 FY2024 release]",
+     "[TSLA Q3 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 2026.5,
+     "generation": 1.5,
+     "llm": 0.0,
+     "verify": 1.6,
+     "total": 2031.3
+    },
+    "tokens": {
+     "prompt": 3732,
+     "completion": 95,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E31",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "The iPhone net sales for Q1 FY2025 were $69,138 million [AAPL Q1 FY2025 release].",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[AAPL Q1 FY2025 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 887.1,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.3,
+     "total": 890.6
+    },
+    "tokens": {
+     "prompt": 3698,
+     "completion": 49,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "AAPL"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E32",
+    "category": "lookup",
+    "answerable": true,
+    "abstained": false,
+    "answer": "3.35 billion daily active people [META Q4 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "high",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 9,
+    "cited": [
+     "[META Q4 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 2094.2,
+     "generation": 1.4,
+     "llm": 0.0,
+     "verify": 0.4,
+     "total": 2097.8
+    },
+    "tokens": {
+     "prompt": 3522,
+     "completion": 40,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "META"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "E33",
+    "category": "numeric",
+    "answerable": true,
+    "abstained": false,
+    "answer": "6,473 Supercharger stations [TSLA Q2 FY2024 release]",
+    "abstain_reason": "",
+    "confidence": "medium",
+    "citation_hit": 1.0,
+    "evidence_recall": 1.0,
+    "claim_support": 1.0,
+    "figure_recall": 1.0,
+    "claims": 1,
+    "sources": 10,
+    "cited": [
+     "[TSLA Q2 FY2024 release]"
+    ],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1848.6,
+     "generation": 1.5,
+     "llm": 0.0,
+     "verify": 1.2,
+     "total": 1853.0
+    },
+    "tokens": {
+     "prompt": 3823,
+     "completion": 37,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": true,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": 1.0,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU9",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": 0.0,
+    "figure_recall": null,
+    "claims": 1,
+    "sources": 9,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.0,
+     "retrieval": 1142.1,
+     "generation": 2.0,
+     "llm": 0.0,
+     "verify": 0.7,
+     "total": 1146.4
+    },
+    "tokens": {
+     "prompt": 3620,
+     "completion": 37,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "AAPL"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU10",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": 0.0,
+    "figure_recall": null,
+    "claims": 1,
+    "sources": 9,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1073.9,
+     "generation": 1.9,
+     "llm": 0.0,
+     "verify": 0.7,
+     "total": 1078.2
+    },
+    "tokens": {
+     "prompt": 3504,
+     "completion": 45,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "AAPL"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU11",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "None of the answer's claims could be verified against the cited sources.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": 0.0,
+    "figure_recall": null,
+    "claims": 1,
+    "sources": 9,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1795.3,
+     "generation": 1.8,
+     "llm": 0.0,
+     "verify": 0.6,
+     "total": 1799.3
+    },
+    "tokens": {
+     "prompt": 3432,
+     "completion": 32,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "TSLA"
+    ],
+    "years": [
+     2023
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU12",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The provided sources do not contain any information about the number of Xbox consoles sold by Microsoft in Q2 FY2024.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 9,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 1851.6,
+     "generation": 1.6,
+     "llm": 0.0,
+     "verify": 0.0,
+     "total": 1854.6
+    },
+    "tokens": {
+     "prompt": 3494,
+     "completion": 56,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "MSFT"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU13",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The provided sources do not contain any information about the number of GPUs sold by NVIDIA in Q3 FY2025.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 10,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.0,
+     "retrieval": 2058.4,
+     "generation": 1.7,
+     "llm": 0.0,
+     "verify": 0.0,
+     "total": 2061.5
+    },
+    "tokens": {
+     "prompt": 3076,
+     "completion": 51,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "NVDA"
+    ],
+    "years": [
+     2025
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
+     "respond"
+    ]
+   },
+   {
+    "id": "EU14",
+    "category": "unanswerable",
+    "answerable": false,
+    "abstained": true,
+    "answer": "",
+    "abstain_reason": "The provided sources do not contain information about the number of AWS customers Amazon had in Q4 2024.",
+    "confidence": "none",
+    "citation_hit": null,
+    "evidence_recall": null,
+    "claim_support": null,
+    "figure_recall": null,
+    "claims": 0,
+    "sources": 9,
+    "cited": [],
+    "provider": "ollama",
+    "cached": true,
+    "latency_ms": {
+     "analyze": 0.1,
+     "retrieval": 2124.3,
+     "generation": 2.0,
+     "llm": 0.0,
+     "verify": 0.0,
+     "total": 2127.8
+    },
+    "tokens": {
+     "prompt": 3607,
+     "completion": 56,
+     "reasoning": 0
+    },
+    "error": "",
+    "model": "granite4.1:3b",
+    "config": "agent_routed",
+    "filters_ok": null,
+    "tickers": [
+     "AMZN"
+    ],
+    "years": [
+     2024
+    ],
+    "refused_early": false,
+    "rewritten": false,
+    "facts": 0,
+    "xbrl_cited": false,
+    "citation_hit_xbrl": null,
+    "steps": [
+     "analyze",
+     "retrieve",
+     "xbrl",
+     "generate",
+     "verify",
      "respond"
     ]
    }

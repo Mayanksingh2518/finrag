@@ -17,6 +17,10 @@ badly cited (common with small local models, see reports/generation_v0_ollama.md
   those figures and share its wording. Such claims are marked `repaired` (the
   model's citation was wrong, the content was not). A figure that appears in no
   provided source still fails, so invented numbers are never rescued.
+
+Figures alone can't catch a real number relabelled as another metric, so release sources get two more checks
+(`_row_fits`): a figure stated as a count can't rest on a dollar amount ("69,138 million iPhone units" on
+"| iPhone | $69,138 |"), and one product can't claim a combined row ("Model Y" on "Model 3/Y deliveries").
 """
 
 import re
@@ -121,7 +125,7 @@ def _segments(text: str) -> list[str]:
     return [seg for seg in re.split(r"\n|(?<=[.;])\s+", text) if seg.strip()]
 
 
-def _in_context(number: Number, words: set[str], source: Source) -> bool:
+def _in_context(number: Number, words: set[str], source: Source, claim_text: str = "") -> bool:
     """Is the figure stated in a sentence/row about the same thing as the claim?
 
     Searching every provided source (not just the cited ones) makes coincidental matches
@@ -129,23 +133,53 @@ def _in_context(number: Number, words: set[str], source: Source) -> bool:
     needs the figure next to the claim's own words.
     """
     if source.chunk.fiscal_quarter:
-        return _in_release_context(number, words, source)
+        return _in_release_context(number, words, source, claim_text)
     return any(len(words & content_words(seg)) >= MIN_SEGMENT_WORDS
                and any(_matches(number, n) for n in extract_numbers(seg)) for seg in _segments(source.chunk.text))
+
+
+# A figure followed within a few words by something counted: "443,956 vehicles", "69,138 million iPhone units".
+_COUNTED = r"(?:\s+[\w/&'-]+){0,3}?\s+(?:units?|vehicles?|cars?|devices?|phones?|shipments?|subscribers?|customers?|employees?|people|users?)\b"
+_COMBINED = re.compile(r"\b([A-Z][a-z]+) (\w+)/(\w+)\b")  # "Model 3/Y": two products in one figure
+
+
+def _names_one_of_a_combined_figure(claim_text: str, row: str) -> bool:
+    text = claim_text.lower()
+    for name, a, b in _COMBINED.findall(row):
+        if f"{name} {a}/{b}".lower() not in text and (f"{name} {a}".lower() in text) != (f"{name} {b}".lower() in text):
+            return True
+    return False
+
+
+def _row_fits(number: Number, claim_text: str, row: str) -> bool:
+    """Is this release row's figure the metric the claim says it is? See the module docstring."""
+    if _names_one_of_a_combined_figure(claim_text, row):
+        return False
+    counted = "$" not in number.raw and re.search(re.escape(number.raw) + _COUNTED, claim_text, re.IGNORECASE)
+    return not (counted and all("$" in n.raw for n in extract_numbers(row) if _matches(number, n)))
+
+
+def _relabelled(numbers: Sequence[Number], claim_text: str, sources: Sequence[Source]) -> list[Number]:
+    """Figures found in the cited release sources, but only in rows that don't fit the claim."""
+    if not sources or not all(s.chunk.fiscal_quarter for s in sources):
+        return []
+    rows = [seg for s in sources for seg in _segments(s.chunk.text)]
+    return [n for n in numbers
+            if not any(_row_fits(n, claim_text, r) and any(_matches(n, x) for x in extract_numbers(r)) for r in rows)]
 
 
 def _stems(words: set[str]) -> set[str]:
     return {w[:STEM_CHARS] for w in words if w.isalpha()}
 
 
-def _in_release_context(number: Number, words: set[str], source: Source) -> bool:
+def _in_release_context(number: Number, words: set[str], source: Source, claim_text: str = "") -> bool:
     """A release's rows don't repeat the company and period ("Net income | $19,309" sits under "Q3 FY25"),
     and its tables use nouns where answers use verbs ("deliveries", "delivered"). So the test is the exact
     figure in a row that names the claim's metric: words beyond the company, compared by stem.
     """
     metric = _stems(words - content_words(source.chunk.context))
-    return any(metric & _stems(content_words(seg)) and any(_matches(number, n) for n in extract_numbers(seg))
-               for seg in _segments(source.chunk.text))
+    return any(metric & _stems(content_words(seg)) and _row_fits(number, claim_text, seg)
+               and any(_matches(number, n) for n in extract_numbers(seg)) for seg in _segments(source.chunk.text))
 
 
 @dataclass
@@ -177,6 +211,8 @@ def verify_claim(claim: Claim, sources: Mapping[str, Source], repair: bool = Tru
     valid_ids = [sid for sid in dict.fromkeys(normalize_source_id(i) for i in claim.source_ids) if sid in sources]
     numbers, derived = extract_numbers(claim.text), derived_figures(claim.text)
     missing = _missing(numbers, derived, [n for sid in valid_ids for n in extract_numbers(sources[sid].chunk.text)])
+    found = [n for n in numbers if n not in missing]
+    missing += [n for n in _relabelled(found, claim.text, [sources[sid] for sid in valid_ids]) if n not in derived]
     if valid_ids and not missing:
         return VerifiedClaim(claim.text, valid_ids, "supported")
     if repair and (fixed := _repair(claim.text, valid_ids, missing, sources)):
@@ -205,7 +241,7 @@ def _repair(text: str, cited: list[str], missing: list[Number], sources: Mapping
     while missing:
         best, covered = None, []
         for sid in candidates:
-            hits = [n for n in missing if _in_context(n, words, sources[sid])]
+            hits = [n for n in missing if _in_context(n, words, sources[sid], text)]
             if len(hits) > len(covered):
                 best, covered = sid, hits
         if best is None:

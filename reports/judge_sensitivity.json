@@ -1,0 +1,67 @@
+{
+ "summary": {
+  "answers": 6,
+  "graded": 6,
+  "errors": 0,
+  "caught": 6,
+  "partial": 0,
+  "missed": 0,
+  "caught_rate": 1.0
+ },
+ "records": [
+  {
+   "id": "E13",
+   "error_type": "prior-quarter column",
+   "answer": "NVIDIA's revenue for the three months ended October 27, 2024 was $30,040 million.",
+   "source": "NVDA-FY2025-Q2-EX-99.1-0002",
+   "correctness": "incorrect",
+   "reason": "The candidate answer provides an incorrect revenue figure and cites a source for a different quarter, so it fails to match the reference answer.",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "E07",
+   "error_type": "prior-quarter column",
+   "answer": "Tesla's free cash flow in Q3 2024 was $1,342 million.",
+   "source": "TSLA-FY2024-Q2-EX-99.1-0004",
+   "correctness": "incorrect",
+   "reason": "The candidate answer gives an incorrect figure that contradicts the reference and is not supported by the cited source, which refers to a different quarter.",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "E05",
+   "error_type": "year-ago column",
+   "answer": "Google Cloud revenue in Q3 2024 was $8,411 million.",
+   "source": "GOOGL-FY2024-Q3-EX-99.1-0004",
+   "correctness": "incorrect",
+   "reason": "The candidate gives the 2023 Google Cloud revenue figure as the 2024 value, contradicting both the reference answer and the source, and omits the correct amount and growth rate.",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "E10",
+   "error_type": "annual figure as the quarter's",
+   "answer": "Mastercard's net revenue in Q4 2024 was $28.2 billion.",
+   "source": "MA-FY2024-Q4-EX-99.1-0007",
+   "correctness": "incorrect",
+   "reason": "The candidate answer gives the full\u2011year net revenue figure and mislabels it as Q4, missing the correct Q4 amount and growth rate from the reference.",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "E04",
+   "error_type": "adjusted figure as reported",
+   "answer": "JPMorgan's reported net income in Q2 2023 was $13.3 billion.",
+   "source": "JPM-FY2023-Q2-EX-99.1-0000",
+   "correctness": "incorrect",
+   "reason": "The answer gives the adjusted net income instead of the reported net income, missing the $14.5\u202fbillion figure and contradicting the reference.",
+   "model": "openai/gpt-oss-120b"
+  },
+  {
+   "id": "E16",
+   "error_type": "next quarter's outlook",
+   "answer": "NVIDIA's revenue outlook for Q4 FY2025 was $43.0 billion.",
+   "source": "NVDA-FY2025-Q4-EX-99.1-0006",
+   "correctness": "incorrect",
+   "reason": "The candidate gives an incorrect figure and misattributes the period; it does not match the reference answer and is not supported by the provided source.",
+   "model": "openai/gpt-oss-120b"
+  }
+ ]
+}

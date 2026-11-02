@@ -1,27 +1,28 @@
 {
  "summary": {
-  "questions": 35,
-  "judged": 27,
+  "questions": 47,
+  "judged": 33,
   "errors": 0,
-  "correctness_all_answerable": 1.0,
-  "correctness_answered": 1.0,
+  "correctness_all_answerable": 0.9696969696969697,
+  "correctness_answered": 0.9696969696969697,
   "grades_answered": {
-   "correct": 27
+   "correct": 32,
+   "incorrect": 1
   },
-  "faithfulness": 1.0,
-  "verifier_claim_support": 0.9753086419753086,
+  "faithfulness": 0.9696969696969697,
+  "verifier_claim_support": 0.9797979797979799,
   "label_agreement": NaN,
   "label_agreement_lenient": NaN,
   "labelled": 0,
-  "judge_tokens": 45194,
+  "judge_tokens": 7673,
   "providers": {
-   "groq": 27
+   "groq": 33
   },
   "judge_models": {
-   "openai/gpt-oss-120b": 27
+   "openai/gpt-oss-120b": 33
   },
   "answer_models": {
-   "granite4.1:3b": 25,
+   "granite4.1:3b": 37,
    "openai/gpt-oss-120b": 7
   }
  },
@@ -46,7 +47,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1315,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -69,7 +70,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1236,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -92,7 +93,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1193,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -115,7 +116,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1327,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -138,7 +139,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1477,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -161,7 +162,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1654,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -184,7 +185,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1291,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -207,7 +208,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1279,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -230,7 +231,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1557,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -253,7 +254,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1136,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -276,7 +277,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1300,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -301,7 +302,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1326,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -324,7 +325,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1319,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -347,7 +348,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1453,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -364,13 +365,13 @@
    "contradicted_facts": [],
    "unsupported_claims": [],
    "verifier_supported": 1.0,
-   "reason": "The candidate provides the specific operating margin (19.2%) which satisfies the reference statement of \"over 19%\". The figure is directly supported by the cited source.",
+   "reason": "The candidate answer provides the exact operating margin reported in the reference and is fully supported by the cited source.",
    "label": null,
    "answer_matches_agent_v0": null,
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1249,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -393,7 +394,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1178,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -416,7 +417,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 2018,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -439,7 +440,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1261,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -462,7 +463,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "openai/gpt-oss-120b",
-   "tokens": 2644,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -485,7 +486,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "openai/gpt-oss-120b",
-   "tokens": 2622,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -508,7 +509,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "openai/gpt-oss-120b",
-   "tokens": 3724,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -531,7 +532,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "openai/gpt-oss-120b",
-   "tokens": 2622,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -554,7 +555,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "openai/gpt-oss-120b",
-   "tokens": 2410,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -577,7 +578,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "openai/gpt-oss-120b",
-   "tokens": 1739,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -600,7 +601,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "openai/gpt-oss-120b",
-   "tokens": 2022,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -623,7 +624,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1518,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -646,7 +647,7 @@
    "provider": "groq",
    "judge_model": "openai/gpt-oss-120b",
    "answer_model": "granite4.1:3b",
-   "tokens": 1324,
+   "tokens": 0,
    "error": ""
   },
   {
@@ -768,17 +769,17 @@
    "id": "EU6",
    "category": "unanswerable",
    "answerable": false,
-   "abstained": false,
-   "answer": "Apple sold 69,138 million iPhone units in Q1 FY2025. [AAPL Q1 FY2025 release]",
-   "correctness": "incorrect",
-   "correctness_score": 0.0,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
    "faithfulness": null,
    "judged": false,
    "missing_facts": [],
    "contradicted_facts": [],
    "unsupported_claims": [],
-   "verifier_supported": 1.0,
-   "reason": "answered an unanswerable question (rule)",
+   "verifier_supported": 0.0,
+   "reason": "abstained (rule)",
    "label": null,
    "answer_matches_agent_v0": null,
    "provider": "",
@@ -791,17 +792,17 @@
    "id": "EU7",
    "category": "unanswerable",
    "answerable": false,
-   "abstained": false,
-   "answer": "422,405 Model Y vehicles were delivered in Q2 2024. [TSLA Q2 FY2024 release]",
-   "correctness": "incorrect",
-   "correctness_score": 0.0,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
    "faithfulness": null,
    "judged": false,
    "missing_facts": [],
    "contradicted_facts": [],
    "unsupported_claims": [],
-   "verifier_supported": 1.0,
-   "reason": "answered an unanswerable question (rule)",
+   "verifier_supported": 0.0,
+   "reason": "abstained (rule)",
    "label": null,
    "answer_matches_agent_v0": null,
    "provider": "",
@@ -830,6 +831,288 @@
    "provider": "",
    "judge_model": "",
    "answer_model": "",
+   "tokens": 0,
+   "error": ""
+  },
+  {
+   "id": "E28",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Meta had 76,834 employees at the end of Q1 2025. [META Q1 FY2025 release]",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": 1.0,
+   "judged": true,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 1.0,
+   "reason": "The candidate answer matches the reference answer exactly and is fully supported by the cited source.",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "groq",
+   "judge_model": "openai/gpt-oss-120b",
+   "answer_model": "granite4.1:3b",
+   "tokens": 1072,
+   "error": ""
+  },
+  {
+   "id": "E29",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "Tesla produced 440,808 vehicles in Q1 2024. [TSLA Q1 FY2024 release]",
+   "correctness": "incorrect",
+   "correctness_score": 0.0,
+   "faithfulness": 0.0,
+   "judged": true,
+   "missing_facts": [
+    "Tesla produced 433,371 vehicles in Q1 2024."
+   ],
+   "contradicted_facts": [
+    "Tesla produced 433,371 vehicles in Q1 2024."
+   ],
+   "unsupported_claims": [
+    "Tesla produced 440,808 vehicles in Q1 2024. (unsupported: The cited source lists 440,808 as total production for Q1‑2023, while Q1‑2024 total production is shown as 433,371.)"
+   ],
+   "verifier_supported": 1.0,
+   "reason": "The candidate answer gives the wrong production figure, contradicting both the reference answer and the source, which shows 433,371 vehicles produced in Q1 2024.",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "groq",
+   "judge_model": "openai/gpt-oss-120b",
+   "answer_model": "granite4.1:3b",
+   "tokens": 1399,
+   "error": ""
+  },
+  {
+   "id": "E30",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "The Tesla delivered 439,975 Model 3 and Model Y vehicles in Q3 2024 [TSLA Q3 FY2024 release]",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": 1.0,
+   "judged": true,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 1.0,
+   "reason": "The candidate answer exactly matches the reference figure and is fully supported by the provided source.",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "groq",
+   "judge_model": "openai/gpt-oss-120b",
+   "answer_model": "granite4.1:3b",
+   "tokens": 1515,
+   "error": ""
+  },
+  {
+   "id": "E31",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "The iPhone net sales for Q1 FY2025 were $69,138 million [AAPL Q1 FY2025 release].",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": 1.0,
+   "judged": true,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 1.0,
+   "reason": "The candidate answer exactly matches the reference figure and is fully supported by the cited source.",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "groq",
+   "judge_model": "openai/gpt-oss-120b",
+   "answer_model": "granite4.1:3b",
+   "tokens": 1321,
+   "error": ""
+  },
+  {
+   "id": "E32",
+   "category": "lookup",
+   "answerable": true,
+   "abstained": false,
+   "answer": "3.35 billion daily active people [META Q4 FY2024 release]",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": 1.0,
+   "judged": true,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 1.0,
+   "reason": "The candidate provides the exact figure asked for, matching the reference and the cited source.",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "groq",
+   "judge_model": "openai/gpt-oss-120b",
+   "answer_model": "granite4.1:3b",
+   "tokens": 1276,
+   "error": ""
+  },
+  {
+   "id": "E33",
+   "category": "numeric",
+   "answerable": true,
+   "abstained": false,
+   "answer": "6,473 Supercharger stations [TSLA Q2 FY2024 release]",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": 1.0,
+   "judged": true,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 1.0,
+   "reason": "The candidate answer provides the exact figure asked and it is directly supported by the cited source, matching the reference answer.",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "groq",
+   "judge_model": "openai/gpt-oss-120b",
+   "answer_model": "granite4.1:3b",
+   "tokens": 1090,
+   "error": ""
+  },
+  {
+   "id": "EU9",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": null,
+   "judged": false,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 0.0,
+   "reason": "abstained (rule)",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "",
+   "judge_model": "",
+   "answer_model": "granite4.1:3b",
+   "tokens": 0,
+   "error": ""
+  },
+  {
+   "id": "EU10",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": null,
+   "judged": false,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 0.0,
+   "reason": "abstained (rule)",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "",
+   "judge_model": "",
+   "answer_model": "granite4.1:3b",
+   "tokens": 0,
+   "error": ""
+  },
+  {
+   "id": "EU11",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": null,
+   "judged": false,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": 0.0,
+   "reason": "abstained (rule)",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "",
+   "judge_model": "",
+   "answer_model": "granite4.1:3b",
+   "tokens": 0,
+   "error": ""
+  },
+  {
+   "id": "EU12",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": null,
+   "judged": false,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": null,
+   "reason": "abstained (rule)",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "",
+   "judge_model": "",
+   "answer_model": "granite4.1:3b",
+   "tokens": 0,
+   "error": ""
+  },
+  {
+   "id": "EU13",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": null,
+   "judged": false,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": null,
+   "reason": "abstained (rule)",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "",
+   "judge_model": "",
+   "answer_model": "granite4.1:3b",
+   "tokens": 0,
+   "error": ""
+  },
+  {
+   "id": "EU14",
+   "category": "unanswerable",
+   "answerable": false,
+   "abstained": true,
+   "answer": "",
+   "correctness": "correct",
+   "correctness_score": 1.0,
+   "faithfulness": null,
+   "judged": false,
+   "missing_facts": [],
+   "contradicted_facts": [],
+   "unsupported_claims": [],
+   "verifier_supported": null,
+   "reason": "abstained (rule)",
+   "label": null,
+   "answer_matches_agent_v0": null,
+   "provider": "",
+   "judge_model": "",
+   "answer_model": "granite4.1:3b",
    "tokens": 0,
    "error": ""
   }

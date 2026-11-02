@@ -1,0 +1,67 @@
+{
+ "summary": {
+  "answers": 6,
+  "graded": 4,
+  "errors": 2,
+  "caught": 4,
+  "partial": 0,
+  "missed": 0,
+  "caught_rate": 1.0
+ },
+ "records": [
+  {
+   "id": "E13",
+   "error_type": "prior-quarter column",
+   "answer": "NVIDIA's revenue for the three months ended October 27, 2024 was $30,040 million.",
+   "source": "NVDA-FY2025-Q2-EX-99.1-0002",
+   "correctness": "incorrect",
+   "reason": "The candidate provided the revenue figure for Q2 FY2025 ($30,040 million) instead of Q3 FY2025 ($35,082 million), which is the quarter ended October 27, 2024. This is a factual error regarding the specific period requested.",
+   "model": "qwen/qwen3.8-27b"
+  },
+  {
+   "id": "E07",
+   "error_type": "prior-quarter column",
+   "answer": "Tesla's free cash flow in Q3 2024 was $1,342 million.",
+   "source": "TSLA-FY2024-Q2-EX-99.1-0004",
+   "correctness": null,
+   "reason": "All LLM providers failed: groq: groq HTTP 400: {\"error\":{\"message\":\"Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.\",\"type\":\"invalid_request_error\",\"code\"",
+   "model": ""
+  },
+  {
+   "id": "E05",
+   "error_type": "year-ago column",
+   "answer": "Google Cloud revenue in Q3 2024 was $8,411 million.",
+   "source": "GOOGL-FY2024-Q3-EX-99.1-0004",
+   "correctness": null,
+   "reason": "All LLM providers failed: groq: groq HTTP 400: {\"error\":{\"message\":\"Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.\",\"type\":\"invalid_request_error\",\"code\"",
+   "model": ""
+  },
+  {
+   "id": "E10",
+   "error_type": "annual figure as the quarter's",
+   "answer": "Mastercard's net revenue in Q4 2024 was $28.2 billion.",
+   "source": "MA-FY2024-Q4-EX-99.1-0007",
+   "correctness": "incorrect",
+   "reason": "The candidate answer states that Mastercard's net revenue in Q4 2024 was $28.2 billion. The reference answer states it was $7.5 billion. The candidate's figure of $28.2 billion corresponds to the full-year 2024 net revenue as shown in the cited source, not the Q4 figure. Therefore, the candidate provides the wrong figure for the specific period asked about.",
+   "model": "qwen/qwen3.8-27b"
+  },
+  {
+   "id": "E04",
+   "error_type": "adjusted figure as reported",
+   "answer": "JPMorgan's reported net income in Q2 2023 was $13.3 billion.",
+   "source": "JPM-FY2023-Q2-EX-99.1-0000",
+   "correctness": "incorrect",
+   "reason": "The candidate answer incorrectly identifies the adjusted net income ($13.3 billion) as the reported net income. The reference and the cited source both clearly state that the reported net income was $14.5 billion, with $13.3 billion being the figure excluding significant items.",
+   "model": "qwen/qwen3.8-27b"
+  },
+  {
+   "id": "E16",
+   "error_type": "next quarter's outlook",
+   "answer": "NVIDIA's revenue outlook for Q4 FY2025 was $43.0 billion.",
+   "source": "NVDA-FY2025-Q4-EX-99.1-0006",
+   "correctness": "incorrect",
+   "reason": "The candidate answer provides the revenue outlook for Q1 FY2026 ($43.0 billion) instead of the requested Q4 FY2025 ($37.5 billion). This is a factual error regarding the specific period asked about.",
+   "model": "qwen/qwen3.8-27b"
+  }
+ ]
+}

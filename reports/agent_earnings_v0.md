@@ -6,12 +6,12 @@ gold rewrite**: `FinRAGAgent.run(question, history)`.
 | Metric | agent_routed |
 |---|---|
 | False abstention (answerable) | 0.000 |
-| Abstention recall (unanswerable) | 0.750 |
-| Citation hit (gold page) | 0.741 |
-| Citation hit incl. XBRL | 0.741 |
-| Evidence recall | 0.704 |
-| Figure recall | 0.833 |
-| Claim support | 0.975 |
+| Abstention recall (unanswerable) | 1.000 |
+| Citation hit (gold page) | 0.939 |
+| Citation hit incl. XBRL | 0.939 |
+| Evidence recall | 0.939 |
+| Figure recall | 0.813 |
+| Claim support | 0.980 |
 | Filters compatible with gold | 1.000 |
 | Unanswerable refused at analyze | 3 |
 | Answerable refused at analyze | 0 |
@@ -20,8 +20,8 @@ gold rewrite**: `FinRAGAgent.run(question, history)`.
 | Figure recall on those questions | - |
 | LLM rewrites | 2 |
 | Errors | 0 |
-| LLM p50 / p95 ms | 16,482 / 25,194 |
-| End-to-end p50 / p95 ms (uncached) | 20,935 / 46,105 |
+| LLM p50 / p95 ms | - / - |
+| End-to-end p50 / p95 ms (uncached) | - / - |
 
 ## By category (false abstention / citation hit incl. XBRL / figure recall)
 
@@ -29,46 +29,58 @@ gold rewrite**: `FinRAGAgent.run(question, history)`.
 |---|---|
 | comparison | 0.00 / 1.00 / 1.000 |
 | follow_up | 0.00 / 0.50 / 0.750 |
-| lookup | 0.00 / 0.80 / 0.900 |
-| numeric | 0.00 / 0.62 / 0.731 |
+| lookup | 0.00 / 0.86 / 0.833 |
+| numeric | 0.00 / 1.00 / 0.735 |
 | trend | 0.00 / 1.00 / 1.000 |
 
 ## Per question (first config)
 
 | Id | Filters ok | Steps | Facts | Abstained | Cite hit (+XBRL) | Fig recall | Total s |
 |---|---|---|---|---|---|---|---|
-| E01 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 1.000 | 2.5 |
-| E02 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 1.0 |
-| E03 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 24.1 |
-| E04 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 0.667 | 22.3 |
-| E05 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.667 | 16.7 |
-| E06 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 22.9 |
-| E07 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 24.5 |
-| E08 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 3.1 |
-| E09 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 29.2 |
-| E10 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 0.500 | 23.8 |
-| E11 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 19.0 |
-| E12 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 18.8 |
-| E13 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 1.000 | 20.0 |
-| E14 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 0.667 | 27.5 |
-| E15 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 1.000 | 23.2 |
-| E16 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 3.1 |
-| E17 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 23.7 |
-| E18 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 20.9 |
-| E19 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 4.9 |
-| E20 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 10.5 |
-| E21 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 8.6 |
-| E22 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 11.2 |
-| E23 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 46.1 |
-| E24 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 4.6 |
-| E25 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 56.1 |
-| E26 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 2.5 |
-| E27 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 0.500 | 15.3 |
-| EU1 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 1.0 |
-| EU2 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 10.0 |
-| EU3 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 0.6 |
+| E01 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 2.3 |
+| E02 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 0.9 |
+| E03 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 1.7 |
+| E04 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.667 | 2.4 |
+| E05 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.667 | 1.9 |
+| E06 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 2.0 |
+| E07 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 1.8 |
+| E08 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 1.9 |
+| E09 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 2.0 |
+| E10 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 2.0 |
+| E11 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 1.3 |
+| E12 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.500 | 1.8 |
+| E13 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 1.9 |
+| E14 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.667 | 1.9 |
+| E15 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 1.000 | 1.2 |
+| E16 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 1.9 |
+| E17 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 2.0 |
+| E18 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 1.8 |
+| E19 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 3.8 |
+| E20 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 7.2 |
+| E21 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 7.5 |
+| E22 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 6.0 |
+| E23 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 3.5 |
+| E24 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 3.8 |
+| E25 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 4.9 |
+| E26 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 2.0 |
+| E27 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 0.000 (0.000) | 0.500 | 2.2 |
+| EU1 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 0.9 |
+| EU2 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 1.0 |
+| EU3 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 0.9 |
 | EU4 | - | analyze > refuse > respond | 0 | True | - (-) | - | 0.0 |
 | EU5 | - | analyze > refuse > respond | 0 | True | - (-) | - | 0.0 |
-| EU6 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | - (-) | - | 14.1 |
-| EU7 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | - (-) | - | 15.0 |
+| EU6 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 0.9 |
+| EU7 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 1.9 |
 | EU8 | - | analyze > refuse > respond | 0 | True | - (-) | - | 0.0 |
+| E28 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.333 | 1.4 |
+| E29 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 0.000 | 1.9 |
+| E30 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 2.0 |
+| E31 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 0.9 |
+| E32 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 2.1 |
+| E33 | True | analyze > retrieve > xbrl > generate > verify > respond | 0 | False | 1.000 (1.000) | 1.000 | 1.9 |
+| EU9 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 1.1 |
+| EU10 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 1.1 |
+| EU11 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 1.8 |
+| EU12 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 1.9 |
+| EU13 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 2.1 |
+| EU14 | - | analyze > retrieve > xbrl > generate > verify > respond | 0 | True | - (-) | - | 2.1 |
