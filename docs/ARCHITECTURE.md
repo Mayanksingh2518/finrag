@@ -2,10 +2,10 @@
 
 ## Scope
 
-An agentic RAG system over SEC annual reports (Form 10-K) for 10 companies × 4 fiscal
-years (FY2022–FY2025, 40 filings). It answers multi-company, multi-year questions with
-page-level citations, refuses when evidence is insufficient, and is measured by an
-evaluation harness with ablations.
+An agentic RAG system over SEC annual reports (Form 10-K) and quarterly earnings releases
+(8-K Exhibit 99.1) for 10 companies × 4 fiscal years (FY2022–FY2025, 40 filings and 160 releases).
+It answers multi-company, multi-year and quarterly questions with citations, refuses when evidence
+is insufficient, and is measured by an evaluation harness with ablations.
 
 **In scope (v1):** 10-K ingestion, hybrid retrieval, reranking, query analysis and
 decomposition, conversational follow-ups, grounded generation with citations and
